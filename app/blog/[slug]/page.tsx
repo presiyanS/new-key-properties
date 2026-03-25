@@ -6,6 +6,7 @@ import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   const sanitySlugss = await getBlogSlugs()

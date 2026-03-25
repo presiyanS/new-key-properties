@@ -7,6 +7,7 @@ export const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2024-01-01',
   useCdn: true,
+  token: process.env.SANITY_API_READ_TOKEN,
 })
 
 const builder = imageUrlBuilder(client)
@@ -48,15 +49,21 @@ const LISTING_FIELDS = `
 `
 
 export async function getListings(): Promise<SanityListing[]> {
-  return client.fetch(`*[_type == "listing"] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+  try {
+    return await client.fetch(`*[_type == "listing"] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+  } catch { return [] }
 }
 
 export async function getListing(id: string): Promise<SanityListing | null> {
-  return client.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id })
+  try {
+    return await client.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id })
+  } catch { return null }
 }
 
 export async function getFeaturedListings(): Promise<SanityListing[]> {
-  return client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+  try {
+    return await client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+  } catch { return [] }
 }
 
 // ── Blog Posts ──────────────────────────────────────────────────────────────
@@ -84,19 +91,25 @@ const BLOG_POST_FIELDS = `
 `
 
 export async function getBlogPosts(): Promise<SanityBlogPost[]> {
-  return client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`)
+  try {
+    return await client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`)
+  } catch { return [] }
 }
 
 export async function getBlogPost(slug: string): Promise<SanityBlogPost | null> {
-  return client.fetch(
-    `*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`,
-    { slug }
-  )
+  try {
+    return await client.fetch(
+      `*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`,
+      { slug }
+    )
+  } catch { return null }
 }
 
 export async function getBlogSlugs(): Promise<string[]> {
-  const results = await client.fetch(`*[_type == "blogPost"]{ "slug": slug.current }`)
-  return results.map((r: { slug: string }) => r.slug)
+  try {
+    const results = await client.fetch(`*[_type == "blogPost"]{ "slug": slug.current }`)
+    return results.map((r: { slug: string }) => r.slug)
+  } catch { return [] }
 }
 
 // ── Team Members ─────────────────────────────────────────────────────────────
@@ -122,5 +135,7 @@ const TEAM_MEMBER_FIELDS = `
 `
 
 export async function getTeamMembers(): Promise<SanityTeamMember[]> {
-  return client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
+  try {
+    return await client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
+  } catch { return [] }
 }
