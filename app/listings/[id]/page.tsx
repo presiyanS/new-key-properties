@@ -7,14 +7,16 @@ import ContactForm from '@/components/ContactForm'
 
 export const revalidate = 60
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const listing = await getListing(params.id)
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const listing = await getListing(id)
   if (!listing) return {}
   return { title: listing.title, description: listing.description }
 }
 
-export default async function ListingDetailPage({ params }: { params: { id: string } }) {
-  const listing = await getListing(params.id)
+export default async function ListingDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const listing = await getListing(id)
   if (!listing) notFound()
 
   const priceFormatted =
