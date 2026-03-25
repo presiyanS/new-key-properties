@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { ExternalImagePreview } from '../components/ExternalImagePreview'
 
 export const listingType = defineType({
   name: 'listing',
@@ -75,7 +76,7 @@ export const listingType = defineType({
       name: 'externalImageUrls',
       title: 'Снимки (URL връзки)',
       type: 'array',
-      of: [{ type: 'url' }],
+      of: [{ type: 'url', components: { input: ExternalImagePreview } }],
       description: 'Използва се автоматично — не е нужно ръчно редактиране',
     }),
     defineField({
