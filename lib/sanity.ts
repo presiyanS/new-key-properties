@@ -43,7 +43,7 @@ const LISTING_FIELDS = `
   totalFloors,
   neighborhood,
   description,
-  "imageUrls": images[].asset->url,
+  "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),
   features,
   featured
 `

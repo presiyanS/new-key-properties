@@ -67,9 +67,16 @@ export const listingType = defineType({
     }),
     defineField({
       name: 'images',
-      title: 'Снимки',
+      title: 'Снимки (качване)',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
+    }),
+    defineField({
+      name: 'externalImageUrls',
+      title: 'Снимки (URL връзки)',
+      type: 'array',
+      of: [{ type: 'url' }],
+      description: 'Използва се автоматично — не е нужно ръчно редактиране',
     }),
     defineField({
       name: 'features',
