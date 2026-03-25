@@ -2,15 +2,15 @@ import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
 import FAQ from '@/components/FAQ'
-import { getFeaturedListings } from '@/lib/sanity'
-import { blogPosts } from '@/data/blog'
+import { getFeaturedListings, getBlogPosts } from '@/lib/sanity'
+import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
 
-const recentPosts = blogPosts.slice(0, 3)
-
 export default async function HomePage() {
-  const featuredListings = await getFeaturedListings()
+  const [featuredListings, sanityPosts] = await Promise.all([getFeaturedListings(), getBlogPosts()])
+  const pool = sanityPosts.length > 0 ? sanityPosts : staticPosts
+  const recentPosts = pool.slice(0, 3)
   return (
     <>
       {/* ── Hero ── */}

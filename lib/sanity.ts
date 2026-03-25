@@ -58,3 +58,69 @@ export async function getListing(id: string): Promise<SanityListing | null> {
 export async function getFeaturedListings(): Promise<SanityListing[]> {
   return client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
 }
+
+// ── Blog Posts ──────────────────────────────────────────────────────────────
+
+export type SanityBlogPost = {
+  id: string
+  slug: string
+  title: string
+  excerpt: string
+  content: string
+  date: string
+  category: string
+  image: string
+}
+
+const BLOG_POST_FIELDS = `
+  "id": _id,
+  "slug": slug.current,
+  title,
+  excerpt,
+  content,
+  date,
+  category,
+  "image": coalesce(image.asset->url, externalImageUrl, '')
+`
+
+export async function getBlogPosts(): Promise<SanityBlogPost[]> {
+  return client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`)
+}
+
+export async function getBlogPost(slug: string): Promise<SanityBlogPost | null> {
+  return client.fetch(
+    `*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`,
+    { slug }
+  )
+}
+
+export async function getBlogSlugs(): Promise<string[]> {
+  const results = await client.fetch(`*[_type == "blogPost"]{ "slug": slug.current }`)
+  return results.map((r: { slug: string }) => r.slug)
+}
+
+// ── Team Members ─────────────────────────────────────────────────────────────
+
+export type SanityTeamMember = {
+  id: string
+  name: string
+  role: string
+  bio: string
+  phone?: string
+  email?: string
+  image: string
+}
+
+const TEAM_MEMBER_FIELDS = `
+  "id": _id,
+  name,
+  role,
+  bio,
+  phone,
+  email,
+  "image": coalesce(image.asset->url, '/team/placeholder.svg')
+`
+
+export async function getTeamMembers(): Promise<SanityTeamMember[]> {
+  return client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
+}

@@ -2,29 +2,38 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { blogPosts } from '@/data/blog'
+import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
+import { blogPosts as staticPosts } from '@/data/blog'
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }))
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const sanitySlugss = await getBlogSlugs()
+  const staticSlugs = staticPosts.map((p) => p.slug)
+  const allSlugs = Array.from(new Set([...sanitySlugss, ...staticSlugs]))
+  return allSlugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+  const post = await getBlogPost(params.slug) ?? staticPosts.find((p) => p.slug === params.slug)
   if (!post) return {}
   return { title: post.title, description: post.excerpt }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const sanityPost = await getBlogPost(params.slug)
+  const post = sanityPost ?? staticPosts.find((p) => p.slug === params.slug)
   if (!post) notFound()
+
+  const allPosts = await getBlogPosts()
+  const pool = allPosts.length > 0 ? allPosts : staticPosts
+  const related = pool.filter((p) => p.id !== post.id && p.slug !== params.slug).slice(0, 3)
 
   const dateFormatted = new Date(post.date).toLocaleDateString('bg-BG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   })
-
-  const related = blogPosts.filter((p) => p.id !== post.id).slice(0, 3)
 
   return (
     <>
@@ -48,9 +57,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       {/* Article */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-12 bg-brand-green/10">
-            <Image src={post.image} alt={post.title} fill className="object-cover" />
-          </div>
+          {post.image && (
+            <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-12 bg-brand-green/10">
+              <Image src={post.image} alt={post.title} fill className="object-cover" />
+            </div>
+          )}
 
           <p className="text-gray-500 text-xl leading-relaxed mb-10 border-l-4 border-brand-gold pl-6 italic">
             {post.excerpt}
@@ -102,9 +113,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 const d = new Date(p.date).toLocaleDateString('bg-BG', { year: 'numeric', month: 'long', day: 'numeric' })
                 return (
                   <Link key={p.id} href={`/blog/${p.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
-                    <div className="relative h-40 overflow-hidden bg-brand-green/10">
-                      <Image src={p.image} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                    </div>
+                    {p.image && (
+                      <div className="relative h-40 overflow-hidden bg-brand-green/10">
+                        <Image src={p.image} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                    )}
                     <div className="p-5">
                       <p className="text-xs text-gray-400 mb-2">{d}</p>
                       <h3 className="font-semibold text-gray-900 text-sm group-hover:text-brand-green transition-colors line-clamp-2">{p.title}</h3>

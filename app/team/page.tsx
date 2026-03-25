@@ -1,14 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import TeamMemberCard from '@/components/TeamMemberCard'
-import { team } from '@/data/team'
+import { getTeamMembers } from '@/lib/sanity'
+import { team as staticTeam } from '@/data/team'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Екипът ни',
   description: 'Запознайте се с екипа на New Key Properties – брокери с опит, отдаденост и истинска грижа за клиентите.',
 }
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const sanityTeam = await getTeamMembers()
+  const team = sanityTeam.length > 0 ? sanityTeam : staticTeam
   return (
     <>
       {/* Hero */}
