@@ -9,26 +9,29 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const sanitySlugss = await getBlogSlugs()
+  const sanitySlugs = await getBlogSlugs()
   const staticSlugs = staticPosts.map((p) => p.slug)
-  const allSlugs = Array.from(new Set([...sanitySlugss, ...staticSlugs]))
+  const allSlugs = Array.from(new Set([...sanitySlugs, ...staticSlugs]))
   return allSlugs.map((slug) => ({ slug }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getBlogPost(params.slug) ?? staticPosts.find((p) => p.slug === params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getBlogPost(slug) ?? staticPosts.find((p) => p.slug === slug)
   if (!post) return {}
   return { title: post.title, description: post.excerpt }
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const sanityPost = await getBlogPost(params.slug)
-  const post = sanityPost ?? staticPosts.find((p) => p.slug === params.slug)
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+
+  const sanityPost = await getBlogPost(slug)
+  const post = sanityPost ?? staticPosts.find((p) => p.slug === slug)
   if (!post) notFound()
 
   const allPosts = await getBlogPosts()
   const pool = allPosts.length > 0 ? allPosts : staticPosts
-  const related = pool.filter((p) => p.id !== post.id && p.slug !== params.slug).slice(0, 3)
+  const related = pool.filter((p) => p.id !== post.id && p.slug !== slug).slice(0, 3)
 
   const dateFormatted = new Date(post.date).toLocaleDateString('bg-BG', {
     year: 'numeric',
