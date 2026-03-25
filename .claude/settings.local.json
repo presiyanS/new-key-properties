@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:newkey.bg)",
+      "Bash(git push:*)"
+    ]
+  }
+}

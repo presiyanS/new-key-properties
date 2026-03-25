@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'files.builder.misssite.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
     ],
   },
 }

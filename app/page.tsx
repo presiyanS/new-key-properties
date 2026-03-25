@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
-import { listings } from '@/data/listings'
+import { getFeaturedListings } from '@/lib/sanity'
 import { blogPosts } from '@/data/blog'
 
-const featuredListings = listings.filter((l) => l.featured)
+export const revalidate = 60
+
 const recentPosts = blogPosts.slice(0, 3)
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredListings = await getFeaturedListings()
   return (
     <>
       {/* ── Hero ── */}
@@ -163,7 +165,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredListings.map((l) => (
-              <PropertyCard key={l.id} listing={l} />
+              <PropertyCard key={l._id} listing={l} />
             ))}
           </div>
 
