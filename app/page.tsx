@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
+import FAQ from '@/components/FAQ'
 import { getFeaturedListings } from '@/lib/sanity'
 import { blogPosts } from '@/data/blog'
 
@@ -65,9 +66,9 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { num: 'Ноември 2025', label: 'Основана' },
+              { num: 'Само София', label: 'Нашият пазар' },
               { num: '100%', label: 'Отдаденост' },
-              { num: '≤10', label: 'Клиента на месец' },
+              { num: 'Персонален', label: 'Подход към всеки' },
               { num: '0', label: 'Скрити такси' },
             ].map((s) => (
               <div key={s.label}>
@@ -261,6 +262,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ ── */}
+      <FAQ />
 
       {/* ── Blog preview ── */}
       <section className="py-24 bg-gray-50">

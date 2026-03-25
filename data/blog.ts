@@ -52,7 +52,7 @@ export const blogPosts: BlogPost[] = [
 Свържете се с нас за безплатна консултация — ще ви помогнем да намерите конкретния имот, който отговаря на вашите цели.`,
     date: '2026-03-20',
     category: 'Инвестиции',
-    image: '/blog/investment.svg',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop',
   },
   {
     id: '9',
@@ -94,7 +94,7 @@ export const blogPosts: BlogPost[] = [
 Имате въпроси? Обадете ни се за безплатна консултация — без задължения, без скрити мотиви.`,
     date: '2026-03-10',
     category: 'Съвети',
-    image: '/blog/guide.svg',
+    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&auto=format&fit=crop',
   },
   {
     id: '10',
@@ -137,7 +137,7 @@ export const blogPosts: BlogPost[] = [
 В New Key Properties ние ви помагаме с целия процес — от ценообразуването до нотариуса. Свържете се с нас за безплатна оценка на вашия имот.`,
     date: '2026-03-01',
     category: 'Съвети',
-    image: '/blog/market-analysis.svg',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop',
   },
   {
     id: '7',
@@ -193,7 +193,7 @@ export const blogPosts: BlogPost[] = [
 Заключение: Пазарът в София остава силен, но вече не е евтин. Добрите имоти изчезват бързо. Ако обмисляте покупка или продажба, свържете се с нас за безплатна консултация – ще ви дадем честна и актуална оценка на конкретния имот.`,
     date: '2026-03-24',
     category: 'Пазарен анализ',
-    image: '/blog/market-analysis.svg',
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&auto=format&fit=crop',
   },
   {
     id: '1',
@@ -211,7 +211,7 @@ export const blogPosts: BlogPost[] = [
 Прогнозите за следващите 12 месеца са умерено оптимистични – очаква се ръст от 5–8% в цените на имотите в добрите локации на столицата.`,
     date: '2025-03-15',
     category: 'Пазарен анализ',
-    image: '/blog/market-analysis.svg',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&auto=format&fit=crop',
   },
   {
     id: '2',
@@ -231,7 +231,7 @@ export const blogPosts: BlogPost[] = [
 **5. Борово** – Установен квартал, добра транспортна връзка. Цени: 1 500–2 000 EUR/кв.м. Добър баланс качество/цена.`,
     date: '2025-02-28',
     category: 'Съвети',
-    image: '/blog/sofia-districts.svg',
+    image: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=800&auto=format&fit=crop',
   },
   {
     id: '3',
@@ -251,7 +251,7 @@ export const blogPosts: BlogPost[] = [
 Нашият екип предоставя безплатни консултации за инвестиционни имоти. Свържете се с нас за персонализиран анализ.`,
     date: '2025-02-10',
     category: 'Инвестиции',
-    image: '/blog/investment.svg',
+    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=800&auto=format&fit=crop',
   },
   {
     id: '4',
@@ -273,7 +273,7 @@ export const blogPosts: BlogPost[] = [
 **6. Нотариален акт** – Финалната стъпка. Уверете се, че всичко е наред преди подписването.`,
     date: '2025-01-20',
     category: 'Ръководства',
-    image: '/blog/guide.svg',
+    image: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&auto=format&fit=crop',
   },
   {
     id: '5',
@@ -301,7 +301,7 @@ export const blogPosts: BlogPost[] = [
 В конкретния пример покупката излиза по-изгодна дългосрочно – при условие, че имате първоначалния капитал.`,
     date: '2025-01-05',
     category: 'Анализи',
-    image: '/blog/rent-vs-buy.svg',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop',
   },
   {
     id: '6',
@@ -329,6 +329,6 @@ export const blogPosts: BlogPost[] = [
 New Key Properties предоставя стандартизирани договори, изготвени с юридическа помощ, за всички наши клиенти.`,
     date: '2024-12-18',
     category: 'Правни съвети',
-    image: '/blog/contracts.svg',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop',
   },
 ]
