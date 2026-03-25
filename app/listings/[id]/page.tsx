@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { getListing } from '@/lib/sanity'
 import ContactForm from '@/components/ContactForm'
+import ImageGallery from '@/components/ImageGallery'
 
 export const revalidate = 60
 
@@ -44,31 +44,14 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2">
               <div className="mb-8">
-                <div className="relative h-80 sm:h-[420px] rounded-2xl overflow-hidden bg-brand-green/10">
-                  {images[0] ? (
-                    <Image src={images[0]} alt={listing.title} fill className="object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-brand-green/30">
-                      <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                      </svg>
-                    </div>
-                  )}
-                  <div className="absolute top-4 left-4">
+                <div className="relative">
+                  <ImageGallery images={images} title={listing.title} />
+                  <div className="absolute top-4 left-4 z-10">
                     <span className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide ${listing.type === 'sale' ? 'bg-brand-green text-brand-gold' : 'bg-brand-gold text-brand-green'}`}>
                       {listing.type === 'sale' ? 'Продажба' : 'Наем'}
                     </span>
                   </div>
                 </div>
-                {images.length > 1 && (
-                  <div className="grid grid-cols-4 gap-2 mt-2">
-                    {images.slice(1).map((img, i) => (
-                      <div key={i} className="relative h-20 rounded-xl overflow-hidden bg-brand-green/10">
-                        <Image src={img} alt={`${listing.title} - снимка ${i + 2}`} fill className="object-cover hover:scale-105 transition-transform duration-300" />
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
