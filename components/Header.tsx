@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/about', label: 'За Нас' },
   { href: '/team', label: 'Екипът ни' },
   { href: '/blog', label: 'Блог' },
+  { href: '/konsultatsiya', label: 'Безплатна Консултация' },
   { href: '/contact', label: 'Контакти' },
 ]
 
