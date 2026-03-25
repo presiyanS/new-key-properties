@@ -10,10 +10,12 @@ export type Listing = {
   totalFloors: number | null
   neighborhood: string
   description: string
-  image: string
+  images: string[]
   features: string[]
   featured: boolean
 }
+
+const BASE = 'https://files.builder.misssite.com'
 
 export const listings: Listing[] = [
   {
@@ -28,7 +30,10 @@ export const listings: Listing[] = [
     totalFloors: 4,
     neighborhood: 'Малинова долина',
     description: 'Тристаен апартамент от 118.98 кв.м (нето 96.78 кв.м) в нова сграда в кв. Малинова долина. Просторен хол от 32 кв.м, 2 спални, баня, тоалетна, килер и лоджия. Изложение изток/югоизток. Тухлена конструкция Wienerberger, дограма Salamander, асансьор Orona. Акт 14.',
-    image: 'https://files.builder.misssite.com/d7/b4/d7b487e1-c988-4d93-90d8-61fdd46c9d6f.jpg',
+    images: [
+      `${BASE}/d7/b4/d7b487e1-c988-4d93-90d8-61fdd46c9d6f.jpg`,
+      `${BASE}/b2/bf/b2bfbb45-9fcc-4f37-8866-1a2131f3ec35.jpg`,
+    ],
     features: ['Акт 14', 'Тухла Wienerberger', 'Дограма Salamander', 'Асансьор Orona', 'Лоджия'],
     featured: true,
   },
@@ -44,7 +49,12 @@ export const listings: Listing[] = [
     totalFloors: 4,
     neighborhood: 'Драгалевци',
     description: 'Тристаен апартамент от 131.33 кв.м (нето 116.96 кв.м) в бутикова сграда от 28 апартамента в кв. Драгалевци. Монолитна стоманобетонна конструкция, PVC тройно остъкляване, подово отопление, панорамна гледка към Витоша. Включени 2 паркоместа. По желание – частен двор от 120 кв.м за €35,000. Завършване: октомври 2026 г.',
-    image: 'https://files.builder.misssite.com/d7/b4/d7b487e1-c988-4d93-90d8-61fdd46c9d6f.jpg',
+    images: [
+      `${BASE}/92/1a/921a640d-24ed-4af2-afb9-d424bac06ad2.jpg`,
+      `${BASE}/fa/e7/fae71350-3923-4eb2-9e7f-6e66dcb49e0c.jpg`,
+      `${BASE}/db/2b/db2bc66c-348a-4d81-9ed2-670588d5e135.jpg`,
+      `${BASE}/81/c3/81c34bed-72ec-4992-a5da-898d0be017ae.jpg`,
+    ],
     features: ['2 паркоместа', 'Подово отопление', 'Гледка към Витоша', 'Тройно остъкляване', 'Бутикова сграда'],
     featured: true,
   },
@@ -60,7 +70,12 @@ export const listings: Listing[] = [
     totalFloors: null,
     neighborhood: 'Манастирски ливади – Запад',
     description: 'Тристаен апартамент от 110.49 кв.м (жилищна площ 98.27 кв.м) в нова сграда в кв. Манастирски ливади – Запад. Г-образен антре, просторен хол с кухня, мастер спалня с баня, втора спалня, баня с тоалетна и тераса. Изложение изток/север. Тухла Wienerberger Porotherm, алуминиева дограма ETEM тройно остъкляване, газово подово отопление, 2 асансьора KONE. Акт 14, очаквано Акт 16 – септември 2027 г.',
-    image: 'https://files.builder.misssite.com/d7/b4/d7b487e1-c988-4d93-90d8-61fdd46c9d6f.jpg',
+    images: [
+      `${BASE}/17/74/1774e063-78e2-4b66-a82d-6a4e3c8ad2f5.png`,
+      `${BASE}/c7/31/c7310a66-f938-4b47-bcc9-bb7eb8ca34ef.jpg`,
+      `${BASE}/b0/1c/b01c6eca-7333-4fff-a9fc-069510d78610.jpg`,
+      `${BASE}/b3/f1/b3f19767-820a-4c6c-abb3-a30dadea3e27.jpg`,
+    ],
     features: ['Акт 14', 'Газово подово отопление', 'Тухла Wienerberger', 'Дограма ETEM', '2 асансьора KONE'],
     featured: true,
   },
@@ -76,7 +91,15 @@ export const listings: Listing[] = [
     totalFloors: 9,
     neighborhood: 'Дружба 2',
     description: 'Тристаен апартамент от 110 кв.м (нето 96.38 кв.м) на 8-ми етаж в нова луксозна сграда в кв. Дружба 2. Изложение югоизток. Монолитна стоманобетонна конструкция, антисеизмична, тухла 25 см, PVC тройно остъкляване, фасада Laminam, централно отопление. На ~150 м от метро.',
-    image: 'https://files.builder.misssite.com/d7/b4/d7b487e1-c988-4d93-90d8-61fdd46c9d6f.jpg',
+    images: [
+      `${BASE}/43/b3/43b35fed-bd6c-4218-942d-9daa4983b442.jpg`,
+      `${BASE}/06/b5/06b53990-14a6-4465-957c-4f0de292adc8.jpg`,
+      `${BASE}/a3/b8/a3b853ca-5dbe-4103-9971-82cea7ef9637.jpg`,
+      `${BASE}/b5/08/b5084d74-5e7a-4ab4-9b5e-6b5214488204.jpg`,
+      `${BASE}/de/c9/dec958b4-4290-4a06-b061-eda5a6dc7087.png`,
+      `${BASE}/8e/88/8e889594-6faa-46ca-9161-0435d37d4d82.png`,
+      `${BASE}/d0/aa/d0aa4cba-02da-407b-ad5e-246695d2697b.jpg`,
+    ],
     features: ['До метро', 'Монолитна конструкция', 'Тройно остъкляване', 'Фасада Laminam', 'Централно отопление'],
     featured: false,
   },
@@ -92,7 +115,12 @@ export const listings: Listing[] = [
     totalFloors: null,
     neighborhood: 'Малинова долина',
     description: 'Двустаен апартамент от 74.91 кв.м с частен двор от 47.55 кв.м в нова сграда в кв. Малинова долина. Антре, хол с кухненски бокс, спалня, баня и перално помещение. Изложение запад. Минерална мазилка с EPS изолация, PVC тройно остъкляване с аргон, асансьор ThyssenKrupp. Очаквано Акт 16 – началото на 2027 г.',
-    image: 'https://files.builder.misssite.com/6e/80/6e80af60-7e0d-4d8d-9369-ff403aece368.jpg',
+    images: [
+      `${BASE}/e6/fd/e6fdfece-5f0a-44f2-8cb7-a800f8bc00b7.png`,
+      `${BASE}/d6/ac/d6ac6ae9-70a6-4cfe-8768-7cb22b773cb9.jpg`,
+      `${BASE}/6e/80/6e80af60-7e0d-4d8d-9369-ff403aece368.jpg`,
+      `${BASE}/28/f3/28f338a2-b051-485b-a605-3a35bc1eb220.jpg`,
+    ],
     features: ['Частен двор 47 кв.м', 'Асансьор ThyssenKrupp', 'Тройно остъкляване', 'EPS изолация'],
     featured: false,
   },
@@ -108,7 +136,16 @@ export const listings: Listing[] = [
     totalFloors: null,
     neighborhood: 'Малинова долина',
     description: 'Тристаен апартамент от 122.90 кв.м с просторен частен двор от 177.07 кв.м в нова сграда в кв. Малинова долина. Г-образен коридор, голям хол с кухня (44 кв.м), 2 спални, баня, тоалетна и перално помещение. Изложение запад/юг. Монолитна конструкция, PVC енергоефективна дограма, асансьор ThyssenKrupp. Очаквано Акт 16 – началото на 2027 г.',
-    image: 'https://files.builder.misssite.com/ca/20/ca20acb2-600b-45e1-a75a-327cb8caac1e.png',
+    images: [
+      `${BASE}/ca/20/ca20acb2-600b-45e1-a75a-327cb8caac1e.png`,
+      `${BASE}/6e/a3/6ea32ee5-ae4d-4c2b-bb68-b8e920fef396.jpg`,
+      `${BASE}/5e/a4/5ea46e7e-40af-4643-ba7c-7c5dc43e9349.jpg`,
+      `${BASE}/1d/d3/1dd35555-8471-4bc5-a401-b3cf9355aa67.jpg`,
+      `${BASE}/7f/01/7f0199b1-fb2a-4415-9b94-eab3908693ea.jpg`,
+      `${BASE}/06/ec/06ecc39a-b430-4291-9bc3-afdbb14d3758.jpg`,
+      `${BASE}/3f/02/3f02d0de-f34f-412e-9def-9d517c6b987f.jpg`,
+      `${BASE}/73/64/73641f5d-493f-4f58-beab-59d623eb1471.jpg`,
+    ],
     features: ['Частен двор 177 кв.м', 'Хол 44 кв.м', 'Асансьор ThyssenKrupp', 'Монолитна конструкция'],
     featured: false,
   },
@@ -124,7 +161,11 @@ export const listings: Listing[] = [
     totalFloors: 9,
     neighborhood: 'Овча купел 2',
     description: 'Двустаен апартамент от 70.89 кв.м на последен (9-ти) етаж в нова сграда в кв. Овча купел 2. Антре, хол с кухненски бокс, спалня, баня и тераса. Изложение север. Тухлена конструкция, топлоизолация EPS 12 см, PVC тройно остъкляване, алуминиеви радиатори, асансьор ORONA. Включено складово помещение. Очаквано Акт 16 – февруари 2028 г.',
-    image: 'https://files.builder.misssite.com/d2/d7/d2d7ca34-9a33-44a8-8b7a-9f152e5d1995.png',
+    images: [
+      `${BASE}/d2/d7/d2d7ca34-9a33-44a8-8b7a-9f152e5d1995.png`,
+      `${BASE}/31/48/314895c7-1559-4e70-ac77-1e7f4be1acb6.jpg`,
+      `${BASE}/d0/ec/d0ec4ec2-229f-4baf-b6a2-5951d4d1eba9.jpg`,
+    ],
     features: ['Последен етаж', 'Асансьор ORONA', 'Складово помещение', 'Тройно остъкляване', 'EPS изолация'],
     featured: false,
   },
@@ -140,7 +181,16 @@ export const listings: Listing[] = [
     totalFloors: null,
     neighborhood: 'Малинова долина',
     description: 'Четиристаен апартамент от 172.19 кв.м (нето 152.15 кв.м) в нова сграда в кв. Малинова долина. Фоайе, коридор, голям хол с кухня, 3 спални (едната с гардеробна и собствена баня), отделна баня, ниша за пералня и 2 тераси. Изложение запад/юг. Фасада WEBER минерална мазилка с EPS, дограма PVC Trocal тройно остъкляване, асансьор ThyssenKrupp. Очаквано Акт 16 – началото на 2027 г.',
-    image: 'https://files.builder.misssite.com/b7/61/b7611424-62e7-476a-b5be-25d8fea0696f.png',
+    images: [
+      `${BASE}/b7/61/b7611424-62e7-476a-b5be-25d8fea0696f.png`,
+      `${BASE}/ba/18/ba186424-7227-47e7-98c4-366204df080d.jpg`,
+      `${BASE}/48/92/4892bf39-bab0-4ece-9664-c0c6223c75dc.jpg`,
+      `${BASE}/72/5f/725ff702-f089-4329-b4d6-7da03ad8e4f2.jpg`,
+      `${BASE}/3e/8b/3e8bab25-b3c2-4353-a0e1-673bef53fd8d.jpg`,
+      `${BASE}/01/bb/01bbef2f-8b58-42dd-963e-3a5d25bdb5ff.jpg`,
+      `${BASE}/67/ae/67aef7fb-ec6a-4afd-80d9-d68bc4f49429.jpg`,
+      `${BASE}/23/58/2358f3c8-ddca-4008-9efd-87a26408f24d.jpg`,
+    ],
     features: ['3 спални', '2 бани', '2 тераси', 'Гардеробна', 'Асансьор ThyssenKrupp'],
     featured: false,
   },
@@ -156,7 +206,13 @@ export const listings: Listing[] = [
     totalFloors: 17,
     neighborhood: 'Охридско езеро',
     description: 'Луксозен четиристаен апартамент от 302.40 кв.м (жилищна площ 186.72 кв.м, тераса 82.02 кв.м) на 12-ти (последен) етаж в комплекс "Охридско езеро Парк". 4 просторни спални (2 с гардеробни), баня с тоалетна, хол с кухня, складово помещение и панорамна обиколна тераса. Подово отопление, термопомпа Toshiba, асансьор Schindler, денонощна охрана, двуетажен подземен паркинг. В комплекса: детска площадка, магазини, ресторант-градина.',
-    image: 'https://files.builder.misssite.com/ab/89/ab89e736-b2d4-42af-a9ad-a320f664a0e4.png',
+    images: [
+      `${BASE}/ab/89/ab89e736-b2d4-42af-a9ad-a320f664a0e4.png`,
+      `${BASE}/34/8b/348b24b7-2987-463e-a1ce-55c8ae0d5fc5.jpg`,
+      `${BASE}/ac/96/ac96775a-183e-432f-abe2-cd85473c2bba.jpg`,
+      `${BASE}/2b/ef/2bef9a78-e585-4fa5-bf66-7b5f5d86da77.jpg`,
+      `${BASE}/62/71/6271a17e-f7b7-4530-a6ad-faff7d2bdec9.jpg`,
+    ],
     features: ['Тераса 82 кв.м', 'Подово отопление', 'Термопомпа Toshiba', 'Асансьор Schindler', '24/7 охрана'],
     featured: false,
   },
@@ -172,7 +228,15 @@ export const listings: Listing[] = [
     totalFloors: null,
     neighborhood: 'Дружба 2',
     description: 'Подземен гараж № 8 от 33.23 кв.м в нова сграда в кв. Дружба 2, ул. "Обколна". Акт 14. Готовност за зарядна станция за електромобили. Подходящ за лично ползване или инвестиция. Промоционална цена €42,000 (каталожна €45,000).',
-    image: 'https://files.builder.misssite.com/8b/93/8b934469-1874-4c1b-83e0-9592798c8553.jpg',
+    images: [
+      `${BASE}/8b/93/8b934469-1874-4c1b-83e0-9592798c8553.jpg`,
+      `${BASE}/37/fe/37fe499d-406d-4eda-9376-d44e86f06cde.jpg`,
+      `${BASE}/4f/72/4f72433e-f607-4140-a205-65f55401b112.jpg`,
+      `${BASE}/a5/15/a515c50a-cf56-486f-a5a4-98e05ea62fde.jpg`,
+      `${BASE}/6c/24/6c244340-fd4a-4c6b-ad21-acbaafbb2e88.jpg`,
+      `${BASE}/43/f3/43f38555-a817-4538-94a1-09bad1c7ced1.jpg`,
+      `${BASE}/1a/22/1a220d3b-8e48-4da7-86e9-bf66e54ae151.jpg`,
+    ],
     features: ['Акт 14', 'Зарядна за ел. автомобил', 'Подземен', 'Промоционална цена'],
     featured: false,
   },

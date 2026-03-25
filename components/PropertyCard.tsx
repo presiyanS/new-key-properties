@@ -15,7 +15,7 @@ export default function PropertyCard({ listing }: { listing: Listing }) {
     >
       <div className="relative h-52 overflow-hidden bg-brand-green/10">
         <Image
-          src={listing.image}
+          src={listing.images[0]}
           alt={listing.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"

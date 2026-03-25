@@ -42,17 +42,28 @@ export default function ListingDetailPage({ params }: { params: { id: string } }
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Main content */}
             <div className="lg:col-span-2">
-              <div className="relative h-80 sm:h-[420px] rounded-2xl overflow-hidden mb-8 bg-brand-green/10">
-                <Image src={listing.image} alt={listing.title} fill className="object-cover" />
-                <div className="absolute top-4 left-4">
-                  <span
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide ${
-                      listing.type === 'sale' ? 'bg-brand-green text-brand-gold' : 'bg-brand-gold text-brand-green'
-                    }`}
-                  >
-                    {listing.type === 'sale' ? 'Продажба' : 'Наем'}
-                  </span>
+              <div className="mb-8">
+                <div className="relative h-80 sm:h-[420px] rounded-2xl overflow-hidden bg-brand-green/10">
+                  <Image src={listing.images[0]} alt={listing.title} fill className="object-cover" />
+                  <div className="absolute top-4 left-4">
+                    <span
+                      className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide ${
+                        listing.type === 'sale' ? 'bg-brand-green text-brand-gold' : 'bg-brand-gold text-brand-green'
+                      }`}
+                    >
+                      {listing.type === 'sale' ? 'Продажба' : 'Наем'}
+                    </span>
+                  </div>
                 </div>
+                {listing.images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-2 mt-2">
+                    {listing.images.slice(1).map((img, i) => (
+                      <div key={i} className="relative h-20 rounded-xl overflow-hidden bg-brand-green/10">
+                        <Image src={img} alt={`${listing.title} - снимка ${i + 2}`} fill className="object-cover hover:scale-105 transition-transform duration-300" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
