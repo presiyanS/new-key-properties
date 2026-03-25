@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#1A4D3A"/>
+  <rect x="0" y="0" width="800" height="400" fill="url(#grid4)" opacity="0.07"/>
+  <defs>
+    <pattern id="grid4" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <!-- Document / checklist -->
+  <rect x="300" y="100" width="200" height="240" rx="10" fill="none" stroke="#C9A84C" stroke-width="5" opacity="0.85"/>
+  <rect x="320" y="80" width="160" height="30" rx="6" fill="#C9A84C" opacity="0.7"/>
+  <!-- Check lines -->
+  <circle cx="330" cy="165" r="8" fill="none" stroke="#C9A84C" stroke-width="3" opacity="0.8"/>
+  <polyline points="325,165 329,170 338,160" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <line x1="350" y1="165" x2="460" y2="165" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <circle cx="330" cy="205" r="8" fill="none" stroke="#C9A84C" stroke-width="3" opacity="0.8"/>
+  <polyline points="325,205 329,210 338,200" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <line x1="350" y1="205" x2="460" y2="205" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <circle cx="330" cy="245" r="8" fill="none" stroke="#C9A84C" stroke-width="3" opacity="0.5"/>
+  <line x1="350" y1="245" x2="440" y2="245" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <circle cx="330" cy="285" r="8" fill="none" stroke="#C9A84C" stroke-width="3" opacity="0.4"/>
+  <line x1="350" y1="285" x2="420" y2="285" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  <!-- Label -->
+  <text x="400" y="368" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C9A84C" opacity="0.5">New Key Properties</text>
+</svg>

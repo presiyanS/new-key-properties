@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#1A4D3A"/>
+  <rect x="0" y="0" width="800" height="400" fill="url(#grid5)" opacity="0.07"/>
+  <defs>
+    <pattern id="grid5" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <!-- VS layout: two houses -->
+  <!-- Left house (rent) -->
+  <polygon points="270,160 190,215 205,215 205,295 335,295 335,215 350,215" fill="none" stroke="#C9A84C" stroke-width="5" stroke-linejoin="round" opacity="0.65"/>
+  <rect x="245" y="245" width="36" height="50" rx="3" fill="#C9A84C" opacity="0.4"/>
+  <!-- Right house (buy) -->
+  <polygon points="530,140 450,195 465,195 465,295 595,295 595,195 610,195" fill="none" stroke="#C9A84C" stroke-width="5" stroke-linejoin="round" opacity="0.9"/>
+  <rect x="505" y="235" width="36" height="60" rx="3" fill="#C9A84C" opacity="0.7"/>
+  <!-- Key on right house -->
+  <circle cx="575" cy="240" r="14" fill="none" stroke="#DEC06A" stroke-width="4" opacity="0.9"/>
+  <line x1="582" y1="248" x2="600" y2="268" stroke="#DEC06A" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+  <line x1="596" y1="264" x2="592" y2="272" stroke="#DEC06A" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <!-- VS text -->
+  <text x="400" y="220" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="bold" fill="#DEC06A" opacity="0.9">VS</text>
+  <!-- Labels -->
+  <text x="265" y="325" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#C9A84C" opacity="0.6">Наем</text>
+  <text x="530" y="325" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#C9A84C" opacity="0.9">Покупка</text>
+  <text x="400" y="368" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C9A84C" opacity="0.5">New Key Properties</text>
+</svg>

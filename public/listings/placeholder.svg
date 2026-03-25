@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1A4D3A"/>
+  <rect x="0" y="0" width="800" height="600" fill="url(#pgrid)" opacity="0.07"/>
+  <defs>
+    <pattern id="pgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <!-- House -->
+  <polygon points="400,160 260,265 285,265 285,420 515,420 515,265 540,265" fill="none" stroke="#C9A84C" stroke-width="7" stroke-linejoin="round" opacity="0.8"/>
+  <!-- Door -->
+  <rect x="368" y="340" width="64" height="80" rx="4" fill="#C9A84C" opacity="0.5"/>
+  <!-- Window left -->
+  <rect x="300" y="310" width="50" height="45" rx="4" fill="none" stroke="#C9A84C" stroke-width="4" opacity="0.6"/>
+  <line x1="325" y1="310" x2="325" y2="355" stroke="#C9A84C" stroke-width="2" opacity="0.5"/>
+  <line x1="300" y1="332" x2="350" y2="332" stroke="#C9A84C" stroke-width="2" opacity="0.5"/>
+  <!-- Window right -->
+  <rect x="450" y="310" width="50" height="45" rx="4" fill="none" stroke="#C9A84C" stroke-width="4" opacity="0.6"/>
+  <line x1="475" y1="310" x2="475" y2="355" stroke="#C9A84C" stroke-width="2" opacity="0.5"/>
+  <line x1="450" y1="332" x2="500" y2="332" stroke="#C9A84C" stroke-width="2" opacity="0.5"/>
+  <!-- Label -->
+  <text x="400" y="490" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#C9A84C" opacity="0.7">New Key Properties</text>
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#C9A84C" opacity="0.4">Снимката предстои</text>
+</svg>

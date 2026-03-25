@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#1A4D3A"/>
+  <rect x="0" y="0" width="800" height="400" fill="url(#grid2)" opacity="0.07"/>
+  <defs>
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <!-- House icon -->
+  <polygon points="400,100 290,190 310,190 310,300 490,300 490,190 510,190" fill="none" stroke="#C9A84C" stroke-width="6" stroke-linejoin="round" opacity="0.9"/>
+  <rect x="355" y="230" width="50" height="70" rx="3" fill="#C9A84C" opacity="0.5"/>
+  <rect x="330" y="210" width="45" height="40" rx="3" fill="none" stroke="#C9A84C" stroke-width="4" opacity="0.7"/>
+  <!-- Sofia pin -->
+  <circle cx="540" cy="150" r="22" fill="#C9A84C" opacity="0.85"/>
+  <circle cx="540" cy="145" r="8" fill="#1A4D3A"/>
+  <line x1="540" y1="160" x2="540" y2="180" stroke="#C9A84C" stroke-width="4" opacity="0.85"/>
+  <!-- Label -->
+  <text x="400" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#C9A84C" opacity="0.8">Съвети и Ръководства</text>
+  <text x="400" y="365" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#C9A84C" opacity="0.5">New Key Properties</text>
+</svg>

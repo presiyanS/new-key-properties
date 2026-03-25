@@ -1,0 +1,104 @@
+import type { Metadata } from 'next'
+import ContactForm from '@/components/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Контакти',
+  description: 'Свържете се с New Key Properties. Телефон: 0879 826 292, Имейл: office@newkey.bg',
+}
+
+export default function ContactPage() {
+  return (
+    <>
+      {/* Hero */}
+      <section className="bg-brand-green py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-brand-gold/60 uppercase text-sm tracking-widest mb-4">Контакти</p>
+            <h1 className="font-serif text-5xl font-bold text-white mb-6">
+              Свържете се<br />
+              <span className="text-brand-gold">с Нас</span>
+            </h1>
+            <p className="text-white/70 text-xl leading-relaxed">
+              Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact content */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Info */}
+            <div>
+              <h2 className="font-serif text-3xl font-bold text-brand-green mb-8">Информация за контакт</h2>
+
+              <div className="space-y-6 mb-12">
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 mb-1">Телефон</p>
+                    <a href="tel:0879826292" className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
+                      0879 826 292
+                    </a>
+                    <p className="text-sm text-gray-400 mt-1">Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 mb-1">Имейл</p>
+                    <a href="mailto:office@newkey.bg" className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
+                      office@newkey.bg
+                    </a>
+                    <p className="text-sm text-gray-400 mt-1">Отговаряме в рамките на 24 часа</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 mb-1">Местоположение</p>
+                    <p className="text-gray-900 font-bold text-xl">София, България</p>
+                    <p className="text-sm text-gray-400 mt-1">Обслужваме целия град</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Urgency box */}
+              <div className="bg-brand-green rounded-2xl p-6 border border-brand-gold/20">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-2.5 h-2.5 bg-brand-gold rounded-full animate-pulse" />
+                  <p className="text-brand-gold font-semibold text-sm uppercase tracking-wide">Ограничени места</p>
+                </div>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за {new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.
+                </p>
+              </div>
+            </div>
+
+            {/* Form */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <h2 className="font-serif text-2xl font-bold text-brand-green mb-2">Изпратете запитване</h2>
+              <p className="text-gray-500 text-sm mb-8">Попълнете формата и ще се свържем с вас в рамките на 24 часа.</p>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
