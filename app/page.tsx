@@ -65,10 +65,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { num: '50+', label: 'Сключени сделки' },
-              { num: '100%', label: 'Доволни клиенти' },
-              { num: '5+', label: 'Години опит' },
+              { num: 'Ноември 2025', label: 'Основана' },
+              { num: '100%', label: 'Отдаденост' },
               { num: '≤10', label: 'Клиента на месец' },
+              { num: '0', label: 'Скрити такси' },
             ].map((s) => (
               <div key={s.label}>
                 <p className="font-serif text-brand-green font-bold text-3xl lg:text-4xl">{s.num}</p>
