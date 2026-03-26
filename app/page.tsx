@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
 import FAQ from '@/components/FAQ'
@@ -40,37 +41,88 @@ export default async function HomePage() {
         <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-brand-gold/5 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 w-full">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mb-8">
-              <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
-              <span className="text-brand-gold text-sm font-medium">{cms?.heroBadge ?? 'Агенция за недвижими имоти · София'}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            {/* ── Left: text ── */}
+            <div>
+              <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mb-8">
+                <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
+                <span className="text-brand-gold text-sm font-medium">{cms?.heroBadge ?? 'Агенция за недвижими имоти · София'}</span>
+              </div>
+
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                {cms?.heroLine1 ?? 'Вашият Нов'}<br />
+                <span className="text-brand-gold">{cms?.heroLineGold ?? 'Дом'}</span> {cms?.heroLine3 ?? 'Започва'}<br />
+                Тук
+              </h1>
+
+              <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl">
+                {cms?.heroSubtitle ?? 'New Key Properties — честна агенция, която наистина се грижи за клиентите си. Намираме правилния имот за вас в София с пълна прозрачност и максимална отдаденост.'}
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/listings"
+                  className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-colors text-center text-lg shadow-lg shadow-brand-gold/20"
+                >
+                  Разгледайте Имотите
+                </Link>
+              <Link
+                  href="/contact"
+                  className="border-2 border-brand-gold/60 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 transition-colors text-center text-lg"
+                >
+                  Свържете се с нас
+                </Link>
+              </div>
             </div>
 
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-              {cms?.heroLine1 ?? 'Вашият Нов'}<br />
-              <span className="text-brand-gold">{cms?.heroLineGold ?? 'Дом'}</span> {cms?.heroLine3 ?? 'Започва'}<br />
-              Тук
-            </h1>
+            {/* ── Right: property image card ── */}
+            <div className="hidden lg:block relative">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40 aspect-[4/5]">
+                <Image
+                  src={featuredListings[0]?.imageUrls?.[0] ?? 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80'}
+                  alt="Имот от New Key Properties"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 50vw, 600px"
+                  priority
+                />
+                {/* gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-            <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
-              {cms?.heroSubtitle ?? 'New Key Properties — честна агенция, която наистина се грижи за клиентите си. Намираме правилния имот за вас в София с пълна прозрачност и максимална отдаденост.'}
-            </p>
+                {/* bottom info card */}
+                {featuredListings[0] && (
+                  <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+                    <p className="text-white/60 text-xs uppercase tracking-widest mb-1">
+                      {featuredListings[0].type === 'sale' ? 'Продажба' : 'Наем'}
+                    </p>
+                    <p className="text-white font-semibold text-sm leading-snug mb-2 line-clamp-1">
+                      {featuredListings[0].title}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-brand-gold font-bold">
+                        €{featuredListings[0].price?.toLocaleString('bg-BG')}
+                      </span>
+                      <span className="text-white/60 text-xs">{featuredListings[0].neighborhood}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/listings"
-                className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-colors text-center text-lg shadow-lg shadow-brand-gold/20"
-              >
-                Разгледайте Имотите
-              </Link>
-              <Link
-                href="/contact"
-                className="border-2 border-brand-gold/60 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 transition-colors text-center text-lg"
-              >
-                Свържете се с нас
-              </Link>
+              {/* floating trust badge */}
+              <div className="absolute -top-4 -left-4 bg-brand-gold rounded-2xl px-4 py-3 shadow-lg shadow-brand-gold/30">
+                <p className="text-brand-green font-bold text-sm">Доверие · Честност</p>
+                <p className="text-brand-green/70 text-xs">Резултати</p>
+              </div>
+
+              {/* floating stat */}
+              <div className="absolute -bottom-4 -right-4 bg-brand-green-light rounded-2xl px-4 py-3 border border-brand-gold/20 shadow-xl">
+                <p className="text-brand-gold font-bold text-2xl">≤10</p>
+                <p className="text-white/60 text-xs">клиента/месец</p>
+              </div>
             </div>
-          </div>
+
+          </div>{/* end grid */}
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand-gold/40">
