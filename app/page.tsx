@@ -76,49 +76,42 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* ── Right: property image card ── */}
+            {/* ── Right: image ── */}
             <div className="hidden lg:block relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40 aspect-[4/5]">
+              {/* main image */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 aspect-[4/5]">
                 <Image
-                  src={featuredListings[0]?.imageUrls?.[0] ?? 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80'}
-                  alt="Имот от New Key Properties"
+                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85"
+                  alt="Недвижими имоти в София"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1280px) 50vw, 600px"
                   priority
                 />
-                {/* gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* subtle dark gradient bottom */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                {/* gold border accent */}
+                <div className="absolute inset-0 rounded-3xl ring-1 ring-brand-gold/20" />
 
-                {/* bottom info card */}
-                {featuredListings[0] && (
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-                    <p className="text-white/60 text-xs uppercase tracking-widest mb-1">
-                      {featuredListings[0].type === 'sale' ? 'Продажба' : 'Наем'}
-                    </p>
-                    <p className="text-white font-semibold text-sm leading-snug mb-2 line-clamp-1">
-                      {featuredListings[0].title}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-brand-gold font-bold">
-                        €{featuredListings[0].price?.toLocaleString('bg-BG')}
-                      </span>
-                      <span className="text-white/60 text-xs">{featuredListings[0].neighborhood}</span>
-                    </div>
-                  </div>
-                )}
+                {/* slogan overlay at bottom */}
+                <div className="absolute bottom-6 left-6 right-6 text-center">
+                  <p className="text-brand-gold font-semibold tracking-widest text-sm uppercase">
+                    Доверие · Честност · Резултати
+                  </p>
+                </div>
               </div>
 
-              {/* floating trust badge */}
-              <div className="absolute -top-4 -left-4 bg-brand-gold rounded-2xl px-4 py-3 shadow-lg shadow-brand-gold/30">
-                <p className="text-brand-green font-bold text-sm">Доверие · Честност</p>
-                <p className="text-brand-green/70 text-xs">Резултати</p>
+              {/* floating key icon badge — brand connection */}
+              <div className="absolute -top-5 -right-5 w-16 h-16 bg-brand-gold rounded-2xl shadow-lg shadow-brand-gold/40 flex items-center justify-center rotate-12">
+                <svg className="w-8 h-8 text-brand-green" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.65 10A5.99 5.99 0 007 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 005.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                </svg>
               </div>
 
-              {/* floating stat */}
-              <div className="absolute -bottom-4 -right-4 bg-brand-green-light rounded-2xl px-4 py-3 border border-brand-gold/20 shadow-xl">
-                <p className="text-brand-gold font-bold text-2xl">≤10</p>
-                <p className="text-white/60 text-xs">клиента/месец</p>
+              {/* floating stat bottom-left */}
+              <div className="absolute -bottom-5 -left-5 bg-white/5 backdrop-blur-sm border border-brand-gold/30 rounded-2xl px-5 py-3 shadow-xl">
+                <p className="text-brand-gold font-bold text-2xl leading-none">≤10</p>
+                <p className="text-white/50 text-xs mt-1">клиента на месец</p>
               </div>
             </div>
 
