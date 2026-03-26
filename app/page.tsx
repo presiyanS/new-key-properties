@@ -39,6 +39,79 @@ export default async function HomePage() {
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-gold/5 pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-brand-gold/5 pointer-events-none" />
 
+        {/* ── Top: Sofia cityscape silhouette ── */}
+        <div className="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style={{height: '200px'}}>
+          <svg viewBox="0 0 1440 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMax meet">
+            {/* City label + flanking lines */}
+            <text x="720" y="22" textAnchor="middle" fill="#c9a84c" fillOpacity="0.45" fontFamily="Georgia, serif" fontSize="11" letterSpacing="10">СОФИЯ · БЪЛГАРИЯ</text>
+            <line x1="420" y1="18" x2="590" y2="18" stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <line x1="850" y1="18" x2="1020" y2="18" stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+
+            {/* Back layer — faint distant buildings */}
+            <rect x="0"    y="140" width="55"  height="60"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="60"   y="122" width="45"  height="78"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="112"  y="135" width="38"  height="65"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="158"  y="115" width="52"  height="85"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="1190" y="125" width="50"  height="75"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="1248" y="108" width="42"  height="92"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="1298" y="130" width="60"  height="70"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+            <rect x="1366" y="118" width="74"  height="82"  stroke="#c9a84c" strokeWidth="0.6" strokeOpacity="0.18" fill="none"/>
+
+            {/* Foreground buildings — left cluster */}
+            <rect x="218"  y="145" width="35"  height="55"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="260"  y="128" width="48"  height="72"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="270"  y="118" width="28"  height="10"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="315"  y="108" width="55"  height="92"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="325"  y="98"  width="35"  height="10"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <line x1="342" y1="98"  x2="342"  y2="78"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40"/>
+            <line x1="337" y1="82"  x2="347"  y2="82"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <rect x="378"  y="120" width="40"  height="80"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.38" fill="none"/>
+            <rect x="425"  y="112" width="30"  height="88"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.38" fill="none"/>
+
+            {/* NDK-style wide cultural center */}
+            <rect x="462"  y="130" width="110" height="70"  stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45" fill="none"/>
+            <rect x="472"  y="122" width="90"  height="8"   stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <line x1="490" y1="122" x2="490"  y2="105" stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <line x1="517" y1="122" x2="517"  y2="98"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <line x1="544" y1="122" x2="544"  y2="98"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+
+            {/* Cathedral dome */}
+            <path  d="M 610 200 L 610 138 L 655 100 L 700 138 L 700 200" stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45" fill="none"/>
+            <path  d="M 628 138 Q 655 115 682 138"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35" fill="none"/>
+            <line x1="655" y1="100" x2="655"  y2="80"  stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45"/>
+            <line x1="650" y1="85"  x2="660"  y2="85"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <rect x="594"  y="148" width="16"  height="52"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35" fill="none"/>
+            <path  d="M 594 148 Q 602 135 610 148"  stroke="#c9a84c" strokeWidth="0.7" strokeOpacity="0.30" fill="none"/>
+            <rect x="700"  y="148" width="16"  height="52"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35" fill="none"/>
+            <path  d="M 700 148 Q 708 135 716 148"  stroke="#c9a84c" strokeWidth="0.7" strokeOpacity="0.30" fill="none"/>
+
+            {/* Office towers center-right */}
+            <rect x="740"  y="88"  width="45"  height="112" stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45" fill="none"/>
+            <rect x="746"  y="78"  width="33"  height="10"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <line x1="762" y1="78"  x2="762"  y2="58"  stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45"/>
+            <line x1="757" y1="63"  x2="767"  y2="63"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35"/>
+            <rect x="795"  y="105" width="38"  height="95"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="840"  y="72"  width="50"  height="128" stroke="#c9a84c" strokeWidth="1.4" strokeOpacity="0.50" fill="none"/>
+            <rect x="848"  y="62"  width="34"  height="10"  stroke="#c9a84c" strokeWidth="1.2" strokeOpacity="0.45" fill="none"/>
+            <line x1="865" y1="62"  x2="865"  y2="38"  stroke="#c9a84c" strokeWidth="1.4" strokeOpacity="0.50"/>
+            <circle cx="865" cy="37" r="3"    stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.50" fill="none"/>
+            <rect x="898"  y="95"  width="42"  height="105" stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="948"  y="115" width="35"  height="85"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.38" fill="none"/>
+
+            {/* Right cluster */}
+            <rect x="992"  y="105" width="48"  height="95"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="1000" y="95"  width="32"  height="10"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35" fill="none"/>
+            <rect x="1048" y="120" width="40"  height="80"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.38" fill="none"/>
+            <rect x="1096" y="100" width="52"  height="100" stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.40" fill="none"/>
+            <rect x="1104" y="90"  width="36"  height="10"  stroke="#c9a84c" strokeWidth="0.8" strokeOpacity="0.35" fill="none"/>
+            <line x1="1122" y1="90" x2="1122" y2="70"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.38"/>
+            <rect x="1156" y="128" width="32"  height="72"  stroke="#c9a84c" strokeWidth="1"   strokeOpacity="0.35" fill="none"/>
+
+            {/* Ground line */}
+            <line x1="0" y1="199" x2="1440" y2="199" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.35"/>
+          </svg>
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
