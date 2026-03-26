@@ -1,9 +1,12 @@
 import { defineField, defineType } from 'sanity'
+import { DocumentTextIcon } from '@sanity/icons'
+import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'
 
 export const blogPostType = defineType({
   name: 'blogPost',
   title: 'Блог статия',
   type: 'document',
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       name: 'title',
@@ -73,12 +76,13 @@ export const blogPostType = defineType({
       category: 'category',
       date: 'date',
       media: 'image',
+      externalUrl: 'externalImageUrl',
     },
-    prepare({ title, category, date, media }) {
+    prepare({ title, category, date, media, externalUrl }) {
       return {
         title,
         subtitle: `${category ?? ''} · ${date ?? ''}`,
-        media,
+        media: media ?? (externalUrl ? createExternalImageThumbnail(externalUrl) : DocumentTextIcon),
       }
     },
   },

@@ -1,10 +1,13 @@
 import { defineField, defineType } from 'sanity'
+import { HomeIcon } from '@sanity/icons'
 import { ExternalImagePreview } from '../components/ExternalImagePreview'
+import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'
 
 export const listingType = defineType({
   name: 'listing',
   title: 'Имот',
   type: 'document',
+  icon: HomeIcon,
   fields: [
     defineField({
       name: 'title',
@@ -99,12 +102,13 @@ export const listingType = defineType({
       price: 'price',
       type: 'type',
       media: 'images.0',
+      externalUrl: 'externalImageUrls.0',
     },
-    prepare({ title, price, type, media }) {
+    prepare({ title, price, type, media, externalUrl }) {
       return {
         title,
         subtitle: `${type === 'sale' ? 'Продажба' : 'Наем'} · €${price?.toLocaleString('bg-BG')}`,
-        media,
+        media: media ?? (externalUrl ? createExternalImageThumbnail(externalUrl) : HomeIcon),
       }
     },
   },
