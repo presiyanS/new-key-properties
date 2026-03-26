@@ -19,8 +19,8 @@ export default function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-brand-green mb-2">Благодарим ви!</h3>
-        <p className="text-gray-600">Получихме вашето запитване. Ще се свържем с вас в рамките на 24 часа.</p>
+        <h3 className="text-xl font-bold text-brand-green mb-2">Благодарим Ви!</h3>
+        <p className="text-gray-600">Получихме Вашето запитване. Ще се свържем с Вас в рамките на 24 часа.</p>
       </div>
     )
   }

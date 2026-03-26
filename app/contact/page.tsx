@@ -102,7 +102,7 @@ export default async function ContactPage() {
             {/* Form */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
               <h2 className="font-serif text-2xl font-bold text-brand-green mb-2">{cms?.formTitle ?? 'Изпратете запитване'}</h2>
-              <p className="text-gray-500 text-sm mb-8">{cms?.formSubtitle ?? 'Попълнете формата и ще се свържем с вас в рамките на 24 часа.'}</p>
+              <p className="text-gray-500 text-sm mb-8">{cms?.formSubtitle ?? 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.'}</p>
               <ContactForm />
             </div>
           </div>

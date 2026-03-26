@@ -51,7 +51,7 @@ export default async function TeamPage() {
             Работим с ограничен брой клиенти на месец — не защото не искаме повече работа, а защото вярваме, че качеството е по-важно от количеството. Всеки клиент заслужава пълното ни внимание.
           </p>
           <p className="text-gray-500 text-lg leading-relaxed">
-            Когато работим с вас, третираме вашия имот и вашите интереси така, сякаш са наши. Това не е маркетинг — това е начинът, по който сме решили да работим.
+            Когато работим с Вас, третираме Вашия имот и Вашите интереси така, сякаш са наши. Това не е маркетинг — това е начинът, по който сме решили да работим.
           </p>
         </div>
       </section>
@@ -61,7 +61,7 @@ export default async function TeamPage() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">Свържете се с нашия екип</h2>
           <p className="text-brand-green/70 text-lg mb-10">
-            Готови сме да отговорим на вашите въпроси и да ви помогнем с намирането на правилния имот.
+            Готови сме да отговорим на Вашите въпроси и да Ви помогнем с намирането на правилния имот.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:0879826292" className="bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-dark transition-colors text-lg">

@@ -53,7 +53,7 @@ export default function ListingsClient({ listings }: { listings: SanityListing[]
         <div className="mt-16 bg-brand-green rounded-3xl p-10 text-center">
           <h3 className="font-serif text-3xl font-bold text-white mb-4">Не намирате търсеното?</h3>
           <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">
-            Разкажете ни какво търсите и ние ще го намерим за вас. Активно работим за намиране на имоти по конкретни критерии.
+            Разкажете ни какво търсите и ние ще го намерим за Вас. Активно работим за намиране на имоти по конкретни критерии.
           </p>
           <a
             href="tel:0879826292"
