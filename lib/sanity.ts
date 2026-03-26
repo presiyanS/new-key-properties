@@ -139,3 +139,29 @@ export async function getTeamMembers(): Promise<SanityTeamMember[]> {
     return await client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
   } catch { return [] }
 }
+
+// ── Page Content ─────────────────────────────────────────────────────────────
+
+export async function getHomePage() {
+  try {
+    return await client.fetch(`*[_type == "homePage" && _id == "homePage"][0]`)
+  } catch { return null }
+}
+
+export async function getAboutPage() {
+  try {
+    return await client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`)
+  } catch { return null }
+}
+
+export async function getContactPage() {
+  try {
+    return await client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`)
+  } catch { return null }
+}
+
+export async function getConsultationPage() {
+  try {
+    return await client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`)
+  } catch { return null }
+}

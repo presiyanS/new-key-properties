@@ -1,12 +1,21 @@
 import type { Metadata } from 'next'
 import ContactForm from '@/components/ContactForm'
+import { getContactPage } from '@/lib/sanity'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Контакти',
   description: 'Свържете се с New Key Properties. Телефон: 0879 826 292, Имейл: office@newkey.bg',
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const cms = await getContactPage()
+
+  const phone = cms?.phone ?? '0879826292'
+  const phoneDisplay = phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
+  const email = cms?.email ?? 'office@newkey.bg'
+
   return (
     <>
       {/* Hero */}
@@ -15,11 +24,11 @@ export default function ContactPage() {
           <div className="max-w-2xl">
             <p className="text-brand-gold/60 uppercase text-sm tracking-widest mb-4">Контакти</p>
             <h1 className="font-serif text-5xl font-bold text-white mb-6">
-              Свържете се<br />
-              <span className="text-brand-gold">с Нас</span>
+              {cms?.heroTitle ?? 'Свържете се'}<br />
+              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'с Нас'}</span>
             </h1>
             <p className="text-white/70 text-xl leading-relaxed">
-              Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.
+              {cms?.heroSubtitle ?? 'Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.'}
             </p>
           </div>
         </div>
@@ -42,10 +51,10 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Телефон</p>
-                    <a href="tel:0879826292" className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
-                      0879 826 292
+                    <a href={`tel:${phone}`} className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
+                      {phoneDisplay}
                     </a>
-                    <p className="text-sm text-gray-400 mt-1">Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00</p>
+                    <p className="text-sm text-gray-400 mt-1">{cms?.phoneHours ?? 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00'}</p>
                   </div>
                 </div>
 
@@ -57,10 +66,10 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Имейл</p>
-                    <a href="mailto:office@newkey.bg" className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
-                      office@newkey.bg
+                    <a href={`mailto:${email}`} className="text-gray-900 font-bold text-xl hover:text-brand-green transition-colors">
+                      {email}
                     </a>
-                    <p className="text-sm text-gray-400 mt-1">Отговаряме в рамките на 24 часа</p>
+                    <p className="text-sm text-gray-400 mt-1">{cms?.emailNote ?? 'Отговаряме в рамките на 24 часа'}</p>
                   </div>
                 </div>
 
@@ -72,8 +81,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Местоположение</p>
-                    <p className="text-gray-900 font-bold text-xl">София, България</p>
-                    <p className="text-sm text-gray-400 mt-1">Обслужваме целия град</p>
+                    <p className="text-gray-900 font-bold text-xl">{cms?.address ?? 'София, България'}</p>
+                    <p className="text-sm text-gray-400 mt-1">{cms?.addressNote ?? 'Обслужваме целия град'}</p>
                   </div>
                 </div>
               </div>
@@ -82,18 +91,18 @@ export default function ContactPage() {
               <div className="bg-brand-green rounded-2xl p-6 border border-brand-gold/20">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-2.5 h-2.5 bg-brand-gold rounded-full animate-pulse" />
-                  <p className="text-brand-gold font-semibold text-sm uppercase tracking-wide">Ограничени места</p>
+                  <p className="text-brand-gold font-semibold text-sm uppercase tracking-wide">{cms?.urgencyTitle ?? 'Ограничени места'}</p>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за {new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.
+                  {cms?.urgencyMessage ?? `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.`}
                 </p>
               </div>
             </div>
 
             {/* Form */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-              <h2 className="font-serif text-2xl font-bold text-brand-green mb-2">Изпратете запитване</h2>
-              <p className="text-gray-500 text-sm mb-8">Попълнете формата и ще се свържем с вас в рамките на 24 часа.</p>
+              <h2 className="font-serif text-2xl font-bold text-brand-green mb-2">{cms?.formTitle ?? 'Изпратете запитване'}</h2>
+              <p className="text-gray-500 text-sm mb-8">{cms?.formSubtitle ?? 'Попълнете формата и ще се свържем с вас в рамките на 24 часа.'}</p>
               <ContactForm />
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const faqs = [
+const defaultFaqs = [
   {
     q: 'Колко струва услугата ви?',
     a: 'Комисионната ни е стандартна за пазара и се договаря индивидуално в зависимост от типа и стойността на сделката. При покупка — работим изцяло в интерес на купувача, без скрити такси. Безплатната ни консултация не ви задължава с нищо.',
@@ -29,7 +29,10 @@ const faqs = [
   },
 ]
 
-export default function FAQ() {
+type FaqItem = { q: string; a: string }
+
+export default function FAQ({ items }: { items?: FaqItem[] }) {
+  const faqs = items && items.length > 0 ? items : defaultFaqs
   const [open, setOpen] = useState<number | null>(null)
 
   return (

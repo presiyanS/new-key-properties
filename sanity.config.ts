@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './sanity/schemaTypes'
-import { HomeIcon, DocumentTextIcon, UsersIcon } from '@sanity/icons'
+import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, StarIcon } from '@sanity/icons'
 
 export default defineConfig({
   name: 'new-key-properties',
@@ -17,6 +17,30 @@ export default defineConfig({
         S.list()
           .title('Съдържание')
           .items([
+            // ── Pages ─────────────────────────────────────────────────
+            S.listItem()
+              .title('Начална страница')
+              .icon(HomeIcon)
+              .child(S.document().documentId('homePage').schemaType('homePage').title('Начална страница')),
+
+            S.listItem()
+              .title('За нас')
+              .icon(InfoOutlineIcon)
+              .child(S.document().documentId('aboutPage').schemaType('aboutPage').title('За нас')),
+
+            S.listItem()
+              .title('Контакти')
+              .icon(EnvelopeIcon)
+              .child(S.document().documentId('contactPage').schemaType('contactPage').title('Контакти')),
+
+            S.listItem()
+              .title('Безплатна консултация')
+              .icon(StarIcon)
+              .child(S.document().documentId('consultationPage').schemaType('consultationPage').title('Безплатна консултация')),
+
+            S.divider(),
+
+            // ── Content ───────────────────────────────────────────────
             S.listItem()
               .title('Имоти')
               .icon(HomeIcon)
@@ -25,7 +49,7 @@ export default defineConfig({
                   .title('Всички имоти')
                   .defaultOrdering([{ field: '_createdAt', direction: 'desc' }])
               ),
-            S.divider(),
+
             S.listItem()
               .title('Блог статии')
               .icon(DocumentTextIcon)
@@ -34,7 +58,7 @@ export default defineConfig({
                   .title('Всички статии')
                   .defaultOrdering([{ field: 'date', direction: 'desc' }])
               ),
-            S.divider(),
+
             S.listItem()
               .title('Екип')
               .icon(UsersIcon)

@@ -2,15 +2,35 @@ import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
 import FAQ from '@/components/FAQ'
-import { getFeaturedListings, getBlogPosts } from '@/lib/sanity'
+import { getFeaturedListings, getBlogPosts, getHomePage } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
 
 export default async function HomePage() {
-  const [featuredListings, sanityPosts] = await Promise.all([getFeaturedListings(), getBlogPosts()])
+  const [featuredListings, sanityPosts, cms] = await Promise.all([getFeaturedListings(), getBlogPosts(), getHomePage()])
   const pool = sanityPosts.length > 0 ? sanityPosts : staticPosts
   const recentPosts = pool.slice(0, 3)
+
+  const stats = cms?.stats?.length > 0 ? cms.stats : [
+    { value: 'Само София', label: 'Нашият пазар' },
+    { value: '100%', label: 'Отдаденост' },
+    { value: 'Персонален', label: 'Подход към всеки' },
+    { value: '0', label: 'Скрити такси' },
+  ]
+  const services = cms?.services?.length > 0 ? cms.services : [
+    { title: 'Продажби', desc: 'Продаваме вашия имот на най-добра цена — прозрачно, бързо и без излишен стрес.' },
+    { title: 'Наеми', desc: 'Намираме надеждни наематели или идеалния имот под наем за вас в София.' },
+    { title: 'Намиране на имот', desc: 'Търсим и намираме имоти по вашите конкретни критерии — като за нас самите.' },
+    { title: 'Инвестиции', desc: 'Реален анализ на доходност и пазарни тенденции — помагаме ви да инвестирате умно.' },
+  ]
+  const whyUsPoints = cms?.whyUsPoints?.length > 0 ? cms.whyUsPoints : [
+    { title: 'Честност на първо място', desc: 'Никога не скриваме информация. Пълна прозрачност при всяка стъпка от сделката.' },
+    { title: 'Работим като за себе си', desc: 'Подхождаме към всяка сделка сякаш купуваме или продаваме собствен имот.' },
+    { title: 'Ограничен брой клиенти', desc: 'Максимум 10 клиента на месец — за максимален фокус и качество на услугата.' },
+    { title: 'Дълбоко познаваме пазара', desc: 'Задълбочени познания за всеки квартал, ценови нива и тенденции в София.' },
+  ]
+
   return (
     <>
       {/* ── Hero ── */}
@@ -23,17 +43,17 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mb-8">
               <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
-              <span className="text-brand-gold text-sm font-medium">Агенция за недвижими имоти · София</span>
+              <span className="text-brand-gold text-sm font-medium">{cms?.heroBadge ?? 'Агенция за недвижими имоти · София'}</span>
             </div>
 
             <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-              Вашият Нов<br />
-              <span className="text-brand-gold">Дом</span> Започва<br />
+              {cms?.heroLine1 ?? 'Вашият Нов'}<br />
+              <span className="text-brand-gold">{cms?.heroLineGold ?? 'Дом'}</span> {cms?.heroLine3 ?? 'Започва'}<br />
               Тук
             </h1>
 
             <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
-              New Key Properties — честна агенция, която наистина се грижи за клиентите си. Намираме правилния имот за вас в София с пълна прозрачност и максимална отдаденост.
+              {cms?.heroSubtitle ?? 'New Key Properties — честна агенция, която наистина се грижи за клиентите си. Намираме правилния имот за вас в София с пълна прозрачност и максимална отдаденост.'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -65,14 +85,9 @@ export default async function HomePage() {
       <section className="bg-brand-gold py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { num: 'Само София', label: 'Нашият пазар' },
-              { num: '100%', label: 'Отдаденост' },
-              { num: 'Персонален', label: 'Подход към всеки' },
-              { num: '0', label: 'Скрити такси' },
-            ].map((s) => (
+            {stats.map((s: { value: string; label: string }) => (
               <div key={s.label}>
-                <p className="font-serif text-brand-green font-bold text-3xl lg:text-4xl">{s.num}</p>
+                <p className="font-serif text-brand-green font-bold text-3xl lg:text-4xl">{s.value}</p>
                 <p className="text-brand-green/60 text-sm font-medium mt-1">{s.label}</p>
               </div>
             ))}
@@ -84,58 +99,22 @@ export default async function HomePage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">Нашите Услуги</h2>
+            <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">{cms?.servicesTitle ?? 'Нашите Услуги'}</h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              Пълен спектър от услуги в сферата на недвижимите имоти в София.
+              {cms?.servicesSubtitle ?? 'Пълен спектър от услуги в сферата на недвижимите имоти в София.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: (
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 22V12h6v10" />
-                  </svg>
-                ),
-                title: 'Продажби',
-                desc: 'Продаваме вашия имот на най-добра цена — прозрачно, бързо и без излишен стрес.',
-              },
-              {
-                icon: (
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                  </svg>
-                ),
-                title: 'Наеми',
-                desc: 'Намираме надеждни наематели или идеалния имот под наем за вас в София.',
-              },
-              {
-                icon: (
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                ),
-                title: 'Намиране на имот',
-                desc: 'Търсим и намираме имоти по вашите конкретни критерии — като за нас самите.',
-              },
-              {
-                icon: (
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                ),
-                title: 'Инвестиции',
-                desc: 'Реален анализ на доходност и пазарни тенденции — помагаме ви да инвестирате умно.',
-              },
-            ].map((s) => (
+            {services.map((s: { title: string; desc: string }, i: number) => (
               <div
-                key={s.title}
+                key={i}
                 className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-md transition-shadow border border-gray-100 group"
               >
                 <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light transition-colors">
-                  {s.icon}
+                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  </svg>
                 </div>
                 <h3 className="font-bold text-gray-900 text-lg mb-2">{s.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
@@ -187,31 +166,14 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="font-serif text-4xl font-bold text-white mb-6">
-                Защо <span className="text-brand-gold">New Key Properties</span>?
+                {cms?.whyUsTitle ?? <>Защо <span className="text-brand-gold">New Key Properties</span>?</>}
               </h2>
               <p className="text-white/70 text-lg leading-relaxed mb-10">
-                Не сме просто поредната агенция. Работим с ограничен брой клиенти на месец, за да гарантираме, че всеки получава пълното ни внимание и най-доброто от нас.
+                {cms?.whyUsSubtitle ?? 'Не сме просто поредната агенция. Работим с ограничен брой клиенти на месец, за да гарантираме, че всеки получава пълното ни внимание и най-доброто от нас.'}
               </p>
 
               <div className="space-y-5">
-                {[
-                  {
-                    title: 'Честност на първо място',
-                    desc: 'Никога не скриваме информация. Пълна прозрачност при всяка стъпка от сделката.',
-                  },
-                  {
-                    title: 'Работим като за себе си',
-                    desc: 'Подхождаме към всяка сделка сякаш купуваме или продаваме собствен имот.',
-                  },
-                  {
-                    title: 'Ограничен брой клиенти',
-                    desc: 'Максимум 10 клиента на месец — за максимален фокус и качество на услугата.',
-                  },
-                  {
-                    title: 'Дълбоко познаваме пазара',
-                    desc: 'Задълбочени познания за всеки квартал, ценови нива и тенденции в София.',
-                  },
-                ].map((item) => (
+                {whyUsPoints.map((item: { title: string; desc: string }) => (
                   <div key={item.title} className="flex items-start gap-4">
                     <div className="w-6 h-6 rounded-full bg-brand-gold flex items-center justify-center shrink-0 mt-0.5">
                       <svg className="w-3.5 h-3.5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -237,9 +199,9 @@ export default async function HomePage() {
             {/* CTA card */}
             <div className="bg-brand-green-light/30 rounded-3xl p-8 border border-brand-gold/20">
               <p className="text-brand-gold/60 uppercase text-xs tracking-widest text-center mb-2">Безплатна консултация</p>
-              <h3 className="font-serif text-2xl font-bold text-white text-center mb-4">Готови ли сте да действате?</h3>
+              <h3 className="font-serif text-2xl font-bold text-white text-center mb-4">{cms?.ctaCardTitle ?? 'Готови ли сте да действате?'}</h3>
               <p className="text-white/60 text-sm text-center leading-relaxed mb-8">
-                Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега — броят на клиентите, с които работим, е ограничен.
+                {cms?.ctaCardDesc ?? 'Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега — броят на клиентите, с които работим, е ограничен.'}
               </p>
               <div className="space-y-3">
                 <a
@@ -264,7 +226,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── FAQ ── */}
-      <FAQ />
+      <FAQ items={cms?.faq} />
 
       {/* ── Blog preview ── */}
       <section className="py-24 bg-gray-50">
@@ -296,10 +258,10 @@ export default async function HomePage() {
       <section className="py-20 bg-brand-gold">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">
-            Честност. Доверие. Резултати.
+            {cms?.finalCtaTitle ?? 'Честност. Доверие. Резултати.'}
           </h2>
           <p className="text-brand-green/70 text-lg mb-10">
-            Свържете се с New Key Properties още днес и направете правилната стъпка на пазара на имоти в София.
+            {cms?.finalCtaSubtitle ?? 'Свържете се с New Key Properties още днес и направете правилната стъпка на пазара на имоти в София.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
