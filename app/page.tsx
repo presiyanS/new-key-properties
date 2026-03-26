@@ -110,8 +110,8 @@ export default async function HomePage() {
 
               {/* floating stat bottom-left */}
               <div className="absolute -bottom-5 -left-5 bg-white/5 backdrop-blur-sm border border-brand-gold/30 rounded-2xl px-5 py-3 shadow-xl">
-                <p className="text-brand-gold font-bold text-2xl leading-none">≤10</p>
-                <p className="text-white/50 text-xs mt-1">клиента на месец</p>
+                <p className="text-brand-gold font-bold text-sm leading-none uppercase tracking-widest">Премиум</p>
+                <p className="text-white/50 text-xs mt-1">персонален подход</p>
               </div>
             </div>
 
