@@ -33,6 +33,74 @@
   }
 }
 
+/* ─── Hero Orb Animations ─── */
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  20%       { transform: translate(-50px, 35px) scale(1.06); }
+  50%       { transform: translate(-90px, -25px) scale(0.96); }
+  75%       { transform: translate(-25px, 55px) scale(1.08); }
+}
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30%       { transform: translate(60px, -45px) scale(1.1); }
+  65%       { transform: translate(25px, -75px) scale(0.92); }
+}
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50%       { transform: translate(45px, -35px) scale(1.25); opacity: 0.9; }
+}
+@keyframes orb-float-4 {
+  0%, 100% { transform: translate(0, 0); }
+  40%       { transform: translate(35px, 28px); }
+  80%       { transform: translate(-18px, 48px); }
+}
+
+/* ─── Building Draw-On (clip-path wipe) ─── */
+@keyframes build-rise {
+  from { clip-path: inset(100% 0 0 0); opacity: 0; }
+  to   { clip-path: inset(0% 0 0 0);   opacity: 1; }
+}
+
+/* ─── Window light flicker ─── */
+@keyframes window-pulse {
+  0%, 100% { opacity: 0.12; }
+  45%       { opacity: 0.50; }
+  55%       { opacity: 0.45; }
+}
+@keyframes window-pulse-alt {
+  0%, 100% { opacity: 0.10; }
+  30%       { opacity: 0.40; }
+  60%       { opacity: 0.55; }
+}
+
+/* ─── Floating value cards ─── */
+@keyframes float-up-down {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-9px); }
+}
+@keyframes float-down-up {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(7px); }
+}
+
+/* ─── Key icon float + slight rotate ─── */
+@keyframes key-float {
+  0%, 100% { transform: translateX(-50%) translateY(0px) rotate(-4deg); }
+  50%       { transform: translateX(-50%) translateY(-8px) rotate(4deg); }
+}
+
+/* ─── Neighbourhood marquee ─── */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Hero gradient pulse ─── */
+@keyframes hero-glow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
 @layer utilities {
   .line-clamp-1 {
     overflow: hidden;
@@ -75,5 +143,13 @@
   .glass {
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+
+  /* Marquee container — pause on hover */
+  .marquee-track {
+    animation: marquee-left 35s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
   }
 }

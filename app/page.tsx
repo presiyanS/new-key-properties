@@ -3,6 +3,10 @@ import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
 import FAQ from '@/components/FAQ'
 import AnimatedSection from '@/components/AnimatedSection'
+import AnimatedHeroBackground from '@/components/AnimatedHeroBackground'
+import AnimatedSkylineHero from '@/components/AnimatedSkylineHero'
+import NeighborhoodMarquee from '@/components/NeighborhoodMarquee'
+import CounterStat from '@/components/CounterStat'
 import { getFeaturedListings, getBlogPosts, getHomePage } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 
@@ -99,9 +103,8 @@ export default async function HomePage() {
     <>
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center bg-brand-green overflow-hidden">
-        {/* Background decorative circles */}
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-brand-gold/4 pointer-events-none blur-3xl" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-brand-gold/4 pointer-events-none blur-2xl" />
+        {/* Animated floating orb background */}
+        <AnimatedHeroBackground />
 
         {/* Sofia cityscape silhouette */}
         <div className="absolute top-0 left-0 right-0 pointer-events-none overflow-hidden" style={{ height: '200px' }}>
@@ -213,89 +216,9 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right: creative composition */}
-            <div className="hidden lg:flex items-center justify-center relative animate-fade-in" style={{ animationDelay: '0.3s', minHeight: '520px' }}>
-              <div className="relative w-[420px] h-[480px]">
-                {/* Grid pattern */}
-                <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c9a84c" strokeWidth="0.5"/>
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                </svg>
-
-                {/* House outline SVG */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 420 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 60 460 L 60 200 L 210 80 L 360 200 L 360 460 Z" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.25"/>
-                  <line x1="210" y1="80" x2="210" y2="180" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <line x1="60" y1="300" x2="360" y2="300" stroke="#c9a84c" strokeWidth="0.75" strokeOpacity="0.15"/>
-                  <line x1="60" y1="380" x2="360" y2="380" stroke="#c9a84c" strokeWidth="0.75" strokeOpacity="0.15"/>
-                  <rect x="110" y="220" width="60" height="55" rx="4" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <rect x="250" y="220" width="60" height="55" rx="4" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <rect x="110" y="315" width="60" height="50" rx="4" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <rect x="250" y="315" width="60" height="50" rx="4" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <path d="M 175 460 L 175 395 Q 210 375 245 395 L 245 460" stroke="#c9a84c" strokeWidth="1" strokeOpacity="0.2"/>
-                  <path d="M 20 20 L 20 60 L 60 60" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4"/>
-                  <path d="M 400 20 L 400 60 L 360 60" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4"/>
-                  <path d="M 20 460 L 20 420 L 60 420" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4"/>
-                  <path d="M 400 460 L 400 420 L 360 420" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4"/>
-                </svg>
-
-                {/* Central NK monogram */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative flex flex-col items-center">
-                    <div className="absolute w-48 h-48 rounded-full bg-brand-gold/5 blur-2xl" />
-                    <span
-                      className="font-serif font-bold text-brand-gold select-none"
-                      style={{ fontSize: '9rem', lineHeight: 1, opacity: 0.18, letterSpacing: '-0.05em' }}
-                    >
-                      NK
-                    </span>
-                    <p className="text-brand-gold/50 text-xs uppercase tracking-[0.35em] mt-2 font-medium">
-                      New Key Properties
-                    </p>
-                  </div>
-                </div>
-
-                {/* Floating value cards */}
-                <div className="absolute top-16 -left-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-brand-gold rounded-full" />
-                    <span className="text-brand-gold font-semibold text-sm tracking-wide">Честност</span>
-                  </div>
-                  <p className="text-white/40 text-xs mt-0.5 pl-4">Пълна прозрачност</p>
-                </div>
-
-                <div className="absolute top-28 -right-10 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-brand-gold rounded-full" />
-                    <span className="text-brand-gold font-semibold text-sm tracking-wide">Доверие</span>
-                  </div>
-                  <p className="text-white/40 text-xs mt-0.5 pl-4">Дългосрочни резултати</p>
-                </div>
-
-                <div className="absolute bottom-24 -left-6 bg-brand-gold/10 border border-brand-gold/25 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl">
-                  <p className="text-white/60 text-xs uppercase tracking-widest">Само</p>
-                  <p className="text-brand-gold font-bold text-lg leading-none">София</p>
-                </div>
-
-                <div className="absolute bottom-16 -right-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
-                    <span className="text-brand-gold font-semibold text-sm tracking-wide">Резултати</span>
-                  </div>
-                  <p className="text-white/40 text-xs mt-0.5 pl-4">Без компромиси</p>
-                </div>
-
-                {/* Gold key icon */}
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 bg-brand-gold rounded-xl shadow-lg shadow-brand-gold/30 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-brand-green" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.65 10A5.99 5.99 0 007 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 005.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                  </svg>
-                </div>
-              </div>
+            {/* Right: animated skyline composition */}
+            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <AnimatedSkylineHero />
             </div>
 
           </div>
@@ -310,18 +233,16 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
+      {/* ── Neighborhood marquee strip ── */}
+      <NeighborhoodMarquee />
+
+      {/* ── Stats (count-up on scroll) ── */}
       <section className="bg-brand-gold py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((s: { value: string; label: string }, i: number) => (
               <AnimatedSection key={s.label} delay={i * 0.1}>
-                <div className="group">
-                  <p className="font-serif text-brand-green font-bold text-3xl lg:text-4xl group-hover:scale-105 transition-transform">
-                    {s.value}
-                  </p>
-                  <p className="text-brand-green/60 text-sm font-medium mt-1">{s.label}</p>
-                </div>
+                <CounterStat value={s.value} label={s.label} />
               </AnimatedSection>
             ))}
           </div>
