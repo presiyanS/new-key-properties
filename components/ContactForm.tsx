@@ -5,10 +5,27 @@ import { useState } from 'react'
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setLoading(true)
+    setError('')
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
+
+    setLoading(false)
+
+    if (res.ok) {
+      setSubmitted(true)
+    } else {
+      setError('Възникна грешка. Моля, обадете се на 0879 826 292.')
+    }
   }
 
   if (submitted) {
@@ -72,11 +89,15 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm resize-none"
         />
       </div>
+      {error && (
+        <p className="text-red-600 text-sm">{error}</p>
+      )}
       <button
         type="submit"
-        className="w-full bg-brand-green text-brand-gold font-bold py-4 rounded-lg hover:bg-brand-green-light transition-colors text-base"
+        disabled={loading}
+        className="w-full bg-brand-green text-brand-gold font-bold py-4 rounded-lg hover:bg-brand-green-light transition-colors text-base disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Изпратете Запитване
+        {loading ? 'Изпращане...' : 'Изпратете Запитване'}
       </button>
       <p className="text-xs text-gray-400 text-center">
         Отговаряме в рамките на 24 часа. Местата са ограничени – свържете се с нас сега.
