@@ -24,6 +24,28 @@ const config: Config = {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         serif: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
+      keyframes: {
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+      animation: {
+        'fade-up': 'fade-up 0.65s cubic-bezier(0.22,1,0.36,1) both',
+        'fade-in': 'fade-in 0.5s ease both',
+        shimmer: 'shimmer 2.5s linear infinite',
+      },
+      backgroundSize: {
+        '200%': '200%',
+      },
     },
   },
   plugins: [],
