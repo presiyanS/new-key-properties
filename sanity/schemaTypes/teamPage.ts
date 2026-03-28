@@ -7,6 +7,8 @@ export const teamPageType = defineType({
   type: 'document',
   icon: UsersIcon,
   fields: [
+    defineField({ name: 'teamGridLabel', title: 'Екип — Малък надпис', type: 'string' }),
+    defineField({ name: 'teamGridTitle', title: 'Екип — Заглавие', type: 'string' }),
     defineField({ name: 'heroTitle', title: 'Hero — Заглавие', type: 'string' }),
     defineField({ name: 'heroTitleGold', title: 'Hero — Златна фраза', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 3 }),

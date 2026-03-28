@@ -12,6 +12,10 @@ export const contactPageType = defineType({
     defineField({ name: 'heroTitleGold', title: 'Hero — Златна фраза', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 2 }),
 
+    // ── Contact info section ──────────────────────────────────────────
+    defineField({ name: 'contactInfoLabel', title: 'Контакт секция — Малък надпис', type: 'string' }),
+    defineField({ name: 'contactInfoTitle', title: 'Контакт секция — Заглавие', type: 'string' }),
+
     // ── Contact info ──────────────────────────────────────────────────
     defineField({ name: 'phone', title: 'Телефон', type: 'string' }),
     defineField({ name: 'phoneHours', title: 'Работно време', type: 'string', description: 'Пр. Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00' }),

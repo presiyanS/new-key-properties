@@ -60,7 +60,19 @@ export const consultationPageType = defineType({
       }],
     }),
 
+    // ── Hero buttons ──────────────────────────────────────────────────
+    defineField({ name: 'heroBookButton', title: 'Hero — Бутон "Запишете се"', type: 'string' }),
+    defineField({ name: 'heroCallButton', title: 'Hero — Бутон "Обадете се"', type: 'string' }),
+
+    // ── Form section ──────────────────────────────────────────────────
+    defineField({ name: 'formSectionTitle', title: 'Форма — Заглавие на секцията', type: 'string' }),
+    defineField({ name: 'formSectionSubtitle', title: 'Форма — Подзаглавие на секцията', type: 'text', rows: 2 }),
+    defineField({ name: 'formCardBadge', title: 'Форма — Значка ("Безплатно")', type: 'string' }),
+    defineField({ name: 'formCardTitle', title: 'Форма — Заглавие на картата', type: 'string' }),
+    defineField({ name: 'formCardSubtitle', title: 'Форма — Подзаглавие на картата', type: 'string' }),
+
     // ── FAQ ───────────────────────────────────────────────────────────
+    defineField({ name: 'faqTitle', title: 'FAQ — Заглавие', type: 'string' }),
     defineField({
       name: 'faq',
       title: 'Често задавани въпроси',
@@ -74,6 +86,12 @@ export const consultationPageType = defineType({
         preview: { select: { title: 'q', subtitle: 'a' } },
       }],
     }),
+
+    // ── Bottom CTA ────────────────────────────────────────────────────
+    defineField({ name: 'bottomCtaTitle', title: 'Долен призив — Заглавие', type: 'string' }),
+    defineField({ name: 'bottomCtaSubtitle', title: 'Долен призив — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({ name: 'bottomCtaButton1', title: 'Долен призив — Бутон 1', type: 'string' }),
+    defineField({ name: 'bottomCtaButton2', title: 'Долен призив — Бутон 2', type: 'string' }),
   ],
   preview: { prepare: () => ({ title: 'Безплатна консултация' }) },
 })

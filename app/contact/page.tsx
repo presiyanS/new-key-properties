@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import ContactForm from '@/components/ContactForm'
 import AnimatedSection from '@/components/AnimatedSection'
-import { getContactPage } from '@/lib/sanity'
+import { getContactPage, getSiteSettings } from '@/lib/sanity'
 
 export const revalidate = 60
 
@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ContactPage() {
-  const cms = await getContactPage()
+  const [cms, settings] = await Promise.all([getContactPage(), getSiteSettings()])
 
-  const phone = cms?.phone ?? '0879826292'
-  const phoneDisplay = phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
-  const email = cms?.email ?? 'office@newkey.bg'
+  const phone = cms?.phone ?? settings?.phone ?? '0879826292'
+  const phoneDisplay = settings?.phoneDisplay ?? phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
+  const email = cms?.email ?? settings?.email ?? 'office@newkey.bg'
 
   return (
     <>
@@ -31,12 +31,8 @@ export default async function ContactPage() {
               {cms?.heroTitle ?? 'Свържете се'} <br />
               <span className="text-brand-gold">{cms?.heroTitleGold ?? 'с Нас'}</span>
             </h1>
-            <p
-              className="text-white/70 text-xl leading-relaxed animate-fade-up"
-              style={{ animationDelay: '0.1s' }}
-            >
-              {cms?.heroSubtitle ??
-                'Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.'}
+            <p className="text-white/70 text-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              {cms?.heroSubtitle ?? 'Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.'}
             </p>
           </div>
         </div>
@@ -49,8 +45,12 @@ export default async function ContactPage() {
 
             {/* Left: Info */}
             <AnimatedSection direction="left">
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Връзка с нас</span>
-              <h2 className="font-serif text-3xl font-bold text-brand-green mt-3 mb-8">Информация за контакт</h2>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
+                {cms?.contactInfoLabel ?? 'Връзка с нас'}
+              </span>
+              <h2 className="font-serif text-3xl font-bold text-brand-green mt-3 mb-8">
+                {cms?.contactInfoTitle ?? 'Информация за контакт'}
+              </h2>
 
               <div className="space-y-5 mb-10">
                 {/* Phone */}
@@ -65,12 +65,8 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Телефон</p>
-                    <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">
-                      {phoneDisplay}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {cms?.phoneHours ?? 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00'}
-                    </p>
+                    <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{phoneDisplay}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{cms?.phoneHours ?? 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00'}</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-brand-green ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -89,12 +85,8 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Имейл</p>
-                    <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">
-                      {email}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {cms?.emailNote ?? 'Отговаряме в рамките на 24 часа'}
-                    </p>
+                    <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{email}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{cms?.emailNote ?? 'Отговаряме в рамките на 24 часа'}</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-brand-green ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -110,7 +102,7 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Местоположение</p>
-                    <p className="text-gray-900 font-bold text-xl">{cms?.address ?? 'София, България'}</p>
+                    <p className="text-gray-900 font-bold text-xl">{cms?.address ?? settings?.address ?? 'София, България'}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{cms?.addressNote ?? 'Обслужваме целия град'}</p>
                   </div>
                 </div>
@@ -126,8 +118,7 @@ export default async function ContactPage() {
                   </p>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  {cms?.urgencyMessage ??
-                    `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.`}
+                  {cms?.urgencyMessage ?? `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.`}
                 </p>
               </div>
             </AnimatedSection>
@@ -142,7 +133,22 @@ export default async function ContactPage() {
                 <p className="text-gray-500 text-sm mb-8">
                   {cms?.formSubtitle ?? 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.'}
                 </p>
-                <ContactForm />
+                <ContactForm
+                  nameLabel={settings?.formNameLabel}
+                  namePlaceholder={settings?.formNamePlaceholder}
+                  phoneLabel={settings?.formPhoneLabel}
+                  phonePlaceholder={settings?.formPhonePlaceholder}
+                  emailLabel={settings?.formEmailLabel}
+                  emailPlaceholder={settings?.formEmailPlaceholder}
+                  messageLabel={settings?.formMessageLabel}
+                  messagePlaceholder={settings?.formMessagePlaceholder}
+                  submitText={settings?.formSubmitText}
+                  loadingText={settings?.formLoadingText}
+                  successTitle={settings?.formSuccessTitle}
+                  successMessage={settings?.formSuccessMessage}
+                  errorMessage={settings?.formErrorMessage}
+                  footerNote={settings?.formFooterNote}
+                />
               </div>
             </AnimatedSection>
           </div>

@@ -59,8 +59,12 @@ export default async function TeamPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашите хора</span>
-            <h2 className="font-serif text-3xl font-bold text-brand-green mt-3">Запознайте се с нас</h2>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
+              {cms?.teamGridLabel ?? 'Нашите хора'}
+            </span>
+            <h2 className="font-serif text-3xl font-bold text-brand-green mt-3">
+              {cms?.teamGridTitle ?? 'Запознайте се с нас'}
+            </h2>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, i) => (
