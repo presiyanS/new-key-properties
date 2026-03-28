@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingCTA from '@/components/FloatingCTA'
 import { getSiteSettings } from '@/lib/sanity'
+import { headers } from 'next/headers'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -27,7 +28,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await getSiteSettings()
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') ?? ''
+  const isStudio = pathname.startsWith('/studio')
+
+  const settings = isStudio ? null : await getSiteSettings()
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
   const socialLinks = {
@@ -39,10 +44,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="bg">
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
-        <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />
+        {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
         <main>{children}</main>
-        <Footer settings={settings} />
-        <FloatingCTA phone={phone} />
+        {!isStudio && <Footer settings={settings} />}
+        {!isStudio && <FloatingCTA phone={phone} />}
       </body>
     </html>
   )

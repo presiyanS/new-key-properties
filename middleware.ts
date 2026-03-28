@@ -20,9 +20,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next()
+  // Forward pathname as header so root layout can read it
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-pathname', pathname)
+  return NextResponse.next({ request: { headers: requestHeaders } })
 }
 
 export const config = {
-  matcher: ['/post-generator/:path*', '/studio/:path*', '/studio'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
