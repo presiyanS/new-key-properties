@@ -7,6 +7,7 @@ import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, S
 export default defineConfig({
   name: 'new-key-properties',
   title: 'New Key Properties',
+  basePath: '/studio',
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
