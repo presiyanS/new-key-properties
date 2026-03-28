@@ -171,9 +171,6 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-brand-gold/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
           <p>© {new Date().getFullYear()} New Key Properties. Всички права запазени.</p>
           <p>Агенция за недвижими имоти – София, България</p>
-          <Link href="/studio" className="text-brand-gold/15 hover:text-brand-gold/40 transition-colors">
-            Admin
-          </Link>
         </div>
       </div>
     </footer>
