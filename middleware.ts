@@ -12,9 +12,17 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Protect /studio — redirect to secret login page if not authenticated
+  if (pathname.startsWith('/studio')) {
+    const auth = request.cookies.get('studio_auth')?.value
+    if (auth !== 'true') {
+      return NextResponse.redirect(new URL('/nkp-admin', request.url))
+    }
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/post-generator/:path*',
+  matcher: ['/post-generator/:path*', '/studio/:path*', '/studio'],
 }
