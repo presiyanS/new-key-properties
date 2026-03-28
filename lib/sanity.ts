@@ -165,3 +165,27 @@ export async function getConsultationPage() {
     return await client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`)
   } catch { return null }
 }
+
+export async function getSiteSettings() {
+  try {
+    return await client.fetch(`*[_type == "siteSettings" && _id == "siteSettings"][0]`)
+  } catch { return null }
+}
+
+export async function getBlogPage() {
+  try {
+    return await client.fetch(`*[_type == "blogPage" && _id == "blogPage"][0]`)
+  } catch { return null }
+}
+
+export async function getTeamPage() {
+  try {
+    return await client.fetch(`*[_type == "teamPage" && _id == "teamPage"][0]`)
+  } catch { return null }
+}
+
+export async function getListingsPage() {
+  try {
+    return await client.fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`)
+  } catch { return null }
+}

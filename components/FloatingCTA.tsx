@@ -1,9 +1,7 @@
-'use client'
-
-export default function FloatingCTA() {
+export default function FloatingCTA({ phone }: { phone: string }) {
   return (
     <a
-      href="tel:0879826292"
+      href={`tel:${phone}`}
       className="fixed bottom-6 right-5 z-40 md:hidden flex items-center justify-center w-14 h-14 bg-brand-gold rounded-full shadow-2xl shadow-brand-gold/50 hover:bg-brand-gold-light transition-all active:scale-95"
       aria-label="Обадете се"
     >

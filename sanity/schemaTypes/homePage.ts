@@ -71,6 +71,24 @@ export const homePageType = defineType({
     defineField({ name: 'finalCtaTitle', title: 'Финален призив — Заглавие', type: 'string' }),
     defineField({ name: 'finalCtaSubtitle', title: 'Финален призив — Подзаглавие', type: 'text', rows: 2 }),
 
+    // ── Process Steps ─────────────────────────────────────────────────
+    defineField({ name: 'processTitle', title: 'Как работим — Заглавие', type: 'string' }),
+    defineField({ name: 'processSubtitle', title: 'Как работим — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({
+      name: 'processSteps',
+      title: 'Как работим — Стъпки (3 броя)',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 3 }),
+        ],
+        preview: { select: { title: 'title', subtitle: 'desc' } },
+      }],
+    }),
+    defineField({ name: 'processButtonText', title: 'Как работим — Текст на бутона', type: 'string' }),
+
     // ── FAQ ───────────────────────────────────────────────────────────
     defineField({
       name: 'faq',

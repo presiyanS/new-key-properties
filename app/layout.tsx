@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingCTA from '@/components/FloatingCTA'
+import { getSiteSettings } from '@/lib/sanity'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -25,14 +26,23 @@ export const metadata: Metadata = {
   keywords: ['недвижими имоти', 'София', 'апартаменти', 'продажба', 'наем', 'New Key Properties'],
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
+  const phone = settings?.phone ?? '0879826292'
+  const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
+  const socialLinks = {
+    facebook: settings?.facebookUrl ?? 'https://www.facebook.com/profile.php?id=61582999994088',
+    instagram: settings?.instagramUrl ?? 'https://www.instagram.com/new_key_properties',
+    linkedin: settings?.linkedinUrl ?? 'https://www.linkedin.com/company/new-key-properties/',
+  }
+
   return (
     <html lang="bg">
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
-        <Header />
+        <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />
         <main>{children}</main>
-        <Footer />
-        <FloatingCTA />
+        <Footer settings={settings} />
+        <FloatingCTA phone={phone} />
       </body>
     </html>
   )

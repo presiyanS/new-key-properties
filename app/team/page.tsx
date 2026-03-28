@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import TeamMemberCard from '@/components/TeamMemberCard'
 import AnimatedSection from '@/components/AnimatedSection'
-import { getTeamMembers } from '@/lib/sanity'
+import { getTeamMembers, getTeamPage, getSiteSettings } from '@/lib/sanity'
 import { team as staticTeam } from '@/data/team'
 
 export const revalidate = 60
@@ -14,8 +14,22 @@ export const metadata: Metadata = {
 }
 
 export default async function TeamPage() {
-  const sanityTeam = await getTeamMembers()
+  const [sanityTeam, cms, settings] = await Promise.all([
+    getTeamMembers(),
+    getTeamPage(),
+    getSiteSettings(),
+  ])
   const team = sanityTeam.length > 0 ? sanityTeam : staticTeam
+  const phone = settings?.phone ?? '0879826292'
+  const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
+
+  const philosophyItems =
+    cms?.philosophyItems?.length > 0
+      ? cms.philosophyItems
+      : [
+          { title: 'Качество над количество', text: 'Работим с ограничен брой клиенти на месец — не защото не искаме повече работа, а защото вярваме, че качеството е по-важно от количеството. Всеки клиент заслужава пълното ни внимание.' },
+          { title: 'Работим като за себе си', text: 'Когато работим с Вас, третираме Вашия имот и Вашите интереси така, сякаш са наши. Това не е маркетинг — това е начинът, по който сме решили да работим.' },
+        ]
 
   return (
     <>
@@ -28,15 +42,14 @@ export default async function TeamPage() {
               Екипът ни
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              Хора, на Които<br />
-              <span className="text-brand-gold">Можете да Разчитате</span>
+              {cms?.heroTitle ?? 'Хора, на Които'}<br />
+              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Можете да Разчитате'}</span>
             </h1>
             <p
               className="text-white/70 text-xl leading-relaxed animate-fade-up"
               style={{ animationDelay: '0.1s' }}
             >
-              Нашият екип е малък, но всеотдаен. Всеки от нас подхожда към работата с максимална грижа и
-              честност.
+              {cms?.heroSubtitle ?? 'Нашият екип е малък, но всеотдаен. Всеки от нас подхожда към работата с максимална грижа и честност.'}
             </p>
           </div>
         </div>
@@ -64,20 +77,13 @@ export default async function TeamPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашата вяра</span>
-            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-8">Нашата Философия</h2>
+            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-8">
+              {cms?.philosophyTitle ?? 'Нашата Философия'}
+            </h2>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-            {[
-              {
-                title: 'Качество над количество',
-                text: 'Работим с ограничен брой клиенти на месец — не защото не искаме повече работа, а защото вярваме, че качеството е по-важно от количеството. Всеки клиент заслужава пълното ни внимание.',
-              },
-              {
-                title: 'Работим като за себе си',
-                text: 'Когато работим с Вас, третираме Вашия имот и Вашите интереси така, сякаш са наши. Това не е маркетинг — това е начинът, по който сме решили да работим.',
-              },
-            ].map((item, i) => (
+            {philosophyItems.map((item: { title: string; text: string }, i: number) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 h-full">
                   <div className="w-10 h-10 bg-brand-green rounded-xl flex items-center justify-center mb-5">
@@ -100,17 +106,17 @@ export default async function TeamPage() {
         <div className="max-w-3xl mx-auto px-4 text-center relative">
           <AnimatedSection>
             <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">
-              Свържете се с нашия екип
+              {cms?.ctaTitle ?? 'Свържете се с нашия екип'}
             </h2>
             <p className="text-brand-green/70 text-lg mb-10">
-              Готови сме да отговорим на Вашите въпроси и да Ви помогнем с намирането на правилния имот.
+              {cms?.ctaSubtitle ?? 'Готови сме да отговорим на Вашите въпроси и да Ви помогнем с намирането на правилния имот.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:0879826292"
+                href={`tel:${phone}`}
                 className="bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-dark transition-all text-lg shadow-lg shadow-brand-green/20 hover:-translate-y-0.5"
               >
-                0879 826 292
+                {phoneDisplay}
               </a>
               <Link
                 href="/contact"

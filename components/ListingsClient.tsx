@@ -6,7 +6,16 @@ import type { SanityListing } from '@/lib/sanity'
 
 type Filter = 'all' | 'sale' | 'rent'
 
-export default function ListingsClient({ listings }: { listings: SanityListing[] }) {
+type Props = {
+  listings: SanityListing[]
+  phone: string
+  phoneDisplay: string
+  email: string
+  bottomCtaTitle?: string
+  bottomCtaSubtitle?: string
+}
+
+export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
   const [filter, setFilter] = useState<Filter>('all')
 
   const counts = {
@@ -40,11 +49,7 @@ export default function ListingsClient({ listings }: { listings: SanityListing[]
               }`}
             >
               {tab.label}
-              <span
-                className={`ml-2 text-xs font-normal ${
-                  filter === tab.val ? 'text-brand-gold/70' : 'text-gray-400'
-                }`}
-              >
+              <span className={`ml-2 text-xs font-normal ${filter === tab.val ? 'text-brand-gold/70' : 'text-gray-400'}`}>
                 ({counts[tab.val]})
               </span>
             </button>
@@ -78,27 +83,26 @@ export default function ListingsClient({ listings }: { listings: SanityListing[]
               Персонално търсене
             </p>
             <h3 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-4">
-              Не намирате търсеното?
+              {bottomCtaTitle ?? 'Не намирате търсеното?'}
             </h3>
             <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">
-              Разкажете ни какво търсите и ние ще го намерим за Вас. Активно работим за намиране на имоти по
-              конкретни критерии — като за нас самите.
+              {bottomCtaSubtitle ?? 'Разкажете ни какво търсите и ние ще го намерим за Вас. Активно работим за намиране на имоти по конкретни критерии — като за нас самите.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:0879826292"
+                href={`tel:${phone}`}
                 className="inline-flex items-center justify-center gap-3 bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-lg shadow-lg shadow-brand-gold/20 hover:-translate-y-0.5"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                 </svg>
-                Обадете ни се
+                {phoneDisplay}
               </a>
               <a
-                href="mailto:office@newkey.bg"
+                href={`mailto:${email}`}
                 className="inline-flex items-center justify-center border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-lg"
               >
-                office@newkey.bg
+                {email}
               </a>
             </div>
           </div>

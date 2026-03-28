@@ -55,6 +55,14 @@ export default async function HomePage() {
         },
       ]
 
+  const processSteps = cms?.processSteps?.length > 0
+    ? cms.processSteps
+    : [
+        { title: 'Консултация', desc: 'Разговаряме задълбочено за Вашите нужди, бюджет и конкретни предпочитания. Безплатно и без ангажименти — само честен разговор.' },
+        { title: 'Проучване', desc: 'Намираме имоти, отговарящи точно на Вашите критерии. Показваме само сериозни, реалистични оферти — без губене на Вашето време.' },
+        { title: 'Резултат', desc: 'Придружаваме Ви до финалното подписване и след него. Работим докато намерим правилното решение — без бързане към комисионна.' },
+      ]
+
   const whyUsPoints = cms?.whyUsPoints?.length > 0
     ? cms.whyUsPoints
     : [
@@ -282,9 +290,11 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-16">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашият метод</span>
-            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">Как Работим</h2>
+            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
+              {cms?.processTitle ?? 'Как Работим'}
+            </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              Три прости стъпки до Вашия идеален имот — без изненади, без стрес.
+              {cms?.processSubtitle ?? 'Три прости стъпки до Вашия идеален имот — без изненади, без стрес.'}
             </p>
           </AnimatedSection>
 
@@ -292,53 +302,30 @@ export default async function HomePage() {
             {/* Connecting line (desktop) */}
             <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-brand-gold/20 via-brand-gold/60 to-brand-gold/20" />
 
-            {[
-              {
-                step: '01',
-                title: 'Консултация',
-                desc: 'Разговаряме задълбочено за Вашите нужди, бюджет и конкретни предпочитания. Безплатно и без ангажименти — само честен разговор.',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                ),
-              },
-              {
-                step: '02',
-                title: 'Проучване',
-                desc: 'Намираме имоти, отговарящи точно на Вашите критерии. Показваме само сериозни, реалистични оферти — без губене на Вашето време.',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                ),
-              },
-              {
-                step: '03',
-                title: 'Резултат',
-                desc: 'Придружаваме Ви до финалното подписване и след него. Работим докато намерим правилното решение — без бързане към комисионна.',
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                ),
-              },
-            ].map((item, i) => (
+            {processSteps.map((item: { title: string; desc: string }, i: number) => {
+              const stepIcons = [
+                <svg key="1" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>,
+                <svg key="2" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
+                <svg key="3" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>,
+              ]
+              const step = String(i + 1).padStart(2, '0')
+              return (
               <AnimatedSection key={i} delay={i * 0.15}>
                 <div className="text-center group">
                   <div className="relative inline-flex">
                     <div className="w-20 h-20 bg-brand-green rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-green/20 group-hover:shadow-brand-green/30 group-hover:-translate-y-1 transition-all duration-300">
-                      <div className="text-brand-gold">{item.icon}</div>
+                      <div className="text-brand-gold">{stepIcons[i] ?? stepIcons[0]}</div>
                     </div>
                     <span className="absolute -top-2 -right-2 w-7 h-7 bg-brand-gold rounded-full flex items-center justify-center">
-                      <span className="font-bold text-brand-green text-xs">{item.step}</span>
+                      <span className="font-bold text-brand-green text-xs">{step}</span>
                     </span>
                   </div>
                   <h3 className="font-bold text-gray-900 text-xl mb-3">{item.title}</h3>
                   <p className="text-gray-500 leading-relaxed text-sm lg:text-base">{item.desc}</p>
                 </div>
               </AnimatedSection>
-            ))}
+              )
+            })}
           </div>
 
           <AnimatedSection className="text-center mt-12" delay={0.4}>
@@ -346,7 +333,7 @@ export default async function HomePage() {
               href="/konsultatsiya"
               className="inline-flex items-center gap-2 bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-light transition-all shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 hover:-translate-y-0.5"
             >
-              Започнете безплатна консултация
+              {cms?.processButtonText ?? 'Започнете безплатна консултация'}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

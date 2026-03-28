@@ -54,6 +54,24 @@ export default async function AboutPage() {
           { label: 'Резултати', desc: 'Фокусираме се върху намирането на правилното решение, не на бързата комисионна.' },
         ]
 
+  const heroStats =
+    cms?.heroStats?.length > 0
+      ? cms.heroStats
+      : [
+          { value: '≤10', label: 'клиента/месец' },
+          { value: '0', label: 'скрити такси' },
+          { value: '100%', label: 'отдаденост' },
+        ]
+
+  const specializations =
+    cms?.specializations?.length > 0
+      ? cms.specializations
+      : [
+          { title: 'Продажби', items: ['Оценка на имота', 'Маркетинг и представяне', 'Преговори от Ваше име', 'Цялостна правна подкрепа'] },
+          { title: 'Наеми', items: ['Намиране на наематели', 'Проверка на кандидати', 'Договори за наем', 'Управление на имота'] },
+          { title: 'Намиране на имот', items: ['Анализ на нуждите', 'Активно търсене', 'Проверка на документи', 'Преговори и покупка'] },
+        ]
+
   const values =
     cms?.values?.length > 0
       ? cms.values
@@ -84,20 +102,15 @@ export default async function AboutPage() {
                 'New Key Properties не е просто поредната агенция за имоти. Ние сме екип от хора, за които честността и грижата за клиента не са маркетингови фрази — те са начин на работа.'}
             </p>
             <div className="flex items-center gap-6 mt-10 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              <div className="text-center">
-                <p className="font-serif text-3xl font-bold text-brand-gold">≤10</p>
-                <p className="text-white/50 text-xs uppercase tracking-wider mt-1">клиента/месец</p>
-              </div>
-              <div className="w-px h-12 bg-brand-gold/20" />
-              <div className="text-center">
-                <p className="font-serif text-3xl font-bold text-brand-gold">0</p>
-                <p className="text-white/50 text-xs uppercase tracking-wider mt-1">скрити такси</p>
-              </div>
-              <div className="w-px h-12 bg-brand-gold/20" />
-              <div className="text-center">
-                <p className="font-serif text-3xl font-bold text-brand-gold">100%</p>
-                <p className="text-white/50 text-xs uppercase tracking-wider mt-1">отдаденост</p>
-              </div>
+              {heroStats.map((stat: { value: string; label: string }, i: number) => (
+                <div key={i} className="flex items-center gap-6">
+                  {i > 0 && <div className="w-px h-12 bg-brand-gold/20" />}
+                  <div className="text-center">
+                    <p className="font-serif text-3xl font-bold text-brand-gold">{stat.value}</p>
+                    <p className="text-white/50 text-xs uppercase tracking-wider mt-1">{stat.label}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -189,37 +202,24 @@ export default async function AboutPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Специализация</span>
-            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">С Какво Се Занимаваме</h2>
+            <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
+              {cms?.specializationTitle ?? 'С Какво Се Занимаваме'}
+            </h2>
             <p className="text-gray-500 text-lg leading-relaxed mb-14 max-w-2xl mx-auto">
-              New Key Properties специализира изключително в жилищни и инвестиционни имоти в София — продажби, наеми и
-              намиране на имоти за покупка.
+              {cms?.specializationSubtitle ?? 'New Key Properties специализира изключително в жилищни и инвестиционни имоти в София — продажби, наеми и намиране на имоти за покупка.'}
             </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
-            {[
-              {
-                title: 'Продажби',
-                color: 'bg-brand-green',
-                items: ['Оценка на имота', 'Маркетинг и представяне', 'Преговори от Ваше име', 'Цялостна правна подкрепа'],
-              },
-              {
-                title: 'Наеми',
-                color: 'bg-brand-gold',
-                items: ['Намиране на наематели', 'Проверка на кандидати', 'Договори за наем', 'Управление на имота'],
-              },
-              {
-                title: 'Намиране на имот',
-                color: 'bg-brand-green-light',
-                items: ['Анализ на нуждите', 'Активно търсене', 'Проверка на документи', 'Преговори и покупка'],
-              },
-            ].map((s, i) => (
+            {specializations.map((s: { title: string; items: string[] }, i: number) => {
+              const colors = ['bg-brand-green', 'bg-brand-gold', 'bg-brand-green-light']
+              return (
               <AnimatedSection key={s.title} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl p-7 border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 h-full">
-                  <div className={`w-2 h-8 rounded-full ${s.color} mb-5`} />
+                  <div className={`w-2 h-8 rounded-full ${colors[i] ?? colors[0]} mb-5`} />
                   <h3 className="font-bold text-brand-green text-xl mb-5">{s.title}</h3>
                   <ul className="space-y-3">
-                    {s.items.map((item) => (
+                    {s.items.map((item: string) => (
                       <li key={item} className="flex items-center gap-3 text-gray-600 text-sm">
                         <span className="w-1.5 h-1.5 bg-brand-gold rounded-full shrink-0" />
                         {item}
@@ -228,7 +228,8 @@ export default async function AboutPage() {
                   </ul>
                 </div>
               </AnimatedSection>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

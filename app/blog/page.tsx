@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import BlogCard from '@/components/BlogCard'
 import AnimatedSection from '@/components/AnimatedSection'
-import { getBlogPosts } from '@/lib/sanity'
+import { getBlogPosts, getBlogPage, getSiteSettings } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
@@ -13,8 +13,15 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
-  const sanityPosts = await getBlogPosts()
+  const [sanityPosts, cms, settings] = await Promise.all([
+    getBlogPosts(),
+    getBlogPage(),
+    getSiteSettings(),
+  ])
   const posts = sanityPosts.length > 0 ? sanityPosts : staticPosts
+  const phone = settings?.phone ?? '0879826292'
+  const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
+  const email = settings?.email ?? 'office@newkey.bg'
 
   return (
     <>
@@ -27,14 +34,14 @@ export default async function BlogPage() {
               Блог
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              Полезна <span className="text-brand-gold">Информация</span>
+              {cms?.heroTitle ?? 'Полезна'}{' '}
+              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Информация'}</span>
             </h1>
             <p
               className="text-white/70 text-xl leading-relaxed animate-fade-up"
               style={{ animationDelay: '0.1s' }}
             >
-              Анализи на пазара, съвети за купувачи и продавачи, правни насоки — всичко, което трябва да знаете за
-              имотите в София.
+              {cms?.heroSubtitle ?? 'Анализи на пазара, съвети за купувачи и продавачи, правни насоки — всичко, което трябва да знаете за имотите в София.'}
             </p>
             <p
               className="text-white/40 text-sm mt-4 animate-fade-up"
@@ -66,25 +73,27 @@ export default async function BlogPage() {
         </div>
         <div className="max-w-3xl mx-auto px-4 text-center relative">
           <AnimatedSection>
-            <h2 className="font-serif text-4xl font-bold text-white mb-4">Имате конкретен въпрос?</h2>
+            <h2 className="font-serif text-4xl font-bold text-white mb-4">
+              {cms?.ctaTitle ?? 'Имате конкретен въпрос?'}
+            </h2>
             <p className="text-white/60 text-lg mb-10">
-              Свържете се с нас директно — ще Ви дадем честен и компетентен отговор.
+              {cms?.ctaSubtitle ?? 'Свържете се с нас директно — ще Ви дадем честен и компетентен отговор.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:0879826292"
+                href={`tel:${phone}`}
                 className="inline-flex items-center justify-center gap-3 bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-lg shadow-lg shadow-brand-gold/20 hover:-translate-y-0.5"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                 </svg>
-                0879 826 292
+                {phoneDisplay}
               </a>
               <a
-                href="mailto:office@newkey.bg"
+                href={`mailto:${email}`}
                 className="inline-flex items-center justify-center border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-lg"
               >
-                office@newkey.bg
+                {email}
               </a>
             </div>
           </AnimatedSection>

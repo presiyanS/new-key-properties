@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getListings } from '@/lib/sanity'
+import { getListings, getListingsPage, getSiteSettings } from '@/lib/sanity'
 import ListingsClient from '@/components/ListingsClient'
 
 export const revalidate = 60
@@ -11,7 +11,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ListingsPage() {
-  const listings = await getListings()
+  const [listings, cms, settings] = await Promise.all([
+    getListings(),
+    getListingsPage(),
+    getSiteSettings(),
+  ])
+  const phone = settings?.phone ?? '0879826292'
+  const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
+  const email = settings?.email ?? 'office@newkey.bg'
 
   return (
     <>
@@ -23,13 +30,14 @@ export default async function ListingsPage() {
             Имоти
           </p>
           <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight animate-fade-up">
-            Намерете Вашия <span className="text-brand-gold">Имот</span>
+            {cms?.heroTitle ?? 'Намерете Вашия'}{' '}
+            <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Имот'}</span>
           </h1>
           <p
             className="text-white/70 text-xl max-w-xl animate-fade-up"
             style={{ animationDelay: '0.1s' }}
           >
-            Всички имоти са внимателно проверени и представени с пълна прозрачност. Само сериозни оферти.
+            {cms?.heroSubtitle ?? 'Всички имоти са внимателно проверени и представени с пълна прозрачност. Само сериозни оферти.'}
           </p>
           <div
             className="flex items-center gap-6 mt-8 animate-fade-up"
@@ -47,7 +55,14 @@ export default async function ListingsPage() {
         </div>
       </section>
 
-      <ListingsClient listings={listings} />
+      <ListingsClient
+        listings={listings}
+        phone={phone}
+        phoneDisplay={phoneDisplay}
+        email={email}
+        bottomCtaTitle={cms?.bottomCtaTitle}
+        bottomCtaSubtitle={cms?.bottomCtaSubtitle}
+      />
     </>
   )
 }
