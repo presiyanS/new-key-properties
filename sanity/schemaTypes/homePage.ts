@@ -63,6 +63,12 @@ export const homePageType = defineType({
       }],
     }),
 
+    // ── Featured Listings Section ─────────────────────────────────────
+    defineField({ name: 'featuredLabel', title: 'Избрани имоти — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'featuredTitle', title: 'Избрани имоти — Заглавие', type: 'string' }),
+    defineField({ name: 'featuredSubtitle', title: 'Избрани имоти — Подзаглавие', type: 'string' }),
+    defineField({ name: 'featuredLinkText', title: 'Избрани имоти — Текст на линка', type: 'string' }),
+
     // ── CTA Card ──────────────────────────────────────────────────────
     defineField({ name: 'ctaCardTitle', title: 'CTA Карта — Заглавие', type: 'string' }),
     defineField({ name: 'ctaCardDesc', title: 'CTA Карта — Описание', type: 'text', rows: 3 }),

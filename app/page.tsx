@@ -347,15 +347,15 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Портфолио</span>
-              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">Избрани Имоти</h2>
-              <p className="text-gray-500">Внимателно подбрани оферти от нашия портфолио</p>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.featuredLabel ?? 'Портфолио'}</span>
+              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{cms?.featuredTitle ?? 'Избрани Имоти'}</h2>
+              <p className="text-gray-500">{cms?.featuredSubtitle ?? 'Внимателно подбрани оферти от нашия портфолио'}</p>
             </div>
             <Link
               href="/listings"
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
-              Всички имоти
+              {cms?.featuredLinkText ?? 'Всички имоти'}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
