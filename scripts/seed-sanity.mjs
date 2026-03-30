@@ -52,6 +52,12 @@ const docs = [
     heroLineGold: 'Дом',
     heroLine3: 'Започва',
     heroSubtitle: 'New Key Properties — агенция, която работи различно. Фокусираме се върху резултати, не върху брой огледи. По-малко суматоха. Повече затворени сделки. В София.',
+    heroBadges: [
+      { _key: 'hb1', title: 'Честност', subtitle: 'Пълна прозрачност' },
+      { _key: 'hb2', title: 'Доверие', subtitle: 'Дългосрочни резултати' },
+      { _key: 'hb3', title: 'Само София', subtitle: '' },
+      { _key: 'hb4', title: 'Резултати', subtitle: 'Без компромиси' },
+    ],
     stats: [
       { _key: 'stat1', value: 'Само София', label: 'Нашият пазар' },
       { _key: 'stat2', value: '100%', label: 'Отдаденост' },
