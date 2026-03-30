@@ -13,14 +13,14 @@ export const listingsPageType = defineType({
     defineField({
       name: 'saleCountOverride',
       title: 'Брой имоти за продажба (ръчно)',
-      description: 'Ако е зададено, се показва вместо автоматично броения брой от обявите. Полезно когато в сграда има повече апартаменти отколкото обяви.',
-      type: 'number',
+      description: 'Ако е зададено, се показва вместо автоматично броения брой от обявите. Може да включва текст, напр. "30+" или "над 30".',
+      type: 'string',
     }),
     defineField({
       name: 'rentCountOverride',
       title: 'Брой имоти под наем (ръчно)',
-      description: 'Ако е зададено, се показва вместо автоматично броения брой от обявите.',
-      type: 'number',
+      description: 'Ако е зададено, се показва вместо автоматично броения брой от обявите. Може да включва текст, напр. "5+".',
+      type: 'string',
     }),
     defineField({ name: 'bottomCtaTitle', title: 'Долен призив — Заглавие', type: 'string' }),
     defineField({ name: 'bottomCtaSubtitle', title: 'Долен призив — Подзаглавие', type: 'text', rows: 3 }),
