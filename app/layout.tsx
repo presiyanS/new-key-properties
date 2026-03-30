@@ -6,6 +6,8 @@ import Footer from '@/components/Footer'
 import FloatingCTA from '@/components/FloatingCTA'
 import { getSiteSettings } from '@/lib/sanity'
 import { headers } from 'next/headers'
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity/visual-editing'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -31,6 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const headersList = await headers()
   const pathname = headersList.get('x-pathname') ?? ''
   const isStudio = pathname.startsWith('/studio')
+  const { isEnabled: isDraftMode } = await draftMode()
 
   const settings = isStudio ? null : await getSiteSettings()
   const phone = settings?.phone ?? '0879826292'
@@ -48,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main>{children}</main>
         {!isStudio && <Footer settings={settings} />}
         {!isStudio && <FloatingCTA phone={phone} />}
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   )

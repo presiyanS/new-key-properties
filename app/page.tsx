@@ -9,14 +9,16 @@ import NeighborhoodMarquee from '@/components/NeighborhoodMarquee'
 import CounterStat from '@/components/CounterStat'
 import { getFeaturedListings, getBlogPosts, getHomePage } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
+import { draftMode } from 'next/headers'
 
 export const revalidate = 60
 
 export default async function HomePage() {
+  const { isEnabled: preview } = await draftMode()
   const [featuredListings, sanityPosts, cms] = await Promise.all([
-    getFeaturedListings(),
-    getBlogPosts(),
-    getHomePage(),
+    getFeaturedListings(preview),
+    getBlogPosts(preview),
+    getHomePage(preview),
   ])
   const pool = sanityPosts.length > 0 ? sanityPosts : staticPosts
   const recentPosts = pool.slice(0, 3)

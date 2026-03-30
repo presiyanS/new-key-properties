@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
@@ -24,12 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const { isEnabled: preview } = await draftMode()
 
-  const sanityPost = await getBlogPost(slug)
+  const sanityPost = await getBlogPost(slug, preview)
   const post = sanityPost ?? staticPosts.find((p) => p.slug === slug)
   if (!post) notFound()
 
-  const allPosts = await getBlogPosts()
+  const allPosts = await getBlogPosts(preview)
   const pool = allPosts.length > 0 ? allPosts : staticPosts
   const related = pool.filter((p) => p.id !== post.id && p.slug !== slug).slice(0, 3)
 

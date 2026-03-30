@@ -10,6 +10,19 @@ export const client = createClient({
   token: process.env.SANITY_API_READ_TOKEN,
 })
 
+export const previewClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '9gz26s06',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
+  apiVersion: '2024-01-01',
+  useCdn: false,
+  token: process.env.SANITY_API_WRITE_TOKEN,
+  perspective: 'previewDrafts',
+})
+
+function getClient(preview = false) {
+  return preview ? previewClient : client
+}
+
 const builder = imageUrlBuilder(client)
 
 export function urlFor(source: SanityImageSource) {
@@ -48,21 +61,21 @@ const LISTING_FIELDS = `
   featured
 `
 
-export async function getListings(): Promise<SanityListing[]> {
+export async function getListings(preview = false): Promise<SanityListing[]> {
   try {
-    return await client.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`)
+    return await getClient(preview).fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`)
   } catch { return [] }
 }
 
-export async function getListing(id: string): Promise<SanityListing | null> {
+export async function getListing(id: string, preview = false): Promise<SanityListing | null> {
   try {
-    return await client.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id })
+    return await getClient(preview).fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id })
   } catch { return null }
 }
 
-export async function getFeaturedListings(): Promise<SanityListing[]> {
+export async function getFeaturedListings(preview = false): Promise<SanityListing[]> {
   try {
-    return await client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+    return await getClient(preview).fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
   } catch { return [] }
 }
 
@@ -90,15 +103,15 @@ const BLOG_POST_FIELDS = `
   "image": coalesce(image.asset->url, externalImageUrl, '')
 `
 
-export async function getBlogPosts(): Promise<SanityBlogPost[]> {
+export async function getBlogPosts(preview = false): Promise<SanityBlogPost[]> {
   try {
-    return await client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`)
+    return await getClient(preview).fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`)
   } catch { return [] }
 }
 
-export async function getBlogPost(slug: string): Promise<SanityBlogPost | null> {
+export async function getBlogPost(slug: string, preview = false): Promise<SanityBlogPost | null> {
   try {
-    return await client.fetch(
+    return await getClient(preview).fetch(
       `*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`,
       { slug }
     )
@@ -134,58 +147,58 @@ const TEAM_MEMBER_FIELDS = `
   "image": coalesce(image.asset->url, '/team/placeholder.svg')
 `
 
-export async function getTeamMembers(): Promise<SanityTeamMember[]> {
+export async function getTeamMembers(preview = false): Promise<SanityTeamMember[]> {
   try {
-    return await client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
+    return await getClient(preview).fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`)
   } catch { return [] }
 }
 
 // ── Page Content ─────────────────────────────────────────────────────────────
 
-export async function getHomePage() {
+export async function getHomePage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "homePage" && _id == "homePage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "homePage" && _id == "homePage"][0]`)
   } catch { return null }
 }
 
-export async function getAboutPage() {
+export async function getAboutPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`)
   } catch { return null }
 }
 
-export async function getContactPage() {
+export async function getContactPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`)
   } catch { return null }
 }
 
-export async function getConsultationPage() {
+export async function getConsultationPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`)
   } catch { return null }
 }
 
-export async function getSiteSettings() {
+export async function getSiteSettings(preview = false) {
   try {
-    return await client.fetch(`*[_type == "siteSettings" && _id == "siteSettings"][0]`)
+    return await getClient(preview).fetch(`*[_type == "siteSettings" && _id == "siteSettings"][0]`)
   } catch { return null }
 }
 
-export async function getBlogPage() {
+export async function getBlogPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "blogPage" && _id == "blogPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "blogPage" && _id == "blogPage"][0]`)
   } catch { return null }
 }
 
-export async function getTeamPage() {
+export async function getTeamPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "teamPage" && _id == "teamPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "teamPage" && _id == "teamPage"][0]`)
   } catch { return null }
 }
 
-export async function getListingsPage() {
+export async function getListingsPage(preview = false) {
   try {
-    return await client.fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`)
+    return await getClient(preview).fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`)
   } catch { return null }
 }

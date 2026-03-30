@@ -3,6 +3,7 @@ import Link from 'next/link'
 import TeamMemberCard from '@/components/TeamMemberCard'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getTeamMembers, getTeamPage, getSiteSettings } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 import { team as staticTeam } from '@/data/team'
 
 export const revalidate = 60
@@ -14,10 +15,11 @@ export const metadata: Metadata = {
 }
 
 export default async function TeamPage() {
+  const { isEnabled: preview } = await draftMode()
   const [sanityTeam, cms, settings] = await Promise.all([
-    getTeamMembers(),
-    getTeamPage(),
-    getSiteSettings(),
+    getTeamMembers(preview),
+    getTeamPage(preview),
+    getSiteSettings(preview),
   ])
   const team = sanityTeam.length > 0 ? sanityTeam : staticTeam
   const phone = settings?.phone ?? '0879826292'

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getListing } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
 
@@ -16,7 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ListingDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const listing = await getListing(id)
+  const { isEnabled: preview } = await draftMode()
+  const listing = await getListing(id, preview)
   if (!listing) notFound()
 
   const priceFormatted =

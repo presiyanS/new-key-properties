@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ContactForm from '@/components/ContactForm'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getConsultationPage, getSiteSettings } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 
 export const revalidate = 60
 
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function KonsultatsiyaPage() {
-  const [cms, settings] = await Promise.all([getConsultationPage(), getSiteSettings()])
+  const { isEnabled: preview } = await draftMode()
+  const [cms, settings] = await Promise.all([getConsultationPage(preview), getSiteSettings(preview)])
 
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'

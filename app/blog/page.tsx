@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import BlogCard from '@/components/BlogCard'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getBlogPosts, getBlogPage, getSiteSettings } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 
 export const revalidate = 60
@@ -13,10 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
+  const { isEnabled: preview } = await draftMode()
   const [sanityPosts, cms, settings] = await Promise.all([
-    getBlogPosts(),
-    getBlogPage(),
-    getSiteSettings(),
+    getBlogPosts(preview),
+    getBlogPage(preview),
+    getSiteSettings(preview),
   ])
   const posts = sanityPosts.length > 0 ? sanityPosts : staticPosts
   const phone = settings?.phone ?? '0879826292'

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getListings, getListingsPage, getSiteSettings } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 import ListingsClient from '@/components/ListingsClient'
 
 export const revalidate = 60
@@ -11,10 +12,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ListingsPage() {
+  const { isEnabled: preview } = await draftMode()
   const [listings, cms, settings] = await Promise.all([
-    getListings(),
-    getListingsPage(),
-    getSiteSettings(),
+    getListings(preview),
+    getListingsPage(preview),
+    getSiteSettings(preview),
   ])
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'

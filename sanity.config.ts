@@ -1,9 +1,13 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { presentationTool } from 'sanity/presentation'
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 import { schemaTypes } from './sanity/schemaTypes'
 import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, StarIcon, CogIcon, BlockElementIcon } from '@sanity/icons'
+
+const previewOrigin = process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000')
 
 export default defineConfig({
   name: 'new-key-properties',
@@ -14,6 +18,12 @@ export default defineConfig({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
 
   plugins: [
+    presentationTool({
+      previewUrl: {
+        origin: previewOrigin,
+        draftMode: { enable: '/api/draft' },
+      },
+    }),
     structureTool({
       structure: (S, context) =>
         S.list()

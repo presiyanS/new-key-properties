@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getAboutPage } from '@/lib/sanity'
+import { draftMode } from 'next/headers'
 
 export const revalidate = 60
 
@@ -34,7 +35,8 @@ const valueIcons: React.ReactNode[] = [
 ]
 
 export default async function AboutPage() {
-  const cms = await getAboutPage()
+  const { isEnabled: preview } = await draftMode()
+  const cms = await getAboutPage(preview)
 
   const missionParagraphs =
     cms?.missionParagraphs?.length > 0
