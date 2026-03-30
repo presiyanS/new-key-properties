@@ -51,7 +51,8 @@ export const listingType = defineType({
     defineField({
       name: 'floor',
       title: 'Етаж',
-      type: 'number',
+      type: 'string',
+      description: 'Може да е число (0, 1, 2...) или текст (Партер, Подземен, Мансарда)',
     }),
     defineField({
       name: 'totalFloors',

@@ -40,7 +40,7 @@ export type SanityListing = {
   price: number
   area: number
   rooms: number
-  floor: number | null
+  floor: string | number | null
   totalFloors: number | null
   constructionAct: 'act14' | 'act15' | 'act16' | null
   neighborhood: string
