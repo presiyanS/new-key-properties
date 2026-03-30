@@ -48,7 +48,7 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
           </span>
           {listing.constructionAct && (
             <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm bg-white/85 text-brand-green">
-              {listing.constructionAct === 'act14' ? 'Акт 14' : listing.constructionAct === 'act15' ? 'Акт 15' : 'Акт 16'}
+              {String(listing.constructionAct).includes('act14') ? 'Акт 14' : String(listing.constructionAct).includes('act15') ? 'Акт 15' : 'Акт 16'}
             </span>
           )}
         </div>
