@@ -161,9 +161,6 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                 }`}
               >
                 {tab.label}
-                <span className={`ml-1.5 text-xs font-normal ${filter === tab.val ? 'text-brand-gold/70' : 'text-gray-400'}`}>
-                  {counts[tab.val]}
-                </span>
               </button>
             ))}
           </div>
