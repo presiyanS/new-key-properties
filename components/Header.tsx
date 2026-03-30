@@ -109,7 +109,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
               alt="New Key Properties"
               width={180}
               height={68}
-              className={`w-auto transition-all duration-300 ${scrolled ? 'h-11' : 'h-14'}`}
+              className={`w-auto transition-all duration-300 ${scrolled ? 'h-14' : 'h-20'}`}
               priority
             />
           </Link>
