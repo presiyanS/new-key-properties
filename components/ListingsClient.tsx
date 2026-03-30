@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import PropertyCard from '@/components/PropertyCard'
 import type { SanityListing } from '@/lib/sanity'
 
 type Filter = 'all' | 'sale' | 'rent'
+type SortBy = 'default' | 'price-asc' | 'price-desc' | 'area-asc' | 'area-desc'
 
 type Props = {
   listings: SanityListing[]
@@ -17,6 +18,26 @@ type Props = {
 
 export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
   const [filter, setFilter] = useState<Filter>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [neighborhood, setNeighborhood] = useState('')
+  const [rooms, setRooms] = useState('')
+  const [priceMin, setPriceMin] = useState('')
+  const [priceMax, setPriceMax] = useState('')
+  const [areaMin, setAreaMin] = useState('')
+  const [areaMax, setAreaMax] = useState('')
+  const [sortBy, setSortBy] = useState<SortBy>('default')
+  const [showFilters, setShowFilters] = useState(false)
+
+  // Derived options from listings data
+  const neighborhoods = useMemo(() => {
+    const set = new Set(listings.map((l) => l.neighborhood).filter(Boolean))
+    return Array.from(set).sort((a, b) => a.localeCompare(b, 'bg'))
+  }, [listings])
+
+  const roomOptions = useMemo(() => {
+    const set = new Set(listings.map((l) => l.rooms).filter((r) => r != null))
+    return Array.from(set).sort((a, b) => a - b)
+  }, [listings])
 
   const counts = {
     all: listings.length,
@@ -24,7 +45,69 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     rent: listings.filter((l) => l.type === 'rent').length,
   }
 
-  const filtered = filter === 'all' ? listings : listings.filter((l) => l.type === filter)
+  const activeFilterCount = [
+    neighborhood,
+    rooms,
+    priceMin,
+    priceMax,
+    areaMin,
+    areaMax,
+    searchQuery,
+  ].filter(Boolean).length
+
+  function clearAll() {
+    setFilter('all')
+    setSearchQuery('')
+    setNeighborhood('')
+    setRooms('')
+    setPriceMin('')
+    setPriceMax('')
+    setAreaMin('')
+    setAreaMax('')
+    setSortBy('default')
+  }
+
+  const filtered = useMemo(() => {
+    let result = listings
+
+    // Type
+    if (filter !== 'all') result = result.filter((l) => l.type === filter)
+
+    // Search
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase()
+      result = result.filter((l) => {
+        return (
+          l.title?.toLowerCase().includes(q) ||
+          l.neighborhood?.toLowerCase().includes(q) ||
+          l.description?.toLowerCase().includes(q) ||
+          l.features?.some((f) => f.toLowerCase().includes(q))
+        )
+      })
+    }
+
+    // Neighborhood
+    if (neighborhood) result = result.filter((l) => l.neighborhood === neighborhood)
+
+    // Rooms
+    if (rooms) result = result.filter((l) => l.rooms === Number(rooms))
+
+    // Price
+    if (priceMin) result = result.filter((l) => l.price >= Number(priceMin))
+    if (priceMax) result = result.filter((l) => l.price <= Number(priceMax))
+
+    // Area
+    if (areaMin) result = result.filter((l) => l.area >= Number(areaMin))
+    if (areaMax) result = result.filter((l) => l.area <= Number(areaMax))
+
+    // Sort
+    if (sortBy === 'price-asc') result = [...result].sort((a, b) => a.price - b.price)
+    else if (sortBy === 'price-desc') result = [...result].sort((a, b) => b.price - a.price)
+    else if (sortBy === 'area-asc') result = [...result].sort((a, b) => a.area - b.area)
+    else if (sortBy === 'area-desc') result = [...result].sort((a, b) => b.area - a.area)
+
+    return result
+  }, [listings, filter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])
 
   const tabs: { val: Filter; label: string }[] = [
     { val: 'all', label: 'Всички' },
@@ -32,25 +115,211 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     { val: 'rent', label: 'Наем' },
   ]
 
+  const selectClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 pr-8 appearance-none focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all cursor-pointer"
+  const inputClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all w-full"
+
   return (
-    <section className="py-16 bg-gray-50 min-h-screen">
+    <section className="py-10 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Filter bar */}
-        <div className="flex items-center gap-3 mb-10 flex-wrap">
-          {tabs.map((tab) => (
+        {/* Search bar */}
+        <div className="relative mb-4">
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+          </svg>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Търсете по заглавие, квартал, характеристики..."
+            className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-4 py-4 text-gray-800 placeholder-gray-400 text-base shadow-sm focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+          />
+          {searchQuery && (
             <button
-              key={tab.val}
-              onClick={() => setFilter(tab.val)}
-              className={`relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
-                filter === tab.val
-                  ? 'bg-brand-green text-brand-gold shadow-lg shadow-brand-green/20'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-green hover:text-brand-green hover:shadow-sm'
-              }`}
+              onClick={() => setSearchQuery('')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              {tab.label}
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-          ))}
+          )}
+        </div>
+
+        {/* Filter bar row */}
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          {/* Type tabs */}
+          <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab.val}
+                onClick={() => setFilter(tab.val)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                  filter === tab.val
+                    ? 'bg-brand-green text-brand-gold shadow-sm'
+                    : 'text-gray-500 hover:text-brand-green'
+                }`}
+              >
+                {tab.label}
+                <span className={`ml-1.5 text-xs font-normal ${filter === tab.val ? 'text-brand-gold/70' : 'text-gray-400'}`}>
+                  {counts[tab.val]}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Advanced filters toggle */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-150 ${
+              showFilters || activeFilterCount > 0
+                ? 'bg-brand-green text-brand-gold border-brand-green shadow-sm'
+                : 'bg-white text-gray-600 border-gray-200 hover:border-brand-green hover:text-brand-green'
+            }`}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M7 8h10M11 12h2M9 16h6" />
+            </svg>
+            Филтри
+            {activeFilterCount > 0 && (
+              <span className="bg-brand-gold text-brand-green text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
+
+          {/* Sort */}
+          <div className="relative ml-auto">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortBy)}
+              className={selectClass}
+            >
+              <option value="default">По подразбиране</option>
+              <option value="price-asc">Цена: ниска → висока</option>
+              <option value="price-desc">Цена: висока → ниска</option>
+              <option value="area-asc">Площ: малка → голяма</option>
+              <option value="area-desc">Площ: голяма → малка</option>
+            </select>
+            <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Advanced filters panel */}
+        {showFilters && (
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-5 shadow-sm">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+
+              {/* Neighborhood */}
+              <div className="col-span-2 sm:col-span-1 lg:col-span-2">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Квартал</label>
+                <div className="relative">
+                  <select
+                    value={neighborhood}
+                    onChange={(e) => setNeighborhood(e.target.value)}
+                    className={selectClass + ' w-full'}
+                  >
+                    <option value="">Всички квартали</option>
+                    {neighborhoods.map((n) => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Rooms */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Стаи</label>
+                <div className="relative">
+                  <select
+                    value={rooms}
+                    onChange={(e) => setRooms(e.target.value)}
+                    className={selectClass + ' w-full'}
+                  >
+                    <option value="">Всички</option>
+                    {roomOptions.map((r) => (
+                      <option key={r} value={r}>{r} стаи</option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Price range */}
+              <div className="col-span-2">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Цена (€)</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={priceMin}
+                    onChange={(e) => setPriceMin(e.target.value)}
+                    placeholder="От"
+                    min={0}
+                    className={inputClass}
+                  />
+                  <span className="text-gray-400 text-sm flex-shrink-0">—</span>
+                  <input
+                    type="number"
+                    value={priceMax}
+                    onChange={(e) => setPriceMax(e.target.value)}
+                    placeholder="До"
+                    min={0}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              {/* Area range */}
+              <div className="col-span-2 lg:col-span-1">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Площ (м²)</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={areaMin}
+                    onChange={(e) => setAreaMin(e.target.value)}
+                    placeholder="От"
+                    min={0}
+                    className={inputClass}
+                  />
+                  <span className="text-gray-400 text-sm flex-shrink-0">—</span>
+                  <input
+                    type="number"
+                    value={areaMax}
+                    onChange={(e) => setAreaMax(e.target.value)}
+                    placeholder="До"
+                    min={0}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* Results count + clear */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-500 text-sm">
+            <span className="font-semibold text-brand-green">{filtered.length}</span> намерени имота
+          </p>
+          {(activeFilterCount > 0 || filter !== 'all' || sortBy !== 'default') && (
+            <button
+              onClick={clearAll}
+              className="text-sm text-gray-400 hover:text-brand-green transition-colors flex items-center gap-1.5"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Изчисти всички
+            </button>
+          )}
         </div>
 
         {/* Grid */}
