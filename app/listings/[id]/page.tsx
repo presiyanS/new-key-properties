@@ -119,7 +119,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     },
                     {
                       label: 'Етаж',
-                      val: listing.floor
+                      val: listing.floor != null
                         ? `${listing.floor}${listing.totalFloors ? `/${listing.totalFloors}` : ''}`
                         : '–',
                       icon: (

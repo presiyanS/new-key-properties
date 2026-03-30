@@ -85,7 +85,7 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
             </svg>
             {listing.rooms} {listing.rooms === 1 ? 'стая' : 'стаи'}
           </span>
-          {listing.floor && (
+          {listing.floor != null && (
             <span className="text-gray-400">ет. {listing.floor}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>
           )}
         </div>
