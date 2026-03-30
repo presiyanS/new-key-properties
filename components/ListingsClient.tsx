@@ -24,7 +24,18 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     rent: listings.filter((l) => l.type === 'rent').length,
   }
 
-  const filtered = filter === 'all' ? listings : listings.filter((l) => l.type === filter)
+  const filtered = (() => {
+    if (filter !== 'all') return listings.filter((l) => l.type === filter)
+    const sale = listings.filter((l) => l.type === 'sale')
+    const rent = listings.filter((l) => l.type === 'rent')
+    const mixed: typeof listings = []
+    const max = Math.max(sale.length, rent.length)
+    for (let i = 0; i < max; i++) {
+      if (i < sale.length) mixed.push(sale[i])
+      if (i < rent.length) mixed.push(rent[i])
+    }
+    return mixed
+  })()
 
   const tabs: { val: Filter; label: string }[] = [
     { val: 'all', label: 'Всички' },
