@@ -39,19 +39,6 @@ export default async function ListingsPage() {
           >
             {cms?.heroSubtitle ?? 'Всички имоти са внимателно проверени и представени с пълна прозрачност. Само сериозни оферти.'}
           </p>
-          <div
-            className="flex items-center gap-6 mt-8 animate-fade-up"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <div className="flex items-center gap-2 text-white/50 text-sm">
-              <span className="w-2 h-2 bg-brand-gold/60 rounded-full" />
-              <span>{cms?.saleCountOverride ?? listings.filter((l) => l.type === 'sale').length} за продажба</span>
-            </div>
-            <div className="flex items-center gap-2 text-white/50 text-sm">
-              <span className="w-2 h-2 bg-brand-gold/60 rounded-full" />
-              <span>{cms?.rentCountOverride ?? listings.filter((l) => l.type === 'rent').length} под наем</span>
-            </div>
-          </div>
         </div>
       </section>
 
