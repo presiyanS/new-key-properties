@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { HomeIcon } from '@sanity/icons'
+import { orderRankField } from '@sanity/orderable-document-list'
 import { ExternalImagePreview } from '../components/ExternalImagePreview'
 import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'
 
@@ -9,6 +10,7 @@ export const listingType = defineType({
   type: 'document',
   icon: HomeIcon,
   fields: [
+    orderRankField({ type: 'listing' }),
     defineField({
       name: 'title',
       title: 'Заглавие',

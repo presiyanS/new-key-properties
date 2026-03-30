@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.80.0",
     "@google/generative-ai": "^0.24.1",
     "@sanity/image-url": "^2.0.3",
+    "@sanity/orderable-document-list": "^1.5.1",
     "@sanity/vision": "^5.18.0",
     "framer-motion": "^12.38.0",
     "next": "^16.2.1",

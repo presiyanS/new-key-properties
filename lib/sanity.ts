@@ -50,7 +50,7 @@ const LISTING_FIELDS = `
 
 export async function getListings(): Promise<SanityListing[]> {
   try {
-    return await client.fetch(`*[_type == "listing"] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
+    return await client.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`)
   } catch { return [] }
 }
 

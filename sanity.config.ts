@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 import { schemaTypes } from './sanity/schemaTypes'
 import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, StarIcon, CogIcon, BlockElementIcon } from '@sanity/icons'
 
@@ -14,7 +15,7 @@ export default defineConfig({
 
   plugins: [
     structureTool({
-      structure: (S) =>
+      structure: (S, context) =>
         S.list()
           .title('Съдържание')
           .items([
@@ -62,14 +63,7 @@ export default defineConfig({
             S.divider(),
 
             // ── Content ───────────────────────────────────────────────
-            S.listItem()
-              .title('Имоти')
-              .icon(HomeIcon)
-              .child(
-                S.documentTypeList('listing')
-                  .title('Всички имоти')
-                  .defaultOrdering([{ field: '_createdAt', direction: 'desc' }])
-              ),
+            orderableDocumentListDeskItem({ type: 'listing', title: 'Имоти', icon: HomeIcon, S, context }),
 
             S.listItem()
               .title('Блог статии')
