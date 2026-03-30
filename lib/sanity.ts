@@ -42,6 +42,7 @@ export type SanityListing = {
   rooms: number
   floor: number | null
   totalFloors: number | null
+  constructionAct: 'act14' | 'act15' | 'act16' | null
   neighborhood: string
   description: string
   imageUrls: string[]
@@ -58,6 +59,7 @@ const LISTING_FIELDS = `
   rooms,
   floor,
   totalFloors,
+  constructionAct,
   neighborhood,
   description,
   "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),

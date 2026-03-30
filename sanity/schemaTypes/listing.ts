@@ -59,6 +59,20 @@ export const listingType = defineType({
       type: 'number',
     }),
     defineField({
+      name: 'constructionAct',
+      title: 'Акт на строителство',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Акт 14', value: 'act14' },
+          { title: 'Акт 15', value: 'act15' },
+          { title: 'Акт 16', value: 'act16' },
+        ],
+        layout: 'radio',
+      },
+      description: 'Степента на завършеност на строителството (по желание)',
+    }),
+    defineField({
       name: 'neighborhood',
       title: 'Квартал',
       type: 'string',

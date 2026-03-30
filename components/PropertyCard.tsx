@@ -36,7 +36,7 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
         <div className="absolute inset-0 bg-gradient-to-t from-brand-green-dark/80 via-brand-green-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Type badge */}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
           <span
             className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm ${
               listing.type === 'sale'
@@ -46,6 +46,11 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
           >
             {listing.type === 'sale' ? 'Продажба' : 'Наем'}
           </span>
+          {listing.constructionAct && (
+            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm bg-white/85 text-brand-green">
+              {listing.constructionAct === 'act14' ? 'Акт 14' : listing.constructionAct === 'act15' ? 'Акт 15' : 'Акт 16'}
+            </span>
+          )}
         </div>
 
         {/* View more — appears on hover */}
