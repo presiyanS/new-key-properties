@@ -13,6 +13,20 @@ export const homePageType = defineType({
     defineField({ name: 'heroLineGold', title: 'Hero — Златна дума', type: 'string' }),
     defineField({ name: 'heroLine3', title: 'Hero — Заглавие ред 3', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({
+      name: 'heroBadges',
+      title: 'Hero — Плаващи карточки (4 броя)',
+      description: 'Четирите анимирани карточки в дясната част на hero секцията.',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'subtitle', title: 'Подзаглавие', type: 'string' }),
+        ],
+        preview: { select: { title: 'title', subtitle: 'subtitle' } },
+      }],
+    }),
 
     // ── Stats bar ─────────────────────────────────────────────────────
     defineField({

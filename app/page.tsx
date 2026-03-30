@@ -226,7 +226,7 @@ export default async function HomePage() {
 
             {/* Right: animated skyline composition */}
             <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <AnimatedSkylineHero />
+              <AnimatedSkylineHero badges={cms?.heroBadges} />
             </div>
 
           </div>

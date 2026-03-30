@@ -8,7 +8,25 @@
  * • The gold key icon rotates and floats
  * • A soft glowing halo pulses behind the NK monogram
  */
-export default function AnimatedSkylineHero() {
+
+interface HeroBadge {
+  title: string
+  subtitle: string
+}
+
+interface Props {
+  badges?: HeroBadge[]
+}
+
+const defaultBadges: HeroBadge[] = [
+  { title: 'Честност', subtitle: 'Пълна прозрачност' },
+  { title: 'Доверие', subtitle: 'Дългосрочни резултати' },
+  { title: 'Само София', subtitle: '' },
+  { title: 'Резултати', subtitle: 'Без компромиси' },
+]
+
+export default function AnimatedSkylineHero({ badges }: Props) {
+  const b = badges && badges.length === 4 ? badges : defaultBadges
   return (
     <div
       className="hidden lg:flex items-center justify-center relative"
@@ -141,49 +159,49 @@ export default function AnimatedSkylineHero() {
 
         {/* ── Floating value cards ── */}
 
-        {/* Честност — top-left, bobs up */}
+        {/* Badge 0 — top-left, bobs up */}
         <div
           className="absolute top-16 -left-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 6s ease-in-out infinite' }}
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-gold rounded-full" />
-            <span className="text-brand-gold font-semibold text-sm tracking-wide">Честност</span>
+            <span className="text-brand-gold font-semibold text-sm tracking-wide">{b[0].title}</span>
           </div>
-          <p className="text-white/40 text-xs mt-0.5 pl-4">Пълна прозрачност</p>
+          {b[0].subtitle && <p className="text-white/40 text-xs mt-0.5 pl-4">{b[0].subtitle}</p>}
         </div>
 
-        {/* Доверие — top-right, bobs down */}
+        {/* Badge 1 — top-right, bobs down */}
         <div
           className="absolute top-28 -right-10 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 7s ease-in-out 1s infinite' }}
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-gold rounded-full" />
-            <span className="text-brand-gold font-semibold text-sm tracking-wide">Доверие</span>
+            <span className="text-brand-gold font-semibold text-sm tracking-wide">{b[1].title}</span>
           </div>
-          <p className="text-white/40 text-xs mt-0.5 pl-4">Дългосрочни резултати</p>
+          {b[1].subtitle && <p className="text-white/40 text-xs mt-0.5 pl-4">{b[1].subtitle}</p>}
         </div>
 
-        {/* София — bottom-left, bobs up slowly */}
+        {/* Badge 2 — bottom-left, bobs up slowly */}
         <div
           className="absolute bottom-24 -left-6 bg-brand-gold/10 border border-brand-gold/25 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 8s ease-in-out 2s infinite' }}
         >
-          <p className="text-white/60 text-xs uppercase tracking-widest">Само</p>
-          <p className="text-brand-gold font-bold text-lg leading-none">София</p>
+          <p className="text-brand-gold font-bold text-lg leading-none">{b[2].title}</p>
+          {b[2].subtitle && <p className="text-white/40 text-xs mt-0.5">{b[2].subtitle}</p>}
         </div>
 
-        {/* Резултати — bottom-right, bobs down */}
+        {/* Badge 3 — bottom-right, bobs down */}
         <div
           className="absolute bottom-16 -right-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 5.5s ease-in-out 0.5s infinite' }}
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
-            <span className="text-brand-gold font-semibold text-sm tracking-wide">Резултати</span>
+            <span className="text-brand-gold font-semibold text-sm tracking-wide">{b[3].title}</span>
           </div>
-          <p className="text-white/40 text-xs mt-0.5 pl-4">Без компромиси</p>
+          {b[3].subtitle && <p className="text-white/40 text-xs mt-0.5 pl-4">{b[3].subtitle}</p>}
         </div>
 
       </div>
