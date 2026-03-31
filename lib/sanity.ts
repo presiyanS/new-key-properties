@@ -24,10 +24,6 @@ export const previewClient = createClient({
   },
 })
 
-function getClient(preview = false) {
-  return preview ? previewClient : client
-}
-
 const builder = imageUrlBuilder(client)
 
 export function urlFor(source: SanityImageSource) {
