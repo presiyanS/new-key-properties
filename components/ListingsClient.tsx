@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import PropertyCard from '@/components/PropertyCard'
+import SaveSearchBar from '@/components/SaveSearchBar'
 import type { SanityListing } from '@/lib/sanity'
 
 type Filter = 'all' | 'sale' | 'rent'
@@ -300,6 +301,15 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
             </div>
           </div>
         )}
+
+        {/* Save search */}
+        <SaveSearchBar
+          type={filter}
+          neighborhood={neighborhood}
+          rooms={rooms}
+          priceMin={priceMin}
+          priceMax={priceMax}
+        />
 
         {/* Results count + clear */}
         <div className="flex items-center justify-between mb-6">

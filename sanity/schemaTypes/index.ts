@@ -9,6 +9,7 @@ import { siteSettingsType } from './siteSettings'
 import { blogPageType } from './blogPage'
 import { teamPageType } from './teamPage'
 import { listingsPageType } from './listingsPage'
+import { savedSearchType } from './savedSearch'
 
 export const schemaTypes = [
   // Singletons (settings & pages)
@@ -24,4 +25,5 @@ export const schemaTypes = [
   listingType,
   blogPostType,
   teamMemberType,
+  savedSearchType,
 ]
