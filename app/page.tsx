@@ -195,7 +195,7 @@ export default async function HomePage() {
                   <span className="text-white">{cms?.heroLine3 ?? 'Започва'}</span>
                 </span>
                 <span className="block animate-fade-up" style={{ animationDelay: '0.3s' }}>
-                  Тук
+                  {cms?.heroLine4 ?? 'Тук'}
                 </span>
               </h1>
 
@@ -215,13 +215,13 @@ export default async function HomePage() {
                   href="/listings"
                   className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-center text-lg shadow-xl shadow-brand-gold/20 hover:shadow-brand-gold/30 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  Разгледайте Имотите
+                  {cms?.heroButton1 ?? 'Разгледайте Имотите'}
                 </Link>
                 <Link
                   href="/contact"
                   className="border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-center text-lg"
                 >
-                  Свържете се с нас
+                  {cms?.heroButton2 ?? 'Свържете се с нас'}
                 </Link>
               </div>
             </div>
@@ -236,7 +236,7 @@ export default async function HomePage() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand-gold/40">
-          <span className="text-xs uppercase tracking-widest">Разгледайте</span>
+          <span className="text-xs uppercase tracking-widest">{cms?.scrollIndicator ?? 'Разгледайте'}</span>
           <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
           </svg>
@@ -291,7 +291,7 @@ export default async function HomePage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-16">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашият метод</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.processLabel ?? 'Нашият метод'}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
               {cms?.processTitle ?? 'Как Работим'}
             </h2>
@@ -377,7 +377,7 @@ export default async function HomePage() {
               href="/listings"
               className="inline-block bg-brand-green text-brand-gold font-bold px-6 py-3 rounded-xl hover:bg-brand-green-light transition-colors"
             >
-              Всички имоти
+              {cms?.featuredMobileLinkText ?? 'Всички имоти'}
             </Link>
           </div>
         </div>
@@ -392,7 +392,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашата разлика</span>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.whyUsLabel ?? 'Нашата разлика'}</span>
               <h2 className="font-serif text-4xl font-bold text-white mt-3 mb-6">
                 {cms?.whyUsTitle ?? (
                   <>Защо <span className="text-brand-gold">New Key Properties</span>?</>
@@ -425,7 +425,7 @@ export default async function HomePage() {
                 href="/about"
                 className="mt-10 inline-flex items-center gap-2 bg-brand-gold text-brand-green font-bold px-7 py-3.5 rounded-xl hover:bg-brand-gold-light transition-all hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5"
               >
-                Научете повече за нас
+                {cms?.whyUsButton ?? 'Научете повече за нас'}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -436,7 +436,7 @@ export default async function HomePage() {
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-brand-green-light/30 rounded-3xl p-8 lg:p-10 border border-brand-gold/20 backdrop-blur-sm shadow-2xl">
                 <p className="text-brand-gold/60 uppercase text-xs tracking-widest text-center mb-2">
-                  Безплатна консултация
+                  {cms?.ctaCardLabel ?? 'Безплатна консултация'}
                 </p>
                 <h3 className="font-serif text-2xl font-bold text-white text-center mb-4">
                   {cms?.ctaCardTitle ?? 'Готови ли сте да действате?'}
@@ -453,13 +453,13 @@ export default async function HomePage() {
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                     </svg>
-                    0879 826 292
+                    {cms?.ctaCardButton1 ?? '0879 826 292'}
                   </a>
                   <Link
                     href="/contact"
                     className="flex items-center justify-center border-2 border-brand-gold/60 text-brand-gold font-bold py-3.5 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all w-full"
                   >
-                    Изпратете запитване
+                    {cms?.ctaCardButton2 ?? 'Изпратете запитване'}
                   </Link>
                 </div>
 
@@ -468,7 +468,7 @@ export default async function HomePage() {
                   <svg className="w-3.5 h-3.5 text-brand-gold/40" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
                   </svg>
-                  100% безплатно и без ангажименти
+                  {cms?.ctaCardTrustText ?? '100% безплатно и без ангажименти'}
                 </div>
               </div>
             </AnimatedSection>
@@ -484,15 +484,15 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Знания</span>
-              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">Полезна Информация</h2>
-              <p className="text-gray-500">Анализи, съвети и новини от пазара на недвижими имоти</p>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.blogLabel ?? 'Знания'}</span>
+              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{cms?.blogTitle ?? 'Полезна Информация'}</h2>
+              <p className="text-gray-500">{cms?.blogSubtitle ?? 'Анализи, съвети и новини от пазара на недвижими имоти'}</p>
             </div>
             <Link
               href="/blog"
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
-              Всички статии
+              {cms?.blogLinkText ?? 'Всички статии'}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -529,13 +529,13 @@ export default async function HomePage() {
                 href="tel:0879826292"
                 className="bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-dark transition-all text-lg shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 hover:-translate-y-0.5"
               >
-                Обадете се сега
+                {cms?.finalCtaButton1 ?? 'Обадете се сега'}
               </a>
               <a
                 href="mailto:office@newkey.bg"
                 className="border-2 border-brand-green text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-green/10 transition-all text-lg"
               >
-                office@newkey.bg
+                {cms?.finalCtaButton2 ?? 'office@newkey.bg'}
               </a>
             </div>
           </AnimatedSection>

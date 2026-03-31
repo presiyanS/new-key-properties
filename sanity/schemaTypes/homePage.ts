@@ -12,7 +12,11 @@ export const homePageType = defineType({
     defineField({ name: 'heroLine1', title: 'Hero — Заглавие ред 1', type: 'string' }),
     defineField({ name: 'heroLineGold', title: 'Hero — Златна дума', type: 'string' }),
     defineField({ name: 'heroLine3', title: 'Hero — Заглавие ред 3', type: 'string' }),
+    defineField({ name: 'heroLine4', title: 'Hero — Заглавие ред 4', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({ name: 'heroButton1', title: 'Hero — Бутон 1 (имоти)', type: 'string' }),
+    defineField({ name: 'heroButton2', title: 'Hero — Бутон 2 (контакт)', type: 'string' }),
+    defineField({ name: 'scrollIndicator', title: 'Hero — Текст на скрол индикатора', type: 'string' }),
     defineField({
       name: 'heroBadges',
       title: 'Hero — Плаващи карточки (4 броя)',
@@ -82,14 +86,34 @@ export const homePageType = defineType({
     defineField({ name: 'featuredTitle', title: 'Избрани имоти — Заглавие', type: 'string' }),
     defineField({ name: 'featuredSubtitle', title: 'Избрани имоти — Подзаглавие', type: 'string' }),
     defineField({ name: 'featuredLinkText', title: 'Избрани имоти — Текст на линка', type: 'string' }),
+    defineField({ name: 'featuredMobileLinkText', title: 'Избрани имоти — Текст на мобилния линк', type: 'string' }),
+
+    // ── Process Section ───────────────────────────────────────────────
+    defineField({ name: 'processLabel', title: 'Как работим — Надпис (малък)', type: 'string' }),
+
+    // ── Why Us ────────────────────────────────────────────────────────
+    defineField({ name: 'whyUsLabel', title: 'Защо ние — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'whyUsButton', title: 'Защо ние — Текст на бутона', type: 'string' }),
 
     // ── CTA Card ──────────────────────────────────────────────────────
+    defineField({ name: 'ctaCardLabel', title: 'CTA Карта — Надпис (малък)', type: 'string' }),
     defineField({ name: 'ctaCardTitle', title: 'CTA Карта — Заглавие', type: 'string' }),
     defineField({ name: 'ctaCardDesc', title: 'CTA Карта — Описание', type: 'text', rows: 3 }),
+    defineField({ name: 'ctaCardButton1', title: 'CTA Карта — Бутон 1 (телефон)', type: 'string' }),
+    defineField({ name: 'ctaCardButton2', title: 'CTA Карта — Бутон 2 (запитване)', type: 'string' }),
+    defineField({ name: 'ctaCardTrustText', title: 'CTA Карта — Текст за доверие (под бутоните)', type: 'string' }),
+
+    // ── Blog Section ──────────────────────────────────────────────────
+    defineField({ name: 'blogLabel', title: 'Блог — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'blogTitle', title: 'Блог — Заглавие', type: 'string' }),
+    defineField({ name: 'blogSubtitle', title: 'Блог — Подзаглавие', type: 'string' }),
+    defineField({ name: 'blogLinkText', title: 'Блог — Текст на линка', type: 'string' }),
 
     // ── Final CTA ─────────────────────────────────────────────────────
     defineField({ name: 'finalCtaTitle', title: 'Финален призив — Заглавие', type: 'string' }),
     defineField({ name: 'finalCtaSubtitle', title: 'Финален призив — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({ name: 'finalCtaButton1', title: 'Финален призив — Бутон 1 (обаждане)', type: 'string' }),
+    defineField({ name: 'finalCtaButton2', title: 'Финален призив — Бутон 2 (имейл)', type: 'string' }),
 
     // ── Process Steps ─────────────────────────────────────────────────
     defineField({ name: 'processTitle', title: 'Как работим — Заглавие', type: 'string' }),
