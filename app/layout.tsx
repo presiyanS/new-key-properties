@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import FloatingCTA from '@/components/FloatingCTA'
 import { getSiteSettings } from '@/lib/sanity'
 import { headers } from 'next/headers'
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {!isStudio && <FloatingCTA phone={phone} />}
         {isDraftMode && <VisualEditing />}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
