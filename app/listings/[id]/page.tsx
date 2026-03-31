@@ -5,6 +5,7 @@ import { getListing } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
+import ShareButtons from '@/components/ShareButtons'
 
 export const revalidate = 60
 
@@ -12,7 +13,29 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params
   const listing = await getListing(id)
   if (!listing) return {}
-  return { title: listing.title, description: listing.description }
+
+  const image = listing.imageUrls?.[0]
+  const description = listing.description?.slice(0, 200) ?? ''
+  const url = `https://www.newkey.bg/listings/${id}`
+
+  return {
+    title: listing.title,
+    description,
+    openGraph: {
+      title: listing.title,
+      description,
+      url,
+      siteName: 'New Key Properties',
+      type: 'website',
+      ...(image ? { images: [{ url: image, width: 1200, height: 800, alt: listing.title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: listing.title,
+      description,
+      ...(image ? { images: [image] } : {}),
+    },
+  }
 }
 
 export default async function ListingDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -182,6 +205,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     </div>
                   </>
                 )}
+
+                <ShareButtons id={id} title={listing.title} />
               </div>
             </div>
 

@@ -20,6 +20,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.newkey.bg'),
   title: {
     default: 'New Key Properties | Недвижими Имоти в София',
     template: '%s | New Key Properties',
