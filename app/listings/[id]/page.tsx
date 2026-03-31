@@ -44,13 +44,13 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   const listing = await getListing(id, preview)
   if (!listing) notFound()
 
-  const numericPrice = listing.price ? Number(listing.price.replace(/\s/g, '')) : NaN
-  const priceFormatted = listing.price
+  const numericPrice = listing.price != null ? Number(String(listing.price).replace(/\s/g, '')) : NaN
+  const priceFormatted = listing.price != null
     ? (!isNaN(numericPrice)
         ? listing.type === 'sale'
           ? `${numericPrice.toLocaleString('bg-BG')} €`
           : `${numericPrice.toLocaleString('bg-BG')} €/мес.`
-        : listing.price)
+        : String(listing.price))
     : '–'
 
   const images = listing.imageUrls ?? []

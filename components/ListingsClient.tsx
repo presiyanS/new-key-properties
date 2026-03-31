@@ -46,8 +46,8 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   const roomOptions = useMemo(() => {
     const seen = new Map<string, string>()
     listings.forEach((l) => {
-      if (!l.rooms) return
-      const clean = l.rooms.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
+      if (l.rooms == null) return
+      const clean = String(l.rooms).replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
       const key = clean.toLowerCase()
       if (!seen.has(key)) seen.set(key, clean)
     })
@@ -110,8 +110,8 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
     // Rooms
     if (rooms) result = result.filter((l) => {
-      const clean = l.rooms?.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
-      return clean?.toLowerCase() === rooms.toLowerCase()
+      const clean = l.rooms != null ? String(l.rooms).replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim() : ''
+      return clean.toLowerCase() === rooms.toLowerCase()
     })
 
     // Price (numeric only)
