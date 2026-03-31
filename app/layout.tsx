@@ -13,11 +13,15 @@ import { VisualEditing } from 'next-sanity/visual-editing'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
   variable: '--font-inter',
 })
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'cyrillic'],
+  weight: '700',
+  display: 'swap',
   variable: '--font-playfair',
 })
 
