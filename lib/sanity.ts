@@ -48,6 +48,7 @@ export type SanityListing = {
   imageUrls: string[]
   features: string[]
   featured: boolean
+  googleMapsUrl: string | null
 }
 
 const LISTING_FIELDS = `
@@ -64,7 +65,8 @@ const LISTING_FIELDS = `
   description,
   "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),
   features,
-  featured
+  featured,
+  googleMapsUrl
 `
 
 export async function getListings(preview = false): Promise<SanityListing[]> {

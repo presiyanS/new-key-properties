@@ -107,6 +107,12 @@ export const listingType = defineType({
       options: { layout: 'tags' },
     }),
     defineField({
+      name: 'googleMapsUrl',
+      title: 'Google Maps — Embed URL',
+      type: 'url',
+      description: 'По желание: отворете Google Maps → намерете имота → Споделяне → Вграждане на карта → копирайте само src="..." URL-а от iframe кода.',
+    }),
+    defineField({
       name: 'featured',
       title: 'Препоръчан имот',
       type: 'boolean',

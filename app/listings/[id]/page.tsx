@@ -208,6 +208,27 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
 
                 <ShareButtons id={id} title={listing.title} />
               </div>
+
+              {/* Map */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                <div className="px-8 py-5 border-b border-gray-100">
+                  <h2 className="font-bold text-gray-900 text-lg">Локация</h2>
+                  <p className="text-sm text-gray-400 mt-0.5">{listing.neighborhood}, София</p>
+                </div>
+                <iframe
+                  src={
+                    listing.googleMapsUrl ??
+                    `https://maps.google.com/maps?q=${encodeURIComponent(listing.neighborhood + ' София')}&output=embed&hl=bg&z=15`
+                  }
+                  width="100%"
+                  height="360"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`Карта — ${listing.neighborhood}, София`}
+                />
+              </div>
             </div>
 
             {/* Right: Contact sidebar */}
