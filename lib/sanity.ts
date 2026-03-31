@@ -210,3 +210,15 @@ export async function getListingsPage(preview = false) {
     return await getClient(preview).fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`)
   } catch { return null }
 }
+
+export async function getNeighborhoods(preview = false) {
+  try {
+    return await getClient(preview).fetch(`*[_type == "neighborhood"] | order(name asc)`)
+  } catch { return [] }
+}
+
+export async function getNeighborhood(slug: string, preview = false) {
+  try {
+    return await getClient(preview).fetch(`*[_type == "neighborhood" && slug.current == $slug][0]`, { slug })
+  } catch { return null }
+}

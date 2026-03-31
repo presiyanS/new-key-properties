@@ -10,6 +10,7 @@ import { blogPageType } from './blogPage'
 import { teamPageType } from './teamPage'
 import { listingsPageType } from './listingsPage'
 import { savedSearchType } from './savedSearch'
+import { neighborhoodType } from './neighborhood'
 
 export const schemaTypes = [
   // Singletons (settings & pages)
@@ -26,4 +27,5 @@ export const schemaTypes = [
   blogPostType,
   teamMemberType,
   savedSearchType,
+  neighborhoodType,
 ]

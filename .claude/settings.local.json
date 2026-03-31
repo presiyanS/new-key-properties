@@ -4,7 +4,12 @@
       "WebFetch(domain:newkey.bg)",
       "Bash(git push:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(vercel deploy:*)",
+      "WebSearch",
+      "WebFetch(domain:www.novinite.com)",
+      "WebFetch(domain:www.bta.bg)",
+      "WebFetch(domain:think.ing.com)"
     ]
   }
 }
