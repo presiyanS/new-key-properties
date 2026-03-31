@@ -26,7 +26,7 @@ export default async function HomePage() {
   const stats = cms?.stats?.length > 0
     ? cms.stats
     : [
-        { value: 'Само София', label: 'Нашият пазар' },
+        { value: 'София', label: 'Нашият пазар' },
         { value: '100%', label: 'Отдаденост' },
         { value: 'Персонален', label: 'Подход към всеки' },
         { value: '0', label: 'Скрити такси' },
@@ -293,7 +293,7 @@ export default async function HomePage() {
           <AnimatedSection className="text-center mb-16">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.processLabel ?? 'Нашият метод'}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-              {cms?.processTitle ?? 'Как Работим'}
+              {cms?.processTitle ?? 'Как работим'}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
               {cms?.processSubtitle ?? 'Три прости стъпки до Вашия идеален имот — без изненади, без стрес.'}

@@ -17,7 +17,7 @@ const items = [
   { type: 'dot' },
   { type: 'hood', text: 'Витоша' },
   { type: 'dot' },
-  { type: 'phrase', text: 'Само София' },
+  { type: 'phrase', text: 'София' },
   { type: 'dot' },
   { type: 'hood', text: 'Студентски Град' },
   { type: 'dot' },

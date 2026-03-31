@@ -21,7 +21,7 @@ interface Props {
 const defaultBadges: HeroBadge[] = [
   { title: 'Честност', subtitle: 'Пълна прозрачност' },
   { title: 'Доверие', subtitle: 'Дългосрочни резултати' },
-  { title: 'Само София', subtitle: '' },
+  { title: 'София', subtitle: '' },
   { title: 'Резултати', subtitle: 'Без компромиси' },
 ]
 
