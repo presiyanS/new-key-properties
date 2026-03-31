@@ -35,8 +35,10 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     listings.forEach((l) => {
       const raw = l.neighborhood
       if (!raw) return
-      const key = raw.trim().toLowerCase()
-      if (!seen.has(key)) seen.set(key, raw.trim())
+      // Strip invisible/stega chars before comparing
+      const clean = raw.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
+      const key = clean.toLowerCase()
+      if (!seen.has(key)) seen.set(key, clean)
     })
     return Array.from(seen.values()).sort((a, b) => a.localeCompare(b, 'bg'))
   }, [listings])
