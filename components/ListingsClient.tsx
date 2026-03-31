@@ -31,8 +31,14 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
   // Derived options from listings data
   const neighborhoods = useMemo(() => {
-    const set = new Set(listings.map((l) => l.neighborhood).filter(Boolean))
-    return Array.from(set).sort((a, b) => a.localeCompare(b, 'bg'))
+    const seen = new Map<string, string>()
+    listings.forEach((l) => {
+      const raw = l.neighborhood
+      if (!raw) return
+      const key = raw.trim().toLowerCase()
+      if (!seen.has(key)) seen.set(key, raw.trim())
+    })
+    return Array.from(seen.values()).sort((a, b) => a.localeCompare(b, 'bg'))
   }, [listings])
 
   const roomOptions = useMemo(() => {
