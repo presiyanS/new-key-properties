@@ -3,10 +3,14 @@ import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
 
 export default function PropertyCard({ listing }: { listing: SanityListing }) {
-  const priceFormatted =
-    listing.type === 'sale'
-      ? `${listing.price.toLocaleString('bg-BG')} €`
-      : `${listing.price.toLocaleString('bg-BG')} €/мес.`
+  const numericPrice = listing.price ? Number(listing.price.replace(/\s/g, '')) : NaN
+  const priceFormatted = listing.price
+    ? (!isNaN(numericPrice)
+        ? listing.type === 'sale'
+          ? `${numericPrice.toLocaleString('bg-BG')} €`
+          : `${numericPrice.toLocaleString('bg-BG')} €/мес.`
+        : listing.price)
+    : '–'
 
   const mainImage = listing.imageUrls?.[0]
 
@@ -83,7 +87,7 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
             <svg className="w-4 h-4 text-brand-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            {listing.rooms} {listing.rooms === 1 ? 'стая' : 'стаи'}
+            {listing.rooms} {listing.rooms === '1' ? 'стая' : 'стаи'}
           </span>
           {listing.floor != null && (
             <span className="text-gray-400">ет. {listing.floor}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>

@@ -33,20 +33,21 @@ export const listingType = defineType({
     defineField({
       name: 'price',
       title: 'Цена (EUR)',
-      type: 'number',
-      validation: (r) => r.required().positive(),
+      type: 'string',
+      description: 'Може да е число (650000) или текст (По договаряне, €650/мес.)',
+      validation: (r) => r.required(),
     }),
     defineField({
       name: 'area',
       title: 'Площ (кв.м)',
-      type: 'number',
-      validation: (r) => r.required().positive(),
+      type: 'string',
+      description: 'Може да е число (85) или текст (85 + 10 тераса)',
     }),
     defineField({
       name: 'rooms',
       title: 'Брой стаи',
-      type: 'number',
-      validation: (r) => r.required().positive(),
+      type: 'string',
+      description: 'Може да е число (3) или текст (Студио, 3 + дневна)',
     }),
     defineField({
       name: 'floor',
@@ -130,7 +131,7 @@ export const listingType = defineType({
     prepare({ title, price, type, media, externalUrl }) {
       return {
         title,
-        subtitle: `${type === 'sale' ? 'Продажба' : 'Наем'} · €${price?.toLocaleString('bg-BG')}`,
+        subtitle: `${type === 'sale' ? 'Продажба' : 'Наем'} · €${price ?? '–'}`,
         media: media ?? (externalUrl ? createExternalImageThumbnail(externalUrl) : HomeIcon),
       }
     },

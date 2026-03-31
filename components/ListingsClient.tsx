@@ -44,8 +44,18 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   }, [listings])
 
   const roomOptions = useMemo(() => {
-    const set = new Set(listings.map((l) => l.rooms).filter((r) => r != null))
-    return Array.from(set).sort((a, b) => a - b)
+    const seen = new Map<string, string>()
+    listings.forEach((l) => {
+      if (!l.rooms) return
+      const clean = l.rooms.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
+      const key = clean.toLowerCase()
+      if (!seen.has(key)) seen.set(key, clean)
+    })
+    return Array.from(seen.values()).sort((a, b) => {
+      const na = Number(a), nb = Number(b)
+      if (!isNaN(na) && !isNaN(nb)) return na - nb
+      return a.localeCompare(b, 'bg')
+    })
   }, [listings])
 
   const counts = {
@@ -99,21 +109,24 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     if (neighborhood) result = result.filter((l) => l.neighborhood === neighborhood)
 
     // Rooms
-    if (rooms) result = result.filter((l) => l.rooms === Number(rooms))
+    if (rooms) result = result.filter((l) => {
+      const clean = l.rooms?.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim()
+      return clean?.toLowerCase() === rooms.toLowerCase()
+    })
 
-    // Price
-    if (priceMin) result = result.filter((l) => l.price >= Number(priceMin))
-    if (priceMax) result = result.filter((l) => l.price <= Number(priceMax))
+    // Price (numeric only)
+    if (priceMin) result = result.filter((l) => { const n = Number(l.price); return !isNaN(n) && n >= Number(priceMin) })
+    if (priceMax) result = result.filter((l) => { const n = Number(l.price); return !isNaN(n) && n <= Number(priceMax) })
 
-    // Area
-    if (areaMin) result = result.filter((l) => l.area >= Number(areaMin))
-    if (areaMax) result = result.filter((l) => l.area <= Number(areaMax))
+    // Area (numeric only)
+    if (areaMin) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n >= Number(areaMin) })
+    if (areaMax) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n <= Number(areaMax) })
 
     // Sort
-    if (sortBy === 'price-asc') result = [...result].sort((a, b) => a.price - b.price)
-    else if (sortBy === 'price-desc') result = [...result].sort((a, b) => b.price - a.price)
-    else if (sortBy === 'area-asc') result = [...result].sort((a, b) => a.area - b.area)
-    else if (sortBy === 'area-desc') result = [...result].sort((a, b) => b.area - a.area)
+    if (sortBy === 'price-asc') result = [...result].sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0))
+    else if (sortBy === 'price-desc') result = [...result].sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0))
+    else if (sortBy === 'area-asc') result = [...result].sort((a, b) => (Number(a.area) || 0) - (Number(b.area) || 0))
+    else if (sortBy === 'area-desc') result = [...result].sort((a, b) => (Number(b.area) || 0) - (Number(a.area) || 0))
 
     return result
   }, [listings, filter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])

@@ -37,9 +37,9 @@ export type SanityListing = {
   _id: string
   title: string
   type: 'sale' | 'rent'
-  price: number
-  area: number
-  rooms: number
+  price: string
+  area: string
+  rooms: string
   floor: string | number | null
   totalFloors: number | null
   constructionAct: 'act14' | 'act15' | 'act16' | null
