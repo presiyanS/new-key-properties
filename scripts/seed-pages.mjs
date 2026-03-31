@@ -151,7 +151,7 @@ const pages = [
 
 async function seed() {
   for (const page of pages) {
-    await client.createOrReplace(page)
+    await client.createIfNotExists(page)
     console.log(`✅  ${page._id} seeded`)
   }
   console.log('\n🎉  All pages seeded successfully!')

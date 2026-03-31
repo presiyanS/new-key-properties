@@ -147,7 +147,7 @@ const neighborhoods = [
 ]
 
 for (const n of neighborhoods) {
-  await client.createOrReplace(n)
+  await client.createIfNotExists(n)
   console.log(`✅  ${n.name}`)
 }
 console.log('\n🎉  All neighborhoods seeded!')

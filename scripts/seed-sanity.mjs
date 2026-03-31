@@ -253,7 +253,7 @@ async function seed() {
   console.log('Seeding Sanity documents...\n')
   for (const doc of docs) {
     try {
-      await client.createOrReplace(doc)
+      await client.createIfNotExists(doc)
       console.log('✓ ' + doc._id)
     } catch (err) {
       console.error('✗ ' + doc._id + ':', err.message)
