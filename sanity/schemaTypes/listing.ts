@@ -3,6 +3,7 @@ import { HomeIcon } from '@sanity/icons'
 import { orderRankField } from '@sanity/orderable-document-list'
 import { ExternalImagePreview } from '../components/ExternalImagePreview'
 import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'
+import { PricePrefixInput } from '../components/PricePrefixInput'
 
 export const listingType = defineType({
   name: 'listing',
@@ -36,6 +37,7 @@ export const listingType = defineType({
       type: 'string',
       description: 'Може да е число (650000) или текст (По договаряне, €650/мес.)',
       validation: (r) => r.required(),
+      components: { input: PricePrefixInput },
     }),
     defineField({
       name: 'area',
