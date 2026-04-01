@@ -68,12 +68,12 @@ const LISTING_FIELDS = `
 
 const _cachedGetListings = unstable_cache(
   () => client.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`),
-  ['listings-v2'],
+  ['listings-v3'],
   { revalidate: 300 }
 )
 const _cachedGetFeaturedListings = unstable_cache(
   () => client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
-  ['featured-listings-v2'],
+  ['featured-listings-v3'],
   { revalidate: 300 }
 )
 

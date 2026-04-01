@@ -3,15 +3,7 @@ import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
 
 export default function PropertyCard({ listing }: { listing: SanityListing }) {
-  const numericPrice = listing.price != null ? Number(String(listing.price).replace(/[\s€/мес.]/g, '').trim()) : NaN
-  const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-  const priceFormatted = listing.price != null
-    ? (!isNaN(numericPrice)
-        ? listing.type === 'sale'
-          ? `${formatNum(numericPrice)} €`
-          : `${formatNum(numericPrice)} €/мес.`
-        : String(listing.price))
-    : '–'
+  const priceFormatted = listing.price != null ? String(listing.price) : '–'
 
   const mainImage = listing.imageUrls?.[0]
 

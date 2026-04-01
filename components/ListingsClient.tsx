@@ -114,17 +114,17 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
       return clean.toLowerCase() === rooms.toLowerCase()
     })
 
-    // Price (numeric only)
-    if (priceMin) result = result.filter((l) => { const n = Number(l.price); return !isNaN(n) && n >= Number(priceMin) })
-    if (priceMax) result = result.filter((l) => { const n = Number(l.price); return !isNaN(n) && n <= Number(priceMax) })
+    // Price (strip formatting before comparing)
+    if (priceMin) result = result.filter((l) => { const n = Number(String(l.price).replace(/[^0-9]/g, '')); return !isNaN(n) && n >= Number(priceMin) })
+    if (priceMax) result = result.filter((l) => { const n = Number(String(l.price).replace(/[^0-9]/g, '')); return !isNaN(n) && n <= Number(priceMax) })
 
     // Area (numeric only)
     if (areaMin) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n >= Number(areaMin) })
     if (areaMax) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n <= Number(areaMax) })
 
     // Sort
-    if (sortBy === 'price-asc') result = [...result].sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0))
-    else if (sortBy === 'price-desc') result = [...result].sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0))
+    if (sortBy === 'price-asc') result = [...result].sort((a, b) => (Number(String(a.price).replace(/[^0-9]/g, '')) || 0) - (Number(String(b.price).replace(/[^0-9]/g, '')) || 0))
+    else if (sortBy === 'price-desc') result = [...result].sort((a, b) => (Number(String(b.price).replace(/[^0-9]/g, '')) || 0) - (Number(String(a.price).replace(/[^0-9]/g, '')) || 0))
     else if (sortBy === 'area-asc') result = [...result].sort((a, b) => (Number(a.area) || 0) - (Number(b.area) || 0))
     else if (sortBy === 'area-desc') result = [...result].sort((a, b) => (Number(b.area) || 0) - (Number(a.area) || 0))
 
