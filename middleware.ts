@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Protect /studio — redirect to secret login page if not authenticated
-  if (pathname.startsWith('/studio')) {
+  if (pathname.startsWith('/studio') && !pathname.startsWith('/studio-staging')) {
     const auth = request.cookies.get('studio_auth')?.value
     if (auth !== 'true') {
       return NextResponse.redirect(new URL('/nkp-admin', request.url))
