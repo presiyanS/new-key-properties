@@ -9,7 +9,7 @@ import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, S
 const previewOrigin = process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000')
 
-const stagingPreviewOrigin = 'https://new-key-properties-mqef43q92-presiyans-projects-e2f8b3d2.vercel.app'
+const stagingPreviewOrigin = 'https://new-key-properties-git-staging-presiyans-projects-e2f8b3d2.vercel.app'
 
 function buildPlugins(previewUrl?: string) {
   return [
