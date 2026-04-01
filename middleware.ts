@@ -20,6 +20,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Protect /studio-staging with its own password
+  if (pathname.startsWith('/studio-staging')) {
+    const auth = request.cookies.get('studio_staging_auth')?.value
+    if (auth !== 'true') {
+      return NextResponse.redirect(new URL('/nkp-admin?next=/studio-staging', request.url))
+    }
+  }
+
   // Forward pathname as header so root layout can read it
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-pathname', pathname)

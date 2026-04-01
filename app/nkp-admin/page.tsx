@@ -1,13 +1,15 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function StudioLoginPage() {
+function LoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next') ?? '/studio'
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -17,11 +19,11 @@ export default function StudioLoginPage() {
     const res = await fetch('/api/studio-login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password, next }),
     })
 
     if (res.ok) {
-      router.push('/studio')
+      router.push(next)
     } else {
       setError(true)
       setLoading(false)
@@ -71,5 +73,13 @@ export default function StudioLoginPage() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function StudioLoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   )
 }
