@@ -44,12 +44,13 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   const listing = await getListing(id, preview)
   if (!listing) notFound()
 
-  const numericPrice = listing.price != null ? Number(String(listing.price).replace(/\s/g, '')) : NaN
+  const numericPrice = listing.price != null ? Number(String(listing.price).replace(/[\s€/мес.]/g, '').trim()) : NaN
+  const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   const priceFormatted = listing.price != null
     ? (!isNaN(numericPrice)
         ? listing.type === 'sale'
-          ? `${numericPrice.toLocaleString('bg-BG')} €`
-          : `${numericPrice.toLocaleString('bg-BG')} €/мес.`
+          ? `${formatNum(numericPrice)} €`
+          : `${formatNum(numericPrice)} €/мес.`
         : String(listing.price))
     : '–'
 
@@ -109,7 +110,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     <p className="text-brand-gold font-bold text-3xl">{priceFormatted}</p>
                     {listing.type === 'sale' && !isNaN(numericPrice) && listing.area && !isNaN(Number(listing.area)) && (
                       <p className="text-gray-400 text-sm mt-0.5">
-                        ~{Math.round(numericPrice / Number(listing.area)).toLocaleString('bg-BG')} €/м²
+                        ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/м²
                       </p>
                     )}
                   </div>
