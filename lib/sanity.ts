@@ -194,7 +194,7 @@ export async function getTeamMembers(preview = false): Promise<SanityTeamMember[
 
 // ── Page Content ─────────────────────────────────────────────────────────────
 
-const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]`), ['home-page'], { revalidate: 3600 })
+const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->{ ${LISTING_FIELDS} } }`), ['home-page'], { revalidate: 3600 })
 const _cachedGetAboutPage = unstable_cache(() => client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`), ['about-page'], { revalidate: 3600 })
 const _cachedGetContactPage = unstable_cache(() => client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`), ['contact-page'], { revalidate: 3600 })
 const _cachedGetConsultationPage = unstable_cache(() => client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`), ['consultation-page'], { revalidate: 3600 })
@@ -206,7 +206,7 @@ const _cachedGetNeighborhoods = unstable_cache(() => client.fetch(`*[_type == "n
 
 export async function getHomePage(preview = false) {
   try {
-    if (preview) return await previewClient.fetch(`*[_type == "homePage" && _id == "homePage"][0]`)
+    if (preview) return await previewClient.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->{ ${LISTING_FIELDS} } }`)
     return await _cachedGetHomePage()
   } catch { return null }
 }

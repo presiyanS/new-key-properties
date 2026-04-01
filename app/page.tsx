@@ -7,7 +7,7 @@ import AnimatedHeroBackground from '@/components/AnimatedHeroBackground'
 import AnimatedSkylineHero from '@/components/AnimatedSkylineHero'
 import NeighborhoodMarquee from '@/components/NeighborhoodMarquee'
 import CounterStat from '@/components/CounterStat'
-import { getFeaturedListings, getBlogPosts, getHomePage } from '@/lib/sanity'
+import { getFeaturedListings, getBlogPosts, getHomePage, type SanityListing } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { draftMode } from 'next/headers'
 
@@ -365,7 +365,7 @@ export default async function HomePage() {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {featuredListings.map((l, i) => (
+            {(cms?.featuredListings?.length > 0 ? cms.featuredListings : featuredListings).map((l: SanityListing, i: number) => (
               <AnimatedSection key={l._id} delay={i * 0.1}>
                 <PropertyCard listing={l} />
               </AnimatedSection>

@@ -87,6 +87,13 @@ export const homePageType = defineType({
     defineField({ name: 'featuredSubtitle', title: 'Избрани имоти — Подзаглавие', type: 'string' }),
     defineField({ name: 'featuredLinkText', title: 'Избрани имоти — Текст на линка', type: 'string' }),
     defineField({ name: 'featuredMobileLinkText', title: 'Избрани имоти — Текст на мобилния линк', type: 'string' }),
+    defineField({
+      name: 'featuredListings',
+      title: 'Избрани имоти — Имоти (ръчен избор)',
+      description: 'Изберете и наредете имотите, които да се показват в секцията. Ако е празно, ще се показват всички маркирани като "Препоръчан имот".',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'listing' }] }],
+    }),
 
     // ── Process Section ───────────────────────────────────────────────
     defineField({ name: 'processLabel', title: 'Как работим — Надпис (малък)', type: 'string' }),
