@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getListing } from '@/lib/sanity'
+import { getListing, getListings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
 import ShareButtons from '@/components/ShareButtons'
 
 export const revalidate = 60
+
+export async function generateStaticParams() {
+  const listings = await getListings()
+  return listings.map((l) => ({ id: l._id }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
