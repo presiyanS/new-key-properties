@@ -183,7 +183,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 {/* Description */}
                 <h2 className="font-bold text-gray-900 text-lg mb-3">Описание</h2>
                 <div className="text-gray-600 leading-relaxed mb-8 space-y-3">
-                  {listing.description.split('\n').filter(Boolean).map((para, i) => (
+                  {(listing.description ?? '').split('\n').filter(Boolean).map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
                 </div>
