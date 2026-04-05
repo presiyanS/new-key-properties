@@ -36,7 +36,7 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
         className="relative h-80 sm:h-[420px] rounded-2xl overflow-hidden bg-brand-green/10 cursor-zoom-in"
         onClick={() => setLightboxIndex(0)}
       >
-        <Image src={images[0]} alt={title} fill className="object-cover" />
+        <Image src={images[0]} alt={title} fill priority sizes="(max-width: 1024px) 100vw, 60vw" className="object-cover" />
         {images.length > 1 && (
           <div className="absolute bottom-4 right-4 bg-black/50 text-white text-xs px-3 py-1.5 rounded-full">
             1 / {images.length}
@@ -53,7 +53,7 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
               className="relative h-20 rounded-xl overflow-hidden bg-brand-green/10 cursor-zoom-in"
               onClick={() => setLightboxIndex(i + 1)}
             >
-              <Image src={img} alt={`${title} - снимка ${i + 2}`} fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src={img} alt={`${title} - снимка ${i + 2}`} fill sizes="25vw" className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
           ))}
         </div>

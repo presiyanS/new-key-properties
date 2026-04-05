@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
 
-export default function PropertyCard({ listing }: { listing: SanityListing }) {
+export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
   const priceFormatted = listing.price != null ? String(listing.price) : '–'
 
   const mainImage = listing.imageUrls?.[0]
@@ -19,6 +19,8 @@ export default function PropertyCard({ listing }: { listing: SanityListing }) {
             src={mainImage}
             alt={listing.title}
             fill
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
         ) : (
