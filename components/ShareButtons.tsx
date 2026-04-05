@@ -50,6 +50,8 @@ export default function ShareButtons({ id, title }: { id: string; title: string 
       {/* Viber */}
       <a
         href={`viber://forward?text=${encodedText}`}
+        target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#7360F2]/10 text-[#7360F2] hover:bg-[#7360F2]/20 transition-colors text-sm font-medium"
         aria-label="Сподели в Viber"
       >
