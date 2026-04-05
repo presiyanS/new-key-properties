@@ -367,7 +367,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {(cms?.featuredListings?.length > 0 ? cms.featuredListings : featuredListings).map((l: SanityListing, i: number) => (
               <AnimatedSection key={l._id} delay={i * 0.1}>
-                <PropertyCard listing={l} />
+                <PropertyCard listing={l} priority={i === 0} />
               </AnimatedSection>
             ))}
           </div>
