@@ -6,7 +6,6 @@ import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
 import ShareButtons from '@/components/ShareButtons'
-import ScrollToTop from '@/components/ScrollToTop'
 
 export const revalidate = 60
 
@@ -58,7 +57,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      <ScrollToTop />
+      <script dangerouslySetInnerHTML={{ __html: `window.scrollTo(0,0);` }} />
       {/* Back bar */}
       <section className="bg-brand-green py-5 border-b border-brand-gold/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

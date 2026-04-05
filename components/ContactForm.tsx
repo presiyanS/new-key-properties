@@ -75,13 +75,14 @@ export default function ContactForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} autoComplete="off" className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">{nameLabel}</label>
           <input
             type="text"
             required
+            autoComplete="new-password"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             placeholder={namePlaceholder}
@@ -93,6 +94,7 @@ export default function ContactForm({
           <input
             type="tel"
             required
+            autoComplete="new-password"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
             placeholder={phonePlaceholder}
@@ -104,6 +106,7 @@ export default function ContactForm({
         <label className="block text-sm font-medium text-gray-700 mb-1.5">{emailLabel}</label>
         <input
           type="email"
+          autoComplete="new-password"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           placeholder={emailPlaceholder}

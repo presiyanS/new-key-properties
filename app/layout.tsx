@@ -53,6 +53,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="bg">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration='manual';` }} />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
         {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
         <main>{children}</main>
