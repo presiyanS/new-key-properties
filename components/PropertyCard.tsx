@@ -3,7 +3,8 @@ import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
 
 export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
-  const priceFormatted = listing.price != null ? String(listing.price) : '–'
+  const priceRaw = listing.price != null ? String(listing.price) : '–'
+  const priceFormatted = /^[\d\s.,]+$/.test(priceRaw) ? priceRaw + ' €' : priceRaw
 
   const mainImage = listing.imageUrls?.[0]
 

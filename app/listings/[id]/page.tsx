@@ -50,7 +50,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   const listing = await getListing(id, preview)
   if (!listing) notFound()
 
-  const priceFormatted = listing.price != null ? String(listing.price) : '–'
+  const priceRaw = listing.price != null ? String(listing.price) : '–'
+  const priceFormatted = /^[\d\s.,]+$/.test(priceRaw) ? priceRaw + ' €' : priceRaw
   const numericPrice = Number(String(listing.price ?? '').replace(/[^0-9]/g, ''))
   const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
