@@ -3,7 +3,7 @@ import { getListings, getListingsPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import ListingsClient from '@/components/ListingsClient'
 
-export const revalidate = 60
+export const revalidate = 30
 
 export const metadata: Metadata = {
   title: 'Имоти',
