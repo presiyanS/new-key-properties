@@ -34,6 +34,7 @@ function buildPlugins() {
             orderableDocumentListDeskItem({ type: 'listing', title: 'Имоти', icon: HomeIcon, S, context }),
             S.listItem().title('Блог статии').icon(DocumentTextIcon).child(S.documentTypeList('blogPost').title('Всички статии').defaultOrdering([{ field: 'date', direction: 'desc' }])),
             S.listItem().title('Екип').icon(UsersIcon).child(S.documentTypeList('teamMember').title('Членове на екипа').defaultOrdering([{ field: 'order', direction: 'asc' }])),
+            S.listItem().title('Квартали').icon(HomeIcon).child(S.documentTypeList('neighborhood').title('Квартали').defaultOrdering([{ field: 'name', direction: 'asc' }])),
           ]),
     }),
     visionTool(),
