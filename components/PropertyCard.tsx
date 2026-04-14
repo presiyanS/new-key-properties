@@ -4,7 +4,10 @@ import type { SanityListing } from '@/lib/sanity'
 
 export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
   const priceRaw = listing.price != null ? String(listing.price) : '–'
-  const priceFormatted = /^[\d\s.,]+$/.test(priceRaw) ? priceRaw + ' €' : priceRaw
+  const priceStripped = priceRaw.replace(/[\s€]/g, '')
+  const priceFormatted = /^\d+$/.test(priceStripped)
+    ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+    : priceRaw
 
   const mainImage = listing.imageUrls?.[0]
 

@@ -51,7 +51,10 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   if (!listing) notFound()
 
   const priceRaw = listing.price != null ? String(listing.price) : '–'
-  const priceFormatted = /^[\d\s.,]+$/.test(priceRaw) ? priceRaw + ' €' : priceRaw
+  const priceStripped = priceRaw.replace(/[\s€]/g, '')
+  const priceFormatted = /^\d+$/.test(priceStripped)
+    ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+    : priceRaw
   const numericPrice = Number(String(listing.price ?? '').replace(/[^0-9]/g, ''))
   const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
