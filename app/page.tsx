@@ -7,6 +7,7 @@ import AnimatedHeroBackground from '@/components/AnimatedHeroBackground'
 import AnimatedSkylineHero from '@/components/AnimatedSkylineHero'
 import NeighborhoodMarquee from '@/components/NeighborhoodMarquee'
 import CounterStat from '@/components/CounterStat'
+import ComplexServices from '@/components/ComplexServices'
 import { getFeaturedListings, getBlogPosts, getHomePage, type SanityListing } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { draftMode } from 'next/headers'
@@ -343,6 +344,9 @@ export default async function HomePage() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ── Complex Services / Partnerships ── */}
+      <ComplexServices />
 
       {/* ── Featured Listings ── */}
       <section className="py-24 bg-gray-50">
