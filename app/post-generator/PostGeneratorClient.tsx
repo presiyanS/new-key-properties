@@ -21,6 +21,7 @@ export default function PostGeneratorClient() {
   const [aiTone, setAiTone] = useState('neutral')
   const [aiDetails, setAiDetails] = useState('')
   const [generating, setGenerating] = useState(false)
+  const [aiError, setAiError] = useState('')
 
   const activeCategory = categories.find(c => c.id === activeCategoryId)!
   const activeTopic = activeCategory.topics.find(t => t.id === activeTopicId)!
@@ -67,6 +68,7 @@ export default function PostGeneratorClient() {
   async function handleAiGenerate() {
     if (!aiDetails.trim()) return
     setGenerating(true)
+    setAiError('')
     try {
       const res = await fetch('/api/generate-post', {
         method: 'POST',
@@ -74,8 +76,14 @@ export default function PostGeneratorClient() {
         body: JSON.stringify({ platform, postType: aiPostType, tone: aiTone, details: aiDetails }),
       })
       const data = await res.json()
-      if (data.post) setPost(data.post)
-    } catch { /* silent */ } finally {
+      if (data.post) {
+        setPost(data.post)
+      } else {
+        setAiError(data.error ?? 'Неизвестна грешка. Провери конзолата.')
+      }
+    } catch (e: any) {
+      setAiError(e?.message ?? 'Мрежова грешка — провери интернет връзката.')
+    } finally {
       setGenerating(false)
     }
   }
@@ -349,6 +357,13 @@ export default function PostGeneratorClient() {
                       className="w-full text-sm border border-gray-200 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green placeholder-gray-300"
                     />
                   </div>
+
+                  {/* Error message */}
+                  {aiError && (
+                    <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-red-600">
+                      ⚠️ {aiError}
+                    </div>
+                  )}
 
                   {/* Generate button */}
                   <button
