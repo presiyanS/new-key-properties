@@ -35,9 +35,11 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
   ])
   if (!n) notFound()
 
-  const neighborhoodListings = allListings.filter(
-    (l) => l.neighborhood?.toLowerCase() === n.name?.toLowerCase()
-  )
+  const nameLC = n.name?.toLowerCase() ?? ''
+  const neighborhoodListings = allListings.filter((l) => {
+    const lc = l.neighborhood?.toLowerCase() ?? ''
+    return lc === nameLC || lc.startsWith(nameLC + ' ')
+  })
 
   const paragraphs = n.description?.split('\n\n').filter(Boolean) ?? []
 
