@@ -64,15 +64,16 @@ ${toneGuide ? `\n${toneGuide}\n` : ''}
 Напиши готов пост за публикуване.`
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-lite',
+      model: 'gemini-1.5-flash',
       systemInstruction: systemPrompt,
     })
 
     const result = await model.generateContent(userPrompt)
     const text = result.response.text()
     return NextResponse.json({ post: text })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generating post:', error)
-    return NextResponse.json({ error: 'Грешка при генерирането. Провери API ключа.' }, { status: 500 })
+    const msg = error?.message ?? 'Неизвестна грешка'
+    return NextResponse.json({ error: `Грешка: ${msg}` }, { status: 500 })
   }
 }
