@@ -15,6 +15,12 @@ export default function PostGeneratorClient() {
   const [platform, setPlatform] = useState<Platform>('instagram')
   const [post, setPost] = useState(categories[0].topics[0].posts['instagram'])
   const [copied, setCopied] = useState(false)
+  const [hashCopied, setHashCopied] = useState(false)
+  const [aiOpen, setAiOpen] = useState(false)
+  const [aiPostType, setAiPostType] = useState('listing')
+  const [aiTone, setAiTone] = useState('neutral')
+  const [aiDetails, setAiDetails] = useState('')
+  const [generating, setGenerating] = useState(false)
 
   const activeCategory = categories.find(c => c.id === activeCategoryId)!
   const activeTopic = activeCategory.topics.find(t => t.id === activeTopicId)!
@@ -50,6 +56,30 @@ export default function PostGeneratorClient() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  async function handleHashtagCopy() {
+    const hashtags = post.match(/#\S+/g)?.join(' ') ?? ''
+    if (!hashtags) return
+    await navigator.clipboard.writeText(hashtags)
+    setHashCopied(true)
+    setTimeout(() => setHashCopied(false), 2000)
+  }
+
+  async function handleAiGenerate() {
+    if (!aiDetails.trim()) return
+    setGenerating(true)
+    try {
+      const res = await fetch('/api/generate-post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ platform, postType: aiPostType, tone: aiTone, details: aiDetails }),
+      })
+      const data = await res.json()
+      if (data.post) setPost(data.post)
+    } catch { /* silent */ } finally {
+      setGenerating(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -59,7 +89,7 @@ export default function PostGeneratorClient() {
             Генератор на <span className="text-brand-gold">постове</span>
           </h1>
           <p className="text-white/70 text-lg">
-            {categories.reduce((acc, c) => acc + c.topics.length, 0)} готови поста за 3 платформи — редактирай и публикувай
+            {categories.reduce((acc, c) => acc + c.topics.length, 0)} готови поста · 3 платформи · AI генератор с избор на тон
           </p>
         </div>
       </div>
@@ -145,10 +175,21 @@ export default function PostGeneratorClient() {
                   <span className="text-xs text-gray-400 uppercase tracking-wider">{activeCategory.label}</span>
                   <h3 className="font-bold text-brand-green">{activeTopic.label}</h3>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <span className={`text-xs font-mono ${charColor}`}>
                     {charCount.toLocaleString()} / {charLimit.toLocaleString()}
                   </span>
+                  <button
+                    onClick={handleHashtagCopy}
+                    title="Копирай само хаштаговете"
+                    className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-all ${
+                      hashCopied
+                        ? 'bg-blue-100 text-blue-700'
+                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
+                    }`}
+                  >
+                    # {hashCopied ? 'Копирано!' : 'Хаштагове'}
+                  </button>
                   <button
                     onClick={handleCopy}
                     className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-lg transition-all ${
@@ -229,6 +270,110 @@ export default function PostGeneratorClient() {
                   ))
                 )}
               </div>
+            </div>
+
+            {/* AI Generator */}
+            <div className="bg-white rounded-2xl shadow-sm border border-brand-gold/20 overflow-hidden">
+              <button
+                onClick={() => setAiOpen(!aiOpen)}
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-brand-gold/10 rounded-xl flex items-center justify-center text-lg shrink-0">✨</div>
+                  <div>
+                    <p className="font-bold text-brand-green text-sm">AI Генератор</p>
+                    <p className="text-xs text-gray-400">Генерирай нов пост по твои детайли + тон</p>
+                  </div>
+                </div>
+                <svg className={`w-5 h-5 text-gray-400 transition-transform shrink-0 ${aiOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {aiOpen && (
+                <div className="border-t border-gray-100 p-4 space-y-4">
+                  {/* Post type */}
+                  <div>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Тип пост</p>
+                    <select
+                      value={aiPostType}
+                      onChange={e => setAiPostType(e.target.value)}
+                      className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green bg-white"
+                    >
+                      <option value="listing">🏠 Обява за имот</option>
+                      <option value="market_tip">📊 Пазарен съвет</option>
+                      <option value="behind_scenes">🔑 Зад кулисите</option>
+                      <option value="market_fact">📈 Пазарен факт</option>
+                      <option value="client_story">❤️ История на клиент</option>
+                      <option value="urgent">⚡ Спешна оферта</option>
+                    </select>
+                  </div>
+
+                  {/* Tone selector */}
+                  <div>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Тон</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { id: 'neutral', label: 'Неутрален', icon: '⚖️' },
+                        { id: 'friendly', label: 'Приятелски', icon: '😊' },
+                        { id: 'authoritative', label: 'Авторитетен', icon: '🎯' },
+                      ].map(t => (
+                        <button
+                          key={t.id}
+                          onClick={() => setAiTone(t.id)}
+                          className={`text-xs py-2.5 px-2 rounded-xl border transition-all font-medium flex flex-col items-center gap-1 ${
+                            aiTone === t.id
+                              ? 'bg-brand-green text-white border-brand-green shadow-sm'
+                              : 'border-gray-200 text-gray-600 hover:border-brand-green/50 hover:text-brand-green'
+                          }`}
+                        >
+                          <span className="text-base">{t.icon}</span>
+                          <span>{t.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Details */}
+                  <div>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Детайли</p>
+                    <textarea
+                      value={aiDetails}
+                      onChange={e => setAiDetails(e.target.value)}
+                      rows={4}
+                      placeholder={
+                        aiPostType === 'listing'
+                          ? 'Пример: 2-стаен в Лозенец, 65 кв.м, ет.4 от 6, АКТ16, цена €175,000, добро разпределение, тихо място, близо до парк...'
+                          : 'Опишете темата, историята или информацията за поста...'
+                      }
+                      className="w-full text-sm border border-gray-200 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green placeholder-gray-300"
+                    />
+                  </div>
+
+                  {/* Generate button */}
+                  <button
+                    onClick={handleAiGenerate}
+                    disabled={generating || !aiDetails.trim()}
+                    className="w-full flex items-center justify-center gap-2 bg-brand-green text-white font-bold py-3.5 rounded-xl hover:bg-brand-green/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  >
+                    {generating ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Генерирам...
+                      </>
+                    ) : (
+                      <>
+                        <span>✨</span>
+                        Генерирай с AI
+                      </>
+                    )}
+                  </button>
+                  <p className="text-xs text-gray-400 text-center">Резултатът се зарежда директно в редактора горе</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

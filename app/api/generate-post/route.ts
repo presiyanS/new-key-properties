@@ -9,6 +9,12 @@ const platformGuides: Record<string, string> = {
   linkedin: 'LinkedIn: максимум 3000 знака, по-professional и информативен тон, фокус върху пазарни прозрения и стойност, по-малко емоджита',
 }
 
+const toneGuides: Record<string, string> = {
+  neutral: '',
+  friendly: 'ВАЖНО ЗА ТОНА: Използвай неформален, топъл, приятелски тон. Обръщай се с "ти" (не "Вие"). Пиши като добър приятел — директно, с личен щрих, понякога с хумор. Никакъв корпоративен език.',
+  authoritative: 'ВАЖНО ЗА ТОНА: Използвай авторитетен, експертен тон на водещ специалист в индустрията. Данни, числа, конкретен анализ. Минимум емоции, максимум информация. Изречения — кратки и категорични.',
+}
+
 const postTypeGuides: Record<string, string> = {
   listing: 'Обява за имот: Опиши имота привлекателно с ключовите предимства и характеристики. Добави усещане за спешност (пазарът е конкурентен, добрите имоти се вземат бързо). Завърши с ясен призив за действие - обади се на 0879826292 или пиши в директни съобщения.',
   market_tip: 'Пазарен съвет: Полезна и практична информация за купувачи или продавачи в София. Позиционирай New Key Properties като честен и компетентен партньор. Завърши с покана за безплатна консултация.',
@@ -38,7 +44,7 @@ const systemPrompt = `Ти си маркетинг експерт за New Key P
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { platform, postType, details } = body
+    const { platform, postType, details, tone } = body
 
     if (!platform || !postType || !details) {
       return NextResponse.json({ error: 'Липсващи полета' }, { status: 400 })
@@ -46,12 +52,13 @@ export async function POST(request: NextRequest) {
 
     const platformGuide = platformGuides[platform] ?? ''
     const postTypeGuide = postTypeGuides[postType] ?? ''
+    const toneGuide = toneGuides[tone ?? 'neutral'] ?? ''
 
     const userPrompt = `Платформа: ${platform.toUpperCase()}
 Насоки за платформата: ${platformGuide}
 
 Тип пост: ${postTypeGuide}
-
+${toneGuide ? `\n${toneGuide}\n` : ''}
 Детайли/Информация: ${details}
 
 Напиши готов пост за публикуване.`
