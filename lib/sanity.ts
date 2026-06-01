@@ -66,15 +66,23 @@ const LISTING_FIELDS = `
   googleMapsUrl
 `
 
+const freshClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '9gz26s06',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
+  apiVersion: '2024-01-01',
+  useCdn: false,
+  token: process.env.SANITY_API_READ_TOKEN,
+})
+
 const _cachedGetListings = unstable_cache(
-  () => client.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`),
-  ['listings-v3'],
-  { revalidate: 300 }
+  () => freshClient.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`),
+  ['listings-v4'],
+  { revalidate: 60 }
 )
 const _cachedGetFeaturedListings = unstable_cache(
-  () => client.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
-  ['featured-listings-v3'],
-  { revalidate: 300 }
+  () => freshClient.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
+  ['featured-listings-v4'],
+  { revalidate: 60 }
 )
 
 export async function getListings(preview = false): Promise<SanityListing[]> {
