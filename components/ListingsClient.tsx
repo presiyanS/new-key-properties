@@ -108,7 +108,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     // Neighborhood
     if (neighborhood) result = result.filter((l) => {
       const raw = l.neighborhood?.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\uFEFF]/g, '').trim() ?? ''
-      return raw === neighborhood
+      return raw.toLowerCase() === neighborhood.toLowerCase()
     })
 
     // Rooms
