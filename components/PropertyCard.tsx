@@ -56,6 +56,15 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           )}
         </div>
 
+        {/* Sold ribbon */}
+        {listing.sold && (
+          <div className="absolute top-0 right-0 w-28 h-28 overflow-hidden pointer-events-none z-20">
+            <div className="absolute top-5 -right-7 w-36 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest text-center py-1.5 rotate-45 shadow-lg">
+              Продадено
+            </div>
+          </div>
+        )}
+
         {/* View more — appears on hover */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="bg-brand-gold text-brand-green text-sm font-bold px-5 py-2 rounded-full flex items-center gap-2 shadow-xl translate-y-2 group-hover:translate-y-0 transition-transform duration-400">

@@ -104,7 +104,30 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     {listing.type === 'sale' ? 'Продажба' : 'Наем'}
                   </span>
                 </div>
+                {/* Sold ribbon */}
+                {listing.sold && (
+                  <div className="absolute top-0 right-0 w-40 h-40 overflow-hidden pointer-events-none z-20">
+                    <div className="absolute top-8 -right-9 w-52 bg-red-600 text-white text-sm font-black uppercase tracking-widest text-center py-2 rotate-45 shadow-xl">
+                      Продадено
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {/* Sold notice banner */}
+              {listing.sold && (
+                <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl px-6 py-4">
+                  <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center shrink-0">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-bold text-red-700 text-sm">Имотът е вече продаден</p>
+                    <p className="text-red-500 text-xs mt-0.5">Свържете се с нас — намираме подобни имоти по индивидуални критерии.</p>
+                  </div>
+                </div>
+              )}
 
               {/* Main info card */}
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">

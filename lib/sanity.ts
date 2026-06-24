@@ -45,6 +45,7 @@ export type SanityListing = {
   imageUrls: string[]
   features: string[]
   featured: boolean
+  sold: boolean
   googleMapsUrl: string | null
   category: string | null
 }
@@ -64,6 +65,7 @@ const LISTING_FIELDS = `
   "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),
   features,
   featured,
+  sold,
   googleMapsUrl,
   category
 `

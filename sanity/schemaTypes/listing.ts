@@ -136,6 +136,13 @@ export const listingType = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'sold',
+      title: 'Продаден / Отдаден',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Маркирайте ако имотът вече е продаден или отдаден под наем.',
+    }),
   ],
   preview: {
     select: {
