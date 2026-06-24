@@ -32,6 +32,21 @@ export const listingType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'category',
+      title: 'Категория имот',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Апартамент', value: 'apartment' },
+          { title: 'Гараж', value: 'garage' },
+          { title: 'Офис', value: 'office' },
+          { title: 'Магазин', value: 'store' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'apartment',
+    }),
+    defineField({
       name: 'price',
       title: 'Цена (EUR)',
       type: 'string',

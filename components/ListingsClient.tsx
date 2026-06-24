@@ -6,6 +6,7 @@ import SaveSearchBar from '@/components/SaveSearchBar'
 import type { SanityListing } from '@/lib/sanity'
 
 type Filter = 'all' | 'sale' | 'rent'
+type CategoryFilter = 'all' | 'apartment' | 'garage' | 'office' | 'store'
 type SortBy = 'default' | 'price-asc' | 'price-desc' | 'area-asc' | 'area-desc'
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
 
 export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
   const [filter, setFilter] = useState<Filter>('all')
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [neighborhood, setNeighborhood] = useState('')
   const [rooms, setRooms] = useState('')
@@ -76,6 +78,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
   function clearAll() {
     setFilter('all')
+    setCategoryFilter('all')
     setSearchQuery('')
     setNeighborhood('')
     setRooms('')
@@ -91,6 +94,14 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
     // Type
     if (filter !== 'all') result = result.filter((l) => l.type === filter)
+
+    // Category — use stored category field; fall back to title heuristic for legacy listings
+    if (categoryFilter !== 'all') {
+      result = result.filter((l) => {
+        const cat = l.category ?? (l.title?.toLowerCase().includes('гараж') ? 'garage' : 'apartment')
+        return cat === categoryFilter
+      })
+    }
 
     // Search
     if (searchQuery.trim()) {
@@ -132,12 +143,20 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     else if (sortBy === 'area-desc') result = [...result].sort((a, b) => (Number(b.area) || 0) - (Number(a.area) || 0))
 
     return result
-  }, [listings, filter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])
+  }, [listings, filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])
 
   const tabs: { val: Filter; label: string }[] = [
     { val: 'all', label: 'Всички' },
     { val: 'sale', label: 'Продажба' },
     { val: 'rent', label: 'Наем' },
+  ]
+
+  const categoryTabs: { val: CategoryFilter; label: string }[] = [
+    { val: 'all', label: 'Всички' },
+    { val: 'apartment', label: 'Апартаменти' },
+    { val: 'garage', label: 'Гаражи' },
+    { val: 'office', label: 'Офиси' },
+    { val: 'store', label: 'Магазини' },
   ]
 
   const selectClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 pr-8 appearance-none focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all cursor-pointer"
@@ -181,6 +200,23 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                 onClick={() => setFilter(tab.val)}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
                   filter === tab.val
+                    ? 'bg-brand-green text-brand-gold shadow-sm'
+                    : 'text-gray-500 hover:text-brand-green'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Category tabs */}
+          <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
+            {categoryTabs.map((tab) => (
+              <button
+                key={tab.val}
+                onClick={() => setCategoryFilter(tab.val)}
+                className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                  categoryFilter === tab.val
                     ? 'bg-brand-green text-brand-gold shadow-sm'
                     : 'text-gray-500 hover:text-brand-green'
                 }`}
@@ -340,7 +376,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
           <p className="text-gray-500 text-sm">
             <span className="font-semibold text-brand-green">{filtered.length}</span> намерени имота
           </p>
-          {(activeFilterCount > 0 || filter !== 'all' || sortBy !== 'default') && (
+          {(activeFilterCount > 0 || filter !== 'all' || categoryFilter !== 'all' || sortBy !== 'default') && (
             <button
               onClick={clearAll}
               className="text-sm text-gray-400 hover:text-brand-green transition-colors flex items-center gap-1.5"
