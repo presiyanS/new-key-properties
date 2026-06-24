@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import PropertyCard from '@/components/PropertyCard'
 import SaveSearchBar from '@/components/SaveSearchBar'
 import type { SanityListing } from '@/lib/sanity'
@@ -19,6 +20,7 @@ type Props = {
 }
 
 export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
+  const pathname = usePathname()
   const [filter, setFilter] = useState<Filter>('all')
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -30,6 +32,40 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   const [areaMax, setAreaMax] = useState('')
   const [sortBy, setSortBy] = useState<SortBy>('default')
   const [showFilters, setShowFilters] = useState(false)
+
+  // Restore filters from URL on mount
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search)
+    if (sp.get('type')) setFilter(sp.get('type') as Filter)
+    if (sp.get('cat')) setCategoryFilter(sp.get('cat') as CategoryFilter)
+    if (sp.get('q')) setSearchQuery(sp.get('q')!)
+    if (sp.get('neighborhood')) setNeighborhood(sp.get('neighborhood')!)
+    if (sp.get('rooms')) setRooms(sp.get('rooms')!)
+    if (sp.get('priceMin')) setPriceMin(sp.get('priceMin')!)
+    if (sp.get('priceMax')) setPriceMax(sp.get('priceMax')!)
+    if (sp.get('areaMin')) setAreaMin(sp.get('areaMin')!)
+    if (sp.get('areaMax')) setAreaMax(sp.get('areaMax')!)
+    if (sp.get('sort')) setSortBy(sp.get('sort') as SortBy)
+    if (sp.get('filters') === '1') setShowFilters(true)
+  }, [])
+
+  // Persist filters to URL without triggering a navigation
+  useEffect(() => {
+    const sp = new URLSearchParams()
+    if (filter !== 'all') sp.set('type', filter)
+    if (categoryFilter !== 'all') sp.set('cat', categoryFilter)
+    if (searchQuery.trim()) sp.set('q', searchQuery.trim())
+    if (neighborhood) sp.set('neighborhood', neighborhood)
+    if (rooms) sp.set('rooms', rooms)
+    if (priceMin) sp.set('priceMin', priceMin)
+    if (priceMax) sp.set('priceMax', priceMax)
+    if (areaMin) sp.set('areaMin', areaMin)
+    if (areaMax) sp.set('areaMax', areaMax)
+    if (sortBy !== 'default') sp.set('sort', sortBy)
+    if (showFilters) sp.set('filters', '1')
+    const qs = sp.toString()
+    window.history.replaceState(null, '', pathname + (qs ? '?' + qs : ''))
+  }, [filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy, showFilters, pathname])
 
   // Derived options from listings data
   const neighborhoods = useMemo(() => {
