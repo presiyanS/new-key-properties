@@ -36,6 +36,7 @@ export default function ContactForm({
   footerNote = 'Отговаряме в рамките на 24 часа. Местата са ограничени – свържете се с нас сега.',
 }: Props) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
+  const [consent, setConsent] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -124,10 +125,28 @@ export default function ContactForm({
           className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm resize-none"
         />
       </div>
+      {/* GDPR consent */}
+      <div className="flex items-start gap-3">
+        <input
+          id="gdpr-consent"
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 w-4 h-4 accent-brand-green shrink-0 cursor-pointer"
+        />
+        <label htmlFor="gdpr-consent" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
+          Съгласен/а съм данните ми (имe, телефон, имейл) да бъдат обработени от New Key Properties единствено с цел отговор на моето запитване. Прочетете нашата{' '}
+          <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-brand-green font-medium hover:underline">
+            Политика за поверителност
+          </a>
+          .
+        </label>
+      </div>
       {error && <p className="text-red-600 text-sm">{error}</p>}
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || !consent}
         className="w-full bg-brand-green text-brand-gold font-bold py-4 rounded-lg hover:bg-brand-green-light transition-colors text-base disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? loadingText : submitText}

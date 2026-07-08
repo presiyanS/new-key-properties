@@ -19,6 +19,25 @@ export const neighborhoodType = defineType({
     defineField({ name: 'cons', title: 'Недостатъци', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'externalImageUrl', title: 'Снимка (URL)', type: 'url' }),
     defineField({ name: 'metaDescription', title: 'SEO описание (до 155 знака)', type: 'string' }),
+    defineField({
+      name: 'faq',
+      title: 'Често задавани въпроси (FAQ)',
+      description: 'Въпроси и отговори за квартала — появяват се на страницата и в Google като rich results.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'faqItem',
+          title: 'Въпрос',
+          fields: [
+            defineField({ name: 'question', title: 'Въпрос', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'answer', title: 'Отговор', type: 'text', rows: 4, validation: (r) => r.required() }),
+          ],
+          preview: { select: { title: 'question' } },
+        },
+      ],
+    }),
+    defineField({ name: 'seoKeywords', title: 'SEO ключови думи (вътрешно)', type: 'string', description: 'Наредени с запетая, само за вътрешна справка' }),
   ],
   preview: {
     select: { title: 'name', subtitle: 'tagline' },

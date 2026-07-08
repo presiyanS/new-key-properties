@@ -181,7 +181,13 @@ export default function Footer({ settings }: { settings: Settings }) {
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-brand-gold/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
           <p>© {new Date().getFullYear()} {copyright}</p>
-          <p>{subline}</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-brand-gold/60 transition-colors">
+              Политика за поверителност
+            </Link>
+            <span className="text-brand-gold/20">·</span>
+            <p>{subline}</p>
+          </div>
         </div>
       </div>
     </footer>

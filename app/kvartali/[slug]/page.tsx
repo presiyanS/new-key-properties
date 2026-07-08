@@ -16,14 +16,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const n = await getNeighborhood(slug)
   if (!n) return {}
+  const title = `Квартал ${n.name} София — Цени, Наем и Имоти | New Key Properties`
+  const description = n.metaDescription ?? `Пълен наръчник за квартал ${n.name} в София: актуални цени на имоти, наеми, транспорт, предимства и недостатъци. New Key Properties.`
   return {
-    title: `Квартал ${n.name} — Пълен наръчник`,
-    description: n.metaDescription ?? `Всичко за квартал ${n.name} в София — цени, транспорт и характер.`,
+    title,
+    description,
+    keywords: `квартал ${n.name}, имоти ${n.name}, апартаменти ${n.name} София, наем ${n.name}, купи имот ${n.name}`,
     openGraph: {
-      title: `Квартал ${n.name} в София — Наръчник за имоти`,
-      description: n.metaDescription,
+      title,
+      description,
+      url: `https://newkey.bg/kvartali/${slug}`,
       ...(n.externalImageUrl ? { images: [{ url: n.externalImageUrl }] } : {}),
     },
+    alternates: { canonical: `https://newkey.bg/kvartali/${slug}` },
   }
 }
 
@@ -42,9 +47,37 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
   })
 
   const paragraphs = n.description?.split('\n\n').filter(Boolean) ?? []
+  const faqs: { question: string; answer: string }[] = n.faq ?? []
+
+  const jsonLd: Record<string, unknown>[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Place',
+      name: `Квартал ${n.name}, София`,
+      description: n.metaDescription ?? `Информация за квартал ${n.name} в София.`,
+      url: `https://newkey.bg/kvartali/${slug}`,
+      ...(n.externalImageUrl ? { image: n.externalImageUrl } : {}),
+      containedInPlace: { '@type': 'City', name: 'София', addressCountry: 'BG' },
+    },
+  ]
+
+  if (faqs.length > 0) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })
+  }
 
   return (
     <>
+      {jsonLd.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
       {/* Hero */}
       <section className="relative h-80 lg:h-96 bg-brand-green overflow-hidden">
         {n.externalImageUrl && (
@@ -133,6 +166,28 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
                     </svg>
                   </div>
                   <p className="text-gray-600 leading-relaxed">{n.transport}</p>
+                </div>
+              </div>
+            )}
+
+            {/* FAQ */}
+            {faqs.length > 0 && (
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <h2 className="font-serif text-2xl font-bold text-brand-green mb-6">Често задавани въпроси за квартал {n.name}</h2>
+                <div className="space-y-4">
+                  {faqs.map((f, i) => (
+                    <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
+                      <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-semibold text-gray-900 text-sm list-none hover:bg-gray-50 transition-colors">
+                        {f.question}
+                        <svg className="w-4 h-4 text-brand-green shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </summary>
+                      <div className="px-5 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                        {f.answer}
+                      </div>
+                    </details>
+                  ))}
                 </div>
               </div>
             )}
