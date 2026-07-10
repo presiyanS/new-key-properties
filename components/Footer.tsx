@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Locale } from '@/lib/i18n/config'
+import { localizeHref } from '@/lib/i18n/config'
+import type { Dictionary } from '@/lib/i18n/getDictionary'
 
 type Settings = {
   phone?: string
@@ -15,7 +18,15 @@ type Settings = {
   footerSubline?: string
 } | null
 
-export default function Footer({ settings }: { settings: Settings }) {
+export default function Footer({
+  settings,
+  locale,
+  dict,
+}: {
+  settings: Settings
+  locale: Locale
+  dict: Dictionary
+}) {
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
   const email = settings?.email ?? 'office@newkey.bg'
@@ -89,19 +100,19 @@ export default function Footer({ settings }: { settings: Settings }) {
           {/* Navigation */}
           <div>
             <h3 className="text-brand-gold font-semibold uppercase tracking-widest text-xs mb-6">
-              Навигация
+              {dict.footer.navHeading}
             </h3>
             <ul className="space-y-3 text-sm">
               {[
-                { href: '/', label: 'Начало' },
-                { href: '/listings', label: 'Имоти' },
-                { href: '/about', label: 'За Нас' },
-                { href: '/team', label: 'Екипът ни' },
-                { href: '/blog', label: 'Блог' },
-                { href: '/contact', label: 'Контакти' },
+                { href: '/', label: dict.nav.home },
+                { href: '/listings', label: dict.nav.listings },
+                { href: '/about', label: dict.nav.about },
+                { href: '/team', label: dict.nav.team },
+                { href: '/blog', label: dict.nav.blog },
+                { href: '/contact', label: dict.nav.contact },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="hover:text-brand-gold transition-colors hover:pl-1 inline-block">
+                  <Link href={localizeHref(l.href, locale)} className="hover:text-brand-gold transition-colors hover:pl-1 inline-block">
                     {l.label}
                   </Link>
                 </li>
@@ -112,16 +123,10 @@ export default function Footer({ settings }: { settings: Settings }) {
           {/* Services */}
           <div>
             <h3 className="text-brand-gold font-semibold uppercase tracking-widest text-xs mb-6">
-              Услуги
+              {dict.footer.servicesHeading}
             </h3>
             <ul className="space-y-3 text-sm">
-              {[
-                'Продажба на имоти',
-                'Отдаване под наем',
-                'Намиране на имот',
-                'Инвестиционни консултации',
-                'Пазарни анализи',
-              ].map((s) => (
+              {dict.footer.services.map((s) => (
                 <li key={s} className="flex items-center gap-2">
                   <span className="w-1 h-1 rounded-full bg-brand-gold/40 shrink-0" />
                   {s}
@@ -133,7 +138,7 @@ export default function Footer({ settings }: { settings: Settings }) {
           {/* Contact */}
           <div>
             <h3 className="text-brand-gold font-semibold uppercase tracking-widest text-xs mb-6">
-              Контакти
+              {dict.footer.contactHeading}
             </h3>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
@@ -167,10 +172,10 @@ export default function Footer({ settings }: { settings: Settings }) {
             </ul>
 
             <Link
-              href="/konsultatsiya"
+              href={localizeHref('/konsultatsiya', locale)}
               className="mt-6 inline-flex items-center gap-2 bg-brand-gold text-brand-green text-sm font-bold px-4 py-2.5 rounded-xl hover:bg-brand-gold-light transition-all hover:shadow-lg hover:shadow-brand-gold/20"
             >
-              Безплатна консултация
+              {dict.footer.consultationCta}
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -182,8 +187,8 @@ export default function Footer({ settings }: { settings: Settings }) {
         <div className="mt-12 pt-6 border-t border-brand-gold/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
           <p>© {new Date().getFullYear()} {copyright}</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="hover:text-brand-gold/60 transition-colors">
-              Политика за поверителност
+            <Link href={localizeHref('/privacy-policy', locale)} className="hover:text-brand-gold/60 transition-colors">
+              {dict.footer.privacyPolicy}
             </Link>
             <span className="text-brand-gold/20">·</span>
             <p>{subline}</p>

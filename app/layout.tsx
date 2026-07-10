@@ -64,7 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <LocaleProvider locale={locale} dict={dict}>
           {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
           <main>{children}</main>
-          {!isStudio && <Footer settings={settings} />}
+          {!isStudio && <Footer settings={settings} locale={locale} dict={dict} />}
           {!isStudio && <FloatingCTA phone={phone} />}
         </LocaleProvider>
         {isDraftMode && <VisualEditing />}

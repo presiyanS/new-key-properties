@@ -6,17 +6,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import LanguageSwitcher from './LanguageSwitcher'
-
-const navLinks = [
-  { href: '/', label: 'Начало' },
-  { href: '/listings', label: 'Имоти' },
-  { href: '/kvartali', label: 'Квартали' },
-  { href: '/about', label: 'За Нас' },
-  { href: '/team', label: 'Екипът ни' },
-  { href: '/blog', label: 'Блог' },
-  { href: '/konsultatsiya', label: 'Консултация' },
-  { href: '/contact', label: 'Контакти' },
-]
+import { useLocale } from '@/lib/i18n/LocaleContext'
+import { localizeHref } from '@/lib/i18n/config'
 
 type SocialLinks = { facebook: string; instagram: string; linkedin: string }
 
@@ -73,6 +64,18 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const { locale, dict } = useLocale()
+
+  const navLinks = [
+    { href: '/', label: dict.nav.home },
+    { href: '/listings', label: dict.nav.listings },
+    { href: '/kvartali', label: dict.nav.kvartali },
+    { href: '/about', label: dict.nav.about },
+    { href: '/team', label: dict.nav.team },
+    { href: '/blog', label: dict.nav.blog },
+    { href: '/konsultatsiya', label: dict.nav.konsultatsiya },
+    { href: '/contact', label: dict.nav.contact },
+  ].map((l) => ({ ...l, href: localizeHref(l.href, locale) }))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -105,7 +108,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 group">
+          <Link href={localizeHref('/', locale)} className="flex-shrink-0 group">
             <Image
               src="/logo.png"
               alt="New Key Properties"
@@ -159,7 +162,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           <button
             onClick={() => setOpen(!open)}
             className="lg:hidden text-brand-gold p-2 rounded-xl hover:bg-brand-gold/10 transition-colors"
-            aria-label="Меню"
+            aria-label={dict.nav.menu}
           >
             <div className="w-6 h-5 flex flex-col justify-between">
               <span className={`block h-0.5 bg-brand-gold rounded-full transition-all duration-300 ${open ? 'rotate-45 translate-y-2.5' : ''}`} />
