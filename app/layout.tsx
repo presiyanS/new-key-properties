@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -88,6 +89,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {isDraftMode && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
+        <Script
+          id="hs-script-loader"
+          src="//js-eu1.hs-scripts.com/148872906.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
