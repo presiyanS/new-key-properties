@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 type Props = {
   type: string
@@ -11,16 +12,18 @@ type Props = {
 }
 
 export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, priceMax }: Props) {
+  const { locale, dict } = useLocale()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [open, setOpen] = useState(false)
 
+  const numberLocale = locale === 'en' ? 'en-US' : 'bg-BG'
   const activeCriteria = [
-    type !== 'all' && type ? (type === 'sale' ? 'Продажба' : 'Наем') : null,
+    type !== 'all' && type ? (type === 'sale' ? dict.listings.tabSale : dict.listings.tabRent) : null,
     neighborhood || null,
-    rooms ? `${rooms} стаи` : null,
-    priceMin ? `от €${Number(priceMin).toLocaleString('bg-BG')}` : null,
-    priceMax ? `до €${Number(priceMax).toLocaleString('bg-BG')}` : null,
+    rooms ? `${rooms} ${dict.listings.roomsSuffix}` : null,
+    priceMin ? `${dict.listings.from} €${Number(priceMin).toLocaleString(numberLocale)}` : null,
+    priceMax ? `${dict.listings.to} €${Number(priceMax).toLocaleString(numberLocale)}` : null,
   ].filter(Boolean) as string[]
 
   async function handleSubmit(e: React.FormEvent) {
@@ -58,7 +61,7 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
           </svg>
         </div>
         <p className="text-brand-green text-sm font-medium">
-          Записано! Ще получите имейл при нов подходящ имот.
+          {dict.listings.saveSearchSuccess}
         </p>
       </div>
     )
@@ -76,13 +79,13 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
           </div>
-          Получавайте известия при нов подходящ имот
+          {dict.listings.saveSearchPrompt}
         </button>
       ) : (
         <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
           <div className="flex items-start justify-between mb-3">
             <div>
-              <h3 className="font-semibold text-gray-900 text-sm">Известие при нов имот</h3>
+              <h3 className="font-semibold text-gray-900 text-sm">{dict.listings.saveSearchTitle}</h3>
               {activeCriteria.length > 0 ? (
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   {activeCriteria.map((c) => (
@@ -92,7 +95,7 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-gray-400 mt-1">За всички имоти</p>
+                <p className="text-xs text-gray-400 mt-1">{dict.listings.saveSearchAllProperties}</p>
               )}
             </div>
             <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors ml-4 shrink-0">
@@ -107,7 +110,7 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Вашият имейл адрес"
+              placeholder={dict.listings.saveSearchEmailPlaceholder}
               required
               className="flex-1 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all"
             />
@@ -116,16 +119,16 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
               disabled={status === 'loading' || !email}
               className="bg-brand-green text-brand-gold font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-brand-green/90 transition-colors disabled:opacity-50 shrink-0"
             >
-              {status === 'loading' ? '...' : 'Запази'}
+              {status === 'loading' ? '...' : dict.listings.saveSearchButton}
             </button>
           </form>
 
           {status === 'error' && (
-            <p className="text-red-500 text-xs mt-2">Грешка. Моля, опитайте отново.</p>
+            <p className="text-red-500 text-xs mt-2">{dict.listings.saveSearchError}</p>
           )}
 
           <p className="text-xs text-gray-400 mt-2.5">
-            Ще получавате имейл само когато добавим нов имот, отговарящ на Вашите критерии.
+            {dict.listings.saveSearchFooterNote}
           </p>
         </div>
       )}

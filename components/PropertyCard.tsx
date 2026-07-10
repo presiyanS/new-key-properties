@@ -1,8 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
+import { useLocale } from '@/lib/i18n/LocaleContext'
+import { localizeHref } from '@/lib/i18n/config'
 
 export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
+  const { locale, dict } = useLocale()
   const priceRaw = listing.price != null ? String(listing.price) : '–'
   const priceStripped = priceRaw.replace(/[\s€]/g, '')
   const priceFormatted = /^\d+$/.test(priceStripped)
@@ -13,7 +18,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
 
   return (
     <Link
-      href={`/listings/${listing._id}`}
+      href={localizeHref(`/listings/${listing._id}`, locale)}
       className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-gray-100/80"
     >
       {/* Image */}
@@ -47,11 +52,11 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
                 : 'bg-brand-gold/90 text-brand-green'
             }`}
           >
-            {listing.type === 'sale' ? 'Продажба' : 'Наем'}
+            {listing.type === 'sale' ? dict.listings.tabSale : dict.listings.tabRent}
           </span>
           {listing.constructionAct && (
             <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm bg-white/85 text-brand-green">
-              {String(listing.constructionAct).includes('act14') ? 'Акт 14' : String(listing.constructionAct).includes('act15') ? 'Акт 15' : 'Акт 16'}
+              {String(listing.constructionAct).includes('act14') ? dict.listings.constructionAct14 : String(listing.constructionAct).includes('act15') ? dict.listings.constructionAct15 : dict.listings.constructionAct16}
             </span>
           )}
         </div>
@@ -60,7 +65,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
         {listing.sold && (
           <div className="absolute top-0 right-0 w-28 h-28 overflow-hidden pointer-events-none z-20">
             <div className="absolute top-5 -right-7 w-36 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest text-center py-1.5 rotate-45 shadow-lg">
-              Продадено
+              {dict.listings.sold}
             </div>
           </div>
         )}
@@ -68,7 +73,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
         {/* View more — appears on hover */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="bg-brand-gold text-brand-green text-sm font-bold px-5 py-2 rounded-full flex items-center gap-2 shadow-xl translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
-            Разгледай
+            {dict.listings.viewMore}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -95,10 +100,10 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
             <svg className="w-4 h-4 text-brand-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            {listing.rooms} {String(listing.rooms) === '1' ? 'стая' : 'стаи'}
+            {listing.rooms} {String(listing.rooms) === '1' ? dict.listings.roomSingular : dict.listings.roomsSuffix}
           </span>
           {listing.floor != null && (
-            <span className="text-gray-400">ет. {listing.floor}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>
+            <span className="text-gray-400">{dict.listings.floorAbbrev} {listing.floor}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>
           )}
         </div>
 
@@ -106,7 +111,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           <svg className="w-3.5 h-3.5 text-brand-green shrink-0" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
           </svg>
-          {listing.neighborhood}, София
+          {listing.neighborhood}, {dict.listings.sofia}
         </div>
       </div>
     </Link>

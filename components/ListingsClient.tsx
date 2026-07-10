@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import PropertyCard from '@/components/PropertyCard'
 import SaveSearchBar from '@/components/SaveSearchBar'
 import type { SanityListing } from '@/lib/sanity'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 type Filter = 'all' | 'sale' | 'rent'
 type CategoryFilter = 'all' | 'apartment' | 'garage' | 'office' | 'store'
@@ -21,6 +22,7 @@ type Props = {
 
 export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
   const pathname = usePathname()
+  const { dict } = useLocale()
   const [filter, setFilter] = useState<Filter>('all')
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -182,17 +184,17 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   }, [listings, filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])
 
   const tabs: { val: Filter; label: string }[] = [
-    { val: 'all', label: 'Всички' },
-    { val: 'sale', label: 'Продажба' },
-    { val: 'rent', label: 'Наем' },
+    { val: 'all', label: dict.listings.tabAll },
+    { val: 'sale', label: dict.listings.tabSale },
+    { val: 'rent', label: dict.listings.tabRent },
   ]
 
   const categoryTabs: { val: CategoryFilter; label: string }[] = [
-    { val: 'all', label: 'Всички' },
-    { val: 'apartment', label: 'Апартаменти' },
-    { val: 'garage', label: 'Гаражи' },
-    { val: 'office', label: 'Офиси' },
-    { val: 'store', label: 'Магазини' },
+    { val: 'all', label: dict.listings.tabAll },
+    { val: 'apartment', label: dict.listings.categoryApartment },
+    { val: 'garage', label: dict.listings.categoryGarage },
+    { val: 'office', label: dict.listings.categoryOffice },
+    { val: 'store', label: dict.listings.categoryStore },
   ]
 
   const selectClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 pr-8 appearance-none focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all cursor-pointer"
@@ -211,7 +213,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Търсете по заглавие, квартал, характеристики..."
+            placeholder={dict.listings.searchPlaceholder}
             className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-4 py-4 text-gray-800 placeholder-gray-400 text-base shadow-sm focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
           />
           {searchQuery && (
@@ -274,7 +276,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M7 8h10M11 12h2M9 16h6" />
             </svg>
-            Филтри
+            {dict.listings.filtersButton}
             {activeFilterCount > 0 && (
               <span className="bg-brand-gold text-brand-green text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
                 {activeFilterCount}
@@ -289,11 +291,11 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
               onChange={(e) => setSortBy(e.target.value as SortBy)}
               className={selectClass}
             >
-              <option value="default">По подразбиране</option>
-              <option value="price-asc">Цена: ниска → висока</option>
-              <option value="price-desc">Цена: висока → ниска</option>
-              <option value="area-asc">Площ: малка → голяма</option>
-              <option value="area-desc">Площ: голяма → малка</option>
+              <option value="default">{dict.listings.sortDefault}</option>
+              <option value="price-asc">{dict.listings.sortPriceAsc}</option>
+              <option value="price-desc">{dict.listings.sortPriceDesc}</option>
+              <option value="area-asc">{dict.listings.sortAreaAsc}</option>
+              <option value="area-desc">{dict.listings.sortAreaDesc}</option>
             </select>
             <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -308,14 +310,14 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
               {/* Neighborhood */}
               <div className="col-span-2 sm:col-span-1 lg:col-span-2">
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Квартал</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{dict.listings.neighborhoodLabel}</label>
                 <div className="relative">
                   <select
                     value={neighborhood}
                     onChange={(e) => setNeighborhood(e.target.value)}
                     className={selectClass + ' w-full'}
                   >
-                    <option value="">Всички квартали</option>
+                    <option value="">{dict.listings.allNeighborhoods}</option>
                     {neighborhoods.map((n) => (
                       <option key={n} value={n}>{n}</option>
                     ))}
@@ -328,16 +330,16 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
               {/* Rooms */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Стаи</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{dict.listings.roomsLabel}</label>
                 <div className="relative">
                   <select
                     value={rooms}
                     onChange={(e) => setRooms(e.target.value)}
                     className={selectClass + ' w-full'}
                   >
-                    <option value="">Всички</option>
+                    <option value="">{dict.listings.allRooms}</option>
                     {roomOptions.map((r) => (
-                      <option key={r} value={r}>{r} стаи</option>
+                      <option key={r} value={r}>{r} {dict.listings.roomsSuffix}</option>
                     ))}
                   </select>
                   <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,13 +350,13 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
               {/* Price range */}
               <div className="col-span-2">
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Цена (€)</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{dict.listings.priceLabel}</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
                     value={priceMin}
                     onChange={(e) => setPriceMin(e.target.value)}
-                    placeholder="От"
+                    placeholder={dict.listings.from}
                     min={0}
                     className={inputClass}
                   />
@@ -363,7 +365,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     type="number"
                     value={priceMax}
                     onChange={(e) => setPriceMax(e.target.value)}
-                    placeholder="До"
+                    placeholder={dict.listings.to}
                     min={0}
                     className={inputClass}
                   />
@@ -372,13 +374,13 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
               {/* Area range */}
               <div className="col-span-2 lg:col-span-1">
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Площ (м²)</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{dict.listings.areaLabel}</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
                     value={areaMin}
                     onChange={(e) => setAreaMin(e.target.value)}
-                    placeholder="От"
+                    placeholder={dict.listings.from}
                     min={0}
                     className={inputClass}
                   />
@@ -387,7 +389,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     type="number"
                     value={areaMax}
                     onChange={(e) => setAreaMax(e.target.value)}
-                    placeholder="До"
+                    placeholder={dict.listings.to}
                     min={0}
                     className={inputClass}
                   />
@@ -410,7 +412,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
         {/* Results count + clear */}
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-500 text-sm">
-            <span className="font-semibold text-brand-green">{filtered.length}</span> намерени имота
+            <span className="font-semibold text-brand-green">{filtered.length}</span> {dict.listings.resultsFound}
           </p>
           {(activeFilterCount > 0 || filter !== 'all' || categoryFilter !== 'all' || sortBy !== 'default') && (
             <button
@@ -420,7 +422,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-              Изчисти всички
+              {dict.listings.clearAll}
             </button>
           )}
         </div>
@@ -439,8 +441,8 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               </svg>
             </div>
-            <p className="text-gray-400 text-lg">Няма намерени имоти в тази категория.</p>
-            <p className="text-gray-400 text-sm mt-1">Обадете ни се — намираме имоти и по конкретни критерии.</p>
+            <p className="text-gray-400 text-lg">{dict.listings.emptyTitle}</p>
+            <p className="text-gray-400 text-sm mt-1">{dict.listings.emptySubtitle}</p>
           </div>
         )}
 
@@ -449,7 +451,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
           <div className="absolute -top-10 -right-10 w-60 h-60 rounded-full bg-brand-gold/5 blur-3xl pointer-events-none" />
           <div className="relative">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium mb-3">
-              Персонално търсене
+              {dict.listings.personalSearchEyebrow}
             </p>
             <h3 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-4">
               {bottomCtaTitle ?? 'Не намирате търсеното?'}

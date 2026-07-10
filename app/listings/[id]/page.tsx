@@ -7,6 +7,7 @@ import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
 import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 
 export const revalidate = 60
 
@@ -49,6 +50,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   const { isEnabled: preview } = await draftMode()
   const listing = await getListing(id, preview)
   if (!listing) notFound()
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
 
   const priceRaw = listing.price != null ? String(listing.price) : '–'
   const priceStripped = priceRaw.replace(/[\s€]/g, '')
@@ -88,14 +91,14 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                         : 'bg-brand-gold/90 text-brand-green'
                     }`}
                   >
-                    {listing.type === 'sale' ? 'Продажба' : 'Наем'}
+                    {listing.type === 'sale' ? dict.listings.tabSale : dict.listings.tabRent}
                   </span>
                 </div>
                 {/* Sold ribbon */}
                 {listing.sold && (
                   <div className="absolute top-0 right-0 w-40 h-40 overflow-hidden pointer-events-none z-20">
                     <div className="absolute top-8 -right-9 w-52 bg-red-600 text-white text-sm font-black uppercase tracking-widest text-center py-2 rotate-45 shadow-xl">
-                      Продадено
+                      {dict.listings.sold}
                     </div>
                   </div>
                 )}
@@ -110,8 +113,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     </svg>
                   </div>
                   <div>
-                    <p className="font-bold text-red-700 text-sm">Имотът е вече продаден</p>
-                    <p className="text-red-500 text-xs mt-0.5">Свържете се с нас — намираме подобни имоти по индивидуални критерии.</p>
+                    <p className="font-bold text-red-700 text-sm">{dict.listings.soldNoticeTitle}</p>
+                    <p className="text-red-500 text-xs mt-0.5">{dict.listings.soldNoticeSubtitle}</p>
                   </div>
                 </div>
               )}
@@ -136,14 +139,14 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   <svg className="w-4 h-4 text-brand-green shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
-                  {listing.neighborhood}, София
+                  {listing.neighborhood}, {dict.listings.sofia}
                 </p>
 
                 {/* Stats grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 p-5 bg-gray-50 rounded-2xl border border-gray-100">
                   {[
                     {
-                      label: 'Площ',
+                      label: dict.listings.statArea,
                       val: listing.area != null ? `${listing.area} м²` : '–',
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,7 +155,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       ),
                     },
                     {
-                      label: 'Стаи',
+                      label: dict.listings.roomsLabel,
                       val: listing.rooms != null ? `${listing.rooms}` : '–',
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,7 +164,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       ),
                     },
                     {
-                      label: 'Етаж',
+                      label: dict.listings.statFloor,
                       val: listing.floor != null
                         ? `${listing.floor}${listing.totalFloors ? `/${listing.totalFloors}` : ''}`
                         : '–',
@@ -172,7 +175,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       ),
                     },
                     {
-                      label: 'Квартал',
+                      label: dict.listings.neighborhoodLabel,
                       val: listing.neighborhood,
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,8 +185,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       ),
                     },
                     ...(listing.constructionAct ? [{
-                      label: 'Строителство',
-                      val: String(listing.constructionAct).includes('act14') ? 'Акт 14' : String(listing.constructionAct).includes('act15') ? 'Акт 15' : 'Акт 16',
+                      label: dict.listings.statConstruction,
+                      val: String(listing.constructionAct).includes('act14') ? dict.listings.constructionAct14 : String(listing.constructionAct).includes('act15') ? dict.listings.constructionAct15 : dict.listings.constructionAct16,
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
@@ -202,7 +205,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 </div>
 
                 {/* Description */}
-                <h2 className="font-bold text-gray-900 text-lg mb-3">Описание</h2>
+                <h2 className="font-bold text-gray-900 text-lg mb-3">{dict.listings.descriptionHeading}</h2>
                 <div className="text-gray-600 leading-relaxed mb-8 space-y-3">
                   {(listing.description ?? '').split('\n').filter(Boolean).map((para, i) => (
                     <p key={i}>{para}</p>
@@ -212,7 +215,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 {/* Features */}
                 {listing.features?.length > 0 && (
                   <>
-                    <h2 className="font-bold text-gray-900 text-lg mb-4">Особености</h2>
+                    <h2 className="font-bold text-gray-900 text-lg mb-4">{dict.listings.featuresHeading}</h2>
                     <div className="flex flex-wrap gap-2">
                       {listing.features.map((f) => (
                         <span
@@ -232,13 +235,13 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               {/* Map */}
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
                 <div className="px-8 py-5 border-b border-gray-100">
-                  <h2 className="font-bold text-gray-900 text-lg">Локация</h2>
-                  <p className="text-sm text-gray-400 mt-0.5">{listing.neighborhood}, София</p>
+                  <h2 className="font-bold text-gray-900 text-lg">{dict.listings.locationHeading}</h2>
+                  <p className="text-sm text-gray-400 mt-0.5">{listing.neighborhood}, {dict.listings.sofia}</p>
                 </div>
                 <iframe
                   src={
                     listing.googleMapsUrl ??
-                    `https://maps.google.com/maps?q=${encodeURIComponent(listing.neighborhood + ' София')}&output=embed&hl=bg&z=15`
+                    `https://maps.google.com/maps?q=${encodeURIComponent(listing.neighborhood + ' ' + dict.listings.sofia)}&output=embed&hl=${locale}&z=15`
                   }
                   width="100%"
                   height="360"
@@ -246,7 +249,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title={`Карта — ${listing.neighborhood}, София`}
+                  title={`${dict.listings.mapTitlePrefix} ${listing.neighborhood}, ${dict.listings.sofia}`}
                 />
               </div>
             </div>
@@ -256,10 +259,10 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               <div className="bg-white rounded-2xl p-7 shadow-xl border border-gray-100 sticky top-24">
                 <div className="h-1 bg-gradient-to-r from-brand-green via-brand-gold to-brand-green rounded-full mb-6" />
                 <h3 className="font-serif text-xl font-bold text-brand-green mb-1">
-                  Интересувате се от имота?
+                  {dict.listings.interestedTitle}
                 </h3>
                 <p className="text-gray-400 text-sm mb-6">
-                  Свържете се с нас за оглед или повече информация.
+                  {dict.listings.interestedSubtitle}
                 </p>
 
                 <div className="space-y-3 mb-6">
@@ -282,7 +285,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
 
                 <div className="border-t border-gray-100 pt-6">
                   <p className="text-xs text-gray-400 mb-5 uppercase tracking-wide font-medium">
-                    Или изпратете бързо запитване:
+                    {dict.listings.quickInquiryLabel}
                   </p>
                   <ContactForm />
                 </div>

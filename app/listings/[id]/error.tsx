@@ -2,8 +2,11 @@
 
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { useLocale } from '@/lib/i18n/LocaleContext'
+import { localizeHref } from '@/lib/i18n/config'
 
 export default function ListingError({ error, reset }: { error: Error; reset: () => void }) {
+  const { locale, dict } = useLocale()
   useEffect(() => {
     console.error('Listing page error:', error)
   }, [error])
@@ -16,24 +19,24 @@ export default function ListingError({ error, reset }: { error: Error; reset: ()
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
           </svg>
         </div>
-        <h1 className="font-serif text-2xl font-bold text-gray-900 mb-2">Имотът не може да се зареди</h1>
-        <p className="text-gray-400 mb-8">Възникна грешка при зареждането на тази страница. Моля, опитайте отново.</p>
+        <h1 className="font-serif text-2xl font-bold text-gray-900 mb-2">{dict.listings.errorTitle}</h1>
+        <p className="text-gray-400 mb-8">{dict.listings.errorSubtitle}</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={reset}
             className="px-6 py-3 bg-brand-green text-brand-gold font-bold rounded-xl hover:bg-brand-green-light transition-colors"
           >
-            Опитай отново
+            {dict.listings.errorRetry}
           </button>
           <Link
-            href="/listings"
+            href={localizeHref('/listings', locale)}
             className="px-6 py-3 border-2 border-brand-green/30 text-brand-green font-bold rounded-xl hover:bg-brand-green/5 transition-colors"
           >
-            Всички имоти
+            {dict.listings.errorAllListings}
           </Link>
         </div>
         <p className="text-sm text-gray-400 mt-6">
-          Или се свържете с нас на{' '}
+          {dict.listings.errorContactPrefix}{' '}
           <a href="tel:0879826292" className="text-brand-green font-medium hover:underline">
             0879 826 292
           </a>

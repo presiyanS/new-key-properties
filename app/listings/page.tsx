@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getListings, getListingsPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import ListingsClient from '@/components/ListingsClient'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 
 export const revalidate = 30
 
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 
 export default async function ListingsPage() {
   const { isEnabled: preview } = await draftMode()
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
   const [listings, cms, settings] = await Promise.all([
     getListings(preview),
     getListingsPage(preview),
@@ -29,7 +32,7 @@ export default async function ListingsPage() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">
-            Имоти
+            {dict.nav.listings}
           </p>
           <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight animate-fade-up">
             {cms?.heroTitle ?? 'Намерете Вашия'}{' '}
@@ -47,11 +50,11 @@ export default async function ListingsPage() {
           >
             <div className="flex items-center gap-2 text-white/50 text-sm">
               <span className="w-2 h-2 bg-brand-gold/60 rounded-full" />
-              <span>{cms?.saleCountOverride ?? listings.filter((l) => l.type === 'sale').length} за продажба</span>
+              <span>{cms?.saleCountOverride ?? listings.filter((l) => l.type === 'sale').length} {dict.listings.forSale}</span>
             </div>
             <div className="flex items-center gap-2 text-white/50 text-sm">
               <span className="w-2 h-2 bg-brand-gold/60 rounded-full" />
-              <span>{cms?.rentCountOverride ?? listings.filter((l) => l.type === 'rent').length} под наем</span>
+              <span>{cms?.rentCountOverride ?? listings.filter((l) => l.type === 'rent').length} {dict.listings.forRent}</span>
             </div>
           </div>
         </div>

@@ -1,8 +1,10 @@
 'use client'
 import { useRouter } from 'next/navigation'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 export default function BackToListings() {
   const router = useRouter()
+  const { dict } = useLocale()
   return (
     <button
       onClick={() => router.back()}
@@ -16,7 +18,7 @@ export default function BackToListings() {
       >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
       </svg>
-      Обратно към имотите
+      {dict.listings.backToListings}
     </button>
   )
 }
