@@ -9,14 +9,23 @@ export const homePageType = defineType({
   fields: [
     // ── Hero ──────────────────────────────────────────────────────────
     defineField({ name: 'heroBadge', title: 'Hero — Значка (малък текст)', type: 'string' }),
+    defineField({ name: 'heroBadgeEn', title: 'Hero — Значка (English)', type: 'string' }),
     defineField({ name: 'heroLine1', title: 'Hero — Заглавие ред 1', type: 'string' }),
+    defineField({ name: 'heroLine1En', title: 'Hero — Заглавие ред 1 (English)', type: 'string' }),
     defineField({ name: 'heroLineGold', title: 'Hero — Златна дума', type: 'string' }),
+    defineField({ name: 'heroLineGoldEn', title: 'Hero — Златна дума (English)', type: 'string' }),
     defineField({ name: 'heroLine3', title: 'Hero — Заглавие ред 3', type: 'string' }),
+    defineField({ name: 'heroLine3En', title: 'Hero — Заглавие ред 3 (English)', type: 'string' }),
     defineField({ name: 'heroLine4', title: 'Hero — Заглавие ред 4', type: 'string' }),
+    defineField({ name: 'heroLine4En', title: 'Hero — Заглавие ред 4 (English)', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({ name: 'heroSubtitleEn', title: 'Hero — Подзаглавие (English)', type: 'text', rows: 3 }),
     defineField({ name: 'heroButton1', title: 'Hero — Бутон 1 (имоти)', type: 'string' }),
+    defineField({ name: 'heroButton1En', title: 'Hero — Бутон 1 (English)', type: 'string' }),
     defineField({ name: 'heroButton2', title: 'Hero — Бутон 2 (контакт)', type: 'string' }),
+    defineField({ name: 'heroButton2En', title: 'Hero — Бутон 2 (English)', type: 'string' }),
     defineField({ name: 'scrollIndicator', title: 'Hero — Текст на скрол индикатора', type: 'string' }),
+    defineField({ name: 'scrollIndicatorEn', title: 'Hero — Текст на скрол индикатора (English)', type: 'string' }),
     defineField({
       name: 'heroBadges',
       title: 'Hero — Плаващи карточки (4 броя)',
@@ -26,7 +35,9 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'subtitle', title: 'Подзаглавие', type: 'string' }),
+          defineField({ name: 'subtitleEn', title: 'Подзаглавие (English)', type: 'string' }),
         ],
         preview: { select: { title: 'title', subtitle: 'subtitle' } },
       }],
@@ -41,7 +52,9 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'value', title: 'Стойност', type: 'string' }),
+          defineField({ name: 'valueEn', title: 'Стойност (English)', type: 'string' }),
           defineField({ name: 'label', title: 'Надпис', type: 'string' }),
+          defineField({ name: 'labelEn', title: 'Надпис (English)', type: 'string' }),
         ],
         preview: { select: { title: 'value', subtitle: 'label' } },
       }],
@@ -49,7 +62,9 @@ export const homePageType = defineType({
 
     // ── Services ──────────────────────────────────────────────────────
     defineField({ name: 'servicesTitle', title: 'Услуги — Заглавие', type: 'string' }),
+    defineField({ name: 'servicesTitleEn', title: 'Услуги — Заглавие (English)', type: 'string' }),
     defineField({ name: 'servicesSubtitle', title: 'Услуги — Подзаглавие', type: 'string' }),
+    defineField({ name: 'servicesSubtitleEn', title: 'Услуги — Подзаглавие (English)', type: 'string' }),
     defineField({
       name: 'services',
       title: 'Услуги (4 броя)',
@@ -58,7 +73,9 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 2 }),
+          defineField({ name: 'descEn', title: 'Описание (English)', type: 'text', rows: 2 }),
         ],
         preview: { select: { title: 'title', subtitle: 'desc' } },
       }],
@@ -66,7 +83,9 @@ export const homePageType = defineType({
 
     // ── Why Us ────────────────────────────────────────────────────────
     defineField({ name: 'whyUsTitle', title: 'Защо ние — Заглавие', type: 'string' }),
+    defineField({ name: 'whyUsTitleEn', title: 'Защо ние — Заглавие (English)', type: 'string' }),
     defineField({ name: 'whyUsSubtitle', title: 'Защо ние — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({ name: 'whyUsSubtitleEn', title: 'Защо ние — Подзаглавие (English)', type: 'text', rows: 3 }),
     defineField({
       name: 'whyUsPoints',
       title: 'Защо ние — Точки (4 броя)',
@@ -75,7 +94,9 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 2 }),
+          defineField({ name: 'descEn', title: 'Описание (English)', type: 'text', rows: 2 }),
         ],
         preview: { select: { title: 'title', subtitle: 'desc' } },
       }],
@@ -83,10 +104,15 @@ export const homePageType = defineType({
 
     // ── Featured Listings Section ─────────────────────────────────────
     defineField({ name: 'featuredLabel', title: 'Избрани имоти — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'featuredLabelEn', title: 'Избрани имоти — Надпис (English)', type: 'string' }),
     defineField({ name: 'featuredTitle', title: 'Избрани имоти — Заглавие', type: 'string' }),
+    defineField({ name: 'featuredTitleEn', title: 'Избрани имоти — Заглавие (English)', type: 'string' }),
     defineField({ name: 'featuredSubtitle', title: 'Избрани имоти — Подзаглавие', type: 'string' }),
+    defineField({ name: 'featuredSubtitleEn', title: 'Избрани имоти — Подзаглавие (English)', type: 'string' }),
     defineField({ name: 'featuredLinkText', title: 'Избрани имоти — Текст на линка', type: 'string' }),
+    defineField({ name: 'featuredLinkTextEn', title: 'Избрани имоти — Текст на линка (English)', type: 'string' }),
     defineField({ name: 'featuredMobileLinkText', title: 'Избрани имоти — Текст на мобилния линк', type: 'string' }),
+    defineField({ name: 'featuredMobileLinkTextEn', title: 'Избрани имоти — Текст на мобилния линк (English)', type: 'string' }),
     defineField({
       name: 'featuredListings',
       title: 'Избрани имоти — Имоти (ръчен избор)',
@@ -97,34 +123,53 @@ export const homePageType = defineType({
 
     // ── Process Section ───────────────────────────────────────────────
     defineField({ name: 'processLabel', title: 'Как работим — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'processLabelEn', title: 'Как работим — Надпис (English)', type: 'string' }),
 
     // ── Why Us ────────────────────────────────────────────────────────
     defineField({ name: 'whyUsLabel', title: 'Защо ние — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'whyUsLabelEn', title: 'Защо ние — Надпис (English)', type: 'string' }),
     defineField({ name: 'whyUsButton', title: 'Защо ние — Текст на бутона', type: 'string' }),
+    defineField({ name: 'whyUsButtonEn', title: 'Защо ние — Текст на бутона (English)', type: 'string' }),
 
     // ── CTA Card ──────────────────────────────────────────────────────
     defineField({ name: 'ctaCardLabel', title: 'CTA Карта — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'ctaCardLabelEn', title: 'CTA Карта — Надпис (English)', type: 'string' }),
     defineField({ name: 'ctaCardTitle', title: 'CTA Карта — Заглавие', type: 'string' }),
+    defineField({ name: 'ctaCardTitleEn', title: 'CTA Карта — Заглавие (English)', type: 'string' }),
     defineField({ name: 'ctaCardDesc', title: 'CTA Карта — Описание', type: 'text', rows: 3 }),
+    defineField({ name: 'ctaCardDescEn', title: 'CTA Карта — Описание (English)', type: 'text', rows: 3 }),
     defineField({ name: 'ctaCardButton1', title: 'CTA Карта — Бутон 1 (телефон)', type: 'string' }),
+    defineField({ name: 'ctaCardButton1En', title: 'CTA Карта — Бутон 1 (English)', type: 'string' }),
     defineField({ name: 'ctaCardButton2', title: 'CTA Карта — Бутон 2 (запитване)', type: 'string' }),
+    defineField({ name: 'ctaCardButton2En', title: 'CTA Карта — Бутон 2 (English)', type: 'string' }),
     defineField({ name: 'ctaCardTrustText', title: 'CTA Карта — Текст за доверие (под бутоните)', type: 'string' }),
+    defineField({ name: 'ctaCardTrustTextEn', title: 'CTA Карта — Текст за доверие (English)', type: 'string' }),
 
     // ── Blog Section ──────────────────────────────────────────────────
     defineField({ name: 'blogLabel', title: 'Блог — Надпис (малък)', type: 'string' }),
+    defineField({ name: 'blogLabelEn', title: 'Блог — Надпис (English)', type: 'string' }),
     defineField({ name: 'blogTitle', title: 'Блог — Заглавие', type: 'string' }),
+    defineField({ name: 'blogTitleEn', title: 'Блог — Заглавие (English)', type: 'string' }),
     defineField({ name: 'blogSubtitle', title: 'Блог — Подзаглавие', type: 'string' }),
+    defineField({ name: 'blogSubtitleEn', title: 'Блог — Подзаглавие (English)', type: 'string' }),
     defineField({ name: 'blogLinkText', title: 'Блог — Текст на линка', type: 'string' }),
+    defineField({ name: 'blogLinkTextEn', title: 'Блог — Текст на линка (English)', type: 'string' }),
 
     // ── Final CTA ─────────────────────────────────────────────────────
     defineField({ name: 'finalCtaTitle', title: 'Финален призив — Заглавие', type: 'string' }),
+    defineField({ name: 'finalCtaTitleEn', title: 'Финален призив — Заглавие (English)', type: 'string' }),
     defineField({ name: 'finalCtaSubtitle', title: 'Финален призив — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({ name: 'finalCtaSubtitleEn', title: 'Финален призив — Подзаглавие (English)', type: 'text', rows: 2 }),
     defineField({ name: 'finalCtaButton1', title: 'Финален призив — Бутон 1 (обаждане)', type: 'string' }),
+    defineField({ name: 'finalCtaButton1En', title: 'Финален призив — Бутон 1 (English)', type: 'string' }),
     defineField({ name: 'finalCtaButton2', title: 'Финален призив — Бутон 2 (имейл)', type: 'string' }),
+    defineField({ name: 'finalCtaButton2En', title: 'Финален призив — Бутон 2 (English)', type: 'string' }),
 
     // ── Process Steps ─────────────────────────────────────────────────
     defineField({ name: 'processTitle', title: 'Как работим — Заглавие', type: 'string' }),
+    defineField({ name: 'processTitleEn', title: 'Как работим — Заглавие (English)', type: 'string' }),
     defineField({ name: 'processSubtitle', title: 'Как работим — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({ name: 'processSubtitleEn', title: 'Как работим — Подзаглавие (English)', type: 'text', rows: 2 }),
     defineField({
       name: 'processSteps',
       title: 'Как работим — Стъпки (3 броя)',
@@ -133,12 +178,15 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 3 }),
+          defineField({ name: 'descEn', title: 'Описание (English)', type: 'text', rows: 3 }),
         ],
         preview: { select: { title: 'title', subtitle: 'desc' } },
       }],
     }),
     defineField({ name: 'processButtonText', title: 'Как работим — Текст на бутона', type: 'string' }),
+    defineField({ name: 'processButtonTextEn', title: 'Как работим — Текст на бутона (English)', type: 'string' }),
 
     // ── FAQ ───────────────────────────────────────────────────────────
     defineField({
@@ -149,7 +197,9 @@ export const homePageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'q', title: 'Въпрос', type: 'string' }),
+          defineField({ name: 'qEn', title: 'Въпрос (English)', type: 'string' }),
           defineField({ name: 'a', title: 'Отговор', type: 'text', rows: 4 }),
+          defineField({ name: 'aEn', title: 'Отговор (English)', type: 'text', rows: 4 }),
         ],
         preview: { select: { title: 'q', subtitle: 'a' } },
       }],

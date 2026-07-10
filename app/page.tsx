@@ -27,7 +27,23 @@ export default async function HomePage() {
   const pool = sanityPosts.length > 0 ? sanityPosts : staticPosts
   const recentPosts = pool.slice(0, 3)
 
-  const stats = cms?.stats?.length > 0
+  // Picks the CMS value for the current locale, falling back to a hardcoded
+  // default when neither the CMS field nor its English counterpart is set.
+  function t(bg: string | undefined, en: string | undefined, bgDefault: string, enDefault: string) {
+    return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
+  }
+
+  const heroBadges = (cms?.heroBadges?.length > 0 ? cms.heroBadges : [
+    { title: 'Честност', subtitle: 'Пълна прозрачност' },
+    { title: 'Доверие', subtitle: 'Дългосрочни резултати' },
+    { title: 'София', subtitle: '' },
+    { title: 'Резултати', subtitle: 'Без компромиси' },
+  ]).map((b: { title: string; titleEn?: string; subtitle: string; subtitleEn?: string }) => ({
+    title: locale === 'en' ? (b.titleEn ?? b.title) : b.title,
+    subtitle: locale === 'en' ? (b.subtitleEn ?? b.subtitle) : b.subtitle,
+  }))
+
+  const stats = (cms?.stats?.length > 0
     ? cms.stats
     : [
         { value: 'София', label: 'Нашият пазар' },
@@ -35,8 +51,12 @@ export default async function HomePage() {
         { value: 'Персонален', label: 'Подход към всеки' },
         { value: '0', label: 'Скрити такси' },
       ]
+  ).map((s: { value: string; valueEn?: string; label: string; labelEn?: string }) => ({
+    value: locale === 'en' ? (s.valueEn ?? s.value) : s.value,
+    label: locale === 'en' ? (s.labelEn ?? s.label) : s.label,
+  }))
 
-  const services = cms?.services?.length > 0
+  const services = (cms?.services?.length > 0
     ? cms.services
     : [
         {
@@ -60,16 +80,25 @@ export default async function HomePage() {
           icon: 'invest',
         },
       ]
+  ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string; icon?: string }) => ({
+    title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
+    desc: locale === 'en' ? (s.descEn ?? s.desc) : s.desc,
+    icon: s.icon,
+  }))
 
-  const processSteps = cms?.processSteps?.length > 0
+  const processSteps = (cms?.processSteps?.length > 0
     ? cms.processSteps
     : [
         { title: 'Консултация', desc: 'Разговаряме задълбочено за Вашите нужди, бюджет и конкретни предпочитания. Безплатно и без ангажименти — само честен разговор.' },
         { title: 'Проучване', desc: 'Намираме имоти, отговарящи точно на Вашите критерии. Показваме само сериозни, реалистични оферти — без губене на Вашето време.' },
         { title: 'Резултат', desc: 'Придружаваме Ви до финалното подписване и след него. Работим докато намерим правилното решение — без бързане към комисионна.' },
       ]
+  ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
+    title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
+    desc: locale === 'en' ? (s.descEn ?? s.desc) : s.desc,
+  }))
 
-  const whyUsPoints = cms?.whyUsPoints?.length > 0
+  const whyUsPoints = (cms?.whyUsPoints?.length > 0
     ? cms.whyUsPoints
     : [
         {
@@ -89,6 +118,17 @@ export default async function HomePage() {
           desc: 'Задълбочени познания за всеки квартал, ценови нива и тенденции в София.',
         },
       ]
+  ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
+    title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
+    desc: locale === 'en' ? (s.descEn ?? s.desc) : s.desc,
+  }))
+
+  const faqItems = cms?.faq?.length > 0
+    ? cms.faq.map((f: { q: string; qEn?: string; a: string; aEn?: string }) => ({
+        q: locale === 'en' ? (f.qEn ?? f.q) : f.q,
+        a: locale === 'en' ? (f.aEn ?? f.a) : f.a,
+      }))
+    : undefined
 
   const serviceIcons: Record<string, React.ReactNode> = {
     sale: (
@@ -186,20 +226,20 @@ export default async function HomePage() {
               <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mb-8 animate-fade-in">
                 <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
                 <span className="text-brand-gold text-sm font-medium tracking-wide">
-                  {cms?.heroBadge ?? 'Агенция за недвижими имоти · София'}
+                  {t(cms?.heroBadge, cms?.heroBadgeEn, 'Агенция за недвижими имоти · София', 'Real Estate Agency · Sofia')}
                 </span>
               </div>
 
               <h1 className="font-serif text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
                 <span className="block animate-fade-up" style={{ animationDelay: '0.1s' }}>
-                  {cms?.heroLine1 ?? 'Вашият Нов'}
+                  {t(cms?.heroLine1, cms?.heroLine1En, 'Вашият Нов', 'Your New')}
                 </span>
                 <span className="block animate-fade-up text-gradient-gold" style={{ animationDelay: '0.2s' }}>
-                  {cms?.heroLineGold ?? 'Дом'}{' '}
-                  <span className="text-white">{cms?.heroLine3 ?? 'Започва'}</span>
+                  {t(cms?.heroLineGold, cms?.heroLineGoldEn, 'Дом', 'Home')}{' '}
+                  <span className="text-white">{t(cms?.heroLine3, cms?.heroLine3En, 'Започва', 'Starts')}</span>
                 </span>
                 <span className="block animate-fade-up" style={{ animationDelay: '0.3s' }}>
-                  {cms?.heroLine4 ?? 'Тук'}
+                  {t(cms?.heroLine4, cms?.heroLine4En, 'Тук', 'Here')}
                 </span>
               </h1>
 
@@ -207,8 +247,12 @@ export default async function HomePage() {
                 className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl animate-fade-up"
                 style={{ animationDelay: '0.4s' }}
               >
-                {cms?.heroSubtitle ??
-                  'New Key Properties — агенция, която работи различно. Фокусираме се върху резултати, не върху брой огледи. По-малко суматоха. Повече затворени сделки. В София.'}
+                {t(
+                  cms?.heroSubtitle,
+                  cms?.heroSubtitleEn,
+                  'New Key Properties — агенция, която работи различно. Фокусираме се върху резултати, не върху брой огледи. По-малко суматоха. Повече затворени сделки. В София.',
+                  "New Key Properties — an agency that works differently. We focus on results, not viewing counts. Less hassle. More closed deals. In Sofia."
+                )}
               </p>
 
               <div
@@ -219,20 +263,20 @@ export default async function HomePage() {
                   href={localizeHref('/listings', locale)}
                   className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-center text-lg shadow-xl shadow-brand-gold/20 hover:shadow-brand-gold/30 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  {cms?.heroButton1 ?? 'Разгледайте Имотите'}
+                  {t(cms?.heroButton1, cms?.heroButton1En, 'Разгледайте Имотите', 'Browse Properties')}
                 </Link>
                 <Link
                   href={localizeHref('/contact', locale)}
                   className="border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-center text-lg"
                 >
-                  {cms?.heroButton2 ?? 'Свържете се с нас'}
+                  {t(cms?.heroButton2, cms?.heroButton2En, 'Свържете се с нас', 'Get in Touch')}
                 </Link>
               </div>
             </div>
 
             {/* Right: animated skyline composition */}
             <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <AnimatedSkylineHero badges={cms?.heroBadges} />
+              <AnimatedSkylineHero badges={heroBadges} />
             </div>
 
           </div>
@@ -240,7 +284,7 @@ export default async function HomePage() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand-gold/40">
-          <span className="text-xs uppercase tracking-widest">{cms?.scrollIndicator ?? 'Разгледайте'}</span>
+          <span className="text-xs uppercase tracking-widest">{t(cms?.scrollIndicator, cms?.scrollIndicatorEn, 'Разгледайте', 'Explore')}</span>
           <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
           </svg>
@@ -268,10 +312,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
             <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">
-              {cms?.servicesTitle ?? 'Нашите Услуги'}
+              {t(cms?.servicesTitle, cms?.servicesTitleEn, 'Нашите Услуги', 'Our Services')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              {cms?.servicesSubtitle ?? 'Пълен спектър от услуги в сферата на недвижимите имоти в София.'}
+              {t(cms?.servicesSubtitle, cms?.servicesSubtitleEn, 'Пълен спектър от услуги в сферата на недвижимите имоти в София.', 'A full range of real estate services in Sofia.')}
             </p>
           </AnimatedSection>
 
@@ -295,12 +339,12 @@ export default async function HomePage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-16">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.processLabel ?? 'Нашият метод'}</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{t(cms?.processLabel, cms?.processLabelEn, 'Нашият метод', 'Our Method')}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-              {cms?.processTitle ?? 'Как работим'}
+              {t(cms?.processTitle, cms?.processTitleEn, 'Как работим', 'How We Work')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              {cms?.processSubtitle ?? 'Три прости стъпки до Вашия идеален имот — без изненади, без стрес.'}
+              {t(cms?.processSubtitle, cms?.processSubtitleEn, 'Три прости стъпки до Вашия идеален имот — без изненади, без стрес.', 'Three simple steps to your ideal property — no surprises, no stress.')}
             </p>
           </AnimatedSection>
 
@@ -339,7 +383,7 @@ export default async function HomePage() {
               href={localizeHref('/konsultatsiya', locale)}
               className="inline-flex items-center gap-2 bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-light transition-all shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 hover:-translate-y-0.5"
             >
-              {cms?.processButtonText ?? 'Започнете безплатна консултация'}
+              {t(cms?.processButtonText, cms?.processButtonTextEn, 'Започнете безплатна консултация', 'Start a Free Consultation')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -356,15 +400,15 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.featuredLabel ?? 'Портфолио'}</span>
-              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{cms?.featuredTitle ?? 'Избрани Имоти'}</h2>
-              <p className="text-gray-500">{cms?.featuredSubtitle ?? 'Внимателно подбрани оферти от нашия портфолио'}</p>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{t(cms?.featuredLabel, cms?.featuredLabelEn, 'Портфолио', 'Portfolio')}</span>
+              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{t(cms?.featuredTitle, cms?.featuredTitleEn, 'Избрани Имоти', 'Featured Properties')}</h2>
+              <p className="text-gray-500">{t(cms?.featuredSubtitle, cms?.featuredSubtitleEn, 'Внимателно подбрани оферти от нашия портфолио', 'Carefully selected listings from our portfolio')}</p>
             </div>
             <Link
               href={localizeHref('/listings', locale)}
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
-              {cms?.featuredLinkText ?? 'Всички имоти'}
+              {t(cms?.featuredLinkText, cms?.featuredLinkTextEn, 'Всички имоти', 'All Properties')}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -384,7 +428,7 @@ export default async function HomePage() {
               href={localizeHref('/listings', locale)}
               className="inline-block bg-brand-green text-brand-gold font-bold px-6 py-3 rounded-xl hover:bg-brand-green-light transition-colors"
             >
-              {cms?.featuredMobileLinkText ?? 'Всички имоти'}
+              {t(cms?.featuredMobileLinkText, cms?.featuredMobileLinkTextEn, 'Всички имоти', 'All Properties')}
             </Link>
           </div>
         </div>
@@ -399,15 +443,19 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.whyUsLabel ?? 'Нашата разлика'}</span>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{t(cms?.whyUsLabel, cms?.whyUsLabelEn, 'Нашата разлика', 'Our Difference')}</span>
               <h2 className="font-serif text-4xl font-bold text-white mt-3 mb-6">
-                {cms?.whyUsTitle ?? (
-                  <>Защо <span className="text-brand-gold">New Key Properties</span>?</>
-                )}
+                {locale === 'en'
+                  ? (cms?.whyUsTitleEn ?? <>Why <span className="text-brand-gold">New Key Properties</span>?</>)
+                  : (cms?.whyUsTitle ?? <>Защо <span className="text-brand-gold">New Key Properties</span>?</>)}
               </h2>
               <p className="text-white/70 text-lg leading-relaxed mb-10">
-                {cms?.whyUsSubtitle ??
-                  'Не сме просто поредната агенция. Работим с ограничен брой клиенти на месец, за да гарантираме, че всеки получава пълното ни внимание и най-доброто от нас.'}
+                {t(
+                  cms?.whyUsSubtitle,
+                  cms?.whyUsSubtitleEn,
+                  'Не сме просто поредната агенция. Работим с ограничен брой клиенти на месец, за да гарантираме, че всеки получава пълното ни внимание и най-доброто от нас.',
+                  "We're not just another agency. We work with a limited number of clients each month to guarantee that everyone gets our full attention and the best we have to offer."
+                )}
               </p>
 
               <div className="space-y-5">
@@ -432,7 +480,7 @@ export default async function HomePage() {
                 href={localizeHref('/about', locale)}
                 className="mt-10 inline-flex items-center gap-2 bg-brand-gold text-brand-green font-bold px-7 py-3.5 rounded-xl hover:bg-brand-gold-light transition-all hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5"
               >
-                {cms?.whyUsButton ?? 'Научете повече за нас'}
+                {t(cms?.whyUsButton, cms?.whyUsButtonEn, 'Научете повече за нас', 'Learn More About Us')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -443,14 +491,18 @@ export default async function HomePage() {
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-brand-green-light/30 rounded-3xl p-8 lg:p-10 border border-brand-gold/20 backdrop-blur-sm shadow-2xl">
                 <p className="text-brand-gold/60 uppercase text-xs tracking-widest text-center mb-2">
-                  {cms?.ctaCardLabel ?? 'Безплатна консултация'}
+                  {t(cms?.ctaCardLabel, cms?.ctaCardLabelEn, 'Безплатна консултация', 'Free Consultation')}
                 </p>
                 <h3 className="font-serif text-2xl font-bold text-white text-center mb-4">
-                  {cms?.ctaCardTitle ?? 'Готови ли сте да действате?'}
+                  {t(cms?.ctaCardTitle, cms?.ctaCardTitleEn, 'Готови ли сте да действате?', 'Ready to Take Action?')}
                 </h3>
                 <p className="text-white/60 text-sm text-center leading-relaxed mb-8">
-                  {cms?.ctaCardDesc ??
-                    'Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега — броят на клиентите, с които работим, е ограничен.'}
+                  {t(
+                    cms?.ctaCardDesc,
+                    cms?.ctaCardDescEn,
+                    'Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега — броят на клиентите, с които работим, е ограничен.',
+                    "The Sofia property market moves fast. Good deals disappear. Get in touch now — the number of clients we take on is limited."
+                  )}
                 </p>
                 <div className="space-y-3">
                   <a
@@ -460,13 +512,13 @@ export default async function HomePage() {
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                     </svg>
-                    {cms?.ctaCardButton1 ?? '0879 826 292'}
+                    {t(cms?.ctaCardButton1, cms?.ctaCardButton1En, '0879 826 292', '0879 826 292')}
                   </a>
                   <Link
                     href={localizeHref('/contact', locale)}
                     className="flex items-center justify-center border-2 border-brand-gold/60 text-brand-gold font-bold py-3.5 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all w-full"
                   >
-                    {cms?.ctaCardButton2 ?? 'Изпратете запитване'}
+                    {t(cms?.ctaCardButton2, cms?.ctaCardButton2En, 'Изпратете запитване', 'Send an Inquiry')}
                   </Link>
                 </div>
 
@@ -475,7 +527,7 @@ export default async function HomePage() {
                   <svg className="w-3.5 h-3.5 text-brand-gold/40" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
                   </svg>
-                  {cms?.ctaCardTrustText ?? '100% безплатно и без ангажименти'}
+                  {t(cms?.ctaCardTrustText, cms?.ctaCardTrustTextEn, '100% безплатно и без ангажименти', '100% free, no obligation')}
                 </div>
               </div>
             </AnimatedSection>
@@ -484,22 +536,22 @@ export default async function HomePage() {
       </section>
 
       {/* ── FAQ ── */}
-      <FAQ items={cms?.faq} />
+      <FAQ items={faqItems} />
 
       {/* ── Blog preview ── */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{cms?.blogLabel ?? 'Знания'}</span>
-              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{cms?.blogTitle ?? 'Полезна Информация'}</h2>
-              <p className="text-gray-500">{cms?.blogSubtitle ?? 'Анализи, съвети и новини от пазара на недвижими имоти'}</p>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{t(cms?.blogLabel, cms?.blogLabelEn, 'Знания', 'Insights')}</span>
+              <h2 className="font-serif text-4xl font-bold text-brand-green mt-1 mb-1">{t(cms?.blogTitle, cms?.blogTitleEn, 'Полезна Информация', 'Useful Information')}</h2>
+              <p className="text-gray-500">{t(cms?.blogSubtitle, cms?.blogSubtitleEn, 'Анализи, съвети и новини от пазара на недвижими имоти', 'Analysis, tips, and news from the real estate market')}</p>
             </div>
             <Link
               href={localizeHref('/blog', locale)}
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
-              {cms?.blogLinkText ?? 'Всички статии'}
+              {t(cms?.blogLinkText, cms?.blogLinkTextEn, 'Всички статии', 'All Articles')}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -525,24 +577,28 @@ export default async function HomePage() {
         <div className="max-w-3xl mx-auto px-4 text-center relative">
           <AnimatedSection>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-brand-green mb-4">
-              {cms?.finalCtaTitle ?? 'Честност. Доверие. Резултати.'}
+              {t(cms?.finalCtaTitle, cms?.finalCtaTitleEn, 'Честност. Доверие. Резултати.', 'Honesty. Trust. Results.')}
             </h2>
             <p className="text-brand-green/70 text-lg mb-10 max-w-xl mx-auto">
-              {cms?.finalCtaSubtitle ??
-                'Свържете се с New Key Properties още днес и направете правилната стъпка на пазара на имоти в София.'}
+              {t(
+                cms?.finalCtaSubtitle,
+                cms?.finalCtaSubtitleEn,
+                'Свържете се с New Key Properties още днес и направете правилната стъпка на пазара на имоти в София.',
+                'Get in touch with New Key Properties today and take the right step in the Sofia property market.'
+              )}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="tel:0879826292"
                 className="bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-dark transition-all text-lg shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 hover:-translate-y-0.5"
               >
-                {cms?.finalCtaButton1 ?? 'Обадете се сега'}
+                {t(cms?.finalCtaButton1, cms?.finalCtaButton1En, 'Обадете се сега', 'Call Now')}
               </a>
               <a
                 href="mailto:office@newkey.bg"
                 className="border-2 border-brand-green text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-green/10 transition-all text-lg"
               >
-                {cms?.finalCtaButton2 ?? 'office@newkey.bg'}
+                {t(cms?.finalCtaButton2, cms?.finalCtaButton2En, 'office@newkey.bg', 'office@newkey.bg')}
               </a>
             </div>
           </AnimatedSection>

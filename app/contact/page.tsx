@@ -30,9 +30,19 @@ export default async function ContactPage() {
   const locale = await getLocale()
   const dict = getDictionary(locale)
 
+  function t(bg: string | undefined, en: string | undefined, bgDefault: string, enDefault: string) {
+    return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
+  }
+
   const phone = cms?.phone ?? settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
   const email = cms?.email ?? settings?.email ?? 'office@newkey.bg'
+  const address = t(cms?.address ?? settings?.address, cms?.addressEn, 'София, България', 'Sofia, Bulgaria')
+
+  const monthLocale = locale === 'en' ? 'en-US' : 'bg-BG'
+  const urgencyMessageDefault = locale === 'en'
+    ? `We work with a maximum of 10 clients a month to guarantee the highest quality. Get in touch now — spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} are limited.`
+    : `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} са ограничени.`
 
   return (
     <>
@@ -45,11 +55,16 @@ export default async function ContactPage() {
               {dict.nav.contact}
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {cms?.heroTitle ?? 'Свържете се'} <br />
-              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'с Нас'}</span>
+              {t(cms?.heroTitle, cms?.heroTitleEn, 'Свържете се', 'Get in')} <br />
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'с Нас', 'Touch')}</span>
             </h1>
             <p className="text-white/70 text-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              {cms?.heroSubtitle ?? 'Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.'}
+              {t(
+                cms?.heroSubtitle,
+                cms?.heroSubtitleEn,
+                'Работим с ограничен брой клиенти на месец. Свържете се с нас сега и запазете своето място.',
+                'We work with a limited number of clients each month. Get in touch now and reserve your place.'
+              )}
             </p>
           </div>
         </div>
@@ -63,10 +78,10 @@ export default async function ContactPage() {
             {/* Left: Info */}
             <AnimatedSection direction="left">
               <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
-                {cms?.contactInfoLabel ?? 'Връзка с нас'}
+                {t(cms?.contactInfoLabel, cms?.contactInfoLabelEn, 'Връзка с нас', 'Get in Touch')}
               </span>
               <h2 className="font-serif text-3xl font-bold text-brand-green mt-3 mb-8">
-                {cms?.contactInfoTitle ?? 'Информация за контакт'}
+                {t(cms?.contactInfoTitle, cms?.contactInfoTitleEn, 'Информация за контакт', 'Contact Information')}
               </h2>
 
               <div className="space-y-5 mb-10">
@@ -83,7 +98,7 @@ export default async function ContactPage() {
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.phoneLabel}</p>
                     <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{phoneDisplay}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{cms?.phoneHours ?? 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00'}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{t(cms?.phoneHours, cms?.phoneHoursEn, 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00', 'Mon – Fri: 9:00 AM – 6:00 PM, Sat: 10:00 AM – 3:00 PM')}</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-brand-green ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -103,7 +118,7 @@ export default async function ContactPage() {
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.emailLabel}</p>
                     <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{email}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{cms?.emailNote ?? 'Отговаряме в рамките на 24 часа'}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{t(cms?.emailNote, cms?.emailNoteEn, 'Отговаряме в рамките на 24 часа', 'We respond within 24 hours')}</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-brand-green ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -119,8 +134,8 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.locationLabel}</p>
-                    <p className="text-gray-900 font-bold text-xl">{cms?.address ?? settings?.address ?? 'София, България'}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{cms?.addressNote ?? 'Обслужваме целия град'}</p>
+                    <p className="text-gray-900 font-bold text-xl">{address}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{t(cms?.addressNote, cms?.addressNoteEn, 'Обслужваме целия град', 'We serve the entire city')}</p>
                   </div>
                 </div>
               </div>
@@ -131,11 +146,11 @@ export default async function ContactPage() {
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-2.5 h-2.5 bg-brand-gold rounded-full animate-pulse" />
                   <p className="text-brand-gold font-semibold text-sm uppercase tracking-wide">
-                    {cms?.urgencyTitle ?? 'Ограничени места'}
+                    {t(cms?.urgencyTitle, cms?.urgencyTitleEn, 'Ограничени места', 'Limited Availability')}
                   </p>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  {cms?.urgencyMessage ?? `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString('bg-BG', { month: 'long' })} са ограничени.`}
+                  {t(cms?.urgencyMessage, cms?.urgencyMessageEn, urgencyMessageDefault, urgencyMessageDefault)}
                 </p>
               </div>
             </AnimatedSection>
@@ -145,10 +160,10 @@ export default async function ContactPage() {
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100">
                 <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.contact.directEyebrow}</span>
                 <h2 className="font-serif text-2xl font-bold text-brand-green mt-2 mb-2">
-                  {cms?.formTitle ?? 'Изпратете запитване'}
+                  {t(cms?.formTitle, cms?.formTitleEn, 'Изпратете запитване', 'Send an Inquiry')}
                 </h2>
                 <p className="text-gray-500 text-sm mb-8">
-                  {cms?.formSubtitle ?? 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.'}
+                  {t(cms?.formSubtitle, cms?.formSubtitleEn, 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.', "Fill out the form and we'll get back to you within 24 hours.")}
                 </p>
                 <ContactForm
                   nameLabel={settings?.formNameLabel}

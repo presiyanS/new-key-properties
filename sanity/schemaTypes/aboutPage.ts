@@ -9,8 +9,11 @@ export const aboutPageType = defineType({
   fields: [
     // ── Hero ──────────────────────────────────────────────────────────
     defineField({ name: 'heroTitle', title: 'Hero — Заглавие ред 1', type: 'string' }),
+    defineField({ name: 'heroTitleEn', title: 'Hero — Заглавие ред 1 (English)', type: 'string' }),
     defineField({ name: 'heroTitleGold', title: 'Hero — Златна фраза', type: 'string' }),
+    defineField({ name: 'heroTitleGoldEn', title: 'Hero — Златна фраза (English)', type: 'string' }),
     defineField({ name: 'heroSubtitle', title: 'Hero — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({ name: 'heroSubtitleEn', title: 'Hero — Подзаглавие (English)', type: 'text', rows: 3 }),
     defineField({
       name: 'heroStats',
       title: 'Hero — Статистики (3 броя)',
@@ -20,6 +23,7 @@ export const aboutPageType = defineType({
         fields: [
           defineField({ name: 'value', title: 'Стойност', type: 'string' }),
           defineField({ name: 'label', title: 'Надпис', type: 'string' }),
+          defineField({ name: 'labelEn', title: 'Надпис (English)', type: 'string' }),
         ],
         preview: { select: { title: 'value', subtitle: 'label' } },
       }],
@@ -27,6 +31,7 @@ export const aboutPageType = defineType({
 
     // ── Mission ───────────────────────────────────────────────────────
     defineField({ name: 'missionTitle', title: 'Мисия — Заглавие', type: 'string' }),
+    defineField({ name: 'missionTitleEn', title: 'Мисия — Заглавие (English)', type: 'string' }),
     defineField({
       name: 'missionParagraphs',
       title: 'Мисия — Параграфи',
@@ -34,7 +39,15 @@ export const aboutPageType = defineType({
       of: [{ type: 'text' }],
       description: 'Добавете 2-3 параграфа',
     }),
+    defineField({
+      name: 'missionParagraphsEn',
+      title: 'Мисия — Параграфи (English)',
+      type: 'array',
+      of: [{ type: 'text' }],
+      description: 'Add 2-3 paragraphs',
+    }),
     defineField({ name: 'missionCardTitle', title: 'Мисия — Карта заглавие', type: 'string' }),
+    defineField({ name: 'missionCardTitleEn', title: 'Мисия — Карта заглавие (English)', type: 'string' }),
     defineField({
       name: 'missionValues',
       title: 'Мисия — Ценности (3 броя)',
@@ -43,7 +56,9 @@ export const aboutPageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'label', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'labelEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 2 }),
+          defineField({ name: 'descEn', title: 'Описание (English)', type: 'text', rows: 2 }),
         ],
         preview: { select: { title: 'label', subtitle: 'desc' } },
       }],
@@ -51,7 +66,9 @@ export const aboutPageType = defineType({
 
     // ── Values ────────────────────────────────────────────────────────
     defineField({ name: 'valuesTitle', title: 'Ценности — Заглавие', type: 'string' }),
+    defineField({ name: 'valuesTitleEn', title: 'Ценности — Заглавие (English)', type: 'string' }),
     defineField({ name: 'valuesSubtitle', title: 'Ценности — Подзаглавие', type: 'string' }),
+    defineField({ name: 'valuesSubtitleEn', title: 'Ценности — Подзаглавие (English)', type: 'string' }),
     defineField({
       name: 'values',
       title: 'Ценности (6 броя)',
@@ -60,7 +77,9 @@ export const aboutPageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({ name: 'desc', title: 'Описание', type: 'text', rows: 2 }),
+          defineField({ name: 'descEn', title: 'Описание (English)', type: 'text', rows: 2 }),
         ],
         preview: { select: { title: 'title', subtitle: 'desc' } },
       }],
@@ -68,7 +87,9 @@ export const aboutPageType = defineType({
 
     // ── Specialization ────────────────────────────────────────────────
     defineField({ name: 'specializationTitle', title: 'Специализация — Заглавие', type: 'string' }),
+    defineField({ name: 'specializationTitleEn', title: 'Специализация — Заглавие (English)', type: 'string' }),
     defineField({ name: 'specializationSubtitle', title: 'Специализация — Подзаглавие', type: 'text', rows: 3 }),
+    defineField({ name: 'specializationSubtitleEn', title: 'Специализация — Подзаглавие (English)', type: 'text', rows: 3 }),
     defineField({
       name: 'specializations',
       title: 'Специализация — Колони (3 броя)',
@@ -77,9 +98,16 @@ export const aboutPageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'title', title: 'Заглавие', type: 'string' }),
+          defineField({ name: 'titleEn', title: 'Заглавие (English)', type: 'string' }),
           defineField({
             name: 'items',
             title: 'Точки',
+            type: 'array',
+            of: [{ type: 'string' }],
+          }),
+          defineField({
+            name: 'itemsEn',
+            title: 'Точки (English)',
             type: 'array',
             of: [{ type: 'string' }],
           }),
@@ -90,7 +118,9 @@ export const aboutPageType = defineType({
 
     // ── CTA ───────────────────────────────────────────────────────────
     defineField({ name: 'ctaTitle', title: 'Призив — Заглавие', type: 'string' }),
+    defineField({ name: 'ctaTitleEn', title: 'Призив — Заглавие (English)', type: 'string' }),
     defineField({ name: 'ctaSubtitle', title: 'Призив — Подзаглавие', type: 'text', rows: 2 }),
+    defineField({ name: 'ctaSubtitleEn', title: 'Призив — Подзаглавие (English)', type: 'text', rows: 2 }),
   ],
   preview: { prepare: () => ({ title: 'За нас' }) },
 })

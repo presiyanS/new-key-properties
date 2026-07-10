@@ -54,53 +54,74 @@ export default async function AboutPage() {
   const locale = await getLocale()
   const dict = getDictionary(locale)
 
-  const missionParagraphs =
-    cms?.missionParagraphs?.length > 0
-      ? cms.missionParagraphs
+  function t(bg: string | undefined, en: string | undefined, bgDefault: string, enDefault: string) {
+    return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
+  }
+
+  const missionParagraphs: string[] = cms?.missionParagraphs?.length > 0
+    ? (locale === 'en' ? (cms.missionParagraphsEn?.length > 0 ? cms.missionParagraphsEn : cms.missionParagraphs) : cms.missionParagraphs)
+    : locale === 'en'
+      ? [
+          "We believe the real estate market needs more honesty. Too many people are let down by agencies that think only about their commission — not the outcome.",
+          'We work differently. We focus on closed deals, not viewing counts. We qualify serious buyers, prepare the property strategically, and negotiate on your behalf.',
+          'Our goal is to become the most trusted agency in Sofia — not through advertising, but through real results, satisfied clients, and a reputation built on honest work.',
+        ]
       : [
           'Вярваме, че пазарът на недвижими имоти се нуждае от повече честност. Твърде много хора са разочаровани от агенции, които мислят само за комисионната — не за резултата.',
           'Ние работим различно. Фокусираме се върху затворени сделки, не върху брой огледи. Квалифицираме сериозните купувачи, подготвяме имота стратегически и преговаряме от Ваше име.',
           'Нашата цел е да станем най-доверената агенция в София — не чрез реклама, а чрез реални резултати, доволни клиенти и репутация, изградена с честна работа.',
         ]
 
-  const missionValues =
-    cms?.missionValues?.length > 0
-      ? cms.missionValues
-      : [
-          { label: 'Доверие', desc: 'Изграждаме дългосрочни отношения, основани на честна работа и реални резултати.' },
-          { label: 'Честност', desc: 'Казваме истината — дори когато тя не е това, което клиентът иска да чуе.' },
-          { label: 'Резултати', desc: 'Фокусираме се върху намирането на правилното решение, не на бързата комисионна.' },
-        ]
+  const missionValues = (cms?.missionValues?.length > 0
+    ? cms.missionValues
+    : [
+        { label: 'Доверие', desc: 'Изграждаме дългосрочни отношения, основани на честна работа и реални резултати.' },
+        { label: 'Честност', desc: 'Казваме истината — дори когато тя не е това, което клиентът иска да чуе.' },
+        { label: 'Резултати', desc: 'Фокусираме се върху намирането на правилното решение, не на бързата комисионна.' },
+      ]
+  ).map((v: { label: string; labelEn?: string; desc: string; descEn?: string }) => ({
+    label: locale === 'en' ? (v.labelEn ?? v.label) : v.label,
+    desc: locale === 'en' ? (v.descEn ?? v.desc) : v.desc,
+  }))
 
-  const heroStats =
-    cms?.heroStats?.length > 0
-      ? cms.heroStats
-      : [
-          { value: '≤10', label: 'клиента/месец' },
-          { value: '0', label: 'скрити такси' },
-          { value: '100%', label: 'отдаденост' },
-        ]
+  const heroStats = (cms?.heroStats?.length > 0
+    ? cms.heroStats
+    : [
+        { value: '≤10', label: 'клиента/месец' },
+        { value: '0', label: 'скрити такси' },
+        { value: '100%', label: 'отдаденост' },
+      ]
+  ).map((s: { value: string; label: string; labelEn?: string }) => ({
+    value: s.value,
+    label: locale === 'en' ? (s.labelEn ?? s.label) : s.label,
+  }))
 
-  const specializations =
-    cms?.specializations?.length > 0
-      ? cms.specializations
-      : [
-          { title: 'Продажби', items: ['Оценка на имота', 'Маркетинг и представяне', 'Преговори от Ваше име', 'Цялостна правна подкрепа'] },
-          { title: 'Наеми', items: ['Намиране на наематели', 'Проверка на кандидати', 'Договори за наем', 'Управление на имота'] },
-          { title: 'Намиране на имот', items: ['Анализ на нуждите', 'Активно търсене', 'Проверка на документи', 'Преговори и покупка'] },
-        ]
+  const specializations = (cms?.specializations?.length > 0
+    ? cms.specializations
+    : [
+        { title: 'Продажби', items: ['Оценка на имота', 'Маркетинг и представяне', 'Преговори от Ваше име', 'Цялостна правна подкрепа'] },
+        { title: 'Наеми', items: ['Намиране на наематели', 'Проверка на кандидати', 'Договори за наем', 'Управление на имота'] },
+        { title: 'Намиране на имот', items: ['Анализ на нуждите', 'Активно търсене', 'Проверка на документи', 'Преговори и покупка'] },
+      ]
+  ).map((s: { title: string; titleEn?: string; items: string[]; itemsEn?: string[] }) => ({
+    title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
+    items: locale === 'en' ? ((s.itemsEn?.length ?? 0) > 0 ? s.itemsEn! : s.items) : s.items,
+  }))
 
-  const values =
-    cms?.values?.length > 0
-      ? cms.values
-      : [
-          { title: 'Прозрачност', desc: 'Никакви скрити такси, никакви изненади. Знаете точно с какво разполагате и какво Ви струва.' },
-          { title: 'Личен подход', desc: 'Всеки клиент е уникален. Слушаме внимателно и намираме решения, съобразени с Вашата конкретна ситуация.' },
-          { title: 'Качество пред количество', desc: 'Работим с ограничен брой клиенти на месец, за да гарантираме максимално качество на услугата.' },
-          { title: 'Дългосрочно мислене', desc: 'Интересуваме се от Вашите дългосрочни цели, не само от текущата сделка.' },
-          { title: 'Пазарна компетентност', desc: 'Следим пазара постоянно и Ви даваме реална картина — без преувеличения в нито една посока.' },
-          { title: 'Ангажираност', desc: 'Остаме достъпни и ангажирани от първия контакт до финалното подписване и след него.' },
-        ]
+  const values = (cms?.values?.length > 0
+    ? cms.values
+    : [
+        { title: 'Прозрачност', desc: 'Никакви скрити такси, никакви изненади. Знаете точно с какво разполагате и какво Ви струва.' },
+        { title: 'Личен подход', desc: 'Всеки клиент е уникален. Слушаме внимателно и намираме решения, съобразени с Вашата конкретна ситуация.' },
+        { title: 'Качество пред количество', desc: 'Работим с ограничен брой клиенти на месец, за да гарантираме максимално качество на услугата.' },
+        { title: 'Дългосрочно мислене', desc: 'Интересуваме се от Вашите дългосрочни цели, не само от текущата сделка.' },
+        { title: 'Пазарна компетентност', desc: 'Следим пазара постоянно и Ви даваме реална картина — без преувеличения в нито една посока.' },
+        { title: 'Ангажираност', desc: 'Остаме достъпни и ангажирани от първия контакт до финалното подписване и след него.' },
+      ]
+  ).map((v: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
+    title: locale === 'en' ? (v.titleEn ?? v.title) : v.title,
+    desc: locale === 'en' ? (v.descEn ?? v.desc) : v.desc,
+  }))
 
   return (
     <>
@@ -112,12 +133,16 @@ export default async function AboutPage() {
           <div className="max-w-3xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">{dict.nav.about}</p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {cms?.heroTitle ?? 'Агенция, Която Наистина'}<br />
-              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Се Грижи'}</span> за Вас
+              {t(cms?.heroTitle, cms?.heroTitleEn, 'Агенция, Която Наистина', 'The Agency That Truly')}<br />
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'Се Грижи', 'Cares')}</span> {locale === 'en' ? 'About You' : 'за Вас'}
             </h1>
             <p className="text-white/70 text-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              {cms?.heroSubtitle ??
-                'New Key Properties не е просто поредната агенция за имоти. Ние сме екип от хора, за които честността и грижата за клиента не са маркетингови фрази — те са начин на работа.'}
+              {t(
+                cms?.heroSubtitle,
+                cms?.heroSubtitleEn,
+                'New Key Properties не е просто поредната агенция за имоти. Ние сме екип от хора, за които честността и грижата за клиента не са маркетингови фрази — те са начин на работа.',
+                "New Key Properties isn't just another real estate agency. We're a team of people for whom honesty and client care aren't marketing phrases — they're how we work."
+              )}
             </p>
             <div className="flex items-center gap-6 mt-10 animate-fade-up" style={{ animationDelay: '0.2s' }}>
               {heroStats.map((stat: { value: string; label: string }, i: number) => (
@@ -141,7 +166,7 @@ export default async function AboutPage() {
             <AnimatedSection direction="left">
               <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.historyEyebrow}</span>
               <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
-                {cms?.missionTitle ?? 'Нашата Мисия'}
+                {t(cms?.missionTitle, cms?.missionTitleEn, 'Нашата Мисия', 'Our Mission')}
               </h2>
               {missionParagraphs.map((p: string, i: number) => (
                 <p key={i} className="text-gray-600 text-lg leading-relaxed mb-5">
@@ -155,7 +180,7 @@ export default async function AboutPage() {
                 <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-brand-gold/5 blur-2xl" />
                 <div className="h-px bg-gradient-to-r from-brand-gold/40 to-transparent mb-8" />
                 <h3 className="font-serif text-2xl font-bold text-white mb-8">
-                  {cms?.missionCardTitle ?? 'Доверие – Честност – Резултати'}
+                  {t(cms?.missionCardTitle, cms?.missionCardTitleEn, 'Доверие – Честност – Резултати', 'Trust – Honesty – Results')}
                 </h3>
                 <div className="space-y-7">
                   {missionValues.map((v: { label: string; desc: string }) => (
@@ -185,10 +210,10 @@ export default async function AboutPage() {
           <AnimatedSection className="text-center mb-14">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.principlesEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-              {cms?.valuesTitle ?? 'Нашите Ценности'}
+              {t(cms?.valuesTitle, cms?.valuesTitleEn, 'Нашите Ценности', 'Our Values')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              {cms?.valuesSubtitle ?? 'Принципите, с които подхождаме към всяка сделка и всеки клиент.'}
+              {t(cms?.valuesSubtitle, cms?.valuesSubtitleEn, 'Принципите, с които подхождаме към всяка сделка и всеки клиент.', 'The principles we bring to every deal and every client.')}
             </p>
           </AnimatedSection>
 
@@ -221,10 +246,15 @@ export default async function AboutPage() {
           <AnimatedSection>
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.specializationEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
-              {cms?.specializationTitle ?? 'С Какво Се Занимаваме'}
+              {t(cms?.specializationTitle, cms?.specializationTitleEn, 'С Какво Се Занимаваме', 'What We Do')}
             </h2>
             <p className="text-gray-500 text-lg leading-relaxed mb-14 max-w-2xl mx-auto">
-              {cms?.specializationSubtitle ?? 'New Key Properties специализира изключително в жилищни и инвестиционни имоти в София — продажби, наеми и намиране на имоти за покупка.'}
+              {t(
+                cms?.specializationSubtitle,
+                cms?.specializationSubtitleEn,
+                'New Key Properties специализира изключително в жилищни и инвестиционни имоти в София — продажби, наеми и намиране на имоти за покупка.',
+                'New Key Properties specializes exclusively in residential and investment property in Sofia — sales, rentals, and property sourcing.'
+              )}
             </p>
           </AnimatedSection>
 
@@ -260,10 +290,10 @@ export default async function AboutPage() {
         <div className="max-w-3xl mx-auto px-4 text-center relative">
           <AnimatedSection>
             <h2 className="font-serif text-4xl font-bold text-white mb-4">
-              {cms?.ctaTitle ?? 'Готови ли сте да работите с нас?'}
+              {t(cms?.ctaTitle, cms?.ctaTitleEn, 'Готови ли сте да работите с нас?', 'Ready to Work With Us?')}
             </h2>
             <p className="text-white/60 text-lg mb-10">
-              {cms?.ctaSubtitle ?? 'Местата са ограничени. Свържете се с нас сега и вижте как можем да Ви помогнем.'}
+              {t(cms?.ctaSubtitle, cms?.ctaSubtitleEn, 'Местата са ограничени. Свържете се с нас сега и вижте как можем да Ви помогнем.', 'Spots are limited. Get in touch now and see how we can help.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
