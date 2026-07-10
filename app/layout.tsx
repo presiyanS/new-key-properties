@@ -12,6 +12,7 @@ import { draftMode } from 'next/headers'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 import { LocaleProvider } from '@/lib/i18n/LocaleContext'
+import { hreflangAlternates } from '@/lib/i18n/config'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -27,15 +28,32 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://www.newkey.bg'),
-  title: {
-    default: 'New Key Properties | Недвижими Имоти в София',
-    template: '%s | New Key Properties',
-  },
-  description:
-    'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.',
-  keywords: ['недвижими имоти', 'София', 'апартаменти', 'продажба', 'наем', 'New Key Properties'],
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      metadataBase: new URL('https://www.newkey.bg'),
+      title: {
+        default: 'New Key Properties | Real Estate in Sofia',
+        template: '%s | New Key Properties',
+      },
+      description:
+        'New Key Properties – an honest, trustworthy real estate agency in Sofia. Sales, rentals, and property sourcing with genuine client care.',
+      keywords: ['real estate', 'Sofia', 'apartments', 'buy', 'rent', 'New Key Properties'],
+      alternates: hreflangAlternates('/', locale),
+    }
+  }
+  return {
+    metadataBase: new URL('https://www.newkey.bg'),
+    title: {
+      default: 'New Key Properties | Недвижими Имоти в София',
+      template: '%s | New Key Properties',
+    },
+    description:
+      'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.',
+    keywords: ['недвижими имоти', 'София', 'апартаменти', 'продажба', 'наем', 'New Key Properties'],
+    alternates: hreflangAlternates('/', locale),
+  }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

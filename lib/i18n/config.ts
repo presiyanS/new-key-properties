@@ -9,3 +9,20 @@ export function localizeHref(href: string, locale: Locale): string {
   if (href.startsWith('#') || href.startsWith('http')) return href
   return `/en${href === '/' ? '' : href}`
 }
+
+/**
+ * Builds Next.js metadata `alternates` (canonical + hreflang) for a locale-agnostic
+ * path, e.g. hreflangAlternates('/about', locale) for both /about and /en/about.
+ */
+export function hreflangAlternates(path: string, locale: Locale) {
+  const bgPath = path
+  const enPath = path === '/' ? '/en' : `/en${path}`
+  return {
+    canonical: locale === 'en' ? enPath : bgPath,
+    languages: {
+      'bg-BG': bgPath,
+      'en-US': enPath,
+      'x-default': bgPath,
+    },
+  }
+}

@@ -4,12 +4,24 @@ import AnimatedSection from '@/components/AnimatedSection'
 import { getContactPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Контакти',
-  description: 'Свържете се с New Key Properties. Телефон: 0879 826 292, Имейл: office@newkey.bg',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Contact',
+      description: 'Get in touch with New Key Properties. Phone: 0879 826 292, Email: office@newkey.bg',
+      alternates: hreflangAlternates('/contact', locale),
+    }
+  }
+  return {
+    title: 'Контакти',
+    description: 'Свържете се с New Key Properties. Телефон: 0879 826 292, Имейл: office@newkey.bg',
+    alternates: hreflangAlternates('/contact', locale),
+  }
 }
 
 export default async function ContactPage() {

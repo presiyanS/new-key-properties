@@ -6,7 +6,7 @@ import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -22,7 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post = await getBlogPost(slug) ?? staticPosts.find((p) => p.slug === slug)
   if (!post) return {}
-  return { title: post.title, description: post.excerpt }
+  const locale = await getLocale()
+  return { title: post.title, description: post.excerpt, alternates: hreflangAlternates(`/blog/${slug}`, locale) }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

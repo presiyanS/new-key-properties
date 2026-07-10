@@ -6,14 +6,26 @@ import { getTeamMembers, getTeamPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { team as staticTeam } from '@/data/team'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Екипът ни',
-  description:
-    'Запознайте се с екипа на New Key Properties – брокери с опит, отдаденост и истинска грижа за клиентите.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Our Team',
+      description:
+        'Meet the New Key Properties team – experienced brokers with dedication and genuine care for clients.',
+      alternates: hreflangAlternates('/team', locale),
+    }
+  }
+  return {
+    title: 'Екипът ни',
+    description:
+      'Запознайте се с екипа на New Key Properties – брокери с опит, отдаденост и истинска грижа за клиентите.',
+    alternates: hreflangAlternates('/team', locale),
+  }
 }
 
 export default async function TeamPage() {

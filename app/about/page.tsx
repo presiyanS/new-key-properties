@@ -4,14 +4,26 @@ import AnimatedSection from '@/components/AnimatedSection'
 import { getAboutPage } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'За Нас',
-  description:
-    'Научете повече за New Key Properties – честна агенция за недвижими имоти в София с истинска грижа за клиентите.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'About Us',
+      description:
+        'Learn about New Key Properties – an honest real estate agency in Sofia with genuine care for clients.',
+      alternates: hreflangAlternates('/about', locale),
+    }
+  }
+  return {
+    title: 'За Нас',
+    description:
+      'Научете повече за New Key Properties – честна агенция за недвижими имоти в София с истинска грижа за клиентите.',
+    alternates: hreflangAlternates('/about', locale),
+  }
 }
 
 const valueIcons: React.ReactNode[] = [

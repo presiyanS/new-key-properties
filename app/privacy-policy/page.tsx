@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLocale } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description:
         'Privacy policy and personal data protection at New Key Properties. Learn how we handle your data in compliance with GDPR.',
       robots: { index: true, follow: true },
+      alternates: hreflangAlternates('/privacy-policy', locale),
     }
   }
   return {
@@ -18,6 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       'Политика за поверителност и защита на личните данни на New Key Properties. Научете как обработваме вашите данни в съответствие с GDPR.',
     robots: { index: true, follow: true },
+    alternates: hreflangAlternates('/privacy-policy', locale),
   }
 }
 

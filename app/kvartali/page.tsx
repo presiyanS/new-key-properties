@@ -3,13 +3,24 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getNeighborhoods } from '@/lib/sanity'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
-  title: 'Квартали в София',
-  description: 'Пълни наръчници за най-търсените квартали в София — цени, транспорт, характер и за кого е подходящ всеки район. От New Key Properties.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Sofia Neighborhoods',
+      description: 'Full guides to the most sought-after neighborhoods in Sofia — prices, transport, character, and who each area suits. From New Key Properties.',
+      alternates: hreflangAlternates('/kvartali', locale),
+    }
+  }
+  return {
+    title: 'Квартали в София',
+    description: 'Пълни наръчници за най-търсените квартали в София — цени, транспорт, характер и за кого е подходящ всеки район. От New Key Properties.',
+    alternates: hreflangAlternates('/kvartali', locale),
+  }
 }
 
 export default async function KvartaliPage() {

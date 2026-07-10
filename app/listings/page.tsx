@@ -3,13 +3,26 @@ import { getListings, getListingsPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import ListingsClient from '@/components/ListingsClient'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 30
 
-export const metadata: Metadata = {
-  title: 'Имоти',
-  description:
-    'Разгледайте всички имоти за продажба и наем в София от New Key Properties. Внимателно проверени оферти с пълна прозрачност.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Properties',
+      description:
+        'Browse all properties for sale and rent in Sofia from New Key Properties. Carefully vetted listings with full transparency.',
+      alternates: hreflangAlternates('/listings', locale),
+    }
+  }
+  return {
+    title: 'Имоти',
+    description:
+      'Разгледайте всички имоти за продажба и наем в София от New Key Properties. Внимателно проверени оферти с пълна прозрачност.',
+    alternates: hreflangAlternates('/listings', locale),
+  }
 }
 
 export default async function ListingsPage() {

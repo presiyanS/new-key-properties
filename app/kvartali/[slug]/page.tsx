@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { getNeighborhood, getNeighborhoods, getListings } from '@/lib/sanity'
 import PropertyCard from '@/components/PropertyCard'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 3600
 
@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const n = await getNeighborhood(slug)
   if (!n) return {}
+  const locale = await getLocale()
   const title = `Квартал ${n.name} София — Цени, Наем и Имоти | New Key Properties`
   const description = n.metaDescription ?? `Пълен наръчник за квартал ${n.name} в София: актуални цени на имоти, наеми, транспорт, предимства и недостатъци. New Key Properties.`
   return {
@@ -27,10 +28,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description,
-      url: `https://newkey.bg/kvartali/${slug}`,
+      url: `https://newkey.bg${localizeHref(`/kvartali/${slug}`, locale)}`,
       ...(n.externalImageUrl ? { images: [{ url: n.externalImageUrl }] } : {}),
     },
-    alternates: { canonical: `https://newkey.bg/kvartali/${slug}` },
+    alternates: hreflangAlternates(`/kvartali/${slug}`, locale),
   }
 }
 

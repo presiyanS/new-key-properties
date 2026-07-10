@@ -8,6 +8,7 @@ import ImageGallery from '@/components/ImageGallery'
 import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
@@ -20,14 +21,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params
   const listing = await getListing(id)
   if (!listing) return {}
+  const locale = await getLocale()
 
   const image = listing.imageUrls?.[0]
   const description = listing.description?.slice(0, 200) ?? ''
-  const url = `https://www.newkey.bg/listings/${id}`
+  const url = `https://www.newkey.bg${localizeHref(`/listings/${id}`, locale)}`
 
   return {
     title: listing.title,
     description,
+    alternates: hreflangAlternates(`/listings/${id}`, locale),
     openGraph: {
       title: listing.title,
       description,

@@ -4,13 +4,26 @@ import AnimatedSection from '@/components/AnimatedSection'
 import { getConsultationPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Безплатна Консултация | New Key Properties',
-  description:
-    'Запишете се за безплатна консултация с нашите брокери. Честен съвет без скрити такси — помагаме Ви да купите, продадете или наемете имот в София.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Free Consultation | New Key Properties',
+      description:
+        'Book a free consultation with our brokers. Honest advice, no hidden fees — we help you buy, sell, or rent a property in Sofia.',
+      alternates: hreflangAlternates('/konsultatsiya', locale),
+    }
+  }
+  return {
+    title: 'Безплатна Консултация | New Key Properties',
+    description:
+      'Запишете се за безплатна консултация с нашите брокери. Честен съвет без скрити такси — помагаме Ви да купите, продадете или наемете имот в София.',
+    alternates: hreflangAlternates('/konsultatsiya', locale),
+  }
 }
 
 export default async function KonsultatsiyaPage() {

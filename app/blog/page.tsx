@@ -5,13 +5,26 @@ import { getBlogPosts, getBlogPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Блог',
-  description:
-    'Полезна информация, анализи и съвети от пазара на недвижими имоти в София от екипа на New Key Properties.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  if (locale === 'en') {
+    return {
+      title: 'Blog',
+      description:
+        'Useful information, analysis, and advice on the Sofia real estate market from the New Key Properties team.',
+      alternates: hreflangAlternates('/blog', locale),
+    }
+  }
+  return {
+    title: 'Блог',
+    description:
+      'Полезна информация, анализи и съвети от пазара на недвижими имоти в София от екипа на New Key Properties.',
+    alternates: hreflangAlternates('/blog', locale),
+  }
 }
 
 export default async function BlogPage() {
