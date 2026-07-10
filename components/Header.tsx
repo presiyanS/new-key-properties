@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const navLinks = [
   { href: '/', label: 'Начало' },
@@ -140,6 +141,9 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
             <div className="flex items-center gap-3 mr-3">
               <SocialLinks links={socialLinks} size="sm" />
             </div>
+            <div className="mr-1 text-brand-gold/80">
+              <LanguageSwitcher />
+            </div>
             <a
               href={`tel:${phone}`}
               className="flex items-center gap-2 bg-brand-gold text-brand-green font-bold px-5 py-2.5 rounded-xl hover:bg-brand-gold-light transition-all hover:shadow-lg hover:shadow-brand-gold/20 active:scale-95 text-sm"
@@ -213,6 +217,9 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
                 </a>
                 <div className="flex items-center justify-center gap-6 pt-3 border-t border-brand-gold/10">
                   <SocialLinks links={socialLinks} size="md" />
+                </div>
+                <div className="flex items-center justify-center text-brand-gold/80">
+                  <LanguageSwitcher />
                 </div>
               </div>
             </div>

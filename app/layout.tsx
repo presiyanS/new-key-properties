@@ -10,6 +10,8 @@ import { getSiteSettings } from '@/lib/sanity'
 import { headers } from 'next/headers'
 import { draftMode } from 'next/headers'
 import { VisualEditing } from 'next-sanity/visual-editing'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { LocaleProvider } from '@/lib/i18n/LocaleContext'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -41,6 +43,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const pathname = headersList.get('x-pathname') ?? ''
   const isStudio = pathname.startsWith('/studio')
   const { isEnabled: isDraftMode } = await draftMode()
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
 
   const settings = isStudio ? null : await getSiteSettings()
   const phone = settings?.phone ?? '0879826292'
@@ -52,15 +56,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <html lang="bg">
+    <html lang={locale}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration='manual';` }} />
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
-        {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
-        <main>{children}</main>
-        {!isStudio && <Footer settings={settings} />}
-        {!isStudio && <FloatingCTA phone={phone} />}
+        <LocaleProvider locale={locale} dict={dict}>
+          {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
+          <main>{children}</main>
+          {!isStudio && <Footer settings={settings} />}
+          {!isStudio && <FloatingCTA phone={phone} />}
+        </LocaleProvider>
         {isDraftMode && <VisualEditing />}
         <Analytics />
         <SpeedInsights />

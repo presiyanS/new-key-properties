@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname: rawPathname } = request.nextUrl
+
+  // English locale is served under an /en prefix; strip it so the rest of
+  // this function (and the app's routes) only ever see the Bulgarian path.
+  const isEnglish = rawPathname === '/en' || rawPathname.startsWith('/en/')
+  const locale = isEnglish ? 'en' : 'bg'
+  const pathname = isEnglish ? rawPathname.slice(3) || '/' : rawPathname
 
   // Protect /post-generator (but not the login page itself)
   if (pathname.startsWith('/post-generator') && !pathname.startsWith('/post-generator/login')) {
@@ -28,9 +34,16 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Forward pathname as header so root layout can read it
+  // Forward pathname/locale as headers so the root layout can read them
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-pathname', pathname)
+  requestHeaders.set('x-locale', locale)
+
+  if (isEnglish) {
+    const rewriteUrl = new URL(pathname + request.nextUrl.search, request.url)
+    return NextResponse.rewrite(rewriteUrl, { request: { headers: requestHeaders } })
+  }
+
   return NextResponse.next({ request: { headers: requestHeaders } })
 }
 
