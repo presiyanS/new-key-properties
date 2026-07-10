@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import FloatingCTA from '@/components/FloatingCTA'
+import CookieConsent from '@/components/CookieConsent'
 import { getSiteSettings } from '@/lib/sanity'
-import { headers } from 'next/headers'
+import { headers, cookies } from 'next/headers'
 import { draftMode } from 'next/headers'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
@@ -64,6 +64,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled: isDraftMode } = await draftMode()
   const locale = await getLocale()
   const dict = getDictionary(locale)
+  const cookieStore = await cookies()
+  const consentCookie = cookieStore.get('nkp_cookie_consent')?.value
+  const initialConsent = consentCookie === 'accepted' || consentCookie === 'declined' ? consentCookie : 'pending'
 
   const settings = isStudio ? null : await getSiteSettings()
   const phone = settings?.phone ?? '0879826292'
@@ -85,15 +88,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main>{children}</main>
           {!isStudio && <Footer settings={settings} locale={locale} dict={dict} />}
           {!isStudio && <FloatingCTA phone={phone} />}
+          {!isStudio && <CookieConsent initialStatus={initialConsent} />}
         </LocaleProvider>
         {isDraftMode && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
-        <Script
-          id="hs-script-loader"
-          src="//js-eu1.hs-scripts.com/148872906.js"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   )

@@ -167,6 +167,12 @@ const en: typeof bg = {
     heading: 'Frequently Asked Questions',
     subtitle: 'Answers to the questions we get asked most often by clients.',
   },
+  cookies: {
+    message: 'We use cookies to improve your experience on this site.',
+    learnMore: 'Privacy Policy',
+    accept: 'Accept',
+    decline: 'Decline',
+  },
 }
 
 export default en
