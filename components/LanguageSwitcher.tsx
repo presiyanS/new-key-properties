@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 
@@ -11,23 +10,28 @@ export default function LanguageSwitcher() {
   const bgPath = locale === 'en' ? pathname.replace(/^\/en(\/|$)/, '/') : pathname
   const enPath = locale === 'en' ? pathname : `/en${pathname === '/' ? '' : pathname}`
 
+  // Plain <a> tags (not next/link): switching locale must reload through the
+  // middleware so the server re-renders with the new x-locale header. Since
+  // /en and / resolve to the identical route tree (rewrite, not a distinct
+  // [locale] segment), Next's client-side router can reuse the cached page
+  // across a soft navigation and never actually re-render in the new locale.
   return (
     <div className="flex items-center gap-1 text-sm font-medium" aria-label={dict.languageSwitcher.label}>
-      <Link
+      <a
         href={bgPath}
         className={locale === 'bg' ? 'opacity-100' : 'opacity-50 hover:opacity-80'}
         aria-current={locale === 'bg'}
       >
         {dict.languageSwitcher.bg}
-      </Link>
+      </a>
       <span aria-hidden="true">/</span>
-      <Link
+      <a
         href={enPath}
         className={locale === 'en' ? 'opacity-100' : 'opacity-50 hover:opacity-80'}
         aria-current={locale === 'en'}
       >
         {dict.languageSwitcher.en}
-      </Link>
+      </a>
     </div>
   )
 }
