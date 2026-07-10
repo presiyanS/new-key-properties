@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLocale } from '@/lib/i18n/LocaleContext'
 
 const defaultFaqs = [
   {
@@ -32,6 +33,7 @@ const defaultFaqs = [
 type FaqItem = { q: string; a: string }
 
 export default function FAQ({ items }: { items?: FaqItem[] }) {
+  const { dict } = useLocale()
   const faqs = items && items.length > 0 ? items : defaultFaqs
   const [open, setOpen] = useState<number | null>(null)
 
@@ -39,8 +41,8 @@ export default function FAQ({ items }: { items?: FaqItem[] }) {
     <section className="py-24 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">Често Задавани Въпроси</h2>
-          <p className="text-gray-500 text-lg">Отговори на най-честите въпроси, които получаваме от клиентите.</p>
+          <h2 className="font-serif text-4xl font-bold text-brand-green mb-4">{dict.faq.heading}</h2>
+          <p className="text-gray-500 text-lg">{dict.faq.subtitle}</p>
         </div>
 
         <div className="space-y-3">

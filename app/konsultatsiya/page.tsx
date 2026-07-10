@@ -3,6 +3,7 @@ import ContactForm from '@/components/ContactForm'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getConsultationPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 
 export const revalidate = 60
 
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default async function KonsultatsiyaPage() {
   const { isEnabled: preview } = await draftMode()
   const [cms, settings] = await Promise.all([getConsultationPage(preview), getSiteSettings(preview)])
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
 
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
@@ -111,7 +114,7 @@ export default async function KonsultatsiyaPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Ползи</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.benefitsEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
               {cms?.benefitsTitle ?? 'Какво получавате'}
             </h2>
@@ -158,7 +161,7 @@ export default async function KonsultatsiyaPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
             <AnimatedSection direction="left">
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Процесът</span>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.processEyebrow}</span>
               <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
                 {cms?.formSectionTitle ?? 'Запишете се за консултация'}
               </h2>
@@ -217,7 +220,7 @@ export default async function KonsultatsiyaPage() {
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-12">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Въпроси</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.questionsEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3">
               {cms?.faqTitle ?? 'Често задавани въпроси'}
             </h2>

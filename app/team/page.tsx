@@ -5,6 +5,8 @@ import AnimatedSection from '@/components/AnimatedSection'
 import { getTeamMembers, getTeamPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { team as staticTeam } from '@/data/team'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { localizeHref } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
@@ -22,6 +24,8 @@ export default async function TeamPage() {
     getSiteSettings(preview),
   ])
   const team = sanityTeam.length > 0 ? sanityTeam : staticTeam
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
 
@@ -41,7 +45,7 @@ export default async function TeamPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-2xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">
-              Екипът ни
+              {dict.nav.team}
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
               {cms?.heroTitle ?? 'Хора, на Които'}<br />
@@ -82,7 +86,7 @@ export default async function TeamPage() {
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашата вяра</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.team.philosophyEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-8">
               {cms?.philosophyTitle ?? 'Нашата Философия'}
             </h2>
@@ -125,10 +129,10 @@ export default async function TeamPage() {
                 {phoneDisplay}
               </a>
               <Link
-                href="/contact"
+                href={localizeHref('/contact', locale)}
                 className="border-2 border-brand-green text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-green/10 transition-all text-lg"
               >
-                Изпратете запитване
+                {dict.team.ctaButton}
               </Link>
             </div>
           </AnimatedSection>

@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { localizeHref } from '@/lib/i18n/config'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -35,7 +37,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const pool = allPosts.length > 0 ? allPosts : staticPosts
   const related = pool.filter((p) => p.id !== post.id && p.slug !== slug).slice(0, 3)
 
-  const dateFormatted = new Date(post.date).toLocaleDateString('bg-BG', {
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
+  const dateLocale = locale === 'en' ? 'en-GB' : 'bg-BG'
+  const dateFormatted = new Date(post.date).toLocaleDateString(dateLocale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -46,11 +51,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* Header */}
       <section className="bg-brand-green py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-brand-gold/70 hover:text-brand-gold transition-colors text-sm mb-8">
+          <Link href={localizeHref('/blog', locale)} className="inline-flex items-center gap-2 text-brand-gold/70 hover:text-brand-gold transition-colors text-sm mb-8">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Обратно към блога
+            {dict.blog.backToBlog}
           </Link>
           <div className="flex items-center gap-3 mb-5">
             <span className="bg-brand-gold text-brand-green text-xs font-bold px-3 py-1.5 rounded-full">{post.category}</span>
@@ -98,7 +103,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <div>
                 <p className="font-bold text-brand-green mb-1">New Key Properties</p>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  Имате въпроси по темата? Свържете се с нас за безплатна консултация.{' '}
+                  {dict.blog.authorNote}{' '}
                   <a href="tel:0879826292" className="text-brand-green font-medium hover:text-brand-gold transition-colors">
                     0879 826 292
                   </a>
@@ -113,12 +118,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {related.length > 0 && (
         <section className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-serif text-3xl font-bold text-brand-green mb-10">Още статии</h2>
+            <h2 className="font-serif text-3xl font-bold text-brand-green mb-10">{dict.blog.relatedHeading}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((p) => {
-                const d = new Date(p.date).toLocaleDateString('bg-BG', { year: 'numeric', month: 'long', day: 'numeric' })
+                const d = new Date(p.date).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })
                 return (
-                  <Link key={p.id} href={`/blog/${p.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+                  <Link key={p.id} href={localizeHref(`/blog/${p.slug}`, locale)} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
                     {p.image && (
                       <div className="relative h-40 overflow-hidden bg-brand-green/10">
                         <Image src={p.image} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />

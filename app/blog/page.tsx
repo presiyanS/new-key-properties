@@ -4,6 +4,7 @@ import AnimatedSection from '@/components/AnimatedSection'
 import { getBlogPosts, getBlogPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 
 export const revalidate = 60
 
@@ -21,6 +22,8 @@ export default async function BlogPage() {
     getSiteSettings(preview),
   ])
   const posts = sanityPosts.length > 0 ? sanityPosts : staticPosts
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
   const email = settings?.email ?? 'office@newkey.bg'
@@ -33,7 +36,7 @@ export default async function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-2xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">
-              Блог
+              {dict.nav.blog}
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
               {cms?.heroTitle ?? 'Полезна'}{' '}
@@ -49,7 +52,7 @@ export default async function BlogPage() {
               className="text-white/40 text-sm mt-4 animate-fade-up"
               style={{ animationDelay: '0.2s' }}
             >
-              {posts.length} статии
+              {posts.length} {dict.blog.articlesCount}
             </p>
           </div>
         </div>

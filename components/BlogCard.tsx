@@ -1,9 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import type { BlogPost } from '@/data/blog'
+import { useLocale } from '@/lib/i18n/LocaleContext'
+import { localizeHref } from '@/lib/i18n/config'
 
 export default function BlogCard({ post }: { post: BlogPost }) {
-  const dateFormatted = new Date(post.date).toLocaleDateString('bg-BG', {
+  const { locale, dict } = useLocale()
+  const dateFormatted = new Date(post.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'bg-BG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -11,7 +16,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
 
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={localizeHref(`/blog/${post.slug}`, locale)}
       className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-gray-100/80"
     >
       {/* Image */}
@@ -44,7 +49,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-4">{post.excerpt}</p>
 
         <span className="inline-flex items-center gap-1.5 text-brand-green text-sm font-semibold group-hover:text-brand-gold transition-colors">
-          Прочети
+          {dict.blog.readMore}
           <svg
             className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300"
             fill="none"
