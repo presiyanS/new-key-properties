@@ -11,11 +11,14 @@ import ComplexServices from '@/components/ComplexServices'
 import { getFeaturedListings, getBlogPosts, getHomePage, type SanityListing } from '@/lib/sanity'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { draftMode } from 'next/headers'
+import { getLocale } from '@/lib/i18n/getDictionary'
+import { localizeHref } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
 export default async function HomePage() {
   const { isEnabled: preview } = await draftMode()
+  const locale = await getLocale()
   const [featuredListings, sanityPosts, cms] = await Promise.all([
     getFeaturedListings(preview),
     getBlogPosts(preview),
@@ -213,13 +216,13 @@ export default async function HomePage() {
                 style={{ animationDelay: '0.5s' }}
               >
                 <Link
-                  href="/listings"
+                  href={localizeHref('/listings', locale)}
                   className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-center text-lg shadow-xl shadow-brand-gold/20 hover:shadow-brand-gold/30 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   {cms?.heroButton1 ?? 'Разгледайте Имотите'}
                 </Link>
                 <Link
-                  href="/contact"
+                  href={localizeHref('/contact', locale)}
                   className="border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-center text-lg"
                 >
                   {cms?.heroButton2 ?? 'Свържете се с нас'}
@@ -333,7 +336,7 @@ export default async function HomePage() {
 
           <AnimatedSection className="text-center mt-12" delay={0.4}>
             <Link
-              href="/konsultatsiya"
+              href={localizeHref('/konsultatsiya', locale)}
               className="inline-flex items-center gap-2 bg-brand-green text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-green-light transition-all shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 hover:-translate-y-0.5"
             >
               {cms?.processButtonText ?? 'Започнете безплатна консултация'}
@@ -358,7 +361,7 @@ export default async function HomePage() {
               <p className="text-gray-500">{cms?.featuredSubtitle ?? 'Внимателно подбрани оферти от нашия портфолио'}</p>
             </div>
             <Link
-              href="/listings"
+              href={localizeHref('/listings', locale)}
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
               {cms?.featuredLinkText ?? 'Всички имоти'}
@@ -378,7 +381,7 @@ export default async function HomePage() {
 
           <div className="mt-8 text-center sm:hidden">
             <Link
-              href="/listings"
+              href={localizeHref('/listings', locale)}
               className="inline-block bg-brand-green text-brand-gold font-bold px-6 py-3 rounded-xl hover:bg-brand-green-light transition-colors"
             >
               {cms?.featuredMobileLinkText ?? 'Всички имоти'}
@@ -426,7 +429,7 @@ export default async function HomePage() {
               </div>
 
               <Link
-                href="/about"
+                href={localizeHref('/about', locale)}
                 className="mt-10 inline-flex items-center gap-2 bg-brand-gold text-brand-green font-bold px-7 py-3.5 rounded-xl hover:bg-brand-gold-light transition-all hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5"
               >
                 {cms?.whyUsButton ?? 'Научете повече за нас'}
@@ -460,7 +463,7 @@ export default async function HomePage() {
                     {cms?.ctaCardButton1 ?? '0879 826 292'}
                   </a>
                   <Link
-                    href="/contact"
+                    href={localizeHref('/contact', locale)}
                     className="flex items-center justify-center border-2 border-brand-gold/60 text-brand-gold font-bold py-3.5 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all w-full"
                   >
                     {cms?.ctaCardButton2 ?? 'Изпратете запитване'}
@@ -493,7 +496,7 @@ export default async function HomePage() {
               <p className="text-gray-500">{cms?.blogSubtitle ?? 'Анализи, съвети и новини от пазара на недвижими имоти'}</p>
             </div>
             <Link
-              href="/blog"
+              href={localizeHref('/blog', locale)}
               className="hidden sm:inline-flex items-center gap-2 text-brand-green font-semibold hover:text-brand-gold transition-colors group"
             >
               {cms?.blogLinkText ?? 'Всички статии'}

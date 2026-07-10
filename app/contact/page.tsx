@@ -3,6 +3,7 @@ import ContactForm from '@/components/ContactForm'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getContactPage, getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 
 export const revalidate = 60
 
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const { isEnabled: preview } = await draftMode()
   const [cms, settings] = await Promise.all([getContactPage(preview), getSiteSettings(preview)])
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
 
   const phone = cms?.phone ?? settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
@@ -27,7 +30,7 @@ export default async function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-2xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">
-              Контакти
+              {dict.nav.contact}
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
               {cms?.heroTitle ?? 'Свържете се'} <br />
@@ -66,7 +69,7 @@ export default async function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Телефон</p>
+                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.phoneLabel}</p>
                     <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{phoneDisplay}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{cms?.phoneHours ?? 'Пон – Пет: 09:00 – 18:00, Сб: 10:00 – 15:00'}</p>
                   </div>
@@ -86,7 +89,7 @@ export default async function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Имейл</p>
+                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.emailLabel}</p>
                     <p className="text-gray-900 font-bold text-xl group-hover:text-brand-green transition-colors">{email}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{cms?.emailNote ?? 'Отговаряме в рамките на 24 часа'}</p>
                   </div>
@@ -103,7 +106,7 @@ export default async function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">Местоположение</p>
+                    <p className="text-xs text-gray-400 mb-0.5 uppercase tracking-wide">{dict.contact.locationLabel}</p>
                     <p className="text-gray-900 font-bold text-xl">{cms?.address ?? settings?.address ?? 'София, България'}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{cms?.addressNote ?? 'Обслужваме целия град'}</p>
                   </div>
@@ -128,7 +131,7 @@ export default async function ContactPage() {
             {/* Right: Form */}
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100">
-                <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Директен контакт</span>
+                <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.contact.directEyebrow}</span>
                 <h2 className="font-serif text-2xl font-bold text-brand-green mt-2 mb-2">
                   {cms?.formTitle ?? 'Изпратете запитване'}
                 </h2>

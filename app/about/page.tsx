@@ -3,6 +3,8 @@ import Link from 'next/link'
 import AnimatedSection from '@/components/AnimatedSection'
 import { getAboutPage } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
+import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
+import { localizeHref } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
@@ -37,6 +39,8 @@ const valueIcons: React.ReactNode[] = [
 export default async function AboutPage() {
   const { isEnabled: preview } = await draftMode()
   const cms = await getAboutPage(preview)
+  const locale = await getLocale()
+  const dict = getDictionary(locale)
 
   const missionParagraphs =
     cms?.missionParagraphs?.length > 0
@@ -94,7 +98,7 @@ export default async function AboutPage() {
         <div className="absolute bottom-0 left-1/3 w-72 h-px bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl">
-            <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">За Нас</p>
+            <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">{dict.nav.about}</p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
               {cms?.heroTitle ?? 'Агенция, Която Наистина'}<br />
               <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Се Грижи'}</span> за Вас
@@ -123,7 +127,7 @@ export default async function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
-              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Нашата история</span>
+              <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.historyEyebrow}</span>
               <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
                 {cms?.missionTitle ?? 'Нашата Мисия'}
               </h2>
@@ -167,7 +171,7 @@ export default async function AboutPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Принципи</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.principlesEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
               {cms?.valuesTitle ?? 'Нашите Ценности'}
             </h2>
@@ -203,7 +207,7 @@ export default async function AboutPage() {
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">Специализация</span>
+            <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.specializationEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
               {cms?.specializationTitle ?? 'С Какво Се Занимаваме'}
             </h2>
@@ -251,16 +255,16 @@ export default async function AboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact"
+                href={localizeHref('/contact', locale)}
                 className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-lg shadow-lg shadow-brand-gold/20 hover:-translate-y-0.5"
               >
-                Свържете се с нас
+                {dict.about.ctaButton1}
               </Link>
               <Link
-                href="/team"
+                href={localizeHref('/team', locale)}
                 className="border-2 border-brand-gold/60 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-lg"
               >
-                Запознайте се с екипа
+                {dict.about.ctaButton2}
               </Link>
             </div>
           </AnimatedSection>

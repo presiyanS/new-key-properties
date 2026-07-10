@@ -34,6 +34,19 @@ const bg = {
     viber: 'Пишете ни в Viber',
     call: 'Обадете се',
   },
+  about: {
+    historyEyebrow: 'Нашата история',
+    principlesEyebrow: 'Принципи',
+    specializationEyebrow: 'Специализация',
+    ctaButton1: 'Свържете се с нас',
+    ctaButton2: 'Запознайте се с екипа',
+  },
+  contact: {
+    phoneLabel: 'Телефон',
+    emailLabel: 'Имейл',
+    locationLabel: 'Местоположение',
+    directEyebrow: 'Директен контакт',
+  },
 }
 
 export default bg

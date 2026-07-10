@@ -36,6 +36,19 @@ const en: typeof bg = {
     viber: 'Message us on Viber',
     call: 'Call us',
   },
+  about: {
+    historyEyebrow: 'Our Story',
+    principlesEyebrow: 'Principles',
+    specializationEyebrow: 'Specialization',
+    ctaButton1: 'Contact us',
+    ctaButton2: 'Meet the team',
+  },
+  contact: {
+    phoneLabel: 'Phone',
+    emailLabel: 'Email',
+    locationLabel: 'Location',
+    directEyebrow: 'Direct contact',
+  },
 }
 
 export default en
