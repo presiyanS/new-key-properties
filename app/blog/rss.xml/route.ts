@@ -37,12 +37,13 @@ export async function GET() {
     .join('\n')
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>New Key Properties Blog</title>
     <link>${SITE_URL}/blog</link>
     <description>Полезна информация, анализи и съвети от пазара на недвижими имоти в София от екипа на New Key Properties.</description>
     <language>bg</language>
+    <atom:link href="${SITE_URL}/blog/rss.xml" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>`
