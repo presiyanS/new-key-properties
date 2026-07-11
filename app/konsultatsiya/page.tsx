@@ -208,6 +208,7 @@ export default async function KonsultatsiyaPage() {
                   {cms?.formCardSubtitle ?? 'Отговаряме в рамките на 24 часа.'}
                 </p>
                 <ContactForm
+                  endpoint="/api/submit-consultation"
                   nameLabel={settings?.formNameLabel}
                   namePlaceholder={settings?.formNamePlaceholder}
                   phoneLabel={settings?.formPhoneLabel}

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 type Props = {
+  endpoint?: string
   nameLabel?: string
   namePlaceholder?: string
   phoneLabel?: string
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export default function ContactForm({
+  endpoint = '/api/contact',
   nameLabel = 'Вашето Име *',
   namePlaceholder = 'Иван Иванов',
   phoneLabel = 'Телефон *',
@@ -46,7 +48,7 @@ export default function ContactForm({
     setLoading(true)
     setError('')
 
-    const res = await fetch('/api/contact', {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
