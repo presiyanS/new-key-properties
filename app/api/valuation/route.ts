@@ -61,6 +61,7 @@ export async function POST(req: Request) {
   const { error } = await resend.emails.send({
     from: 'New Key Properties <noreply@newkey.bg>',
     to: 'office@newkey.bg',
+    bcc: process.env.PERSONAL_NOTIFY_EMAIL || undefined,
     replyTo: email || undefined,
     subject: `Нова заявка за оценка от ${name}`,
     html: `
