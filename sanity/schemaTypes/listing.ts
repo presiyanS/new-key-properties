@@ -19,6 +19,12 @@ export const listingType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'titleEn',
+      title: 'Заглавие (EN)',
+      type: 'string',
+      description: 'Английски превод — показва се на /en сайта',
+    }),
+    defineField({
       name: 'type',
       title: 'Тип',
       type: 'string',
@@ -105,6 +111,13 @@ export const listingType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'descriptionEn',
+      title: 'Описание (EN)',
+      type: 'text',
+      rows: 5,
+      description: 'Английски превод — показва се на /en сайта',
+    }),
+    defineField({
       name: 'images',
       title: 'Снимки (качване)',
       type: 'array',
@@ -123,6 +136,14 @@ export const listingType = defineType({
       type: 'array',
       of: [{ type: 'string' }],
       options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'featuresEn',
+      title: 'Особености (EN)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+      description: 'Английски превод — показва се на /en сайта',
     }),
     defineField({
       name: 'googleMapsUrl',

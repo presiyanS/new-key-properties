@@ -14,6 +14,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
     ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     : priceRaw
 
+  const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
   const mainImage = listing.imageUrls?.[0]
 
   return (
@@ -26,7 +27,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
         {mainImage ? (
           <Image
             src={mainImage}
-            alt={listing.title}
+            alt={title}
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -84,7 +85,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
       {/* Content */}
       <div className="p-5">
         <h3 className="font-semibold text-gray-900 text-base mb-1.5 group-hover:text-brand-green transition-colors line-clamp-1 leading-snug">
-          {listing.title}
+          {title}
         </h3>
 
         <p className="text-brand-gold font-bold text-xl mb-4">{priceFormatted}</p>

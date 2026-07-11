@@ -4,10 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { BlogPost } from '@/data/blog'
 import { useLocale } from '@/lib/i18n/LocaleContext'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, translateBlogCategory } from '@/lib/i18n/config'
 
-export default function BlogCard({ post }: { post: BlogPost }) {
+type BlogCardPost = BlogPost & { titleEn?: string | null; excerptEn?: string | null }
+
+export default function BlogCard({ post }: { post: BlogCardPost }) {
   const { locale, dict } = useLocale()
+  const title = locale === 'en' ? (post.titleEn ?? post.title) : post.title
+  const excerpt = locale === 'en' ? (post.excerptEn ?? post.excerpt) : post.excerpt
+  const category = translateBlogCategory(post.category, locale)
   const dateFormatted = new Date(post.date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'bg-BG', {
     year: 'numeric',
     month: 'long',
@@ -23,7 +28,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
       <div className="relative h-52 overflow-hidden bg-brand-green/10">
         <Image
           src={post.image}
-          alt={post.title}
+          alt={title}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
@@ -33,7 +38,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
         {/* Category badge */}
         <div className="absolute top-3 left-3">
           <span className="bg-brand-gold/95 text-brand-green text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
-            {post.category}
+            {category}
           </span>
         </div>
       </div>
@@ -43,10 +48,10 @@ export default function BlogCard({ post }: { post: BlogPost }) {
         <p className="text-xs text-gray-400 mb-2.5 font-medium tracking-wide">{dateFormatted}</p>
 
         <h3 className="font-semibold text-gray-900 text-base mb-2.5 group-hover:text-brand-green transition-colors line-clamp-2 leading-snug">
-          {post.title}
+          {title}
         </h3>
 
-        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-4">{post.excerpt}</p>
+        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-4">{excerpt}</p>
 
         <span className="inline-flex items-center gap-1.5 text-brand-green text-sm font-semibold group-hover:text-brand-gold transition-colors">
           {dict.blog.readMore}

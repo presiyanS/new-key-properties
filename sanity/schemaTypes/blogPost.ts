@@ -15,6 +15,12 @@ export const blogPostType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'titleEn',
+      title: 'Заглавие (EN)',
+      type: 'string',
+      description: 'Английски превод — показва се на /en сайта',
+    }),
+    defineField({
       name: 'slug',
       title: 'URL адрес (slug)',
       type: 'slug',
@@ -29,11 +35,25 @@ export const blogPostType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'excerptEn',
+      title: 'Кратко описание (EN)',
+      type: 'text',
+      rows: 3,
+      description: 'Английски превод — показва се на /en сайта',
+    }),
+    defineField({
       name: 'content',
       title: 'Съдържание',
       type: 'text',
       rows: 20,
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'contentEn',
+      title: 'Съдържание (EN)',
+      type: 'text',
+      rows: 20,
+      description: 'Английски превод — показва се на /en сайта',
     }),
     defineField({
       name: 'date',

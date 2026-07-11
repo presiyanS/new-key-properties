@@ -6,7 +6,9 @@
  * Pauses on hover so visitors can read.
  */
 
-const items = [
+import { useLocale } from '@/lib/i18n/LocaleContext'
+
+const itemsBg = [
   { type: 'hood', text: 'Драгалевци' },
   { type: 'dot' },
   { type: 'hood', text: 'Младост' },
@@ -43,7 +45,46 @@ const items = [
   { type: 'dot' },
 ]
 
+const itemsEn = [
+  { type: 'hood', text: 'Dragalevtsi' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Mladost' },
+  { type: 'dot' },
+  { type: 'phrase', text: 'Honesty · Trust · Results' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Lozenets' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Vitosha' },
+  { type: 'dot' },
+  { type: 'phrase', text: 'Sofia' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Studentski Grad' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Borovo' },
+  { type: 'dot' },
+  { type: 'phrase', text: '0 Hidden Fees' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Druzhba' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Krasno Selo' },
+  { type: 'dot' },
+  { type: 'phrase', text: 'Personal Approach' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Oborishte' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Iztok' },
+  { type: 'dot' },
+  { type: 'phrase', text: 'Max 10 Clients / Month' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Ivan Vazov' },
+  { type: 'dot' },
+  { type: 'hood', text: 'Krastova Vada' },
+  { type: 'dot' },
+]
+
 export default function NeighborhoodMarquee() {
+  const { locale } = useLocale()
+  const items = locale === 'en' ? itemsEn : itemsBg
   const doubled = [...items, ...items]
 
   return (

@@ -23,25 +23,27 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!listing) return {}
   const locale = await getLocale()
 
+  const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
+  const descriptionFull = locale === 'en' ? (listing.descriptionEn ?? listing.description) : listing.description
   const image = listing.imageUrls?.[0]
-  const description = listing.description?.slice(0, 200) ?? ''
+  const description = descriptionFull?.slice(0, 200) ?? ''
   const url = `https://www.newkey.bg${localizeHref(`/listings/${id}`, locale)}`
 
   return {
-    title: listing.title,
+    title,
     description,
     alternates: hreflangAlternates(`/listings/${id}`, locale),
     openGraph: {
-      title: listing.title,
+      title,
       description,
       url,
       siteName: 'New Key Properties',
       type: 'website',
-      ...(image ? { images: [{ url: image, width: 1200, height: 800, alt: listing.title }] } : {}),
+      ...(image ? { images: [{ url: image, width: 1200, height: 800, alt: title }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
-      title: listing.title,
+      title,
       description,
       ...(image ? { images: [image] } : {}),
     },
@@ -55,6 +57,10 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   if (!listing) notFound()
   const locale = await getLocale()
   const dict = getDictionary(locale)
+
+  const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
+  const description = locale === 'en' ? (listing.descriptionEn ?? listing.description) : listing.description
+  const features = locale === 'en' && listing.featuresEn?.length ? listing.featuresEn : listing.features
 
   const priceRaw = listing.price != null ? String(listing.price) : '–'
   const priceStripped = priceRaw.replace(/[\s€]/g, '')
@@ -85,7 +91,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
             <div className="lg:col-span-2 space-y-6">
               {/* Gallery */}
               <div className="relative rounded-2xl overflow-hidden">
-                <ImageGallery images={images} title={listing.title} />
+                <ImageGallery images={images} title={title} />
                 <div className="absolute top-4 left-4 z-10">
                   <span
                     className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide backdrop-blur-sm shadow ${
@@ -126,7 +132,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
                 {/* Title + Price */}
                 <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
-                  <h1 className="font-serif text-3xl font-bold text-gray-900 leading-tight">{listing.title}</h1>
+                  <h1 className="font-serif text-3xl font-bold text-gray-900 leading-tight">{title}</h1>
                   <div className="text-right">
                     <p className="text-brand-gold font-bold text-3xl">{priceFormatted}</p>
                     {listing.type === 'sale' && !isNaN(numericPrice) && listing.area && !isNaN(Number(listing.area)) && (
@@ -210,17 +216,17 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 {/* Description */}
                 <h2 className="font-bold text-gray-900 text-lg mb-3">{dict.listings.descriptionHeading}</h2>
                 <div className="text-gray-600 leading-relaxed mb-8 space-y-3">
-                  {(listing.description ?? '').split('\n').filter(Boolean).map((para, i) => (
+                  {(description ?? '').split('\n').filter(Boolean).map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
                 </div>
 
                 {/* Features */}
-                {listing.features?.length > 0 && (
+                {features?.length > 0 && (
                   <>
                     <h2 className="font-bold text-gray-900 text-lg mb-4">{dict.listings.featuresHeading}</h2>
                     <div className="flex flex-wrap gap-2">
-                      {listing.features.map((f) => (
+                      {features.map((f) => (
                         <span
                           key={f}
                           className="bg-brand-green/8 border border-brand-green/15 text-brand-green text-sm font-medium px-4 py-2 rounded-full hover:bg-brand-green/12 transition-colors"
@@ -232,7 +238,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   </>
                 )}
 
-                <ShareButtons id={id} title={listing.title} />
+                <ShareButtons id={id} title={title} />
               </div>
 
               {/* Map */}

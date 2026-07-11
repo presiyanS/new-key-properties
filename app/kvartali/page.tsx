@@ -53,7 +53,10 @@ export default async function KvartaliPage() {
             <p className="text-gray-400 text-center py-24">{dict.neighborhoods.emptyState}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {neighborhoods.map((n: any) => (
+              {neighborhoods.map((n: any) => {
+                const name = locale === 'en' ? (n.nameEn ?? n.name) : n.name
+                const tagline = locale === 'en' ? (n.taglineEn ?? n.tagline) : n.tagline
+                return (
                 <Link
                   key={n._id}
                   href={localizeHref(`/kvartali/${n.slug.current}`, locale)}
@@ -64,7 +67,7 @@ export default async function KvartaliPage() {
                     {n.externalImageUrl ? (
                       <Image
                         src={n.externalImageUrl}
-                        alt={n.name}
+                        alt={name}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -73,14 +76,14 @@ export default async function KvartaliPage() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <div className="absolute bottom-4 left-5">
-                      <h2 className="font-serif text-2xl font-bold text-white">{n.name}</h2>
+                      <h2 className="font-serif text-2xl font-bold text-white">{name}</h2>
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-6">
-                    {n.tagline && (
-                      <p className="text-gray-500 text-sm mb-4 leading-relaxed">{n.tagline}</p>
+                    {tagline && (
+                      <p className="text-gray-500 text-sm mb-4 leading-relaxed">{tagline}</p>
                     )}
 
                     {/* Price pills */}
@@ -105,7 +108,7 @@ export default async function KvartaliPage() {
                     </div>
                   </div>
                 </Link>
-              ))}
+              )})}
             </div>
           )}
         </div>

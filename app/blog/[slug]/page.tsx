@@ -6,7 +6,7 @@ import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates, translateBlogCategory } from '@/lib/i18n/config'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -23,7 +23,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getBlogPost(slug) ?? staticPosts.find((p) => p.slug === slug)
   if (!post) return {}
   const locale = await getLocale()
-  return { title: post.title, description: post.excerpt, alternates: hreflangAlternates(`/blog/${slug}`, locale) }
+  const title = locale === 'en' ? ((post as { titleEn?: string }).titleEn ?? post.title) : post.title
+  const excerpt = locale === 'en' ? ((post as { excerptEn?: string }).excerptEn ?? post.excerpt) : post.excerpt
+  return { title, description: excerpt, alternates: hreflangAlternates(`/blog/${slug}`, locale) }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -47,6 +49,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     day: 'numeric',
   })
 
+  const postAny = post as { titleEn?: string; excerptEn?: string; contentEn?: string }
+  const title = locale === 'en' ? (postAny.titleEn ?? post.title) : post.title
+  const excerpt = locale === 'en' ? (postAny.excerptEn ?? post.excerpt) : post.excerpt
+  const content = locale === 'en' ? (postAny.contentEn ?? post.content) : post.content
+  const category = translateBlogCategory(post.category, locale)
+
   return (
     <>
       {/* Header */}
@@ -59,10 +67,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {dict.blog.backToBlog}
           </Link>
           <div className="flex items-center gap-3 mb-5">
-            <span className="bg-brand-gold text-brand-green text-xs font-bold px-3 py-1.5 rounded-full">{post.category}</span>
+            <span className="bg-brand-gold text-brand-green text-xs font-bold px-3 py-1.5 rounded-full">{category}</span>
             <span className="text-brand-gold/50 text-sm">{dateFormatted}</span>
           </div>
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white leading-tight">{post.title}</h1>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white leading-tight">{title}</h1>
         </div>
       </section>
 
@@ -71,16 +79,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {post.image && (
             <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-12 bg-brand-green/10">
-              <Image src={post.image} alt={post.title} fill className="object-cover" />
+              <Image src={post.image} alt={title} fill className="object-cover" />
             </div>
           )}
 
           <p className="text-gray-500 text-xl leading-relaxed mb-10 border-l-4 border-brand-gold pl-6 italic">
-            {post.excerpt}
+            {excerpt}
           </p>
 
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-            {post.content.split('\n\n').map((paragraph, i) => {
+            {content.split('\n\n').map((paragraph, i) => {
               if (paragraph.startsWith('**') && paragraph.includes('**')) {
                 const parts = paragraph.split(/\*\*(.*?)\*\*/)
                 return (
@@ -122,17 +130,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <h2 className="font-serif text-3xl font-bold text-brand-green mb-10">{dict.blog.relatedHeading}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((p) => {
+                const pAny = p as { titleEn?: string }
+                const pTitle = locale === 'en' ? (pAny.titleEn ?? p.title) : p.title
                 const d = new Date(p.date).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })
                 return (
                   <Link key={p.id} href={localizeHref(`/blog/${p.slug}`, locale)} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
                     {p.image && (
                       <div className="relative h-40 overflow-hidden bg-brand-green/10">
-                        <Image src={p.image} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                        <Image src={p.image} alt={pTitle} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                     )}
                     <div className="p-5">
                       <p className="text-xs text-gray-400 mb-2">{d}</p>
-                      <h3 className="font-semibold text-gray-900 text-sm group-hover:text-brand-green transition-colors line-clamp-2">{p.title}</h3>
+                      <h3 className="font-semibold text-gray-900 text-sm group-hover:text-brand-green transition-colors line-clamp-2">{pTitle}</h3>
                     </div>
                   </Link>
                 )

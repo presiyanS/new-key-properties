@@ -33,6 +33,7 @@ export function urlFor(source: SanityImageSource) {
 export type SanityListing = {
   _id: string
   title: string
+  titleEn: string | null
   type: 'sale' | 'rent'
   price: string | number
   area: string | number
@@ -42,8 +43,10 @@ export type SanityListing = {
   constructionAct: 'act14' | 'act15' | 'act16' | null
   neighborhood: string
   description: string
+  descriptionEn: string | null
   imageUrls: string[]
   features: string[]
+  featuresEn: string[] | null
   featured: boolean
   sold: boolean
   googleMapsUrl: string | null
@@ -53,6 +56,7 @@ export type SanityListing = {
 const LISTING_FIELDS = `
   _id,
   title,
+  titleEn,
   type,
   price,
   area,
@@ -62,8 +66,10 @@ const LISTING_FIELDS = `
   constructionAct,
   neighborhood,
   description,
+  descriptionEn,
   "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),
   features,
+  featuresEn,
   featured,
   sold,
   googleMapsUrl,
@@ -120,8 +126,11 @@ export type SanityBlogPost = {
   id: string
   slug: string
   title: string
+  titleEn: string | null
   excerpt: string
+  excerptEn: string | null
   content: string
+  contentEn: string | null
   date: string
   category: string
   image: string
@@ -131,8 +140,11 @@ const BLOG_POST_FIELDS = `
   "id": _id,
   "slug": slug.current,
   title,
+  titleEn,
   excerpt,
+  excerptEn,
   content,
+  contentEn,
   date,
   category,
   "image": coalesce(image.asset->url, externalImageUrl, '')

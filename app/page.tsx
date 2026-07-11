@@ -393,7 +393,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Complex Services / Partnerships ── */}
-      <ComplexServices />
+      <ComplexServices locale={locale} />
 
       {/* ── Featured Listings ── */}
       <section className="py-24 bg-gray-50">
