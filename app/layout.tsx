@@ -80,6 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale}>
       <head>
+        <link rel="alternate" type="application/rss+xml" title="New Key Properties Blog" href="https://www.newkey.bg/blog/rss.xml" />
         <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration='manual';` }} />
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
