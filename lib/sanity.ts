@@ -87,12 +87,12 @@ const freshClient = createClient({
 const _cachedGetListings = unstable_cache(
   () => freshClient.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`),
   ['listings-v4'],
-  { revalidate: 60 }
+  { revalidate: 60, tags: ['listings'] }
 )
 const _cachedGetFeaturedListings = unstable_cache(
   () => freshClient.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
   ['featured-listings-v4'],
-  { revalidate: 60 }
+  { revalidate: 60, tags: ['listings'] }
 )
 
 export async function getListings(preview = false): Promise<SanityListing[]> {
@@ -108,7 +108,7 @@ export async function getListing(id: string, preview = false): Promise<SanityLis
     return await unstable_cache(
       () => client.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id }),
       [`listing-${id}`],
-      { revalidate: 300 }
+      { revalidate: 300, tags: ['listings'] }
     )()
   } catch { return null }
 }
@@ -153,7 +153,7 @@ const BLOG_POST_FIELDS = `
 const _cachedGetBlogPosts = unstable_cache(
   () => client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`),
   ['blog-posts'],
-  { revalidate: 600 }
+  { revalidate: 600, tags: ['blog'] }
 )
 
 export async function getBlogPosts(preview = false): Promise<SanityBlogPost[]> {
@@ -169,7 +169,7 @@ export async function getBlogPost(slug: string, preview = false): Promise<Sanity
     return await unstable_cache(
       () => client.fetch(`*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`, { slug }),
       [`blog-post-${slug}`],
-      { revalidate: 600 }
+      { revalidate: 600, tags: ['blog'] }
     )()
   } catch { return null }
 }
@@ -206,7 +206,7 @@ const TEAM_MEMBER_FIELDS = `
 const _cachedGetTeamMembers = unstable_cache(
   () => client.fetch(`*[_type == "teamMember"] | order(order asc) { ${TEAM_MEMBER_FIELDS} }`),
   ['team-members'],
-  { revalidate: 3600 }
+  { revalidate: 3600, tags: ['team'] }
 )
 
 export async function getTeamMembers(preview = false): Promise<SanityTeamMember[]> {
@@ -218,15 +218,15 @@ export async function getTeamMembers(preview = false): Promise<SanityTeamMember[
 
 // ── Page Content ─────────────────────────────────────────────────────────────
 
-const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->{ ${LISTING_FIELDS} } }`), ['home-page'], { revalidate: 3600 })
-const _cachedGetAboutPage = unstable_cache(() => client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`), ['about-page'], { revalidate: 3600 })
-const _cachedGetContactPage = unstable_cache(() => client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`), ['contact-page'], { revalidate: 3600 })
-const _cachedGetConsultationPage = unstable_cache(() => client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`), ['consultation-page'], { revalidate: 3600 })
-const _cachedGetSiteSettings = unstable_cache(() => client.fetch(`*[_type == "siteSettings" && _id == "siteSettings"][0]`), ['site-settings'], { revalidate: 3600 })
-const _cachedGetBlogPage = unstable_cache(() => client.fetch(`*[_type == "blogPage" && _id == "blogPage"][0]`), ['blog-page'], { revalidate: 3600 })
-const _cachedGetTeamPage = unstable_cache(() => client.fetch(`*[_type == "teamPage" && _id == "teamPage"][0]`), ['team-page'], { revalidate: 3600 })
-const _cachedGetListingsPage = unstable_cache(() => client.fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`), ['listings-page'], { revalidate: 3600 })
-const _cachedGetNeighborhoods = unstable_cache(() => client.fetch(`*[_type == "neighborhood"] | order(name asc)`), ['neighborhoods'], { revalidate: 3600 })
+const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->{ ${LISTING_FIELDS} } }`), ['home-page'], { revalidate: 3600, tags: ['home-page', 'listings'] })
+const _cachedGetAboutPage = unstable_cache(() => client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`), ['about-page'], { revalidate: 3600, tags: ['about-page'] })
+const _cachedGetContactPage = unstable_cache(() => client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`), ['contact-page'], { revalidate: 3600, tags: ['contact-page'] })
+const _cachedGetConsultationPage = unstable_cache(() => client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`), ['consultation-page'], { revalidate: 3600, tags: ['consultation-page'] })
+const _cachedGetSiteSettings = unstable_cache(() => client.fetch(`*[_type == "siteSettings" && _id == "siteSettings"][0]`), ['site-settings'], { revalidate: 3600, tags: ['site-settings'] })
+const _cachedGetBlogPage = unstable_cache(() => client.fetch(`*[_type == "blogPage" && _id == "blogPage"][0]`), ['blog-page'], { revalidate: 3600, tags: ['blog-page'] })
+const _cachedGetTeamPage = unstable_cache(() => client.fetch(`*[_type == "teamPage" && _id == "teamPage"][0]`), ['team-page'], { revalidate: 3600, tags: ['team-page'] })
+const _cachedGetListingsPage = unstable_cache(() => client.fetch(`*[_type == "listingsPage" && _id == "listingsPage"][0]`), ['listings-page'], { revalidate: 3600, tags: ['listings-page'] })
+const _cachedGetNeighborhoods = unstable_cache(() => client.fetch(`*[_type == "neighborhood"] | order(name asc)`), ['neighborhoods'], { revalidate: 3600, tags: ['neighborhoods'] })
 
 export async function getHomePage(preview = false) {
   try {
@@ -297,7 +297,7 @@ export async function getNeighborhood(slug: string, preview = false) {
     return await unstable_cache(
       () => client.fetch(`*[_type == "neighborhood" && slug.current == $slug][0]`, { slug }),
       [`neighborhood-${slug}`],
-      { revalidate: 3600 }
+      { revalidate: 3600, tags: ['neighborhoods'] }
     )()
   } catch { return null }
 }
