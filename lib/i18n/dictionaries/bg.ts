@@ -7,6 +7,7 @@ const bg = {
     team: 'Екипът ни',
     blog: 'Блог',
     konsultatsiya: 'Консултация',
+    valuation: 'Оценка',
     contact: 'Контакти',
     callUs: 'Обадете се',
     menu: 'Меню',

@@ -9,6 +9,7 @@ const en: typeof bg = {
     team: 'Our Team',
     blog: 'Blog',
     konsultatsiya: 'Consultation',
+    valuation: 'Valuation',
     contact: 'Contact',
     callUs: 'Call us',
     menu: 'Menu',

@@ -109,6 +109,7 @@ export default function Footer({
                 { href: '/about', label: dict.nav.about },
                 { href: '/team', label: dict.nav.team },
                 { href: '/blog', label: dict.nav.blog },
+                { href: '/otsenka', label: dict.nav.valuation },
                 { href: '/contact', label: dict.nav.contact },
               ].map((l) => (
                 <li key={l.href}>

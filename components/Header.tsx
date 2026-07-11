@@ -74,6 +74,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     { href: '/team', label: dict.nav.team },
     { href: '/blog', label: dict.nav.blog },
     { href: '/konsultatsiya', label: dict.nav.konsultatsiya },
+    { href: '/otsenka', label: dict.nav.valuation },
     { href: '/contact', label: dict.nav.contact },
   ].map((l) => ({ ...l, href: localizeHref(l.href, locale) }))
 

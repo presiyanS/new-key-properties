@@ -11,6 +11,7 @@ import { teamPageType } from './teamPage'
 import { listingsPageType } from './listingsPage'
 import { savedSearchType } from './savedSearch'
 import { neighborhoodType } from './neighborhood'
+import { valuationRequestType } from './valuationRequest'
 
 export const schemaTypes = [
   // Singletons (settings & pages)
@@ -28,4 +29,5 @@ export const schemaTypes = [
   teamMemberType,
   savedSearchType,
   neighborhoodType,
+  valuationRequestType,
 ]
