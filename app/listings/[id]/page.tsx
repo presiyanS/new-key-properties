@@ -7,6 +7,7 @@ import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
 import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
+import MortgageCalculator from '@/components/MortgageCalculator'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
@@ -240,6 +241,11 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
 
                 <ShareButtons id={id} title={title} />
               </div>
+
+              {/* Mortgage calculator */}
+              {listing.type === 'sale' && !listing.sold && !isNaN(numericPrice) && numericPrice > 0 && (
+                <MortgageCalculator price={numericPrice} />
+              )}
 
               {/* Map */}
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
