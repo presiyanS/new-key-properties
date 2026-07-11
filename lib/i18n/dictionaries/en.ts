@@ -37,6 +37,11 @@ const en: typeof bg = {
     viber: 'Message us on Viber',
     call: 'Call us',
   },
+  viberBanner: {
+    text: 'Get our new listings before they go live on the site',
+    cta: 'Join our Viber channel',
+    close: 'Close',
+  },
   about: {
     historyEyebrow: 'Our Story',
     principlesEyebrow: 'Principles',

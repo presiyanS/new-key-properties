@@ -35,6 +35,11 @@ const bg = {
     viber: 'Пишете ни в Viber',
     call: 'Обадете се',
   },
+  viberBanner: {
+    text: 'Получавайте новите ни обяви преди да са публикувани на сайта',
+    cta: 'Присъедини се във Viber',
+    close: 'Затвори',
+  },
   about: {
     historyEyebrow: 'Нашата история',
     principlesEyebrow: 'Принципи',

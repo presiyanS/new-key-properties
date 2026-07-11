@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import FloatingCTA from '@/components/FloatingCTA'
 import CookieConsent from '@/components/CookieConsent'
+import ViberBanner from '@/components/ViberBanner'
 import { getSiteSettings } from '@/lib/sanity'
 import { headers, cookies } from 'next/headers'
 import { draftMode } from 'next/headers'
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const cookieStore = await cookies()
   const consentCookie = cookieStore.get('nkp_cookie_consent')?.value
   const initialConsent = consentCookie === 'accepted' || consentCookie === 'declined' ? consentCookie : 'pending'
+  const viberBannerDismissed = cookieStore.get('nkp_viber_banner_dismissed')?.value === '1'
 
   const settings = isStudio ? null : await getSiteSettings()
   const phone = settings?.phone ?? '0879826292'
@@ -85,6 +87,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
         <LocaleProvider locale={locale} dict={dict}>
+          {!isStudio && <ViberBanner initialDismissed={viberBannerDismissed} />}
           {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
           <main>{children}</main>
           {!isStudio && <Footer settings={settings} locale={locale} dict={dict} />}
