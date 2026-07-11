@@ -1,58 +1,6 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
-
-const HUBSPOT_BASE = 'https://api.hubapi.com/crm/v3/objects/contacts'
-
-function splitName(fullName: string): { firstname: string; lastname: string } {
-  const trimmed = fullName.trim()
-  const idx = trimmed.indexOf(' ')
-  if (idx === -1) return { firstname: trimmed, lastname: '' }
-  return { firstname: trimmed.slice(0, idx), lastname: trimmed.slice(idx + 1) }
-}
-
-async function syncToHubSpot(properties: Record<string, string>, email?: string) {
-  const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN
-  if (!token) {
-    console.error('HubSpot sync skipped: HUBSPOT_PRIVATE_APP_TOKEN is not set')
-    return
-  }
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  }
-
-  try {
-    if (email) {
-      // Upsert by email: try updating an existing contact first.
-      const patchRes = await fetch(`${HUBSPOT_BASE}/${encodeURIComponent(email)}?idProperty=email`, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify({ properties }),
-      })
-
-      if (patchRes.ok) return
-
-      if (patchRes.status !== 404) {
-        console.error('HubSpot PATCH failed:', patchRes.status, await patchRes.text())
-        return
-      }
-      // 404 = no existing contact with this email, fall through to create.
-    }
-
-    const createRes = await fetch(HUBSPOT_BASE, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ properties: { ...properties, ...(email ? { email } : {}) } }),
-    })
-
-    if (!createRes.ok) {
-      console.error('HubSpot POST failed:', createRes.status, await createRes.text())
-    }
-  } catch (err) {
-    console.error('HubSpot sync error:', err)
-  }
-}
+import { splitName, syncHubSpotContact } from '@/lib/hubspot'
 
 export async function POST(req: Request) {
   const { name, phone, email, message } = await req.json()
@@ -64,8 +12,8 @@ export async function POST(req: Request) {
   const { firstname, lastname } = splitName(name)
 
   // Awaited so Vercel doesn't freeze the function before the request completes,
-  // but syncToHubSpot never throws — CRM failures must never block the user-facing success state.
-  await syncToHubSpot({ firstname, lastname, phone, message }, email || undefined)
+  // but syncHubSpotContact never throws — CRM failures must never block the user-facing success state.
+  await syncHubSpotContact({ firstname, lastname, phone, message }, email || undefined)
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { error } = await resend.emails.send({
