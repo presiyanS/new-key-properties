@@ -13,6 +13,8 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
   const priceFormatted = /^\d+$/.test(priceStripped)
     ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     : priceRaw
+  const numericPrice = Number(String(listing.price ?? '').replace(/[^0-9]/g, ''))
+  const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
   const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
   const mainImage = listing.imageUrls?.[0]
@@ -88,7 +90,14 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           {title}
         </h3>
 
-        <p className="text-brand-gold font-bold text-xl mb-4">{priceFormatted}</p>
+        <div className="mb-4">
+          <p className="text-brand-gold font-bold text-xl">{priceFormatted}</p>
+          {listing.type === 'sale' && !isNaN(numericPrice) && listing.area && !isNaN(Number(listing.area)) && (
+            <p className="text-gray-400 text-xs mt-0.5">
+              ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/м²
+            </p>
+          )}
+        </div>
 
         <div className="flex items-center gap-4 text-sm text-gray-500 pb-3.5 border-b border-gray-100">
           <span className="flex items-center gap-1.5">
