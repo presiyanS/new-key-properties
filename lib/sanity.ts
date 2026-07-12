@@ -32,6 +32,7 @@ export function urlFor(source: SanityImageSource) {
 
 export type SanityListing = {
   _id: string
+  code: string | null
   title: string
   titleEn: string | null
   type: 'sale' | 'rent'
@@ -55,6 +56,7 @@ export type SanityListing = {
 
 const LISTING_FIELDS = `
   _id,
+  code,
   title,
   titleEn,
   type,

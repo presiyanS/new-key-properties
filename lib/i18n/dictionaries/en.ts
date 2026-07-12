@@ -58,7 +58,8 @@ const en: typeof bg = {
   listings: {
     forSale: 'for sale',
     forRent: 'for rent',
-    searchPlaceholder: 'Search by title, neighborhood, features...',
+    searchPlaceholder: 'Search by title, neighborhood, listing code...',
+    listingCodeLabel: 'Listing code',
     tabAll: 'All',
     tabSale: 'Sale',
     tabRent: 'Rent',

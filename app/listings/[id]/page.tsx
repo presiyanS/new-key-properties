@@ -145,12 +145,19 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 </div>
 
                 {/* Location */}
-                <p className="text-gray-400 flex items-center gap-1.5 mb-8">
+                <p className={`text-gray-400 flex items-center gap-1.5 ${listing.code ? 'mb-1.5' : 'mb-8'}`}>
                   <svg className="w-4 h-4 text-brand-green shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
                   {listing.neighborhood}, {dict.listings.sofia}
                 </p>
+
+                {/* Listing code */}
+                {listing.code && (
+                  <p className="text-gray-300 text-xs mb-8">
+                    {dict.listings.listingCodeLabel}: <span className="font-semibold text-gray-400">{listing.code}</span>
+                  </p>
+                )}
 
                 {/* Stats grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 p-5 bg-gray-50 rounded-2xl border border-gray-100">

@@ -13,6 +13,25 @@ export const listingType = defineType({
   fields: [
     orderRankField({ type: 'listing' }),
     defineField({
+      name: 'code',
+      title: 'Код на имота',
+      type: 'string',
+      description: 'Кратък уникален код за търсене и споделяне по телефон (напр. NK-1042).',
+      validation: (r) =>
+        r.required().custom(async (code, context) => {
+          if (!code) return true
+          const { document, getClient } = context
+          const client = getClient({ apiVersion: '2024-01-01' })
+          const id = document?._id.replace(/^drafts\./, '') ?? ''
+          const params = { draft: `drafts.${id}`, published: id, code }
+          const isUnique = await client.fetch(
+            `!defined(*[_type == "listing" && !(_id in [$draft, $published]) && code == $code][0]._id)`,
+            params
+          )
+          return isUnique || 'Този код вече се използва от друг имот'
+        }),
+    }),
+    defineField({
       name: 'title',
       title: 'Заглавие',
       type: 'string',
@@ -170,13 +189,14 @@ export const listingType = defineType({
       title: 'title',
       price: 'price',
       type: 'type',
+      code: 'code',
       media: 'images.0',
       externalUrl: 'externalImageUrls.0',
     },
-    prepare({ title, price, type, media, externalUrl }) {
+    prepare({ title, price, type, code, media, externalUrl }) {
       return {
         title,
-        subtitle: `${type === 'sale' ? 'Продажба' : 'Наем'} · €${price ?? '–'}`,
+        subtitle: `${code ? code + ' · ' : ''}${type === 'sale' ? 'Продажба' : 'Наем'} · €${price ?? '–'}`,
         media: media ?? (externalUrl ? createExternalImageThumbnail(externalUrl) : HomeIcon),
       }
     },

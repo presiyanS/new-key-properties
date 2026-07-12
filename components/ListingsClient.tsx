@@ -151,6 +151,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
       const q = searchQuery.trim().toLowerCase()
       result = result.filter((l) => {
         return (
+          l.code?.toLowerCase().includes(q) ||
           l.title?.toLowerCase().includes(q) ||
           l.neighborhood?.toLowerCase().includes(q) ||
           l.description?.toLowerCase().includes(q) ||

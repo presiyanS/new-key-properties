@@ -56,7 +56,8 @@ const bg = {
   listings: {
     forSale: 'за продажба',
     forRent: 'под наем',
-    searchPlaceholder: 'Търсете по заглавие, квартал, характеристики...',
+    searchPlaceholder: 'Търсете по заглавие, квартал, код на имот...',
+    listingCodeLabel: 'Код на имота',
     tabAll: 'Всички',
     tabSale: 'Продажба',
     tabRent: 'Наем',
