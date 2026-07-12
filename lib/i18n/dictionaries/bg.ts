@@ -103,6 +103,8 @@ const bg = {
     constructionAct14: 'Акт 14',
     constructionAct15: 'Акт 15',
     constructionAct16: 'Акт 16',
+    constructionActLabel: 'Акт на строителство',
+    allConstructionActs: 'Всички',
     statArea: 'Площ',
     statFloor: 'Етаж',
     statConstruction: 'Строителство',

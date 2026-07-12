@@ -105,6 +105,8 @@ const en: typeof bg = {
     constructionAct14: 'Permit Stage 14',
     constructionAct15: 'Permit Stage 15',
     constructionAct16: 'Permit Stage 16',
+    constructionActLabel: 'Construction Stage',
+    allConstructionActs: 'All',
     statArea: 'Area',
     statFloor: 'Floor',
     statConstruction: 'Construction',

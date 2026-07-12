@@ -32,6 +32,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   const [priceMax, setPriceMax] = useState('')
   const [areaMin, setAreaMin] = useState('')
   const [areaMax, setAreaMax] = useState('')
+  const [constructionAct, setConstructionAct] = useState('')
   const [sortBy, setSortBy] = useState<SortBy>('default')
   const [showFilters, setShowFilters] = useState(false)
 
@@ -47,6 +48,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     if (sp.get('priceMax')) setPriceMax(sp.get('priceMax')!)
     if (sp.get('areaMin')) setAreaMin(sp.get('areaMin')!)
     if (sp.get('areaMax')) setAreaMax(sp.get('areaMax')!)
+    if (sp.get('act')) setConstructionAct(sp.get('act')!)
     if (sp.get('sort')) setSortBy(sp.get('sort') as SortBy)
     if (sp.get('filters') === '1') setShowFilters(true)
   }, [])
@@ -63,11 +65,12 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     if (priceMax) sp.set('priceMax', priceMax)
     if (areaMin) sp.set('areaMin', areaMin)
     if (areaMax) sp.set('areaMax', areaMax)
+    if (constructionAct) sp.set('act', constructionAct)
     if (sortBy !== 'default') sp.set('sort', sortBy)
     if (showFilters) sp.set('filters', '1')
     const qs = sp.toString()
     window.history.replaceState(null, '', pathname + (qs ? '?' + qs : ''))
-  }, [filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy, showFilters, pathname])
+  }, [filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, constructionAct, sortBy, showFilters, pathname])
 
   // Derived options from listings data
   const neighborhoods = useMemo(() => {
@@ -111,6 +114,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     priceMax,
     areaMin,
     areaMax,
+    constructionAct,
     searchQuery,
   ].filter(Boolean).length
 
@@ -124,6 +128,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     setPriceMax('')
     setAreaMin('')
     setAreaMax('')
+    setConstructionAct('')
     setSortBy('default')
   }
 
@@ -174,6 +179,9 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     if (areaMin) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n >= Number(areaMin) })
     if (areaMax) result = result.filter((l) => { const n = Number(l.area); return !isNaN(n) && n <= Number(areaMax) })
 
+    // Construction act
+    if (constructionAct) result = result.filter((l) => l.constructionAct === constructionAct)
+
     // Sort
     if (sortBy === 'price-asc') result = [...result].sort((a, b) => (Number(String(a.price).replace(/[^0-9]/g, '')) || 0) - (Number(String(b.price).replace(/[^0-9]/g, '')) || 0))
     else if (sortBy === 'price-desc') result = [...result].sort((a, b) => (Number(String(b.price).replace(/[^0-9]/g, '')) || 0) - (Number(String(a.price).replace(/[^0-9]/g, '')) || 0))
@@ -181,7 +189,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     else if (sortBy === 'area-desc') result = [...result].sort((a, b) => (Number(b.area) || 0) - (Number(a.area) || 0))
 
     return result
-  }, [listings, filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, sortBy])
+  }, [listings, filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, constructionAct, sortBy])
 
   const tabs: { val: Filter; label: string }[] = [
     { val: 'all', label: dict.listings.tabAll },
@@ -393,6 +401,26 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     min={0}
                     className={inputClass}
                   />
+                </div>
+              </div>
+
+              {/* Construction act */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">{dict.listings.constructionActLabel}</label>
+                <div className="relative">
+                  <select
+                    value={constructionAct}
+                    onChange={(e) => setConstructionAct(e.target.value)}
+                    className={selectClass + ' w-full'}
+                  >
+                    <option value="">{dict.listings.allConstructionActs}</option>
+                    <option value="act14">{dict.listings.constructionAct14}</option>
+                    <option value="act15">{dict.listings.constructionAct15}</option>
+                    <option value="act16">{dict.listings.constructionAct16}</option>
+                  </select>
+                  <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
               </div>
 
