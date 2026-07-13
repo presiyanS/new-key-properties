@@ -87,7 +87,7 @@ export default async function AboutPage() {
   const heroStats = (cms?.heroStats?.length > 0
     ? cms.heroStats
     : [
-        { value: '≤10', label: 'клиента/месец' },
+        { value: 'Ограничен', label: 'брой клиенти' },
         { value: '0', label: 'скрити такси' },
         { value: '100%', label: 'отдаденост' },
       ]
@@ -133,8 +133,8 @@ export default async function AboutPage() {
           <div className="max-w-3xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">{dict.nav.about}</p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {t(cms?.heroTitle, cms?.heroTitleEn, 'Агенция, Която Наистина', 'The Agency That Truly')}<br />
-              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'Се Грижи', 'Cares')}</span> {locale === 'en' ? 'About You' : 'за Вас'}
+              {t(cms?.heroTitle, cms?.heroTitleEn, 'Агенция, която наистина', 'The Agency That Truly')}<br />
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'се грижи', 'Cares')}</span> {locale === 'en' ? 'About You' : 'за Вас'}
             </h1>
             <p className="text-white/70 text-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
               {t(
