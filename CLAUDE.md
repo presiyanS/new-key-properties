@@ -50,6 +50,7 @@ npx tsc --noEmit # typecheck
 ## Conventions
 
 - UI copy is **Bulgarian** unless the task says otherwise
+- Headlines/titles (blog posts, page titles, etc.) use **sentence case** — only the first letter and proper nouns (e.g. София, България) are capitalized, never Title Case
 - Prefer editing Sanity-backed pages over hardcoding in `data/` when CMS fields exist
 - Keep changes minimal; match existing component and GROQ patterns
 - Do not commit `.env`, `.env.local`, or `.claude/settings.local.json`
