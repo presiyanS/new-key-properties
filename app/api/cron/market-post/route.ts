@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
     const topic = pickTopic(now)
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-lite',
+      model: 'gemini-flash-latest',
       systemInstruction: systemPrompt,
     })
 
