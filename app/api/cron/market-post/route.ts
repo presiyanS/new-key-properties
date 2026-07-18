@@ -14,46 +14,57 @@ const sanity = createClient({
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 // Rotating topics so each week covers something different
+// Each topic has its own real, verified photo (Wikimedia Commons) instead of
+// sharing 3 generic stock images across every post — avoids repeating the
+// same cover art and avoids location-mismatched stock photos.
 const topics = [
   {
     slug_prefix: 'pazaren-obzor',
     category: 'Пазарен анализ',
     prompt: 'Напиши актуален пазарен обзор за имотния пазар в София за текущия месец. Включи: текущи средни цени на квадратен метър, сравнение с предходния период, търсене vs. предлагане, кои квартали са най-активни и защо.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Sofia_skyline.jpg',
   },
   {
     slug_prefix: 'saveti-kupuvachi',
     category: 'Съвети',
     prompt: 'Напиши практичен наръчник за купувачи на имоти в София. Включи: как да разпознаят добра оферта, на какво да обърнат внимание при оглед, какви документи да проверят, как да преговарят за цената. Тон — честен съвет от приятел с опит.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Boulevard_Vitosha_at_night%2C_Sofia_PD_2012_7.JPG',
   },
   {
     slug_prefix: 'investitsii-sofia',
     category: 'Инвестиции',
     prompt: 'Напиши анализ за инвестиционния потенциал на имотния пазар в София. Включи: наемна доходност по квартали, какъв тип имоти носят най-добра възвращаемост, рискове и предимства на имотната инвестиция спрямо алтернативите.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/National_Palace_of_Culture_Sofia.jpg',
   },
   {
     slug_prefix: 'kvartal-analiz',
     category: 'Пазарен анализ',
     prompt: 'Напиши задълбочен анализ на конкретен квартал в София — избери между Драгалевци, Малинова долина, Младост, Лозенец, Витоша или Кръстова вада. Включи: характеристики на квартала, транспорт, средни цени, целева аудитория, тенденции.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Cherni_Vrah_Boulevard_with_Krastova_Vada.jpg',
   },
   {
     slug_prefix: 'propuski-kupuvachi',
     category: 'Съвети',
     prompt: 'Напиши статия за най-честите грешки, които купувачите на имоти в София правят. Включи поне 5-7 конкретни грешки с обяснение защо са грешки и как да ги избегнат. Тон — директен, честен, полезен.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Ivan_Vazov_National_Theatre_december.jpg',
   },
   {
     slug_prefix: 'evropeiski-trend',
     category: 'Пазарен анализ',
     prompt: 'Напиши статия как европейските тенденции в имотния пазар влияят на България и София. Включи: лихвени нива, инфлация, движение на капитали, сравнение с Румъния, Полша и Гърция. Какво означава това за купувачите в София?',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Nevski01.jpg',
   },
   {
     slug_prefix: 'naem-ili-kupuvane',
     category: 'Съвети',
     prompt: 'Напиши обективна статия: по-изгодно ли е да наемеш или да купиш имот в София днес? Включи конкретни изчисления, примерни сценарии, кога има смисъл да купуваш и кога — да наемаш. Без пристрастие.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Sofia_South_Park.jpg',
   },
   {
     slug_prefix: 'novo-stroitelstvo',
     category: 'Пазарен анализ',
     prompt: 'Напиши анализ на пазара на ново строителство в София. Включи: разлика в цените ново vs. старо строителство, предимства и рискове при покупка на Акт 14/15/16, какво да проверят купувачите при новострояща се сграда.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Apartment_block_in_district_of_Sveta_Troitsa%2C_Sofia%2C_Bulgaria.jpg',
   },
 ]
 
@@ -95,12 +106,6 @@ function formatDate(date: Date) {
   return date.toISOString().split('T')[0]
 }
 
-const UNSPLASH_IMAGES: Record<string, string> = {
-  'Пазарен анализ': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
-  'Съвети': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80',
-  'Инвестиции': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80',
-}
-
 export async function GET(request: NextRequest) {
   // Verify this is called by Vercel Cron (or manually with the secret)
   const authHeader = request.headers.get('authorization')
@@ -134,7 +139,6 @@ export async function GET(request: NextRequest) {
     const excerpt = excerptResult.response.text().trim()
 
     const slug = `${topic.slug_prefix}-${formatDate(now)}`
-    const image = UNSPLASH_IMAGES[topic.category] ?? UNSPLASH_IMAGES['Пазарен анализ']
 
     const post = await sanity.create({
       _type: 'blogPost',
@@ -144,7 +148,7 @@ export async function GET(request: NextRequest) {
       category: topic.category,
       excerpt,
       content,
-      externalImageUrl: image,
+      externalImageUrl: topic.image,
     })
 
     return NextResponse.json({ success: true, id: post._id, title, slug })
