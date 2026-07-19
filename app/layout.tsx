@@ -30,31 +30,49 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 })
 
+const defaultOgImage = { url: '/og-default.png', width: 1200, height: 630 }
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
+    const title = { default: 'New Key Properties | Real Estate in Sofia', template: '%s | New Key Properties' }
+    const description =
+      'New Key Properties – an honest, trustworthy real estate agency in Sofia. Sales, rentals, and property sourcing with genuine client care.'
     return {
       metadataBase: new URL('https://www.newkey.bg'),
-      title: {
-        default: 'New Key Properties | Real Estate in Sofia',
-        template: '%s | New Key Properties',
-      },
-      description:
-        'New Key Properties – an honest, trustworthy real estate agency in Sofia. Sales, rentals, and property sourcing with genuine client care.',
+      title,
+      description,
       keywords: ['real estate', 'Sofia', 'apartments', 'buy', 'rent', 'New Key Properties'],
       alternates: hreflangAlternates('/', locale),
+      openGraph: {
+        siteName: 'New Key Properties',
+        type: 'website',
+        locale: 'en_US',
+        title: title.default,
+        description,
+        images: [defaultOgImage],
+      },
+      twitter: { card: 'summary_large_image', title: title.default, description, images: [defaultOgImage.url] },
     }
   }
+  const title = { default: 'New Key Properties | Недвижими Имоти в София', template: '%s | New Key Properties' }
+  const description =
+    'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.'
   return {
     metadataBase: new URL('https://www.newkey.bg'),
-    title: {
-      default: 'New Key Properties | Недвижими Имоти в София',
-      template: '%s | New Key Properties',
-    },
-    description:
-      'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.',
+    title,
+    description,
     keywords: ['недвижими имоти', 'София', 'апартаменти', 'продажба', 'наем', 'New Key Properties'],
     alternates: hreflangAlternates('/', locale),
+    openGraph: {
+      siteName: 'New Key Properties',
+      type: 'website',
+      locale: 'bg_BG',
+      title: title.default,
+      description,
+      images: [defaultOgImage],
+    },
+    twitter: { card: 'summary_large_image', title: title.default, description, images: [defaultOgImage.url] },
   }
 }
 

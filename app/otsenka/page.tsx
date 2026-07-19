@@ -10,19 +10,30 @@ export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
+  const url = `https://www.newkey.bg${locale === 'en' ? '/en/otsenka' : '/otsenka'}`
+  const image = { url: '/og-otsenka.png', width: 1200, height: 630 }
+
   if (locale === 'en') {
+    const title = 'Free Property Valuation | New Key Properties'
+    const description =
+      'Get a free, honest market valuation of your property in Sofia. No obligation — our brokers respond within 24 hours with a fair price estimate.'
     return {
-      title: 'Free Property Valuation | New Key Properties',
-      description:
-        'Get a free, honest market valuation of your property in Sofia. No obligation — our brokers respond within 24 hours with a fair price estimate.',
+      title,
+      description,
       alternates: hreflangAlternates('/otsenka', locale),
+      openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+      twitter: { card: 'summary_large_image', title, description, images: [image.url] },
     }
   }
+  const title = 'Безплатна Оценка на Имот | New Key Properties'
+  const description =
+    'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент — нашите брокери отговарят до 24 часа с точна ценова оценка.'
   return {
-    title: 'Безплатна Оценка на Имот | New Key Properties',
-    description:
-      'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент — нашите брокери отговарят до 24 часа с точна ценова оценка.',
+    title,
+    description,
     alternates: hreflangAlternates('/otsenka', locale),
+    openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+    twitter: { card: 'summary_large_image', title, description, images: [image.url] },
   }
 }
 

@@ -9,19 +9,30 @@ export const revalidate = 30
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
+  const url = `https://www.newkey.bg${locale === 'en' ? '/en/listings' : '/listings'}`
+  const image = { url: '/og-listings.jpg', width: 1200, height: 630 }
+
   if (locale === 'en') {
+    const title = 'Properties'
+    const description =
+      'Browse all properties for sale and rent in Sofia from New Key Properties. Carefully vetted listings with full transparency.'
     return {
-      title: 'Properties',
-      description:
-        'Browse all properties for sale and rent in Sofia from New Key Properties. Carefully vetted listings with full transparency.',
+      title,
+      description,
       alternates: hreflangAlternates('/listings', locale),
+      openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+      twitter: { card: 'summary_large_image', title, description, images: [image.url] },
     }
   }
+  const title = 'Имоти'
+  const description =
+    'Разгледайте всички имоти за продажба и наем в София от New Key Properties. Внимателно проверени оферти с пълна прозрачност.'
   return {
-    title: 'Имоти',
-    description:
-      'Разгледайте всички имоти за продажба и наем в София от New Key Properties. Внимателно проверени оферти с пълна прозрачност.',
+    title,
+    description,
     alternates: hreflangAlternates('/listings', locale),
+    openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+    twitter: { card: 'summary_large_image', title, description, images: [image.url] },
   }
 }
 

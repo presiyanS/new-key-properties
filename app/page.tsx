@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
 import BlogCard from '@/components/BlogCard'
@@ -12,9 +13,38 @@ import { getFeaturedListings, getBlogPosts, getHomePage, type SanityListing } fr
 import { blogPosts as staticPosts } from '@/data/blog'
 import { draftMode } from 'next/headers'
 import { getLocale } from '@/lib/i18n/getDictionary'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
 
 export const revalidate = 60
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const url = `https://www.newkey.bg${locale === 'en' ? '/en' : ''}`
+  const image = { url: '/og-default.png', width: 1200, height: 630 }
+
+  if (locale === 'en') {
+    const title = 'New Key Properties | Real Estate in Sofia'
+    const description =
+      'New Key Properties – an honest, trustworthy real estate agency in Sofia. Sales, rentals, and property sourcing with genuine client care.'
+    return {
+      title,
+      description,
+      alternates: hreflangAlternates('/', locale),
+      openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+      twitter: { card: 'summary_large_image', title, description, images: [image.url] },
+    }
+  }
+  const title = 'New Key Properties | Недвижими Имоти в София'
+  const description =
+    'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.'
+  return {
+    title,
+    description,
+    alternates: hreflangAlternates('/', locale),
+    openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
+    twitter: { card: 'summary_large_image', title, description, images: [image.url] },
+  }
+}
 
 export default async function HomePage() {
   const { isEnabled: preview } = await draftMode()
