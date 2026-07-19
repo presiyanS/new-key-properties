@@ -41,8 +41,8 @@ export default async function ContactPage() {
 
   const monthLocale = locale === 'en' ? 'en-US' : 'bg-BG'
   const urgencyMessageDefault = locale === 'en'
-    ? `We work with a maximum of 10 clients a month to guarantee the highest quality. Get in touch now — spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} are limited.`
-    : `Работим с максимум 10 клиента на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} са ограничени.`
+    ? `We work with a limited number of clients each month to guarantee the highest quality. Get in touch now — spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} are limited.`
+    : `Работим с ограничен брой клиенти на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} са ограничени.`
 
   return (
     <>
