@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { HomeIcon } from '@sanity/icons'
+import { HomeIcon } from '@sanity/icons/Home'
 import { orderRankField } from '@sanity/orderable-document-list'
 import { ExternalImagePreview } from '../components/ExternalImagePreview'
 import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'

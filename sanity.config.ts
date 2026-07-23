@@ -4,7 +4,13 @@ import { visionTool } from '@sanity/vision'
 import { presentationTool } from 'sanity/presentation'
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 import { schemaTypes } from './sanity/schemaTypes'
-import { HomeIcon, DocumentTextIcon, UsersIcon, InfoOutlineIcon, EnvelopeIcon, StarIcon, CogIcon } from '@sanity/icons'
+import { HomeIcon } from '@sanity/icons/Home'
+import { DocumentTextIcon } from '@sanity/icons/DocumentText'
+import { UsersIcon } from '@sanity/icons/Users'
+import { InfoOutlineIcon } from '@sanity/icons/InfoOutline'
+import { EnvelopeIcon } from '@sanity/icons/Envelope'
+import { StarIcon } from '@sanity/icons/Star'
+import { CogIcon } from '@sanity/icons/Cog'
 
 const previewOrigin = process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000')

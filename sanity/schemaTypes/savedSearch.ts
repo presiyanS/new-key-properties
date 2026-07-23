@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { BellIcon } from '@sanity/icons'
+import { BellIcon } from '@sanity/icons/Bell'
 
 export const savedSearchType = defineType({
   name: 'savedSearch',
