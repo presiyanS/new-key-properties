@@ -33,11 +33,11 @@ export default function BlogCard({ post }: { post: BlogCardPost }) {
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-green-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-green-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Category badge */}
         <div className="absolute top-3 left-3">
-          <span className="bg-brand-gold/95 text-brand-green text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
+          <span className="bg-brand-gold/95 text-brand-green text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-xs shadow-xs">
             {category}
           </span>
         </div>

@@ -109,7 +109,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           }`}
         >
           {/* Logo */}
-          <Link href={localizeHref('/', locale)} className="flex-shrink-0 group">
+          <Link href={localizeHref('/', locale)} className="shrink-0 group">
             <Image
               src="/logo.png"
               alt="New Key Properties"

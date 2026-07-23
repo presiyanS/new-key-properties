@@ -352,7 +352,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s: { title: string; desc: string; icon?: string }, i: number) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <div className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-1 h-full">
+                <div className="bg-white rounded-2xl p-7 shadow-xs hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-1 h-full">
                   <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light group-hover:scale-105 transition-all shadow-md shadow-brand-green/10">
                     {serviceIcons[s.icon ?? 'sale'] ?? serviceIcons.sale}
                   </div>
@@ -380,7 +380,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
             {/* Connecting line (desktop) */}
-            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-brand-gold/20 via-brand-gold/60 to-brand-gold/20" />
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-linear-to-r from-brand-gold/20 via-brand-gold/60 to-brand-gold/20" />
 
             {processSteps.map((item: { title: string; desc: string }, i: number) => {
               const stepIcons = [
@@ -519,7 +519,7 @@ export default async function HomePage() {
 
             {/* CTA card */}
             <AnimatedSection direction="right" delay={0.15}>
-              <div className="bg-brand-green-light/30 rounded-3xl p-8 lg:p-10 border border-brand-gold/20 backdrop-blur-sm shadow-2xl">
+              <div className="bg-brand-green-light/30 rounded-3xl p-8 lg:p-10 border border-brand-gold/20 backdrop-blur-xs shadow-2xl">
                 <p className="text-brand-gold/60 uppercase text-xs tracking-widest text-center mb-2">
                   {t(cms?.ctaCardLabel, cms?.ctaCardLabelEn, 'Безплатна консултация', 'Free Consultation')}
                 </p>

@@ -56,7 +56,7 @@ export default function Footer({
 
   return (
     <footer className="bg-brand-green-dark text-brand-gold/70 relative overflow-hidden">
-      <div className="h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
+      <div className="h-px bg-linear-to-r from-transparent via-brand-gold/40 to-transparent" />
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-gold/3 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">

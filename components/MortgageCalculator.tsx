@@ -28,7 +28,7 @@ export default function MortgageCalculator({ price }: Props) {
   const fmt = (n: number) => '€' + Math.round(n).toLocaleString(numberLocale)
 
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+    <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
       <h2 className="font-bold text-gray-900 text-lg mb-1">{dict.listings.mortgageHeading}</h2>
       <p className="text-gray-400 text-sm mb-6">{dict.listings.mortgageDisclaimer}</p>
 

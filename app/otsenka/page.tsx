@@ -149,7 +149,7 @@ export default async function OtsenkaPage() {
             {t.benefits.map((b, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 group h-full">
-                  <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light transition-colors shadow-sm shadow-brand-green/10">
+                  <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light transition-colors shadow-xs shadow-brand-green/10">
                     {benefitIcons[i] ?? benefitIcons[0]}
                   </div>
                   <h3 className="font-bold text-brand-green text-lg mb-2 group-hover:text-brand-green-light transition-colors">{b.title}</h3>

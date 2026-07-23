@@ -236,7 +236,7 @@ export default async function PrivacyPolicyPage() {
       {/* Content */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-12 space-y-10">
+          <div className="bg-white rounded-2xl shadow-xs border border-gray-100 p-8 lg:p-12 space-y-10">
 
             {t.sections.map((s) => (
               <div key={s.heading}>

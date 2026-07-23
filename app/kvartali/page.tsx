@@ -33,7 +33,7 @@ export default async function KvartaliPage() {
       {/* Hero */}
       <section className="bg-brand-green py-28 relative overflow-hidden">
         <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-brand-gold/5 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-brand-gold/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium">{dict.nav.kvartali}</p>
           <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
@@ -60,7 +60,7 @@ export default async function KvartaliPage() {
                 <Link
                   key={n._id}
                   href={localizeHref(`/kvartali/${n.slug.current}`, locale)}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                  className="group bg-white rounded-2xl overflow-hidden shadow-xs border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
                   {/* Image */}
                   <div className="relative h-52 bg-brand-green/10 overflow-hidden">
@@ -72,9 +72,9 @@ export default async function KvartaliPage() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-brand-green/20 to-brand-gold/10" />
+                      <div className="w-full h-full bg-linear-to-br from-brand-green/20 to-brand-gold/10" />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
                     <div className="absolute bottom-4 left-5">
                       <h2 className="font-serif text-2xl font-bold text-white">{name}</h2>
                     </div>

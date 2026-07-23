@@ -3,7 +3,7 @@ import type { TeamMember } from '@/data/team'
 
 export default function TeamMemberCard({ member }: { member: TeamMember }) {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 text-center p-8 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-xs border border-gray-100 text-center p-8 hover:shadow-lg transition-shadow">
       <div className="relative w-28 h-28 mx-auto mb-5 rounded-full overflow-hidden border-4 border-brand-gold ring-4 ring-brand-green/10">
         <Image src={member.image} alt={member.name} fill className="object-cover" />
       </div>

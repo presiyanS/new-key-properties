@@ -105,7 +105,7 @@ export default function ContactForm({
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             placeholder={namePlaceholder}
-            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
+            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
           />
         </div>
         <div>
@@ -117,7 +117,7 @@ export default function ContactForm({
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
             placeholder={phonePlaceholder}
-            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
+            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
           />
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function ContactForm({
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           placeholder={emailPlaceholder}
-          className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
+          className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm"
         />
       </div>
       <div>
@@ -140,7 +140,7 @@ export default function ContactForm({
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           placeholder={messagePlaceholder}
           rows={5}
-          className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm resize-none"
+          className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm resize-none"
         />
       </div>
       {/* GDPR consent */}

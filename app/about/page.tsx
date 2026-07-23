@@ -128,7 +128,7 @@ export default async function AboutPage() {
       {/* ── Hero ── */}
       <section className="bg-brand-green py-28 relative overflow-hidden">
         <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-brand-gold/5 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-72 h-px bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent" />
+        <div className="absolute bottom-0 left-1/3 w-72 h-px bg-linear-to-r from-transparent via-brand-gold/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">{dict.nav.about}</p>
@@ -178,7 +178,7 @@ export default async function AboutPage() {
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-brand-green rounded-3xl p-10 shadow-2xl shadow-brand-green/20 relative overflow-hidden">
                 <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-brand-gold/5 blur-2xl" />
-                <div className="h-px bg-gradient-to-r from-brand-gold/40 to-transparent mb-8" />
+                <div className="h-px bg-linear-to-r from-brand-gold/40 to-transparent mb-8" />
                 <h3 className="font-serif text-2xl font-bold text-white mb-8">
                   {t(cms?.missionCardTitle, cms?.missionCardTitleEn, 'Доверие – Честност – Резултати', 'Trust – Honesty – Results')}
                 </h3>
@@ -197,7 +197,7 @@ export default async function AboutPage() {
                     </div>
                   ))}
                 </div>
-                <div className="h-px bg-gradient-to-r from-brand-gold/40 to-transparent mt-8" />
+                <div className="h-px bg-linear-to-r from-brand-gold/40 to-transparent mt-8" />
               </div>
             </AnimatedSection>
           </div>
@@ -220,9 +220,9 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((v: { title: string; desc: string }, i: number) => (
               <AnimatedSection key={i} delay={i * 0.08}>
-                <div className="bg-white rounded-2xl p-7 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full">
+                <div className="bg-white rounded-2xl p-7 border border-gray-100 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold group-hover:bg-brand-green-light transition-colors shadow-sm shadow-brand-green/10">
+                    <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold group-hover:bg-brand-green-light transition-colors shadow-xs shadow-brand-green/10">
                       {valueIcons[i] ?? valueIcons[0]}
                     </div>
                     <span className="font-serif text-brand-gold/25 font-bold text-2xl">

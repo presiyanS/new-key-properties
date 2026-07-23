@@ -77,7 +77,7 @@ const textEn: typeof textBg = {
 }
 
 const inputClass =
-  'w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm'
+  'w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors text-sm'
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1.5'
 
 export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {

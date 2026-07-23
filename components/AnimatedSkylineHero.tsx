@@ -161,7 +161,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
 
         {/* Badge 0 — top-left, bobs up */}
         <div
-          className="absolute top-16 -left-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
+          className="absolute top-16 -left-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 6s ease-in-out infinite' }}
         >
           <div className="flex items-center gap-2">
@@ -173,7 +173,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
 
         {/* Badge 1 — top-right, bobs down */}
         <div
-          className="absolute top-28 -right-10 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
+          className="absolute top-28 -right-10 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 7s ease-in-out 1s infinite' }}
         >
           <div className="flex items-center gap-2">
@@ -185,7 +185,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
 
         {/* Badge 2 — bottom-left, bobs up slowly */}
         <div
-          className="absolute bottom-24 -left-6 bg-brand-gold/10 border border-brand-gold/25 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
+          className="absolute bottom-24 -left-6 bg-brand-gold/10 border border-brand-gold/25 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 8s ease-in-out 2s infinite' }}
         >
           <p className="text-brand-gold font-bold text-lg leading-none">{b[2].title}</p>
@@ -194,7 +194,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
 
         {/* Badge 3 — bottom-right, bobs down */}
         <div
-          className="absolute bottom-16 -right-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl"
+          className="absolute bottom-16 -right-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 5.5s ease-in-out 0.5s infinite' }}
         >
           <div className="flex items-center gap-2">

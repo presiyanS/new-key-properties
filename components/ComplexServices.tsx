@@ -111,7 +111,7 @@ export default function ComplexServices({ locale = 'bg' }: { locale?: Locale }) 
       />
 
       {/* Top gold glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-linear-to-r from-transparent via-brand-gold/50 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -133,7 +133,7 @@ export default function ComplexServices({ locale = 'bg' }: { locale?: Locale }) 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {services.map((s, i) => (
             <AnimatedSection key={i} delay={i * 0.12}>
-              <div className="relative group h-full flex flex-col border border-brand-gold/20 rounded-2xl p-8 bg-white/[0.04] hover:bg-white/[0.08] hover:border-brand-gold/50 transition-all duration-500">
+              <div className="relative group h-full flex flex-col border border-brand-gold/20 rounded-2xl p-8 bg-white/4 hover:bg-white/8 hover:border-brand-gold/50 transition-all duration-500">
 
                 {/* Number */}
                 <span className="absolute top-7 right-7 font-serif text-6xl font-bold text-brand-gold/10 group-hover:text-brand-gold/20 transition-colors leading-none select-none">
@@ -149,7 +149,7 @@ export default function ComplexServices({ locale = 'bg' }: { locale?: Locale }) 
                 <h3 className="font-bold text-white text-xl mb-3">{s.title}</h3>
 
                 {/* Description */}
-                <p className="text-white/55 text-sm leading-relaxed mb-6 flex-grow">{s.desc}</p>
+                <p className="text-white/55 text-sm leading-relaxed mb-6 grow">{s.desc}</p>
 
                 {/* Perks */}
                 <ul className="space-y-2 mb-7">
@@ -201,7 +201,7 @@ export default function ComplexServices({ locale = 'bg' }: { locale?: Locale }) 
       </div>
 
       {/* Bottom gold glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-linear-to-r from-transparent via-brand-gold/50 to-transparent" />
     </section>
   )
 }

@@ -206,8 +206,8 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     { val: 'store', label: dict.listings.categoryStore },
   ]
 
-  const selectClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 pr-8 appearance-none focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all cursor-pointer"
-  const inputClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all w-full"
+  const selectClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 pr-8 appearance-none focus:outline-hidden focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all cursor-pointer"
+  const inputClass = "bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-3 py-2.5 focus:outline-hidden focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all w-full"
 
   return (
     <section className="py-10 bg-gray-50 min-h-screen">
@@ -223,7 +223,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={dict.listings.searchPlaceholder}
-            className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-4 py-4 text-gray-800 placeholder-gray-400 text-base shadow-sm focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+            className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-4 py-4 text-gray-800 placeholder-gray-400 text-base shadow-xs focus:outline-hidden focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
           />
           {searchQuery && (
             <button
@@ -247,7 +247,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                 onClick={() => setFilter(tab.val)}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
                   filter === tab.val
-                    ? 'bg-brand-green text-brand-gold shadow-sm'
+                    ? 'bg-brand-green text-brand-gold shadow-xs'
                     : 'text-gray-500 hover:text-brand-green'
                 }`}
               >
@@ -264,7 +264,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                 onClick={() => setCategoryFilter(tab.val)}
                 className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
                   categoryFilter === tab.val
-                    ? 'bg-brand-green text-brand-gold shadow-sm'
+                    ? 'bg-brand-green text-brand-gold shadow-xs'
                     : 'text-gray-500 hover:text-brand-green'
                 }`}
               >
@@ -278,7 +278,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
             onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-150 ${
               showFilters || activeFilterCount > 0
-                ? 'bg-brand-green text-brand-gold border-brand-green shadow-sm'
+                ? 'bg-brand-green text-brand-gold border-brand-green shadow-xs'
                 : 'bg-white text-gray-600 border-gray-200 hover:border-brand-green hover:text-brand-green'
             }`}
           >
@@ -314,7 +314,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
         {/* Advanced filters panel */}
         {showFilters && (
-          <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-5 shadow-sm">
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-5 shadow-xs">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
 
               {/* Neighborhood */}
@@ -369,7 +369,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     min={0}
                     className={inputClass}
                   />
-                  <span className="text-gray-400 text-sm flex-shrink-0">—</span>
+                  <span className="text-gray-400 text-sm shrink-0">—</span>
                   <input
                     type="number"
                     value={priceMax}
@@ -393,7 +393,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     min={0}
                     className={inputClass}
                   />
-                  <span className="text-gray-400 text-sm flex-shrink-0">—</span>
+                  <span className="text-gray-400 text-sm shrink-0">—</span>
                   <input
                     type="number"
                     value={areaMax}
