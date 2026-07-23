@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { sendToMakeWebhook } from '@/lib/makeWebhook'
 
 type Props = {
   endpoint?: string
@@ -38,6 +39,7 @@ export default function ContactForm({
   footerNote = 'Отговаряме в рамките на 24 часа. Местата са ограничени – свържете се с нас сега.',
 }: Props) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
+  const [website, setWebsite] = useState('')
   const [consent, setConsent] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -45,8 +47,12 @@ export default function ContactForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (website) return // honeypot caught a bot — silently drop
+
     setLoading(true)
     setError('')
+
+    sendToMakeWebhook('Website Contact Form', form)
 
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -79,6 +85,16 @@ export default function ContactForm({
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="space-y-5">
+      <input
+        type="text"
+        name="website"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ display: 'none' }}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">{nameLabel}</label>

@@ -139,6 +139,7 @@ const en: typeof bg = {
     mortgageLoanAmount: 'Loan amount',
     mortgageMonthlyPayment: 'Monthly payment',
     mortgagePerMonth: 'month',
+    agentLabel: 'Your consultant',
   },
   blog: {
     articlesCount: 'articles',

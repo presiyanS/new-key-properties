@@ -137,6 +137,7 @@ const bg = {
     mortgageLoanAmount: 'Размер на кредита',
     mortgageMonthlyPayment: 'Месечна вноска',
     mortgagePerMonth: 'месец',
+    agentLabel: 'Ваш консултант',
   },
   blog: {
     articlesCount: 'статии',

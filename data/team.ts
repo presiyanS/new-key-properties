@@ -16,7 +16,7 @@ export const team: TeamMember[] = [
     bio: 'Александър е основател на New Key Properties и води агенцията с ясна мисия — да бъде най-честната агенция за недвижими имоти в София. Подхожда към всяка сделка с пълна прозрачност и истинска грижа за клиента.',
     phone: '0879826292',
     email: 'a.sokolov@newkey.bg',
-    image: '/team/placeholder.svg',
+    image: '/team/alexander-sokolov.jpg',
   },
   {
     id: '3',

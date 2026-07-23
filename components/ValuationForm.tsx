@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { Locale } from '@/lib/i18n/config'
+import { sendToMakeWebhook } from '@/lib/makeWebhook'
 
 const textBg = {
   nameLabel: 'Вашето име *',
@@ -96,6 +97,7 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
     condition: '',
     message: '',
   })
+  const [website, setWebsite] = useState('')
   const [consent, setConsent] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -105,8 +107,12 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (website) return // honeypot caught a bot — silently drop
+
     setLoading(true)
     setError('')
+
+    sendToMakeWebhook('Website Valuation Form', form)
 
     const res = await fetch('/api/valuation', {
       method: 'POST',
@@ -139,6 +145,16 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="space-y-5">
+      <input
+        type="text"
+        name="website"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ display: 'none' }}
+      />
       {/* Purpose toggle */}
       <div>
         <label className={labelClass}>{t.purposeLabel}</label>

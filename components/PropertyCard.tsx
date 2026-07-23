@@ -6,6 +6,9 @@ import type { SanityListing } from '@/lib/sanity'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
 
+const AGENT_NAME = 'Александър Соколов'
+const AGENT_PHOTO = '/team/alexander-sokolov.jpg'
+
 export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
   const { locale, dict } = useLocale()
   const priceRaw = listing.price != null ? String(listing.price) : '–'
@@ -122,6 +125,16 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
           </svg>
           {listing.neighborhood}, {dict.listings.sofia}
+        </div>
+
+        <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-gray-100">
+          <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
+            <Image src={AGENT_PHOTO} alt={AGENT_NAME} fill className="object-cover" />
+          </div>
+          <p className="text-xs text-gray-500">
+            <span className="text-gray-400">{dict.listings.agentLabel}:</span>{' '}
+            <span className="font-medium text-gray-700">{AGENT_NAME}</span>
+          </p>
         </div>
       </div>
     </Link>
