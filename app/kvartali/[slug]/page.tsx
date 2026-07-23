@@ -120,7 +120,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
         {n.externalImageUrl && (
           <Image src={n.externalImageUrl} alt={name} fill className="object-cover opacity-40" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-green via-brand-green/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-green via-brand-green/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 pb-10 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <Link href={localizeHref('/kvartali', locale)} className="inline-flex items-center gap-1.5 text-brand-gold/60 hover:text-brand-gold text-sm mb-4 transition-colors">
@@ -143,7 +143,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* Description */}
             {paragraphs.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                 <h2 className="font-serif text-2xl font-bold text-brand-green mb-5">{dict.neighborhoods.aboutHeading}</h2>
                 <div className="space-y-4">
                   {paragraphs.map((p: string, i: number) => (
@@ -155,7 +155,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* Pros & Cons */}
             {(pros.length > 0 || cons.length > 0) && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                 <h2 className="font-serif text-2xl font-bold text-brand-green mb-6">{dict.neighborhoods.prosConsHeading}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {pros.length > 0 && (
@@ -194,7 +194,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* Transport */}
             {transport && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                 <h2 className="font-serif text-2xl font-bold text-brand-green mb-4">{dict.neighborhoods.transportHeading}</h2>
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-brand-green/10 rounded-xl flex items-center justify-center shrink-0">
@@ -209,7 +209,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* FAQ */}
             {faqs.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                 <h2 className="font-serif text-2xl font-bold text-brand-green mb-6">{dict.neighborhoods.faqHeadingPrefix} {name}</h2>
                 <div className="space-y-4">
                   {faqs.map((f, i) => (
@@ -258,7 +258,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
           <div className="space-y-5">
 
             {/* Price card */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-6 shadow-xs border border-gray-100">
               <h3 className="font-bold text-brand-green text-lg mb-4">{dict.neighborhoods.pricesHeadingPrefix} {name}</h3>
               {n.priceRangeSale && (
                 <div className="mb-4">
@@ -276,7 +276,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* Target audience */}
             {targetAudience && (
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-6 shadow-xs border border-gray-100">
                 <h3 className="font-bold text-brand-green text-lg mb-3">{dict.neighborhoods.targetAudienceHeading}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{targetAudience}</p>
               </div>
@@ -284,7 +284,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
 
             {/* CTA */}
             <div className="bg-brand-green rounded-2xl p-6">
-              <div className="h-0.5 bg-gradient-to-r from-brand-gold/60 to-transparent rounded-full mb-5" />
+              <div className="h-0.5 bg-linear-to-r from-brand-gold/60 to-transparent rounded-full mb-5" />
               <h3 className="font-serif text-lg font-bold text-white mb-2">
                 {dict.neighborhoods.ctaCardTitlePrefix} {name}?
               </h3>
@@ -309,7 +309,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
             </div>
 
             {/* Other neighborhoods */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-6 shadow-xs border border-gray-100">
               <h3 className="font-bold text-gray-900 text-sm mb-3">{dict.neighborhoods.otherNeighborhoodsHeading}</h3>
               <Link href={localizeHref('/kvartali', locale)} className="text-brand-green font-semibold text-sm hover:underline">
                 {dict.neighborhoods.allGuidesLink}

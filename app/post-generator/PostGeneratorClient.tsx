@@ -108,7 +108,7 @@ export default function PostGeneratorClient() {
           {/* Column 1: Categories + Topics */}
           <div className="space-y-4">
             {/* Categories */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Категория</p>
               <div className="space-y-1">
                 {categories.map(cat => (
@@ -134,7 +134,7 @@ export default function PostGeneratorClient() {
             </div>
 
             {/* Topics */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Тема</p>
               <div className="space-y-1">
                 {activeCategory.topics.map(topic => (
@@ -157,7 +157,7 @@ export default function PostGeneratorClient() {
           {/* Column 2+3: Editor */}
           <div className="lg:col-span-2 space-y-4">
             {/* Platform tabs */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100">
               <div className="flex gap-2">
                 {platforms.map(p => (
                   <button
@@ -165,7 +165,7 @@ export default function PostGeneratorClient() {
                     onClick={() => selectPlatform(p.id)}
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all ${
                       platform === p.id
-                        ? 'bg-brand-green text-white shadow-sm'
+                        ? 'bg-brand-green text-white shadow-xs'
                         : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                     }`}
                   >
@@ -177,7 +177,7 @@ export default function PostGeneratorClient() {
             </div>
 
             {/* Editor */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-6 shadow-xs border border-gray-100">
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <span className="text-xs text-gray-400 uppercase tracking-wider">{activeCategory.label}</span>
@@ -234,7 +234,7 @@ export default function PostGeneratorClient() {
                 value={post}
                 onChange={e => setPost(e.target.value)}
                 rows={18}
-                className="w-full text-sm text-gray-700 leading-relaxed resize-none border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                className="w-full text-sm text-gray-700 leading-relaxed resize-none border border-gray-200 rounded-xl p-4 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
               />
 
               <div className="flex items-center justify-between mt-3">
@@ -253,7 +253,7 @@ export default function PostGeneratorClient() {
             </div>
 
             {/* Quick nav */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Бърза навигация</p>
               <div className="flex flex-wrap gap-2">
                 {categories.map(cat =>
@@ -281,7 +281,7 @@ export default function PostGeneratorClient() {
             </div>
 
             {/* AI Generator */}
-            <div className="bg-white rounded-2xl shadow-sm border border-brand-gold/20 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-xs border border-brand-gold/20 overflow-hidden">
               <button
                 onClick={() => setAiOpen(!aiOpen)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
@@ -306,7 +306,7 @@ export default function PostGeneratorClient() {
                     <select
                       value={aiPostType}
                       onChange={e => setAiPostType(e.target.value)}
-                      className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green bg-white"
+                      className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green bg-white"
                     >
                       <option value="listing">🏠 Обява за имот</option>
                       <option value="market_tip">📊 Пазарен съвет</option>
@@ -331,7 +331,7 @@ export default function PostGeneratorClient() {
                           onClick={() => setAiTone(t.id)}
                           className={`text-xs py-2.5 px-2 rounded-xl border transition-all font-medium flex flex-col items-center gap-1 ${
                             aiTone === t.id
-                              ? 'bg-brand-green text-white border-brand-green shadow-sm'
+                              ? 'bg-brand-green text-white border-brand-green shadow-xs'
                               : 'border-gray-200 text-gray-600 hover:border-brand-green/50 hover:text-brand-green'
                           }`}
                         >
@@ -354,7 +354,7 @@ export default function PostGeneratorClient() {
                           ? 'Пример: 2-стаен в Лозенец, 65 кв.м, ет.4 от 6, АКТ16, цена €175,000, добро разпределение, тихо място, близо до парк...'
                           : 'Опишете темата, историята или информацията за поста...'
                       }
-                      className="w-full text-sm border border-gray-200 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green placeholder-gray-300"
+                      className="w-full text-sm border border-gray-200 rounded-xl p-3 resize-none focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green placeholder-gray-300"
                     />
                   </div>
 
@@ -369,7 +369,7 @@ export default function PostGeneratorClient() {
                   <button
                     onClick={handleAiGenerate}
                     disabled={generating || !aiDetails.trim()}
-                    className="w-full flex items-center justify-center gap-2 bg-brand-green text-white font-bold py-3.5 rounded-xl hover:bg-brand-green/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    className="w-full flex items-center justify-center gap-2 bg-brand-green text-white font-bold py-3.5 rounded-xl hover:bg-brand-green/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xs"
                   >
                     {generating ? (
                       <>

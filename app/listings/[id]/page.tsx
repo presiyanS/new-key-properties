@@ -95,7 +95,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 <ImageGallery images={images} title={title} />
                 <div className="absolute top-4 left-4 z-10">
                   <span
-                    className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide backdrop-blur-sm shadow ${
+                    className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide backdrop-blur-xs shadow ${
                       listing.type === 'sale'
                         ? 'bg-brand-green/90 text-brand-gold'
                         : 'bg-brand-gold/90 text-brand-green'
@@ -130,7 +130,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               )}
 
               {/* Main info card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                 {/* Title + Price */}
                 <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
                   <h1 className="font-serif text-3xl font-bold text-gray-900 leading-tight">{title}</h1>
@@ -255,7 +255,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               )}
 
               {/* Map */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-xs border border-gray-100">
                 <div className="px-8 py-5 border-b border-gray-100">
                   <h2 className="font-bold text-gray-900 text-lg">{dict.listings.locationHeading}</h2>
                   <p className="text-sm text-gray-400 mt-0.5">{listing.neighborhood}, {dict.listings.sofia}</p>
@@ -279,7 +279,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
             {/* Right: Contact sidebar */}
             <div>
               <div className="bg-white rounded-2xl p-7 shadow-xl border border-gray-100 sticky top-24">
-                <div className="h-1 bg-gradient-to-r from-brand-green via-brand-gold to-brand-green rounded-full mb-6" />
+                <div className="h-1 bg-linear-to-r from-brand-green via-brand-gold to-brand-green rounded-full mb-6" />
                 <h3 className="font-serif text-xl font-bold text-brand-green mb-1">
                   {dict.listings.interestedTitle}
                 </h3>
@@ -290,7 +290,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 <div className="space-y-3 mb-6">
                   <a
                     href="tel:0879826292"
-                    className="flex items-center justify-center gap-3 bg-brand-green text-brand-gold font-bold py-4 rounded-xl hover:bg-brand-green-light transition-all w-full shadow-sm shadow-brand-green/10 hover:shadow-brand-green/20 hover:-translate-y-0.5"
+                    className="flex items-center justify-center gap-3 bg-brand-green text-brand-gold font-bold py-4 rounded-xl hover:bg-brand-green-light transition-all w-full shadow-xs shadow-brand-green/10 hover:shadow-brand-green/20 hover:-translate-y-0.5"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />

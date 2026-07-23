@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 const pTitle = locale === 'en' ? (pAny.titleEn ?? p.title) : p.title
                 const d = new Date(p.date).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })
                 return (
-                  <Link key={p.id} href={localizeHref(`/blog/${p.slug}`, locale)} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-100">
+                  <Link key={p.id} href={localizeHref(`/blog/${p.slug}`, locale)} className="group bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition-shadow border border-gray-100">
                     {p.image && (
                       <div className="relative h-40 overflow-hidden bg-brand-green/10">
                         <Image src={p.image} alt={pTitle} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />

@@ -82,7 +82,7 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
           {dict.listings.saveSearchPrompt}
         </button>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-xs">
           <div className="flex items-start justify-between mb-3">
             <div>
               <h3 className="font-semibold text-gray-900 text-sm">{dict.listings.saveSearchTitle}</h3>
@@ -112,7 +112,7 @@ export default function SaveSearchBar({ type, neighborhood, rooms, priceMin, pri
               onChange={(e) => setEmail(e.target.value)}
               placeholder={dict.listings.saveSearchEmailPlaceholder}
               required
-              className="flex-1 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all"
+              className="flex-1 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl px-4 py-2.5 focus:outline-hidden focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all"
             />
             <button
               type="submit"

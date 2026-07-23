@@ -47,12 +47,12 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
         )}
 
         {/* Dark overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-green-dark/80 via-brand-green-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-green-dark/80 via-brand-green-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Type badge */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
           <span
-            className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm ${
+            className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-xs shadow-xs ${
               listing.type === 'sale'
                 ? 'bg-brand-green/90 text-brand-gold'
                 : 'bg-brand-gold/90 text-brand-green'
@@ -61,7 +61,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
             {listing.type === 'sale' ? dict.listings.tabSale : dict.listings.tabRent}
           </span>
           {listing.constructionAct && (
-            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm bg-white/85 text-brand-green">
+            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-xs shadow-xs bg-white/85 text-brand-green">
               {String(listing.constructionAct).includes('act14') ? dict.listings.constructionAct14 : String(listing.constructionAct).includes('act15') ? dict.listings.constructionAct15 : dict.listings.constructionAct16}
             </span>
           )}

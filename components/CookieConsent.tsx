@@ -37,7 +37,7 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
       )}
 
       {status === 'pending' && (
-        <div className="fixed bottom-0 inset-x-0 z-[60] bg-brand-green-dark border-t border-brand-gold/20 px-4 py-4 sm:py-5">
+        <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-4 sm:py-5">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-4">
             <p className="text-white/80 text-sm text-center sm:text-left flex-1">
               {dict.cookies.message}{' '}

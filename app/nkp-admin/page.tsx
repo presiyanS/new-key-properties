@@ -54,7 +54,7 @@ function LoginForm() {
               onChange={e => setPassword(e.target.value)}
               placeholder="Въведете паролата"
               autoFocus
-              className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors ${
+              className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-colors ${
                 error ? 'border-red-300 bg-red-50' : 'border-gray-200'
               }`}
             />

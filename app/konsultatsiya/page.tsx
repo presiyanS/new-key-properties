@@ -140,7 +140,7 @@ export default async function KonsultatsiyaPage() {
             {benefits.map((b: { title: string; desc: string }, i: number) => (
               <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 group h-full">
-                  <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light transition-colors shadow-sm shadow-brand-green/10">
+                  <div className="w-14 h-14 bg-brand-green rounded-xl flex items-center justify-center text-brand-gold mb-5 group-hover:bg-brand-green-light transition-colors shadow-xs shadow-brand-green/10">
                     {benefitIcons[i] ?? benefitIcons[0]}
                   </div>
                   <h3 className="font-bold text-brand-green text-lg mb-2 group-hover:text-brand-green-light transition-colors">{b.title}</h3>
@@ -184,7 +184,7 @@ export default async function KonsultatsiyaPage() {
               <div className="space-y-5">
                 {steps.map((s: { title: string; desc: string }, i: number) => (
                   <div key={i} className="flex gap-5 items-start">
-                    <div className="w-11 h-11 bg-brand-green rounded-xl flex items-center justify-center shrink-0 shadow-sm shadow-brand-green/20">
+                    <div className="w-11 h-11 bg-brand-green rounded-xl flex items-center justify-center shrink-0 shadow-xs shadow-brand-green/20">
                       <span className="text-brand-gold font-bold text-xs">{String(i + 1).padStart(2, '0')}</span>
                     </div>
                     <div>
@@ -243,7 +243,7 @@ export default async function KonsultatsiyaPage() {
           <div className="space-y-4">
             {faq.map((item: { q: string; a: string }, i: number) => (
               <AnimatedSection key={i} delay={i * 0.08}>
-                <div className="border border-gray-200 rounded-2xl p-6 hover:border-brand-green/30 hover:shadow-sm transition-all">
+                <div className="border border-gray-200 rounded-2xl p-6 hover:border-brand-green/30 hover:shadow-xs transition-all">
                   <h3 className="font-bold text-brand-green text-lg mb-2">{item.q}</h3>
                   <p className="text-gray-500 leading-relaxed">{item.a}</p>
                 </div>

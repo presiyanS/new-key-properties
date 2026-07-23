@@ -88,7 +88,7 @@ export default async function ContactPage() {
                 {/* Phone */}
                 <a
                   href={`tel:${phone}`}
-                  className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                  className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all group"
                 >
                   <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0 group-hover:bg-brand-green-light transition-colors">
                     <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@ export default async function ContactPage() {
                 {/* Email */}
                 <a
                   href={`mailto:${email}`}
-                  className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                  className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all group"
                 >
                   <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0 group-hover:bg-brand-green-light transition-colors">
                     <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
@@ -126,7 +126,7 @@ export default async function ContactPage() {
                 </a>
 
                 {/* Location */}
-                <div className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                <div className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-xs">
                   <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
