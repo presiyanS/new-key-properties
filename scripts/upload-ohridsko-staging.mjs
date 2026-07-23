@@ -5,7 +5,6 @@
 
 import { createClient } from '@sanity/client'
 import fs from 'fs'
-import path from 'path'
 
 const token = process.env.SANITY_TOKEN
 if (!token) {

@@ -66,6 +66,12 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
   const pathname = usePathname()
   const { locale, dict } = useLocale()
 
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname)
+    setOpen(false)
+  }
+
   const navLinks = [
     { href: '/', label: dict.nav.home },
     { href: '/listings', label: dict.nav.listings },
@@ -84,10 +90,6 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  useEffect(() => {
-    setOpen(false)
-  }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''

@@ -93,15 +93,6 @@ function pickTopic(date: Date) {
   return topics[weekNumber % topics.length]
 }
 
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\u0400-\u04ff\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .slice(0, 80)
-}
-
 function formatDate(date: Date) {
   return date.toISOString().split('T')[0]
 }

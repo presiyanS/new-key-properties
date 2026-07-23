@@ -36,7 +36,11 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
   const [sortBy, setSortBy] = useState<SortBy>('default')
   const [showFilters, setShowFilters] = useState(false)
 
-  // Restore filters from URL on mount
+  // Restore filters from URL on mount. Deliberately done in an effect (not a
+  // lazy useState initializer) because window.location.search isn't
+  // available during SSR — reading it during render would cause a hydration
+  // mismatch between the server-rendered defaults and the client's first pass.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search)
     if (sp.get('type')) setFilter(sp.get('type') as Filter)
@@ -52,6 +56,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     if (sp.get('sort')) setSortBy(sp.get('sort') as SortBy)
     if (sp.get('filters') === '1') setShowFilters(true)
   }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Persist filters to URL without triggering a navigation
   useEffect(() => {
@@ -100,12 +105,6 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
       return a.localeCompare(b, 'bg')
     })
   }, [listings])
-
-  const counts = {
-    all: listings.length,
-    sale: listings.filter((l) => l.type === 'sale').length,
-    rent: listings.filter((l) => l.type === 'rent').length,
-  }
 
   const activeFilterCount = [
     neighborhood,

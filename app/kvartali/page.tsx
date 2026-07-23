@@ -53,7 +53,17 @@ export default async function KvartaliPage() {
             <p className="text-gray-400 text-center py-24">{dict.neighborhoods.emptyState}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {neighborhoods.map((n: any) => {
+              {neighborhoods.map((n: {
+                _id: string
+                slug: { current: string }
+                name: string
+                nameEn?: string
+                tagline?: string
+                taglineEn?: string
+                externalImageUrl?: string
+                priceRangeSale?: string
+                priceRangeRent?: string
+              }) => {
                 const name = locale === 'en' ? (n.nameEn ?? n.name) : n.name
                 const tagline = locale === 'en' ? (n.taglineEn ?? n.tagline) : n.tagline
                 return (

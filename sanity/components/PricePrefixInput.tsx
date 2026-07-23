@@ -1,4 +1,4 @@
-import { StringInputProps, useFormValue, set } from 'sanity'
+import { StringInputProps, set } from 'sanity'
 
 export function PricePrefixInput(props: StringInputProps) {
   const { value = '', elementProps } = props

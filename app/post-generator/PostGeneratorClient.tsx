@@ -81,8 +81,8 @@ export default function PostGeneratorClient() {
       } else {
         setAiError(data.error ?? 'Неизвестна грешка. Провери конзолата.')
       }
-    } catch (e: any) {
-      setAiError(e?.message ?? 'Мрежова грешка — провери интернет връзката.')
+    } catch (e) {
+      setAiError(e instanceof Error ? e.message : 'Мрежова грешка — провери интернет връзката.')
     } finally {
       setGenerating(false)
     }

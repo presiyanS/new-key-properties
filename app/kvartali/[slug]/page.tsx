@@ -11,7 +11,7 @@ export const revalidate = 3600
 
 export async function generateStaticParams() {
   const neighborhoods = await getNeighborhoods()
-  return neighborhoods.map((n: any) => ({ slug: n.slug.current }))
+  return neighborhoods.map((n: { slug: { current: string } }) => ({ slug: n.slug.current }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

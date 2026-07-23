@@ -100,7 +100,7 @@ const content = {
         ],
         rightsFooter: (
           <>
-            За упражняване на правата си, моля свържете се с нас на <a href="mailto:office@newkey.bg" className="text-brand-green font-medium hover:underline">office@newkey.bg</a>. Имате право и да подадете жалба до <strong>Комисия за защита на личните данни (КЗЛД)</strong>, гр. София, бул. „Проф. Цветан Лазаров" № 2, www.cpdp.bg.
+            За упражняване на правата си, моля свържете се с нас на <a href="mailto:office@newkey.bg" className="text-brand-green font-medium hover:underline">office@newkey.bg</a>. Имате право и да подадете жалба до <strong>Комисия за защита на личните данни (КЗЛД)</strong>, гр. София, бул. „Проф. Цветан Лазаров“ № 2, www.cpdp.bg.
           </>
         ),
       },

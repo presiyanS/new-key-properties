@@ -75,9 +75,9 @@ ${toneGuide ? `\n${toneGuide}\n` : ''}
     const result = await model.generateContent(userPrompt)
     const text = result.response.text()
     return NextResponse.json({ post: text })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error generating post:', error)
-    const msg = error?.message ?? 'Неизвестна грешка'
+    const msg = error instanceof Error ? error.message : 'Неизвестна грешка'
     return NextResponse.json({ error: `Грешка: ${msg}` }, { status: 500 })
   }
 }

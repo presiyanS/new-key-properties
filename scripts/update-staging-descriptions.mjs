@@ -5,9 +5,6 @@
  */
 
 import { createClient } from '@sanity/client'
-import { execSync } from 'child_process'
-import path from 'path'
-import fs from 'fs'
 
 const token = process.env.SANITY_TOKEN
 if (!token) { console.error('❌  Missing SANITY_TOKEN.'); process.exit(1) }
