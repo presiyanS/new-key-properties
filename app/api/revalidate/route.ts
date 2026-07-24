@@ -52,29 +52,28 @@ export async function POST(req: Request) {
   // dashboard trigger) — forward the listing to Make.com for downstream
   // automations. Fetched fresh by id rather than trusting the webhook body,
   // since the dashboard trigger's payload projection can change independently
-  // of this route.
+  // of this route. Fire-and-forget: must never delay or fail this response.
   if (body._type === 'listing' && typeof body._id === 'string') {
     const id = body._id.replace(/^drafts\./, '')
-    const listing = await getListingForWebhook(id)
-    if (listing) {
-      await sendListingToMakeWebhook({
-        id,
-        code: listing.code,
+    getListingForWebhook(id).then((listing) => {
+      if (!listing) return
+      sendListingToMakeWebhook({
         title: listing.title,
-        type: listing.type,
-        category: listing.category,
+        slug: id,
+        purpose: listing.purpose,
+        propertyType: listing.propertyType,
+        neighborhood: listing.neighborhood,
         price: listing.price,
+        currency: listing.currency,
         area: listing.area,
         rooms: listing.rooms,
         floor: listing.floor,
-        neighborhood: listing.neighborhood,
         description: listing.description,
-        imageUrl: listing.imageUrl,
-        url: `https://www.newkey.bg/listings/${id}`,
         status: listing.status,
-        sold: listing.status === 'sold',
+        mainImage: listing.mainImage,
+        url: `https://www.newkey.bg/listings/${id}`,
       })
-    }
+    })
   }
 
   return NextResponse.json({ revalidated: applied })

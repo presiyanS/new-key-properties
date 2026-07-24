@@ -127,36 +127,36 @@ export async function getFeaturedListings(preview = false): Promise<SanityListin
 // right after a Sanity webhook fires — needs the freshest data, not the CDN.
 
 export type SanityListingForWebhook = {
-  code: string | null
   title: string
-  type: 'sale' | 'rent'
-  category: string | null
+  purpose: 'sale' | 'rent'
+  propertyType: string | null
+  neighborhood: string
   price: string | number
+  currency: 'EUR'
   area: string | number
   rooms: string | number
   floor: string | number | null
-  neighborhood: string
   description: string
-  imageUrl: string | null
   status: 'active' | 'under_offer' | 'sold'
+  mainImage: string | null
 }
 
 export async function getListingForWebhook(id: string): Promise<SanityListingForWebhook | null> {
   try {
     return await freshClient.fetch(
       `*[_type == "listing" && _id == $id][0]{
-        code,
         title,
-        type,
-        category,
+        "purpose": type,
+        "propertyType": category,
+        neighborhood,
         price,
+        "currency": "EUR",
         area,
         rooms,
         floor,
-        neighborhood,
         description,
-        "imageUrl": coalesce(images[0].asset->url, externalImageUrls[0]),
-        "status": coalesce(status, "active")
+        "status": coalesce(status, "active"),
+        "mainImage": coalesce(images[0].asset->url, externalImageUrls[0])
       }`,
       { id }
     )
