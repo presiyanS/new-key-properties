@@ -112,7 +112,9 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                         listing.status === 'sold' ? 'bg-red-600' : 'bg-amber-600'
                       }`}
                     >
-                      {listing.status === 'sold' ? dict.listings.sold : dict.listings.underOffer}
+                      {listing.status === 'sold'
+                        ? listing.type === 'rent' ? dict.listings.rented : dict.listings.sold
+                        : dict.listings.underOffer}
                     </div>
                   </div>
                 )}
@@ -132,10 +134,14 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div>
                     <p className={`font-bold text-sm ${listing.status === 'sold' ? 'text-red-700' : 'text-amber-700'}`}>
-                      {listing.status === 'sold' ? dict.listings.soldNoticeTitle : dict.listings.underOfferNoticeTitle}
+                      {listing.status === 'sold'
+                        ? listing.type === 'rent' ? dict.listings.rentedNoticeTitle : dict.listings.soldNoticeTitle
+                        : dict.listings.underOfferNoticeTitle}
                     </p>
                     <p className={`text-xs mt-0.5 ${listing.status === 'sold' ? 'text-red-500' : 'text-amber-600'}`}>
-                      {listing.status === 'sold' ? dict.listings.soldNoticeSubtitle : dict.listings.underOfferNoticeSubtitle}
+                      {listing.status === 'sold'
+                        ? listing.type === 'rent' ? dict.listings.rentedNoticeSubtitle : dict.listings.soldNoticeSubtitle
+                        : dict.listings.underOfferNoticeSubtitle}
                     </p>
                   </div>
                 </div>

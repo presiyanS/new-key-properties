@@ -75,7 +75,9 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
                 listing.status === 'sold' ? 'bg-red-600' : 'bg-amber-600'
               }`}
             >
-              {listing.status === 'sold' ? dict.listings.sold : dict.listings.underOffer}
+              {listing.status === 'sold'
+                ? listing.type === 'rent' ? dict.listings.rented : dict.listings.sold
+                : dict.listings.underOffer}
             </div>
           </div>
         )}
