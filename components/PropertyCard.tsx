@@ -8,6 +8,7 @@ import { localizeHref } from '@/lib/i18n/config'
 
 const AGENT_NAME = 'Александър Соколов'
 const AGENT_PHOTO = '/team/alexander-sokolov.jpg'
+const AGENT_NEIGHBORHOODS = ['драгалевци', 'малинова долина']
 
 export default function PropertyCard({ listing, priority }: { listing: SanityListing; priority?: boolean }) {
   const { locale, dict } = useLocale()
@@ -21,6 +22,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
 
   const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
   const mainImage = listing.imageUrls?.[0]
+  const showAgent = AGENT_NEIGHBORHOODS.includes(listing.neighborhood.trim().toLowerCase())
 
   return (
     <Link
@@ -133,15 +135,17 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           {listing.neighborhood}, {dict.listings.sofia}
         </div>
 
-        <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-gray-100">
-          <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
-            <Image src={AGENT_PHOTO} alt={AGENT_NAME} fill className="object-cover" />
+        {showAgent && (
+          <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-gray-100">
+            <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
+              <Image src={AGENT_PHOTO} alt={AGENT_NAME} fill className="object-cover" />
+            </div>
+            <p className="text-xs text-gray-500">
+              <span className="text-gray-400">{dict.listings.agentLabel}:</span>{' '}
+              <span className="font-medium text-gray-700">{AGENT_NAME}</span>
+            </p>
           </div>
-          <p className="text-xs text-gray-500">
-            <span className="text-gray-400">{dict.listings.agentLabel}:</span>{' '}
-            <span className="font-medium text-gray-700">{AGENT_NAME}</span>
-          </p>
-        </div>
+        )}
       </div>
     </Link>
   )
