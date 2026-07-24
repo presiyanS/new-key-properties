@@ -55,6 +55,7 @@ console.log('\nCreating garage listing in production...')
 const created = await client.create({
   _type: 'listing',
   featured: false,
+  status: 'active',
   title: 'Гараж под наем, Център – ул. Осогово',
   type: 'rent',
   price: '130',

@@ -177,11 +177,20 @@ export const listingType = defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'sold',
-      title: 'Продаден / Отдаден',
-      type: 'boolean',
-      initialValue: false,
-      description: 'Маркирайте ако имотът вече е продаден или отдаден под наем.',
+      name: 'status',
+      title: 'Статус',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Активен', value: 'active' },
+          { title: 'Под оферта', value: 'under_offer' },
+          { title: 'Продаден / Отдаден', value: 'sold' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'active',
+      validation: (r) => r.required(),
+      description: 'Активен — свободен. Под оферта — в процес на сделка, все още не е финализирана. Продаден / Отдаден — сделката е приключена.',
     }),
   ],
   preview: {

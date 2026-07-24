@@ -78,6 +78,7 @@ const listing = {
   neighborhood: 'Лозенец',
   description,
   featured: false,
+  status: 'active',
   images: imageAssets.map((asset) => ({
     _type: 'image',
     _key: asset._id,

@@ -114,6 +114,7 @@ for (const listing of listings) {
   const created = await client.create({
     _type: 'listing',
     featured: false,
+    status: 'active',
     ...rest,
     images,
   })

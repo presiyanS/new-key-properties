@@ -67,11 +67,15 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           )}
         </div>
 
-        {/* Sold ribbon */}
-        {listing.sold && (
+        {/* Status ribbon */}
+        {listing.status !== 'active' && (
           <div className="absolute top-0 right-0 w-28 h-28 overflow-hidden pointer-events-none z-20">
-            <div className="absolute top-5 -right-7 w-36 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest text-center py-1.5 rotate-45 shadow-lg">
-              {dict.listings.sold}
+            <div
+              className={`absolute top-5 -right-7 w-36 text-white text-[10px] font-black uppercase tracking-widest text-center py-1.5 rotate-45 shadow-lg ${
+                listing.status === 'sold' ? 'bg-red-600' : 'bg-amber-600'
+              }`}
+            >
+              {listing.status === 'sold' ? dict.listings.sold : dict.listings.underOffer}
             </div>
           </div>
         )}

@@ -104,27 +104,39 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     {listing.type === 'sale' ? dict.listings.tabSale : dict.listings.tabRent}
                   </span>
                 </div>
-                {/* Sold ribbon */}
-                {listing.sold && (
+                {/* Status ribbon */}
+                {listing.status !== 'active' && (
                   <div className="absolute top-0 right-0 w-40 h-40 overflow-hidden pointer-events-none z-20">
-                    <div className="absolute top-8 -right-9 w-52 bg-red-600 text-white text-sm font-black uppercase tracking-widest text-center py-2 rotate-45 shadow-xl">
-                      {dict.listings.sold}
+                    <div
+                      className={`absolute top-8 -right-9 w-52 text-white text-sm font-black uppercase tracking-widest text-center py-2 rotate-45 shadow-xl ${
+                        listing.status === 'sold' ? 'bg-red-600' : 'bg-amber-600'
+                      }`}
+                    >
+                      {listing.status === 'sold' ? dict.listings.sold : dict.listings.underOffer}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Sold notice banner */}
-              {listing.sold && (
-                <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl px-6 py-4">
-                  <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center shrink-0">
+              {/* Status notice banner */}
+              {listing.status !== 'active' && (
+                <div
+                  className={`flex items-center gap-3 rounded-2xl px-6 py-4 border ${
+                    listing.status === 'sold' ? 'bg-red-50 border-red-200' : 'bg-amber-50 border-amber-200'
+                  }`}
+                >
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${listing.status === 'sold' ? 'bg-red-600' : 'bg-amber-600'}`}>
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
-                    <p className="font-bold text-red-700 text-sm">{dict.listings.soldNoticeTitle}</p>
-                    <p className="text-red-500 text-xs mt-0.5">{dict.listings.soldNoticeSubtitle}</p>
+                    <p className={`font-bold text-sm ${listing.status === 'sold' ? 'text-red-700' : 'text-amber-700'}`}>
+                      {listing.status === 'sold' ? dict.listings.soldNoticeTitle : dict.listings.underOfferNoticeTitle}
+                    </p>
+                    <p className={`text-xs mt-0.5 ${listing.status === 'sold' ? 'text-red-500' : 'text-amber-600'}`}>
+                      {listing.status === 'sold' ? dict.listings.soldNoticeSubtitle : dict.listings.underOfferNoticeSubtitle}
+                    </p>
                   </div>
                 </div>
               )}
@@ -250,7 +262,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               </div>
 
               {/* Mortgage calculator */}
-              {listing.type === 'sale' && !listing.sold && !isNaN(numericPrice) && numericPrice > 0 && (
+              {listing.type === 'sale' && listing.status === 'active' && !isNaN(numericPrice) && numericPrice > 0 && (
                 <MortgageCalculator price={numericPrice} />
               )}
 

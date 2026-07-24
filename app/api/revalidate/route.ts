@@ -1,5 +1,7 @@
 import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
+import { getListingForWebhook } from '@/lib/sanity'
+import { sendListingToMakeWebhook } from '@/lib/makeWebhook'
 
 const ALL_TAGS = [
   'listings', 'blog', 'team', 'home-page', 'about-page', 'contact-page',
@@ -45,6 +47,35 @@ export async function POST(req: Request) {
 
   const applied = tags.filter((t) => ALL_TAGS.includes(t))
   for (const tag of applied) revalidateTag(tag, 'max')
+
+  // Sanity webhook (create/update, filtered to _type == "listing" in the
+  // dashboard trigger) — forward the listing to Make.com for downstream
+  // automations. Fetched fresh by id rather than trusting the webhook body,
+  // since the dashboard trigger's payload projection can change independently
+  // of this route.
+  if (body._type === 'listing' && typeof body._id === 'string') {
+    const id = body._id.replace(/^drafts\./, '')
+    const listing = await getListingForWebhook(id)
+    if (listing) {
+      await sendListingToMakeWebhook({
+        id,
+        code: listing.code,
+        title: listing.title,
+        type: listing.type,
+        category: listing.category,
+        price: listing.price,
+        area: listing.area,
+        rooms: listing.rooms,
+        floor: listing.floor,
+        neighborhood: listing.neighborhood,
+        description: listing.description,
+        imageUrl: listing.imageUrl,
+        url: `https://www.newkey.bg/listings/${id}`,
+        status: listing.status,
+        sold: listing.status === 'sold',
+      })
+    }
+  }
 
   return NextResponse.json({ revalidated: applied })
 }

@@ -1,5 +1,5 @@
 /**
- * Marks the Раковски street rental listing as rented (sold=true) so it
+ * Marks the Раковски street rental listing as rented (status=sold) so it
  * shows the "Отдадено" ribbon instead of appearing available.
  * Usage: SANITY_API_WRITE_TOKEN=<token> node scripts/mark-rakovski-rented.mjs
  */
@@ -19,5 +19,5 @@ const client = createClient({
 
 const id = 'o3mQPUBUBxVVo14n0jm6tI'
 
-await client.patch(id).set({ sold: true }).commit()
+await client.patch(id).set({ status: 'sold' }).commit()
 console.log('✅  Marked as rented:', id)

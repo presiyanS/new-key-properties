@@ -72,6 +72,7 @@ const listing = {
   neighborhood: 'Овча Купел 2',
   description,
   featured: false,
+  status: 'active',
   images: imageAssets.map((asset) => ({
     _type: 'image',
     _key: asset._id,
