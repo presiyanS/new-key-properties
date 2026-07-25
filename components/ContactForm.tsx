@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { sendToMakeWebhook } from '@/lib/makeWebhook'
+import { generateEventId, trackLead } from '@/lib/metaPixel'
 
 type Props = {
   endpoint?: string
@@ -54,10 +55,13 @@ export default function ContactForm({
 
     sendToMakeWebhook('Website Contact Form', form)
 
+    const metaEventId = generateEventId()
+    trackLead(metaEventId, { content_name: 'Contact Form' })
+
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, metaEventId }),
     })
 
     setLoading(false)

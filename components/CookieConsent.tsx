@@ -5,6 +5,7 @@ import Script from 'next/script'
 import Link from 'next/link'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
+import MetaPixel from '@/components/MetaPixel'
 
 const COOKIE_NAME = 'nkp_cookie_consent'
 
@@ -35,6 +36,8 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
           strategy="afterInteractive"
         />
       )}
+
+      {status === 'accepted' && <MetaPixel />}
 
       {status === 'pending' && (
         <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-4 sm:py-5">

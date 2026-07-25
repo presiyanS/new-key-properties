@@ -1,13 +1,27 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const { name, phone, email, message } = await req.json()
+  const { name, phone, email, message, metaEventId } = await req.json()
 
   if (!name || !phone || !message) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  // Runs alongside the Resend send rather than after it, so a slow Meta API
+  // (bounded by its own 5s timeout) doesn't add to the response latency.
+  const metaLeadPromise = metaEventId
+    ? sendMetaLeadEvent({
+        eventId: metaEventId,
+        eventSourceUrl: req.headers.get('referer') ?? 'https://www.newkey.bg/',
+        email,
+        phone,
+        clientIp: req.headers.get('x-forwarded-for')?.split(',')[0]?.trim(),
+        userAgent: req.headers.get('user-agent') ?? undefined,
+      })
+    : Promise.resolve()
 
   const { error } = await resend.emails.send({
     from: 'New Key Properties <noreply@newkey.bg>',
@@ -40,6 +54,8 @@ export async function POST(req: Request) {
       </div>
     `,
   })
+
+  await metaLeadPromise
 
   if (error) {
     console.error('Resend error:', error)

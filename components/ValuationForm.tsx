@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { Locale } from '@/lib/i18n/config'
 import { sendToMakeWebhook } from '@/lib/makeWebhook'
+import { generateEventId, trackLead } from '@/lib/metaPixel'
 
 const textBg = {
   nameLabel: 'Вашето име *',
@@ -114,10 +115,13 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
 
     sendToMakeWebhook('Website Valuation Form', form)
 
+    const metaEventId = generateEventId()
+    trackLead(metaEventId, { content_name: 'Valuation Form' })
+
     const res = await fetch('/api/valuation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, metaEventId }),
     })
 
     setLoading(false)

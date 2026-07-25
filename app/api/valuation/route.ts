@@ -2,6 +2,7 @@ import { createClient } from '@sanity/client'
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 import { splitName, syncHubSpotContact } from '@/lib/hubspot'
+import { sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 const sanity = createClient({
   projectId: '9gz26s06',
@@ -27,7 +28,7 @@ const CONDITION_LABEL: Record<string, string> = {
 }
 
 export async function POST(req: Request) {
-  const { name, phone, email, neighborhood, purpose, propertyType, area, rooms, floor, condition, message } = await req.json()
+  const { name, phone, email, neighborhood, purpose, propertyType, area, rooms, floor, condition, message, metaEventId } = await req.json()
 
   if (!name || !phone || !neighborhood || !purpose) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -70,6 +71,19 @@ export async function POST(req: Request) {
   // Awaited so Vercel doesn't freeze the function before the request completes,
   // but syncHubSpotContact never throws — CRM failures must never block the user-facing success state.
   await syncHubSpotContact({ firstname, lastname, phone, message: summaryLines.join('\n') }, email || undefined)
+
+  // Same reasoning as syncHubSpotContact above — awaited (bounded by its own
+  // 5s timeout) so the promise isn't orphaned once the function returns.
+  if (metaEventId) {
+    await sendMetaLeadEvent({
+      eventId: metaEventId,
+      eventSourceUrl: req.headers.get('referer') ?? 'https://www.newkey.bg/',
+      email,
+      phone,
+      clientIp: req.headers.get('x-forwarded-for')?.split(',')[0]?.trim(),
+      userAgent: req.headers.get('user-agent') ?? undefined,
+    })
+  }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const row = (label: string, value?: string) =>
