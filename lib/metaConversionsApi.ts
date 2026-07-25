@@ -2,6 +2,9 @@ import { createHash } from 'crypto'
 
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 const ACCESS_TOKEN = process.env.META_CONVERSIONS_API_ACCESS_TOKEN
+// Temporary — set only while verifying in Events Manager's Test Events tab.
+// Must be unset in normal production operation, or live traffic gets tagged as test data.
+const TEST_EVENT_CODE = process.env.META_TEST_EVENT_CODE
 
 function hashField(value: string): string {
   return createHash('sha256').update(value.trim().toLowerCase()).digest('hex')
@@ -52,6 +55,7 @@ export async function sendMetaLeadEvent({ eventId, eventSourceUrl, email, phone,
             user_data,
           },
         ],
+        ...(TEST_EVENT_CODE ? { test_event_code: TEST_EVENT_CODE } : {}),
       }),
       signal: AbortSignal.timeout(5000),
     })
