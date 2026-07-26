@@ -274,6 +274,13 @@ export default async function HomePage() {
               </h1>
 
               <p
+                className="font-serif italic text-brand-gold/90 text-lg sm:text-xl mb-4 animate-fade-up"
+                style={{ animationDelay: '0.35s' }}
+              >
+                New Key Properties – защото Вашият имот заслужава честност
+              </p>
+
+              <p
                 className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl animate-fade-up"
                 style={{ animationDelay: '0.4s' }}
               >

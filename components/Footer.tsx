@@ -185,14 +185,19 @@ export default function Footer({
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-brand-gold/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
-          <p>© {new Date().getFullYear()} {copyright}</p>
-          <div className="flex items-center gap-4">
-            <Link href={localizeHref('/privacy-policy', locale)} className="hover:text-brand-gold/60 transition-colors">
-              {dict.footer.privacyPolicy}
-            </Link>
-            <span className="text-brand-gold/20">·</span>
-            <p>{subline}</p>
+        <div className="mt-12 pt-6 border-t border-brand-gold/15">
+          <p className="text-center font-serif italic text-brand-gold/50 text-sm mb-4">
+            New Key Properties – защото Вашият имот заслужава честност
+          </p>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
+            <p>© {new Date().getFullYear()} {copyright}</p>
+            <div className="flex items-center gap-4">
+              <Link href={localizeHref('/privacy-policy', locale)} className="hover:text-brand-gold/60 transition-colors">
+                {dict.footer.privacyPolicy}
+              </Link>
+              <span className="text-brand-gold/20">·</span>
+              <p>{subline}</p>
+            </div>
           </div>
         </div>
       </div>
