@@ -89,6 +89,13 @@ export const blogPostType = defineType({
       type: 'url',
       description: 'Използвайте ако не качвате снимка — поставете URL адрес на снимка от интернет',
     }),
+    defineField({
+      name: 'researchNotes',
+      title: 'Бележки от проверката на източниците (вътрешно)',
+      type: 'text',
+      rows: 12,
+      description: 'Само за преглед преди публикуване — кои факти са проверени и от кои източници. Не се показва на сайта.',
+    }),
   ],
   preview: {
     select: {

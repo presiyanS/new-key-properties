@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@sanity/client'
-import { SOFIA_MARKET_DATA } from '@/lib/sofiaMarketData'
+import { Resend } from 'resend'
+
+export const maxDuration = 180
 
 const sanity = createClient({
   projectId: '9gz26s06',
@@ -11,82 +13,183 @@ const sanity = createClient({
   useCdn: false,
 })
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Rotating topics so each week covers something different
-// Each topic has its own real, verified photo (Wikimedia Commons) instead of
-// sharing 3 generic stock images across every post — avoids repeating the
-// same cover art and avoids location-mismatched stock photos.
+// Only these domains may be used as sources — the specific authoritative
+// list Presiyan approved (BNB, NSI, EU/ECB, market research, etc.). Facts
+// found outside this list don't get cited and can't be used in the post.
+const ALLOWED_DOMAINS = [
+  'bnb.bg',
+  'nsi.bg',
+  'nsni.bg',
+  'registryagency.bg',
+  'ecb.europa.eu',
+  'consilium.europa.eu',
+  'globalpropertyguide.com',
+  'investropa.com',
+  'pirotska.bg',
+  'tradingeconomics.com',
+  'globallawexperts.com',
+  'realting.com',
+  'build-up.ec.europa.eu',
+  'worldpopulationreview.com',
+  'similarweb.com',
+  'proptech.bg',
+  'oecd.org',
+  'bta.bg',
+  'capital.bg',
+  'colliers.com',
+]
+
+// Rotating angles so each week covers something different. `research` tells
+// the research pass which questions to answer and which of the approved
+// sources are most relevant; the actual search is still restricted to
+// ALLOWED_DOMAINS as a whole. `image` reuses previously-verified Wikimedia
+// Commons photos — new topics reuse an existing one rather than risk a
+// broken/unverified URL; Presiyan can swap in a real photo via Sanity anytime.
 const topics = [
   {
     slug_prefix: 'pazaren-obzor',
     category: 'Пазарен анализ',
-    prompt: 'Напиши актуален пазарен обзор за имотния пазар в София за текущия месец. Включи: текущи средни цени на квадратен метър, сравнение с предходния период, търсене vs. предлагане, кои квартали са най-активни и защо.',
+    research:
+      'Провери текущите средни офертни и реално сключени цени на кв.м за жилища в София, годишната промяна спрямо предходната година и обема на регистрираните сделки. Приоритетни източници: nsi.bg, registryagency.bg, globalpropertyguide.com, investropa.com.',
+    angle:
+      'Напиши актуален пазарен обзор за имотния пазар в София, базиран САМО на проверените данни по-долу.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Sofia_skyline.jpg',
   },
   {
     slug_prefix: 'saveti-kupuvachi',
     category: 'Съвети',
-    prompt: 'Напиши практичен наръчник за купувачи на имоти в София. Включи: как да разпознаят добра оферта, на какво да обърнат внимание при оглед, какви документи да проверят, как да преговарят за цената. Тон — честен съвет от приятел с опит.',
+    research:
+      'Провери текущите средни цени на кв.м в София (за контекст на примерите) и стандартните разходи по сделка (данък, нотариус, такси). Приоритетни източници: nsi.bg, registryagency.bg, pirotska.bg.',
+    angle:
+      'Напиши практичен наръчник за купувачи на имоти в София — какво да проверят при оглед, документи, преговори за цена. Използвай проверените данни само за конкретни примери с цифри.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Boulevard_Vitosha_at_night%2C_Sofia_PD_2012_7.JPG',
   },
   {
     slug_prefix: 'investitsii-sofia',
     category: 'Инвестиции',
-    prompt: 'Напиши анализ за инвестиционния потенциал на имотния пазар в София. Включи: наемна доходност по квартали, какъв тип имоти носят най-добра възвращаемост, рискове и предимства на имотната инвестиция спрямо алтернативите.',
+    research:
+      'Провери наемна доходност по квартали в София, средни цени на кв.м и лихви по ипотечни кредити. Приоритетни източници: colliers.com, globalpropertyguide.com, bnb.bg, tradingeconomics.com.',
+    angle:
+      'Напиши анализ на инвестиционния потенциал на имотния пазар в София — наемна доходност, рискове, сравнение с алтернативи.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/National_Palace_of_Culture_Sofia.jpg',
   },
   {
     slug_prefix: 'kvartal-analiz',
     category: 'Пазарен анализ',
-    prompt: 'Напиши задълбочен анализ на конкретен квартал в София — избери между Драгалевци, Малинова долина, Младост, Лозенец, Витоша или Кръстова вада. Включи: характеристики на квартала, транспорт, средни цени, целева аудитория, тенденции.',
+    research:
+      'Провери средни цени на кв.м за конкретни квартали в София (избери 1-2 — напр. Лозенец, Младост, Витоша, Кръстова вада) и тенденциите там. Приоритетни източници: nsi.bg, globalpropertyguide.com, investropa.com.',
+    angle:
+      'Напиши задълбочен анализ на конкретен квартал в София — характеристики, транспорт, цени, целева аудитория.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Cherni_Vrah_Boulevard_with_Krastova_Vada.jpg',
   },
   {
     slug_prefix: 'propuski-kupuvachi',
     category: 'Съвети',
-    prompt: 'Напиши статия за най-честите грешки, които купувачите на имоти в София правят. Включи поне 5-7 конкретни грешки с обяснение защо са грешки и как да ги избегнат. Тон — директен, честен, полезен.',
+    research:
+      'Провери стандартни разходи и такси при сделка с имот в София (данък, нотариус, комисиона) и изисквания за самоучастие при ипотечен кредит. Приоритетни източници: pirotska.bg, bnb.bg.',
+    angle:
+      'Напиши статия за най-честите грешки, които купувачите на имоти в София правят, с поне 5-7 конкретни примера.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Ivan_Vazov_National_Theatre_december.jpg',
   },
   {
-    slug_prefix: 'evropeiski-trend',
+    slug_prefix: 'evrozona-vliyanie',
     category: 'Пазарен анализ',
-    prompt: 'Напиши статия как европейските тенденции в имотния пазар влияят на България и София. Включи: лихвени нива, инфлация, движение на капитали, сравнение с Румъния, Полша и Гърция. Какво означава това за купувачите в София?',
+    research:
+      'Провери статуса на въвеждането на еврото в България, официалната дата, и лихвените нива в еврозоната. Приоритетни източници: ecb.europa.eu, consilium.europa.eu, oecd.org, bnb.bg.',
+    angle:
+      'Напиши статия как въвеждането на еврото и европейските лихвени нива влияят на имотния пазар в София. Какво означава това за купувачите.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Nevski01.jpg',
+  },
+  {
+    slug_prefix: 'ipotechni-lihvi',
+    category: 'Анализи',
+    research:
+      'Провери текущите лихвени нива по жилищни ипотечни кредити в България и прогнозите за годината. Приоритетни източници: bnb.bg, pirotska.bg, tradingeconomics.com.',
+    angle:
+      'Напиши обективна статия за ипотечните кредити в България днес — лихви, изисквания, как да избереш между фиксирана и променлива лихва.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Sofia_skyline.jpg',
   },
   {
     slug_prefix: 'naem-ili-kupuvane',
     category: 'Съвети',
-    prompt: 'Напиши обективна статия: по-изгодно ли е да наемеш или да купиш имот в София днес? Включи конкретни изчисления, примерни сценарии, кога има смисъл да купуваш и кога — да наемаш. Без пристрастие.',
+    research:
+      'Провери средни цени на кв.м за покупка и средни наеми в София, както и текущите лихви по ипотечни кредити, за да изчислиш примерни сценарии. Приоритетни източници: nsi.bg, globalpropertyguide.com, bnb.bg.',
+    angle:
+      'Напиши обективна статия: по-изгодно ли е да наемеш или да купиш имот в София днес? Направи конкретно изчисление на база проверените данни.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Sofia_South_Park.jpg',
   },
   {
     slug_prefix: 'novo-stroitelstvo',
     category: 'Пазарен анализ',
-    prompt: 'Напиши анализ на пазара на ново строителство в София. Включи: разлика в цените ново vs. старо строителство, предимства и рискове при покупка на Акт 14/15/16, какво да проверят купувачите при новострояща се сграда.',
+    research:
+      'Провери разликата в цените между ново и старо строителство в София и изискванията за енергийна ефективност на новите сгради (EPBD реформа). Приоритетни източници: nsi.bg, build-up.ec.europa.eu, globalpropertyguide.com.',
+    angle:
+      'Напиши анализ на пазара на ново строителство в София — цени спрямо вторичен пазар, какво да проверят купувачите, енергийни изисквания.',
     image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Apartment_block_in_district_of_Sveta_Troitsa%2C_Sofia%2C_Bulgaria.jpg',
+  },
+  {
+    slug_prefix: 'regulacii-broker',
+    category: 'Правни съвети',
+    research:
+      'Провери актуални промени в регулацията на брокерите на недвижими имоти и изискванията за регистрация на сделки в България. Приоритетни източници: globallawexperts.com, realting.com, registryagency.bg.',
+    angle:
+      'Напиши статия обясняваща на купувачи и продавачи какви са актуалните законови изисквания при сделка с имот в София — защо да работят с лицензиран и почтен брокер.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/National_Palace_of_Culture_Sofia.jpg',
+  },
+  {
+    slug_prefix: 'demografia-sofia',
+    category: 'Анализи',
+    research:
+      'Провери актуални данни за населението на София и тенденциите в растежа му. Приоритетни източници: worldpopulationreview.com, nsi.bg.',
+    angle:
+      'Напиши статия как ръстът на населението на София се отразява на търсенето на жилища и на имотния пазар.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Sofia_South_Park.jpg',
+  },
+  {
+    slug_prefix: 'evropeiski-trend',
+    category: 'Пазарен анализ',
+    research:
+      'Провери икономическата прогноза (БВП, инфлация) за България и сравнение с други европейски пазари на имоти. Приоритетни източници: oecd.org, bta.bg, tradingeconomics.com.',
+    angle:
+      'Напиши статия как европейските икономически тенденции влияят на имотния пазар в София — лихви, инфлация, сравнение със съседни пазари.',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Nevski01.jpg',
   },
 ]
 
-const systemPrompt = `Ти си опитен журналист и пазарен анализатор за New Key Properties — агенция за недвижими имоти в София, България.
-
-За агенцията:
+const AGENCY_FACTS = `New Key Properties — агенция за недвижими имоти в София, България.
 - Слоган: "Доверие - Честност - Резултати"
 - Тел: 0879826292 | Email: office@newkey.bg
-- Ценности: Честност, прозрачност, истинска грижа за клиента
+- Работим с ограничен брой клиенти на месец — за максимално качество на услугата
+- Ценности: Честност, прозрачност, истинска грижа за клиента`
 
-${SOFIA_MARKET_DATA}
+const researchSystemPrompt = `Ти си стриктен пазарен изследовател. Задачата ти е да провериш конкретни факти за имотния пазар в София и България, използвайки САМО резултати от web_search в разрешените домейни.
+
+Правила:
+1. Приемай факт (цифра, дата, процент, тенденция) само ако е потвърден от НАЙ-МАЛКО 2 независими източника от разрешените домейни, чиито стойности съвпадат или са разумно близки. Ако намериш само 1 източник или източниците си противоречат съществено, сложи го в "unverified", не в "facts".
+2. Никога не измисляй цифри. Ако не намериш достатъчно потвърждение за нещо — не го включвай.
+3. За всеки факт в "facts" посочи всички източници, които го потвърждават (име и URL).
+4. Върни САМО валиден JSON, без markdown форматиране, без обяснения преди или след него, в следния формат:
+{"facts":[{"claim":"кратко описание какво е проверено","value":"конкретната стойност/цифра/дата","sources":[{"name":"...","url":"..."}]}],"unverified":["кратко описание на нещо, което не успя да потвърдиш"]}`
+
+const writingSystemPrompt = `Ти си опитен журналист и пазарен анализатор за New Key Properties.
+
+За агенцията:
+${AGENCY_FACTS}
 
 Правила за писане:
 1. Пиши САМО на български език
 2. Обективен, информативен тон — не рекламен
-3. Използвай САМО цифрите от пазарните данни по-горе, когато цитираш цени, лихви или доходност — никога не измисляй и не закръгляй на своя глава цени, лихвени проценти или суми, които не са дадени там
-4. Ако ти трябва конкретна цена за въображаем пример (напр. апартамент от Х м²), изведи я чрез изчисление от дадените диапазони/€-на-м² и покажи изчислението
-5. Дължина: 600–900 думи
-6. Структура: увод → основно съдържание (2-4 секции) → заключение с CTA към агенцията
-7. Завърши с покана за безплатна консултация на 0879 826 292
-8. Не включвай заглавие в текста — само съдържанието
-9. Не включвай markdown форматиране (без #, **, _ и т.н.) — само обикновен текст с нови редове`
+3. Използвай САМО фактите, дадени ти по-долу в JSON. Никога не измисляй и не закръгляш цени, лихвени проценти или суми, които не са дадени там
+4. Ако ти трябва конкретна цена за въображаем пример, изведи я чрез изчисление от дадените данни и покажи изчислението
+5. Дължина на "content": 600–900 думи
+6. Структура на "content": увод → основно съдържание (2-4 секции) → заключение с покана за безплатна консултация на 0879 826 292
+7. "content" не съдържа markdown форматиране (без #, **, _ и т.н.) — само обикновен текст с нови редове, и не съдържа заглавие в себе си
+8. "title": кратко, привлекателно заглавие (максимум 70 знака), sentence case — главна буква само на първата дума и на собствени имена (напр. София, България), НЕ Title Case
+9. "excerpt": кратко резюме, максимум 200 знака
+10. Върни САМО валиден JSON във формат {"title":"...","excerpt":"...","content":"..."}, без markdown форматиране, без обяснения преди или след него`
 
 function pickTopic(date: Date) {
   const weekNumber = Math.floor(date.getTime() / (7 * 24 * 60 * 60 * 1000))
@@ -97,54 +200,244 @@ function formatDate(date: Date) {
   return date.toISOString().split('T')[0]
 }
 
+type ResearchFact = { claim: string; value: string; sources: { name: string; url: string }[] }
+type ResearchResult = { facts: ResearchFact[]; unverified: string[] }
+
+function extractJson<T>(text: string): T | null {
+  try {
+    return JSON.parse(text.trim()) as T
+  } catch {
+    const start = text.indexOf('{')
+    const end = text.lastIndexOf('}')
+    if (start === -1 || end === -1 || end <= start) return null
+    try {
+      return JSON.parse(text.slice(start, end + 1)) as T
+    } catch {
+      return null
+    }
+  }
+}
+
+function extractText(content: Anthropic.ContentBlock[]): string {
+  return content
+    .filter((block): block is Anthropic.TextBlock => block.type === 'text')
+    .map((block) => block.text)
+    .join('\n')
+}
+
+function buildResearchNotes(research: ResearchResult): string {
+  const factLines = research.facts.map((f) => {
+    const sources = f.sources.map((s) => `${s.name} (${s.url})`).join(', ')
+    return `- ${f.claim}: ${f.value}\n  Източници: ${sources}`
+  })
+  const unverifiedLines = research.unverified.map((u) => `- ${u}`)
+  return [
+    'ПРОВЕРЕНИ ФАКТИ (потвърдени от поне 2 независими източника):',
+    factLines.length > 0 ? factLines.join('\n') : '(няма)',
+    '',
+    'НЕПОТВЪРДЕНИ (не са използвани в статията):',
+    unverifiedLines.length > 0 ? unverifiedLines.join('\n') : '(няма)',
+  ].join('\n')
+}
+
+function buildFailureEmailHtml(reason: string): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#f9fafb;font-family:Georgia,serif;">
+  <div style="max-width:600px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <div style="background:#1a4d3a;padding:32px 40px;">
+      <p style="margin:0;color:#c9a84c;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;">New Key Properties</p>
+      <h1 style="margin:12px 0 0;color:#fff;font-size:22px;line-height:1.3;">Тази седмица няма нова блог статия</h1>
+    </div>
+    <div style="padding:32px 40px;">
+      <p style="margin:0;font-size:14px;color:#374151;font-family:sans-serif;line-height:1.6;">${reason}</p>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
+function buildDraftReadyEmailHtml(params: {
+  title: string
+  excerpt: string
+  category: string
+  sourceCount: number
+  studioUrl: string
+  previewUrl: string
+}): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#f9fafb;font-family:Georgia,serif;">
+  <div style="max-width:600px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <div style="background:#1a4d3a;padding:32px 40px;">
+      <p style="margin:0;color:#c9a84c;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;">New Key Properties</p>
+      <h1 style="margin:12px 0 0;color:#fff;font-size:24px;line-height:1.3;">Нова чернова е готова за преглед</h1>
+    </div>
+    <div style="padding:32px 40px;">
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-bottom:24px;">
+        <p style="margin:0 0 4px;font-size:11px;color:#6b7280;font-family:sans-serif;text-transform:uppercase;letter-spacing:1px;">${params.category}</p>
+        <h2 style="margin:0 0 12px;font-size:20px;color:#111827;">${params.title}</h2>
+        <p style="margin:0;font-size:14px;color:#374151;font-family:sans-serif;line-height:1.5;">${params.excerpt}</p>
+      </div>
+      <p style="margin:0 0 20px;font-size:13px;color:#6b7280;font-family:sans-serif;">Проверена е с ${params.sourceCount} източник(а). Пълният списък е записан в бележките на статията в Studio, преди да я публикуваш.</p>
+      <a href="${params.previewUrl}" style="display:block;background:#1a4d3a;color:#c9a84c;text-decoration:none;text-align:center;padding:16px;border-radius:12px;font-weight:bold;font-size:16px;font-family:sans-serif;margin-bottom:12px;">
+        Прегледай статията →
+      </a>
+      <a href="${params.studioUrl}" style="display:block;text-align:center;padding:8px;font-size:13px;color:#6b7280;font-family:sans-serif;">
+        Или отвори в Studio за публикуване
+      </a>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
 export async function GET(request: NextRequest) {
-  // Verify this is called by Vercel Cron (or manually with the secret)
   const authHeader = request.headers.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const notifyEmail = process.env.PERSONAL_NOTIFY_EMAIL
+
   try {
     const now = new Date()
     const topic = pickTopic(now)
 
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-flash-latest',
-      systemInstruction: systemPrompt,
+    // 1. Research pass — web-search-grounded, restricted to the approved sources.
+    const researchResponse = await anthropic.messages.create({
+      model: 'claude-sonnet-5',
+      max_tokens: 8192,
+      output_config: { effort: 'medium' },
+      system: researchSystemPrompt,
+      tools: [
+        {
+          type: 'web_search_20260209',
+          name: 'web_search',
+          max_uses: 10,
+          allowed_domains: ALLOWED_DOMAINS,
+        },
+      ],
+      messages: [{ role: 'user', content: topic.research }],
     })
 
-    // Generate title first
-    const titleResult = await model.generateContent(
-      `Измисли кратко, привлекателно заглавие (максимум 70 знака) за статия на тема: ${topic.prompt}. Използвай главна буква само на първата дума и на собствени имена (напр. София, България) — не пиши всяка дума с главна буква. Върни САМО заглавието, без кавички или обяснения.`
-    )
-    const title = titleResult.response.text().trim()
+    if (researchResponse.stop_reason === 'refusal') {
+      throw new Error('Research request was declined by safety classifiers')
+    }
 
-    // Generate content
-    const contentResult = await model.generateContent(topic.prompt)
-    const content = contentResult.response.text().trim()
+    const research = extractJson<ResearchResult>(extractText(researchResponse.content))
 
-    // Generate excerpt
-    const excerptResult = await model.generateContent(
-      `Напиши кратко резюме (максимум 200 знака) за следната статия:\n\n${content}\n\nВърни САМО резюмето.`
+    if (!research || research.facts.length < 2) {
+      const reason =
+        'Тази седмица AI изследването не успя да потвърди достатъчно факти от одобрените източници (нужни са поне 2 съвпадащи източника за всеки факт), затова не беше генерирана статия — за да няма грешни данни на сайта. Ще опитаме отново следващата седмица.'
+      if (notifyEmail) {
+        await resend.emails.send({
+          from: 'New Key Properties <noreply@newkey.bg>',
+          to: notifyEmail,
+          subject: 'Блог: няма нова статия тази седмица',
+          html: buildFailureEmailHtml(reason),
+        })
+      }
+      return NextResponse.json({ success: false, reason: 'insufficient_verified_facts' })
+    }
+
+    // 2. Writing pass — grounded only in the verified facts above, no tools.
+    // Uses structured outputs (output_config.format) instead of asking the model to
+    // hand-format JSON in prose: a free-text "return JSON" instruction lets the model
+    // write literal newlines inside the multi-paragraph "content" string, which breaks
+    // strict JSON.parse — the schema constraint prevents that at generation time.
+    const writingResponse = await anthropic.messages.create({
+      model: 'claude-sonnet-5',
+      max_tokens: 6000,
+      output_config: {
+        effort: 'medium',
+        format: {
+          type: 'json_schema',
+          schema: {
+            type: 'object',
+            properties: {
+              title: { type: 'string' },
+              excerpt: { type: 'string' },
+              content: { type: 'string' },
+            },
+            required: ['title', 'excerpt', 'content'],
+            additionalProperties: false,
+          },
+        },
+      },
+      system: writingSystemPrompt,
+      messages: [
+        {
+          role: 'user',
+          content: `${topic.angle}\n\nПроверени факти (JSON):\n${JSON.stringify(research.facts)}`,
+        },
+      ],
+    })
+
+    if (writingResponse.stop_reason === 'refusal') {
+      throw new Error('Writing request was declined by safety classifiers')
+    }
+
+    const post = extractJson<{ title: string; excerpt: string; content: string }>(
+      extractText(writingResponse.content)
     )
-    const excerpt = excerptResult.response.text().trim()
+
+    if (!post || !post.title || !post.content) {
+      throw new Error('Writing pass did not return valid JSON')
+    }
 
     const slug = `${topic.slug_prefix}-${formatDate(now)}`
+    const docId = `drafts.market-post-${formatDate(now)}-${crypto.randomUUID().slice(0, 8)}`
 
-    const post = await sanity.create({
+    const created = await sanity.create({
+      _id: docId,
       _type: 'blogPost',
-      title,
+      title: post.title,
       slug: { _type: 'slug', current: slug },
       date: formatDate(now),
       category: topic.category,
-      excerpt,
-      content,
+      excerpt: post.excerpt,
+      content: post.content,
       externalImageUrl: topic.image,
+      researchNotes: buildResearchNotes(research),
     })
 
-    return NextResponse.json({ success: true, id: post._id, title, slug })
+    if (notifyEmail) {
+      const previewUrl = `https://www.newkey.bg/api/draft?sanity-preview-secret=cron-preview&redirect=${encodeURIComponent('/blog/' + slug)}`
+      await resend.emails.send({
+        from: 'New Key Properties <noreply@newkey.bg>',
+        to: notifyEmail,
+        subject: `Чернова за преглед: ${post.title}`,
+        html: buildDraftReadyEmailHtml({
+          title: post.title,
+          excerpt: post.excerpt,
+          category: topic.category,
+          sourceCount: research.facts.reduce((sum, f) => sum + f.sources.length, 0),
+          studioUrl: 'https://www.newkey.bg/studio',
+          previewUrl,
+        }),
+      })
+    }
+
+    return NextResponse.json({ success: true, id: created._id, title: post.title, slug, verifiedFacts: research.facts.length })
   } catch (error) {
     console.error('Cron market post error:', error)
+    if (notifyEmail) {
+      try {
+        await resend.emails.send({
+          from: 'New Key Properties <noreply@newkey.bg>',
+          to: notifyEmail,
+          subject: 'Блог: грешка при генериране на статия',
+          html: buildFailureEmailHtml(`Възникна техническа грешка тази седмица: ${String(error)}. Няма да пропуснем данни — просто провери следващата седмица или се свържи с Claude.`),
+        })
+      } catch (emailError) {
+        console.error('Failed to send failure notification:', emailError)
+      }
+    }
     return NextResponse.json({ error: String(error) }, { status: 500 })
   }
 }
