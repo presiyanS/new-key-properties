@@ -128,7 +128,7 @@ export default async function KonsultatsiyaPage() {
             </div>
             <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
               {t(cms?.heroTitle, cms?.heroTitleEn, 'Безплатна', 'Free')}<br />
-              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'Консултация', 'consultation')}</span>
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'Консултация', 'Consultation')}</span>
             </h1>
             <p className="text-white/70 text-xl leading-relaxed mb-10 max-w-2xl animate-fade-up" style={{ animationDelay: '0.1s' }}>
               {t(

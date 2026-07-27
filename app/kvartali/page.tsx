@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getNeighborhoods } from '@/lib/sanity'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates, translateNeighborhoodPriceRange } from '@/lib/i18n/config'
 
 export const revalidate = 3600
 
@@ -100,12 +100,12 @@ export default async function KvartaliPage() {
                     <div className="flex flex-wrap gap-2 mb-4">
                       {n.priceRangeSale && (
                         <span className="text-xs bg-brand-green/8 text-brand-green border border-brand-green/15 px-3 py-1.5 rounded-full font-medium">
-                          🏠 {n.priceRangeSale}
+                          🏠 {translateNeighborhoodPriceRange(n.priceRangeSale, locale)}
                         </span>
                       )}
                       {n.priceRangeRent && (
                         <span className="text-xs bg-brand-gold/10 text-amber-700 border border-brand-gold/20 px-3 py-1.5 rounded-full font-medium">
-                          🔑 {n.priceRangeRent}
+                          🔑 {translateNeighborhoodPriceRange(n.priceRangeRent, locale)}
                         </span>
                       )}
                     </div>

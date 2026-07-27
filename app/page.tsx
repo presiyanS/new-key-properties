@@ -277,7 +277,12 @@ export default async function HomePage() {
                 className="font-serif italic text-brand-gold/90 text-lg sm:text-xl mb-4 animate-fade-up"
                 style={{ animationDelay: '0.35s' }}
               >
-                New Key Properties – защото Вашият имот заслужава честност
+                {t(
+                  undefined,
+                  undefined,
+                  'New Key Properties – защото Вашият имот заслужава честност',
+                  'New Key Properties – because your property deserves honesty'
+                )}
               </p>
 
               <p

@@ -111,3 +111,15 @@ export function translatePriceText(price: string, locale: Locale): string {
     .replace(/^от\s+/i, 'from ')
     .replace(/€\s*\/\s*мес\.?/i, '€/mo')
 }
+
+/**
+ * Neighborhood `priceRangeSale`/`priceRangeRent` are also free-text fields with
+ * no separate En counterpart (per the schema) — translate the fixed Bulgarian
+ * unit fragments (e.g. "€/кв.м" -> "€/m²"), leave the numbers untouched.
+ */
+export function translateNeighborhoodPriceRange(range: string, locale: Locale): string {
+  if (locale !== 'en') return range
+  return range
+    .replace(/€\s*\/\s*кв\.?\s*м\.?/i, '€/m²')
+    .replace(/€\s*\/\s*мес\.?/i, '€/mo')
+}

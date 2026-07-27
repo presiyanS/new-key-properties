@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { getNeighborhood, getNeighborhoods, getListings } from '@/lib/sanity'
 import PropertyCard from '@/components/PropertyCard'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates, translateNeighborhoodPriceRange } from '@/lib/i18n/config'
 
 export const revalidate = 3600
 
@@ -263,13 +263,13 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
               {n.priceRangeSale && (
                 <div className="mb-4">
                   <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">{dict.listings.tabSale}</p>
-                  <p className="text-xl font-bold text-gray-900">{n.priceRangeSale}</p>
+                  <p className="text-xl font-bold text-gray-900">{translateNeighborhoodPriceRange(n.priceRangeSale, locale)}</p>
                 </div>
               )}
               {n.priceRangeRent && (
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">{dict.listings.tabRent}</p>
-                  <p className="text-xl font-bold text-gray-900">{n.priceRangeRent}</p>
+                  <p className="text-xl font-bold text-gray-900">{translateNeighborhoodPriceRange(n.priceRangeRent, locale)}</p>
                 </div>
               )}
             </div>
