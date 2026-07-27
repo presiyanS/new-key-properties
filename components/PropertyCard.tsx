@@ -4,9 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { SanityListing } from '@/lib/sanity'
 import { useLocale } from '@/lib/i18n/LocaleContext'
-import { localizeHref } from '@/lib/i18n/config'
+import { localizeHref, translateNeighborhood, translateFloor, translatePriceText } from '@/lib/i18n/config'
 
-const AGENT_NAME = 'Александър Соколов'
+const AGENT_NAME_BG = 'Александър Соколов'
+const AGENT_NAME_EN = 'Alexander Sokolov'
 const AGENT_PHOTO = '/team/alexander-sokolov.jpg'
 const AGENT_NEIGHBORHOODS = ['драгалевци', 'малинова долина']
 
@@ -16,13 +17,14 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
   const priceStripped = priceRaw.replace(/[\s€]/g, '')
   const priceFormatted = /^\d+$/.test(priceStripped)
     ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-    : priceRaw
+    : translatePriceText(priceRaw, locale)
   const numericPrice = Number(String(listing.price ?? '').replace(/[^0-9]/g, ''))
   const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
   const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
   const mainImage = listing.imageUrls?.[0]
   const showAgent = AGENT_NEIGHBORHOODS.includes(listing.neighborhood.trim().toLowerCase())
+  const agentName = locale === 'en' ? AGENT_NAME_EN : AGENT_NAME_BG
 
   return (
     <Link
@@ -105,7 +107,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           <p className="text-brand-gold font-bold text-xl">{priceFormatted}</p>
           {listing.type === 'sale' && !isNaN(numericPrice) && listing.area && !isNaN(Number(listing.area)) && (
             <p className="text-gray-400 text-xs mt-0.5">
-              ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/м²
+              ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/{dict.listings.areaUnit}
             </p>
           )}
         </div>
@@ -115,7 +117,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
             <svg className="w-4 h-4 text-brand-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
             </svg>
-            {listing.area} м²
+            {listing.area} {dict.listings.areaUnit}
           </span>
           <span className="flex items-center gap-1.5">
             <svg className="w-4 h-4 text-brand-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +126,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
             {listing.rooms} {String(listing.rooms) === '1' ? dict.listings.roomSingular : dict.listings.roomsSuffix}
           </span>
           {listing.floor != null && (
-            <span className="text-gray-400">{dict.listings.floorAbbrev} {listing.floor}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>
+            <span className="text-gray-400">{dict.listings.floorAbbrev} {translateFloor(String(listing.floor), locale)}{listing.totalFloors ? `/${listing.totalFloors}` : ''}</span>
           )}
         </div>
 
@@ -132,17 +134,17 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
           <svg className="w-3.5 h-3.5 text-brand-green shrink-0" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
           </svg>
-          {listing.neighborhood}, {dict.listings.sofia}
+          {translateNeighborhood(listing.neighborhood, locale)}, {dict.listings.sofia}
         </div>
 
         {showAgent && (
           <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-gray-100">
             <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
-              <Image src={AGENT_PHOTO} alt={AGENT_NAME} fill className="object-cover" />
+              <Image src={AGENT_PHOTO} alt={agentName} fill className="object-cover" />
             </div>
             <p className="text-xs text-gray-500">
               <span className="text-gray-400">{dict.listings.agentLabel}:</span>{' '}
-              <span className="font-medium text-gray-700">{AGENT_NAME}</span>
+              <span className="font-medium text-gray-700">{agentName}</span>
             </p>
           </div>
         )}

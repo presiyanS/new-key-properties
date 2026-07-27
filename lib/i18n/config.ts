@@ -40,3 +40,74 @@ const BLOG_CATEGORY_EN: Record<string, string> = {
 export function translateBlogCategory(category: string, locale: Locale): string {
   return locale === 'en' ? (BLOG_CATEGORY_EN[category] ?? category) : category
 }
+
+/**
+ * Listings store `neighborhood` as a single Bulgarian string (no En field in
+ * the schema), so this transliterates the known Sofia neighborhoods for the
+ * English site. Unknown/future values fall back to the original string
+ * instead of erroring — better an unmapped Cyrillic name than a crash.
+ */
+const NEIGHBORHOOD_EN: Record<string, string> = {
+  'борово': 'Borovo',
+  'гео милев': 'Geo Milev',
+  'драгалевци': 'Dragalevtsi',
+  'дружба': 'Druzhba',
+  'дружба 2': 'Druzhba 2',
+  'красно село': 'Krasno Selo',
+  'кръстова вада': 'Krastova Vada',
+  'лозенец': 'Lozenets',
+  'малинова долина': 'Malinova Dolina',
+  'манастирски ливади': 'Manastirski Livadi',
+  'младост': 'Mladost',
+  'овча купел': 'Ovcha Kupel',
+  'овча купел 2': 'Ovcha Kupel 2',
+  'сердика': 'Serdika',
+  'созопол': 'Sozopol',
+  'хиподрума': 'Hipodruma',
+  'център': 'Center',
+}
+
+export function translateNeighborhood(name: string, locale: Locale): string {
+  if (locale !== 'en') return name
+  const key = name.trim().toLowerCase()
+  return NEIGHBORHOOD_EN[key] ?? name
+}
+
+/**
+ * `floor` is a free-text string field (per the schema, it can hold a number
+ * or one of a few fixed Bulgarian words instead) — translate the known words,
+ * leave anything else (numbers) untouched.
+ */
+const FLOOR_TEXT_EN: Record<string, string> = {
+  'партер': 'Ground floor',
+  'подземен': 'Basement',
+  'мансарда': 'Attic',
+}
+
+export function translateFloor(floor: string, locale: Locale): string {
+  if (locale !== 'en') return floor
+  const key = floor.trim().toLowerCase()
+  return FLOOR_TEXT_EN[key] ?? floor
+}
+
+/**
+ * `price` is also a free-text string field — usually a plain number, but can
+ * be one of these fixed Bulgarian phrases instead (per the schema
+ * description). Translate the known phrases, leave numeric prices untouched.
+ */
+const PRICE_TEXT_EN: Record<string, string> = {
+  'по договаряне': 'Negotiable',
+  'по запитване': 'Price on request',
+}
+
+export function translatePriceText(price: string, locale: Locale): string {
+  if (locale !== 'en') return price
+  const key = price.trim().toLowerCase()
+  if (PRICE_TEXT_EN[key]) return PRICE_TEXT_EN[key]
+  // Rental prices are sometimes entered as free text like "от 400 €/мес."
+  // ("from 400 €/month") — translate the common fragments rather than the
+  // whole string, since the numbers/formatting vary per listing.
+  return price
+    .replace(/^от\s+/i, 'from ')
+    .replace(/€\s*\/\s*мес\.?/i, '€/mo')
+}

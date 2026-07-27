@@ -9,7 +9,7 @@ import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
 import MortgageCalculator from '@/components/MortgageCalculator'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref, hreflangAlternates } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates, translateNeighborhood, translateFloor, translatePriceText } from '@/lib/i18n/config'
 
 export const revalidate = 60
 
@@ -67,7 +67,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   const priceStripped = priceRaw.replace(/[\s€]/g, '')
   const priceFormatted = /^\d+$/.test(priceStripped)
     ? '€' + priceStripped.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-    : priceRaw
+    : translatePriceText(priceRaw, locale)
   const numericPrice = Number(String(listing.price ?? '').replace(/[^0-9]/g, ''))
   const formatNum = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
@@ -156,7 +156,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     <p className="text-brand-gold font-bold text-3xl">{priceFormatted}</p>
                     {listing.type === 'sale' && !isNaN(numericPrice) && listing.area && !isNaN(Number(listing.area)) && (
                       <p className="text-gray-400 text-sm mt-0.5">
-                        ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/м²
+                        ~{formatNum(Math.round(numericPrice / Number(listing.area)))} €/{dict.listings.areaUnit}
                       </p>
                     )}
                   </div>
@@ -167,7 +167,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   <svg className="w-4 h-4 text-brand-green shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
-                  {listing.neighborhood}, {dict.listings.sofia}
+                  {translateNeighborhood(listing.neighborhood, locale)}, {dict.listings.sofia}
                 </p>
 
                 {/* Listing code */}
@@ -182,7 +182,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   {[
                     {
                       label: dict.listings.statArea,
-                      val: listing.area != null ? `${listing.area} м²` : '–',
+                      val: listing.area != null ? `${listing.area} ${dict.listings.areaUnit}` : '–',
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
@@ -201,7 +201,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     {
                       label: dict.listings.statFloor,
                       val: listing.floor != null
-                        ? `${listing.floor}${listing.totalFloors ? `/${listing.totalFloors}` : ''}`
+                        ? `${translateFloor(String(listing.floor), locale)}${listing.totalFloors ? `/${listing.totalFloors}` : ''}`
                         : '–',
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,7 +211,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     },
                     {
                       label: dict.listings.neighborhoodLabel,
-                      val: listing.neighborhood,
+                      val: translateNeighborhood(listing.neighborhood, locale),
                       icon: (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -276,7 +276,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               <div className="bg-white rounded-2xl overflow-hidden shadow-xs border border-gray-100">
                 <div className="px-8 py-5 border-b border-gray-100">
                   <h2 className="font-bold text-gray-900 text-lg">{dict.listings.locationHeading}</h2>
-                  <p className="text-sm text-gray-400 mt-0.5">{listing.neighborhood}, {dict.listings.sofia}</p>
+                  <p className="text-sm text-gray-400 mt-0.5">{translateNeighborhood(listing.neighborhood, locale)}, {dict.listings.sofia}</p>
                 </div>
                 <iframe
                   src={
@@ -289,7 +289,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title={`${dict.listings.mapTitlePrefix} ${listing.neighborhood}, ${dict.listings.sofia}`}
+                  title={`${dict.listings.mapTitlePrefix} ${translateNeighborhood(listing.neighborhood, locale)}, ${dict.listings.sofia}`}
                 />
               </div>
             </div>

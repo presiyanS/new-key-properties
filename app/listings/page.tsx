@@ -49,6 +49,10 @@ export default async function ListingsPage() {
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
   const email = settings?.email ?? 'office@newkey.bg'
 
+  // This page's CMS fields are Bulgarian-only (no En variant in the schema) —
+  // only apply them on the bg site, so English visitors get dict defaults.
+  const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
+
   return (
     <>
       <section className="bg-brand-green py-28 relative overflow-hidden">
@@ -59,14 +63,14 @@ export default async function ListingsPage() {
             {dict.nav.listings}
           </p>
           <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight animate-fade-up">
-            {cms?.heroTitle ?? 'Намерете Вашия'}{' '}
-            <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Имот'}</span>
+            {bgOnly(cms?.heroTitle) ?? dict.listings.heroTitle}{' '}
+            <span className="text-brand-gold">{bgOnly(cms?.heroTitleGold) ?? dict.listings.heroTitleGold}</span>
           </h1>
           <p
             className="text-white/70 text-xl max-w-xl animate-fade-up"
             style={{ animationDelay: '0.1s' }}
           >
-            {cms?.heroSubtitle ?? 'Всички имоти са внимателно проверени и представени с пълна прозрачност. Само сериозни оферти.'}
+            {bgOnly(cms?.heroSubtitle) ?? dict.listings.heroSubtitle}
           </p>
           <div
             className="flex items-center gap-6 mt-8 animate-fade-up"
@@ -89,8 +93,8 @@ export default async function ListingsPage() {
         phone={phone}
         phoneDisplay={phoneDisplay}
         email={email}
-        bottomCtaTitle={cms?.bottomCtaTitle}
-        bottomCtaSubtitle={cms?.bottomCtaSubtitle}
+        bottomCtaTitle={bgOnly(cms?.bottomCtaTitle) ?? dict.listings.bottomCtaTitle}
+        bottomCtaSubtitle={bgOnly(cms?.bottomCtaSubtitle) ?? dict.listings.bottomCtaSubtitle}
       />
     </>
   )

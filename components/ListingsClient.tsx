@@ -6,6 +6,7 @@ import PropertyCard from '@/components/PropertyCard'
 import SaveSearchBar from '@/components/SaveSearchBar'
 import type { SanityListing } from '@/lib/sanity'
 import { useLocale } from '@/lib/i18n/LocaleContext'
+import { translateNeighborhood } from '@/lib/i18n/config'
 
 type Filter = 'all' | 'sale' | 'rent'
 type CategoryFilter = 'all' | 'apartment' | 'garage' | 'office' | 'store'
@@ -23,7 +24,7 @@ type Props = {
 
 export default function ListingsClient({ listings, phone, phoneDisplay, email, bottomCtaTitle, bottomCtaSubtitle }: Props) {
   const pathname = usePathname()
-  const { dict } = useLocale()
+  const { locale, dict } = useLocale()
   const [filter, setFilter] = useState<Filter>('all')
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -336,7 +337,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                   >
                     <option value="">{dict.listings.allNeighborhoods}</option>
                     {neighborhoods.map((n) => (
-                      <option key={n} value={n}>{n}</option>
+                      <option key={n} value={n}>{translateNeighborhood(n, locale)}</option>
                     ))}
                   </select>
                   <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -27,14 +27,18 @@ export default function Footer({
   locale: Locale
   dict: Dictionary
 }) {
+  // Site-settings footer copy is Bulgarian-only in the CMS (no En field) — only
+  // apply it on the bg site, so English visitors get the dictionary defaults.
+  const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
+
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
   const email = settings?.email ?? 'office@newkey.bg'
-  const address = settings?.address ?? 'София, България'
-  const tagline = settings?.footerTagline ?? 'Честност. Доверие. Резултати.\nВашият надежден партньор на пазара на недвижими имоти в София.'
-  const quote = settings?.footerQuote ?? 'Работим с ограничен брой клиенти на месец – за максимално качество.'
-  const copyright = settings?.footerCopyright ?? 'New Key Properties. Всички права запазени.'
-  const subline = settings?.footerSubline ?? 'Агенция за недвижими имоти – София, България'
+  const address = bgOnly(settings?.address) ?? dict.footer.address
+  const tagline = bgOnly(settings?.footerTagline) ?? dict.footer.tagline
+  const quote = bgOnly(settings?.footerQuote) ?? dict.footer.quote
+  const copyright = bgOnly(settings?.footerCopyright) ?? dict.footer.copyright
+  const subline = bgOnly(settings?.footerSubline) ?? dict.footer.subline
 
   const socials = [
     {
@@ -187,7 +191,7 @@ export default function Footer({
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-brand-gold/15">
           <p className="text-center font-serif italic text-brand-gold/50 text-sm mb-4">
-            New Key Properties – защото Вашият имот заслужава честност
+            {dict.footer.bottomTagline}
           </p>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-brand-gold/35">
             <p>© {new Date().getFullYear()} {copyright}</p>
