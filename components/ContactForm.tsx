@@ -8,6 +8,13 @@ import { localizeHref } from '@/lib/i18n/config'
 
 type Props = {
   endpoint?: string
+  // Distinguishes which page/context a submission came from in the Make.com →
+  // HubSpot pipeline (Deal/Contact records otherwise all look identical).
+  source?: string
+  // Extra context merged into the Make.com webhook payload only — e.g. which
+  // listing a "quick inquiry" was submitted from. Never sent to /api/* (those
+  // routes only expect the visible form fields).
+  extraFields?: Record<string, unknown>
   nameLabel?: string
   namePlaceholder?: string
   phoneLabel?: string
@@ -26,6 +33,8 @@ type Props = {
 
 export default function ContactForm({
   endpoint = '/api/contact',
+  source = 'Website Contact Form',
+  extraFields,
   nameLabel,
   namePlaceholder,
   phoneLabel,
@@ -72,7 +81,7 @@ export default function ContactForm({
     setLoading(true)
     setError('')
 
-    sendToMakeWebhook('Website Contact Form', form)
+    sendToMakeWebhook(source, extraFields ? { ...form, ...extraFields } : form)
 
     const metaEventId = generateEventId()
     trackLead(metaEventId, { content_name: 'Contact Form' })
