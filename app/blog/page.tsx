@@ -52,14 +52,22 @@ export default async function BlogPage() {
               {dict.nav.blog}
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {cms?.heroTitle ?? 'Полезна'}{' '}
-              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Информация'}</span>
+              {locale === 'en'
+                ? (cms?.heroTitleEn ?? cms?.heroTitle ?? 'Useful')
+                : (cms?.heroTitle ?? 'Полезна')}{' '}
+              <span className="text-brand-gold">
+                {locale === 'en'
+                  ? (cms?.heroTitleGoldEn ?? cms?.heroTitleGold ?? 'information')
+                  : (cms?.heroTitleGold ?? 'Информация')}
+              </span>
             </h1>
             <p
               className="text-white/70 text-xl leading-relaxed animate-fade-up"
               style={{ animationDelay: '0.1s' }}
             >
-              {cms?.heroSubtitle ?? 'Анализи на пазара, съвети за купувачи и продавачи, правни насоки — всичко, което трябва да знаете за имотите в София.'}
+              {locale === 'en'
+                ? (cms?.heroSubtitleEn ?? cms?.heroSubtitle ?? 'Market analysis, tips for buyers and sellers, legal guidance — everything you need to know about property in Sofia.')
+                : (cms?.heroSubtitle ?? 'Анализи на пазара, съвети за купувачи и продавачи, правни насоки — всичко, което трябва да знаете за имотите в София.')}
             </p>
             <p
               className="text-white/40 text-sm mt-4 animate-fade-up"
@@ -92,10 +100,14 @@ export default async function BlogPage() {
         <div className="max-w-3xl mx-auto px-4 text-center relative">
           <AnimatedSection>
             <h2 className="font-serif text-4xl font-bold text-white mb-4">
-              {cms?.ctaTitle ?? 'Имате конкретен въпрос?'}
+              {locale === 'en'
+                ? (cms?.ctaTitleEn ?? cms?.ctaTitle ?? 'Have a specific question?')
+                : (cms?.ctaTitle ?? 'Имате конкретен въпрос?')}
             </h2>
             <p className="text-white/60 text-lg mb-10">
-              {cms?.ctaSubtitle ?? 'Свържете се с нас директно — ще Ви дадем честен и компетентен отговор.'}
+              {locale === 'en'
+                ? (cms?.ctaSubtitleEn ?? cms?.ctaSubtitle ?? "Get in touch with us directly — we'll give you an honest, informed answer.")
+                : (cms?.ctaSubtitle ?? 'Свържете се с нас директно — ще Ви дадем честен и компетентен отговор.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
