@@ -193,8 +193,11 @@ const BLOG_POST_FIELDS = `
   "image": coalesce(image.asset->url, externalImageUrl, '')
 `
 
+// date <= now() keeps future-dated posts (scheduled publishing) hidden from the
+// live site until their date arrives; preview mode bypasses this so editors can
+// still see scheduled posts in Studio preview.
 const _cachedGetBlogPosts = unstable_cache(
-  () => client.fetch(`*[_type == "blogPost"] | order(date desc) { ${BLOG_POST_FIELDS} }`),
+  () => client.fetch(`*[_type == "blogPost" && date <= now()] | order(date desc) { ${BLOG_POST_FIELDS} }`),
   ['blog-posts'],
   { revalidate: 600, tags: ['blog'] }
 )
@@ -210,7 +213,7 @@ export async function getBlogPost(slug: string, preview = false): Promise<Sanity
   try {
     if (preview) return await previewClient.fetch(`*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`, { slug })
     return await unstable_cache(
-      () => client.fetch(`*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_POST_FIELDS} }`, { slug }),
+      () => client.fetch(`*[_type == "blogPost" && slug.current == $slug && date <= now()][0] { ${BLOG_POST_FIELDS} }`, { slug }),
       [`blog-post-${slug}`],
       { revalidate: 600, tags: ['blog'] }
     )()
