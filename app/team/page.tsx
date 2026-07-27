@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
     return {
-      title: 'Our Team',
+      title: 'Our team',
       description:
         'Meet the New Key Properties team – experienced brokers with dedication and genuine care for clients.',
       alternates: hreflangAlternates('/team', locale),

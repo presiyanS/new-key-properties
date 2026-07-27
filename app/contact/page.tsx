@@ -82,10 +82,10 @@ export default async function ContactPage() {
             {/* Left: Info */}
             <AnimatedSection direction="left">
               <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
-                {t(cms?.contactInfoLabel, cms?.contactInfoLabelEn, 'Връзка с нас', 'Get in Touch')}
+                {t(cms?.contactInfoLabel, cms?.contactInfoLabelEn, 'Връзка с нас', 'Get in touch')}
               </span>
               <h2 className="font-serif text-3xl font-bold text-brand-green mt-3 mb-8">
-                {t(cms?.contactInfoTitle, cms?.contactInfoTitleEn, 'Информация за контакт', 'Contact Information')}
+                {t(cms?.contactInfoTitle, cms?.contactInfoTitleEn, 'Информация за контакт', 'Contact information')}
               </h2>
 
               <div className="space-y-5 mb-10">
@@ -150,7 +150,7 @@ export default async function ContactPage() {
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-2.5 h-2.5 bg-brand-gold rounded-full animate-pulse" />
                   <p className="text-brand-gold font-semibold text-sm uppercase tracking-wide">
-                    {t(cms?.urgencyTitle, cms?.urgencyTitleEn, 'Ограничени места', 'Limited Availability')}
+                    {t(cms?.urgencyTitle, cms?.urgencyTitleEn, 'Ограничени места', 'Limited availability')}
                   </p>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
@@ -164,7 +164,7 @@ export default async function ContactPage() {
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100">
                 <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.contact.directEyebrow}</span>
                 <h2 className="font-serif text-2xl font-bold text-brand-green mt-2 mb-2">
-                  {t(cms?.formTitle, cms?.formTitleEn, 'Изпратете запитване', 'Send an Inquiry')}
+                  {t(cms?.formTitle, cms?.formTitleEn, 'Изпратете запитване', 'Send an inquiry')}
                 </h2>
                 <p className="text-gray-500 text-sm mb-8">
                   {t(cms?.formSubtitle, cms?.formSubtitleEn, 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.', "Fill out the form and we'll get back to you within 24 hours.")}

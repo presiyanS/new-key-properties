@@ -67,25 +67,25 @@ const textBg = {
 }
 
 const textEn: typeof textBg = {
-  heroBadge: 'Completely Free · No Obligation',
-  heroTitle: "What's My",
-  heroTitleGold: 'Property Worth?',
+  heroBadge: 'Completely free · No obligation',
+  heroTitle: "What's my",
+  heroTitleGold: 'property worth?',
   heroSubtitle: "Get a fair, accurate market valuation of your property in Sofia — based on real deals in the neighborhood, not inflated expectations. We respond within 24 hours.",
-  heroButton: 'Request a Free Valuation',
-  benefitsEyebrow: 'Why Choose Us',
-  benefitsTitle: 'A Valuation You Can Trust',
+  heroButton: 'Request a free valuation',
+  benefitsEyebrow: 'Why choose us',
+  benefitsTitle: 'A valuation you can trust',
   benefitsSubtitle: "We don't inflate prices to win a client. We tell you the truth about the market — because we value you as a future client, not a one-time deal.",
   benefits: [
-    { title: 'Real Market Data', desc: 'We base the valuation on actual recent deals and listings in your specific neighborhood — not a gut feeling.' },
-    { title: 'An Honest Price', desc: "We don't tell you what you want to hear. We tell you the truth, even if it means a lower price than expected." },
-    { title: 'No Obligation', desc: "The valuation is completely free. You're not required to work with us afterward." },
-    { title: 'Personal Attention', desc: 'We work with a limited number of clients each month — your request gets real attention, not an automated reply.' },
+    { title: 'Real market data', desc: 'We base the valuation on actual recent deals and listings in your specific neighborhood — not a gut feeling.' },
+    { title: 'An honest price', desc: "We don't tell you what you want to hear. We tell you the truth, even if it means a lower price than expected." },
+    { title: 'No obligation', desc: "The valuation is completely free. You're not required to work with us afterward." },
+    { title: 'Personal attention', desc: 'We work with a limited number of clients each month — your request gets real attention, not an automated reply.' },
   ],
   formEyebrow: 'Request',
-  formTitle: 'Request Your Valuation',
+  formTitle: 'Request your valuation',
   formSubtitle: "Fill in a few details about the property and we'll get back to you within 24 hours.",
   formCardBadge: 'Free',
-  formCardTitle: 'Property Details',
+  formCardTitle: 'Property details',
 }
 
 export default async function OtsenkaPage() {

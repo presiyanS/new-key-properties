@@ -7,7 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
     return {
-      title: 'Privacy Policy — New Key Properties',
+      title: 'Privacy policy — New Key Properties',
       description:
         'Privacy policy and personal data protection at New Key Properties. Learn how we handle your data in compliance with GDPR.',
       robots: { index: true, follow: true },
@@ -121,7 +121,7 @@ const content = {
   },
   en: {
     eyebrow: 'Legal information',
-    title: 'Privacy Policy',
+    title: 'Privacy policy',
     lastUpdatedLabel: 'Last updated',
     lastUpdated: '08.07.2026',
     sections: [

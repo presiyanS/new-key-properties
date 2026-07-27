@@ -29,12 +29,12 @@ export function hreflangAlternates(path: string, locale: Locale) {
 
 /** Blog post `category` values are fixed Bulgarian strings stored directly in Sanity (no separate En field). */
 const BLOG_CATEGORY_EN: Record<string, string> = {
-  'Пазарен анализ': 'Market Analysis',
+  'Пазарен анализ': 'Market analysis',
   'Съвети': 'Tips',
   'Инвестиции': 'Investments',
   'Ръководства': 'Guides',
   'Анализи': 'Analysis',
-  'Правни съвети': 'Legal Advice',
+  'Правни съвети': 'Legal advice',
 }
 
 export function translateBlogCategory(category: string, locale: Locale): string {

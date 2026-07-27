@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
     return {
-      title: 'About Us',
+      title: 'About us',
       description:
         'Learn about New Key Properties – an honest real estate agency in Sofia with genuine care for clients.',
       alternates: hreflangAlternates('/about', locale),
@@ -166,7 +166,7 @@ export default async function AboutPage() {
             <AnimatedSection direction="left">
               <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.historyEyebrow}</span>
               <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
-                {t(cms?.missionTitle, cms?.missionTitleEn, 'Нашата Мисия', 'Our Mission')}
+                {t(cms?.missionTitle, cms?.missionTitleEn, 'Нашата Мисия', 'Our mission')}
               </h2>
               {missionParagraphs.map((p: string, i: number) => (
                 <p key={i} className="text-gray-600 text-lg leading-relaxed mb-5">
@@ -210,7 +210,7 @@ export default async function AboutPage() {
           <AnimatedSection className="text-center mb-14">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.principlesEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-              {t(cms?.valuesTitle, cms?.valuesTitleEn, 'Нашите Ценности', 'Our Values')}
+              {t(cms?.valuesTitle, cms?.valuesTitleEn, 'Нашите Ценности', 'Our values')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
               {t(cms?.valuesSubtitle, cms?.valuesSubtitleEn, 'Принципите, с които подхождаме към всяка сделка и всеки клиент.', 'The principles we bring to every deal and every client.')}
@@ -246,7 +246,7 @@ export default async function AboutPage() {
           <AnimatedSection>
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.about.specializationEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-6">
-              {t(cms?.specializationTitle, cms?.specializationTitleEn, 'С Какво Се Занимаваме', 'What We Do')}
+              {t(cms?.specializationTitle, cms?.specializationTitleEn, 'С Какво Се Занимаваме', 'What we do')}
             </h2>
             <p className="text-gray-500 text-lg leading-relaxed mb-14 max-w-2xl mx-auto">
               {t(
