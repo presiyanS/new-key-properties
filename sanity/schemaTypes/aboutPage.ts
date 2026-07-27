@@ -22,6 +22,7 @@ export const aboutPageType = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'value', title: 'Стойност', type: 'string' }),
+          defineField({ name: 'valueEn', title: 'Стойност (English)', type: 'string' }),
           defineField({ name: 'label', title: 'Надпис', type: 'string' }),
           defineField({ name: 'labelEn', title: 'Надпис (English)', type: 'string' }),
         ],

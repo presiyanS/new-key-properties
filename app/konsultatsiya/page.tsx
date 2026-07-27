@@ -35,49 +35,75 @@ export default async function KonsultatsiyaPage() {
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
 
-  // Site-settings form copy and this page's form-card copy are Bulgarian-only
-  // in the CMS (no En field) — only apply them on the bg site, so English
-  // visitors get the dictionary/hardcoded En defaults instead.
+  // Picks the CMS value for the current locale, falling back to a hardcoded
+  // default when neither the CMS field nor its English counterpart is set.
+  function t(bg: string | undefined, en: string | undefined, bgDefault: string, enDefault: string) {
+    return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
+  }
+
+  // Site-settings form copy is Bulgarian-only in the CMS (no En field) — only
+  // apply it on the bg site, so English visitors get the dictionary defaults.
   const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
 
-  const benefits =
+  const monthLocale = locale === 'en' ? 'en-US' : 'bg-BG'
+  const heroBadgeDefault = locale === 'en'
+    ? `Limited spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long', year: 'numeric' })}`
+    : `Ограничени места за месец ${new Date().toLocaleDateString(monthLocale, { month: 'long', year: 'numeric' })}`
+
+  const benefits = (
     cms?.benefits?.length > 0
       ? cms.benefits
       : [
-          { title: 'Напълно безплатно', desc: 'Без никакви задължения. Консултацията е безплатна — говорим честно и без да се опитваме да Ви "продадем" нещо.' },
-          { title: 'Честен съвет', desc: 'Казваме Ви истината — дори ако тя означава да изчакате или да не купувате точно сега. Вашият интерес е на първо място.' },
-          { title: 'Пазарна оценка', desc: 'Получавате реална оценка на цените в квартала, който Ви интересува — без преувеличения и без скрити агенди.' },
-          { title: 'Личен брокер', desc: 'Работите директно с Александър или Борил — не с колцентър, не с начинаещ стажант. Лично внимание от първия контакт.' },
+          { title: 'Напълно безплатно', titleEn: 'Completely free', desc: 'Без никакви задължения. Консултацията е безплатна — говорим честно и без да се опитваме да Ви "продадем" нещо.', descEn: 'No obligation whatsoever. The consultation is free — we talk honestly, without trying to "sell" you anything.' },
+          { title: 'Честен съвет', titleEn: 'Honest advice', desc: 'Казваме Ви истината — дори ако тя означава да изчакате или да не купувате точно сега. Вашият интерес е на първо място.', descEn: 'We tell you the truth — even if it means waiting, or not buying right now. Your interest comes first.' },
+          { title: 'Пазарна оценка', titleEn: 'Market assessment', desc: 'Получавате реална оценка на цените в квартала, който Ви интересува — без преувеличения и без скрити агенди.', descEn: "You get a realistic assessment of prices in the neighborhood you're interested in — no exaggeration, no hidden agenda." },
+          { title: 'Личен брокер', titleEn: 'Personal broker', desc: 'Работите директно с Александър или Борил — не с колцентър, не с начинаещ стажант. Лично внимание от първия контакт.', descEn: 'You work directly with Alexander or Boril — not a call center, not a junior intern. Personal attention from the first contact.' },
         ]
+  ).map((b: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
+    title: locale === 'en' ? (b.titleEn ?? b.title) : b.title,
+    desc: locale === 'en' ? (b.descEn ?? b.desc) : b.desc,
+  }))
 
-  const stats =
+  const stats = (
     cms?.stats?.length > 0
       ? cms.stats
       : [
-          { value: 'Ограничен', label: 'брой клиенти на месец — за максимално внимание към всеки' },
-          { value: '0', label: 'скрити такси — прозрачност от първия разговор' },
-          { value: '100%', label: 'отдаденост — работим като за собствен имот' },
+          { value: 'Ограничен', valueEn: 'Limited', label: 'брой клиенти на месец — за максимално внимание към всеки', labelEn: 'clients per month — for maximum attention to each one' },
+          { value: '0', valueEn: '0', label: 'скрити такси — прозрачност от първия разговор', labelEn: 'hidden fees — transparency from the first conversation' },
+          { value: '100%', valueEn: '100%', label: 'отдаденост — работим като за собствен имот', labelEn: 'dedication — we work as if it were our own property' },
         ]
+  ).map((s: { value: string; valueEn?: string; label: string; labelEn?: string }) => ({
+    value: locale === 'en' ? (s.valueEn ?? s.value) : s.value,
+    label: locale === 'en' ? (s.labelEn ?? s.label) : s.label,
+  }))
 
-  const steps =
+  const steps = (
     cms?.steps?.length > 0
       ? cms.steps
       : [
-          { title: 'Попълнете формата', desc: 'Кажете ни накратко с какво можем да помогнем.' },
-          { title: 'Обаждаме Ви се', desc: 'Свързваме се с Вас до 24 часа, за да уточним час.' },
-          { title: 'Консултация', desc: '30-45 мин. разговор — по телефон или лично в София.' },
-          { title: 'Решавате Вие', desc: 'Без натиск. Работим заедно само ако решите сам.' },
+          { title: 'Попълнете формата', titleEn: 'Fill out the form', desc: 'Кажете ни накратко с какво можем да помогнем.', descEn: 'Tell us briefly how we can help.' },
+          { title: 'Обаждаме Ви се', titleEn: 'We call you', desc: 'Свързваме се с Вас до 24 часа, за да уточним час.', descEn: "We get in touch within 24 hours to arrange a time." },
+          { title: 'Консултация', titleEn: 'Consultation', desc: '30-45 мин. разговор — по телефон или лично в София.', descEn: '30-45 min. conversation — by phone or in person in Sofia.' },
+          { title: 'Решавате Вие', titleEn: 'You decide', desc: 'Без натиск. Работим заедно само ако решите сам.', descEn: 'No pressure. We only work together if you decide to.' },
         ]
+  ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
+    title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
+    desc: locale === 'en' ? (s.descEn ?? s.desc) : s.desc,
+  }))
 
-  const faq =
+  const faq = (
     cms?.faq?.length > 0
       ? cms.faq
       : [
-          { q: 'Наистина ли е безплатно?', a: 'Да, напълно безплатно. Нямаме скрити такси за консултацията. Ако решите да работите с нас след това — тогава обсъждаме условия.' },
-          { q: 'Колко продължава консултацията?', a: 'Обикновено 30-45 минути — по телефон или лично в удобно за Вас място в София.' },
-          { q: 'Трябва ли да съм готов да купувам/продавам веднага?', a: 'Не. Много хора идват при нас с въпроси, планират покупка след 3-6 месеца, или просто искат да разберат пазара. Всичко е добре дошло.' },
-          { q: 'Работите ли само в определени квартали?', a: 'Работим в цяла София, но специализираме в: Драгалевци, Младост, Овча купел, Дружба, Monastery Livadi и центъра.' },
+          { q: 'Наистина ли е безплатно?', qEn: 'Is it really free?', a: 'Да, напълно безплатно. Нямаме скрити такси за консултацията. Ако решите да работите с нас след това — тогава обсъждаме условия.', aEn: 'Yes, completely free. There are no hidden fees for the consultation. If you decide to work with us afterward, we discuss terms then.' },
+          { q: 'Колко продължава консултацията?', qEn: 'How long does the consultation last?', a: 'Обикновено 30-45 минути — по телефон или лично в удобно за Вас място в София.', aEn: 'Usually 30-45 minutes — by phone or in person at a location convenient for you in Sofia.' },
+          { q: 'Трябва ли да съм готов да купувам/продавам веднага?', qEn: 'Do I need to be ready to buy or sell right away?', a: 'Не. Много хора идват при нас с въпроси, планират покупка след 3-6 месеца, или просто искат да разберат пазара. Всичко е добре дошло.', aEn: 'No. Many people come to us with questions, plan to buy in 3-6 months, or simply want to understand the market. All of that is welcome.' },
+          { q: 'Работите ли само в определени квартали?', qEn: 'Do you only work in certain neighborhoods?', a: 'Работим в цяла София, но специализираме в: Драгалевци, Младост, Овча купел, Дружба, Манастирски ливади и центъра.', aEn: 'We work across all of Sofia, but we specialize in: Dragalevtsi, Mladost, Ovcha Kupel, Druzhba, Manastirski Livadi, and the city center.' },
         ]
+  ).map((f: { q: string; qEn?: string; a: string; aEn?: string }) => ({
+    q: locale === 'en' ? (f.qEn ?? f.q) : f.q,
+    a: locale === 'en' ? (f.aEn ?? f.a) : f.a,
+  }))
 
   const benefitIcons = [
     <svg key="0" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
@@ -97,22 +123,27 @@ export default async function KonsultatsiyaPage() {
             <div className="inline-flex items-center gap-2 bg-brand-gold/10 border border-brand-gold/30 rounded-full px-4 py-2 mb-6 animate-fade-in">
               <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
               <span className="text-brand-gold text-sm font-medium">
-                {cms?.heroBadge ?? `Ограничени места за месец ${new Date().toLocaleDateString('bg-BG', { month: 'long', year: 'numeric' })}`}
+                {t(cms?.heroBadge, cms?.heroBadgeEn, heroBadgeDefault, heroBadgeDefault)}
               </span>
             </div>
             <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {cms?.heroTitle ?? 'Безплатна'}<br />
-              <span className="text-brand-gold">{cms?.heroTitleGold ?? 'Консултация'}</span>
+              {t(cms?.heroTitle, cms?.heroTitleEn, 'Безплатна', 'Free')}<br />
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'Консултация', 'consultation')}</span>
             </h1>
             <p className="text-white/70 text-xl leading-relaxed mb-10 max-w-2xl animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              {cms?.heroSubtitle ?? 'Имате въпроси за имотния пазар в София? Мислите да купувате, продавате или наемате? Говорете с нас — честно, без задължения и напълно безплатно.'}
+              {t(
+                cms?.heroSubtitle,
+                cms?.heroSubtitleEn,
+                'Имате въпроси за имотния пазар в София? Мислите да купувате, продавате или наемате? Говорете с нас — честно, без задължения и напълно безплатно.',
+                'Have questions about the Sofia property market? Thinking about buying, selling, or renting? Talk to us — honestly, with no obligation, and completely free.'
+              )}
             </p>
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
               <a
                 href="#form"
                 className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-lg shadow-lg shadow-brand-gold/20 hover:-translate-y-0.5"
               >
-                {cms?.heroBookButton ?? 'Запишете се сега'}
+                {t(cms?.heroBookButton, cms?.heroBookButtonEn, 'Запишете се сега', 'Book now')}
               </a>
               <a
                 href={`tel:${phone}`}
@@ -121,7 +152,7 @@ export default async function KonsultatsiyaPage() {
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                 </svg>
-                {cms?.heroCallButton ?? phoneDisplay}
+                {t(cms?.heroCallButton, cms?.heroCallButtonEn, phoneDisplay, phoneDisplay)}
               </a>
             </div>
           </div>
@@ -134,10 +165,15 @@ export default async function KonsultatsiyaPage() {
           <AnimatedSection className="text-center mb-14">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.benefitsEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-              {cms?.benefitsTitle ?? 'Какво получавате'}
+              {t(cms?.benefitsTitle, cms?.benefitsTitleEn, 'Какво получавате', 'What you get')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              {cms?.benefitsSubtitle ?? 'При консултацията с New Key Properties нямате какво да губите — само да спечелите.'}
+              {t(
+                cms?.benefitsSubtitle,
+                cms?.benefitsSubtitleEn,
+                'При консултацията с New Key Properties нямате какво да губите — само да спечелите.',
+                'With a New Key Properties consultation, you have nothing to lose — only to gain.'
+              )}
             </p>
           </AnimatedSection>
 
@@ -181,10 +217,15 @@ export default async function KonsultatsiyaPage() {
             <AnimatedSection direction="left">
               <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.processEyebrow}</span>
               <h2 className="font-serif text-4xl font-bold text-brand-green mt-3 mb-4">
-                {cms?.formSectionTitle ?? 'Запишете се за консултация'}
+                {t(cms?.formSectionTitle, cms?.formSectionTitleEn, 'Запишете се за консултация', 'Book a consultation')}
               </h2>
               <p className="text-gray-500 text-lg leading-relaxed mb-10">
-                {cms?.formSectionSubtitle ?? 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа, за да уточним удобен час.'}
+                {t(
+                  cms?.formSectionSubtitle,
+                  cms?.formSectionSubtitleEn,
+                  'Попълнете формата и ще се свържем с Вас в рамките на 24 часа, за да уточним удобен час.',
+                  "Fill out the form and we'll get in touch within 24 hours to arrange a convenient time."
+                )}
               </p>
               <div className="space-y-5">
                 {steps.map((s: { title: string; desc: string }, i: number) => (
@@ -204,13 +245,13 @@ export default async function KonsultatsiyaPage() {
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100">
                 <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
-                  {locale === 'bg' ? (cms?.formCardBadge ?? 'Безплатно') : 'Free'}
+                  {t(cms?.formCardBadge, cms?.formCardBadgeEn, 'Безплатно', 'Free')}
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-brand-green mt-2 mb-2">
-                  {locale === 'bg' ? (cms?.formCardTitle ?? 'Вашето запитване') : 'Your Inquiry'}
+                  {t(cms?.formCardTitle, cms?.formCardTitleEn, 'Вашето запитване', 'Your inquiry')}
                 </h3>
                 <p className="text-gray-400 text-sm mb-8">
-                  {locale === 'bg' ? (cms?.formCardSubtitle ?? 'Отговаряме в рамките на 24 часа.') : "We respond within 24 hours."}
+                  {t(cms?.formCardSubtitle, cms?.formCardSubtitleEn, 'Отговаряме в рамките на 24 часа.', 'We respond within 24 hours.')}
                 </p>
                 <ContactForm
                   endpoint="/api/submit-consultation"
@@ -241,7 +282,7 @@ export default async function KonsultatsiyaPage() {
           <AnimatedSection className="text-center mb-12">
             <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">{dict.konsultatsiya.questionsEyebrow}</span>
             <h2 className="font-serif text-4xl font-bold text-brand-green mt-3">
-              {cms?.faqTitle ?? 'Често задавани въпроси'}
+              {t(cms?.faqTitle, cms?.faqTitleEn, 'Често задавани въпроси', 'Frequently asked questions')}
             </h2>
           </AnimatedSection>
 
@@ -266,23 +307,23 @@ export default async function KonsultatsiyaPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <AnimatedSection>
             <h2 className="font-serif text-4xl font-bold text-white mb-4">
-              {cms?.bottomCtaTitle ?? 'Готови ли сте?'}
+              {t(cms?.bottomCtaTitle, cms?.bottomCtaTitleEn, 'Готови ли сте?', 'Ready?')}
             </h2>
             <p className="text-white/70 text-lg mb-10">
-              {cms?.bottomCtaSubtitle ?? 'Първата стъпка е безплатна. Свържете се с нас днес.'}
+              {t(cms?.bottomCtaSubtitle, cms?.bottomCtaSubtitleEn, 'Първата стъпка е безплатна. Свържете се с нас днес.', 'The first step is free. Get in touch with us today.')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="#form"
                 className="bg-brand-gold text-brand-green font-bold px-8 py-4 rounded-xl hover:bg-brand-gold-light transition-all text-lg shadow-lg shadow-brand-gold/20 hover:-translate-y-0.5"
               >
-                {cms?.bottomCtaButton1 ?? 'Запишете се онлайн'}
+                {t(cms?.bottomCtaButton1, cms?.bottomCtaButton1En, 'Запишете се онлайн', 'Book online')}
               </a>
               <a
                 href={`tel:${phone}`}
                 className="border-2 border-brand-gold/50 text-brand-gold font-bold px-8 py-4 rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all text-lg"
               >
-                {cms?.bottomCtaButton2 ?? 'Обадете се сега'}
+                {t(cms?.bottomCtaButton2, cms?.bottomCtaButton2En, 'Обадете се сега', 'Call now')}
               </a>
             </div>
           </AnimatedSection>

@@ -60,7 +60,7 @@ const bg = {
     directEyebrow: 'Директен контакт',
   },
   contactForm: {
-    nameLabel: 'Вашето Име *',
+    nameLabel: 'Вашето име *',
     namePlaceholder: 'Иван Иванов',
     phoneLabel: 'Телефон *',
     phonePlaceholder: '0888 123 456',
@@ -68,7 +68,7 @@ const bg = {
     emailPlaceholder: 'ivan@example.com',
     messageLabel: 'Съобщение *',
     messagePlaceholder: 'Търсите ли имот за покупка или наем? Разкажете ни повече...',
-    submitText: 'Изпратете Запитване',
+    submitText: 'Изпратете запитване',
     loadingText: 'Изпращане...',
     successTitle: 'Благодарим Ви!',
     successMessage: 'Получихме Вашето запитване. Ще се свържем с Вас в рамките на 24 часа.',

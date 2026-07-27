@@ -14,10 +14,21 @@ export const teamMemberType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'nameEn',
+      title: 'Име (English, транслитерация)',
+      description: 'Напр. "Alexander Sokolov" за "Александър Соколов" — показва се на /en сайта',
+      type: 'string',
+    }),
+    defineField({
       name: 'role',
       title: 'Позиция',
       type: 'string',
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'roleEn',
+      title: 'Позиция (English)',
+      type: 'string',
     }),
     defineField({
       name: 'bio',
@@ -25,6 +36,12 @@ export const teamMemberType = defineType({
       type: 'text',
       rows: 4,
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'bioEn',
+      title: 'Биография (English)',
+      type: 'text',
+      rows: 4,
     }),
     defineField({
       name: 'phone',

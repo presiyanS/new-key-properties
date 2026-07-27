@@ -232,8 +232,11 @@ export async function getBlogSlugs(): Promise<string[]> {
 export type SanityTeamMember = {
   id: string
   name: string
+  nameEn?: string
   role: string
+  roleEn?: string
   bio: string
+  bioEn?: string
   phone?: string
   email?: string
   image: string
@@ -242,8 +245,11 @@ export type SanityTeamMember = {
 const TEAM_MEMBER_FIELDS = `
   "id": _id,
   name,
+  nameEn,
   role,
+  roleEn,
   bio,
+  bioEn,
   phone,
   email,
   "image": coalesce(image.asset->url, '/team/placeholder.svg')

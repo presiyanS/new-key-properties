@@ -31,7 +31,7 @@ const servicesBg = [
 const servicesEn = [
   {
     num: '01',
-    title: 'Bank Financing',
+    title: 'Bank financing',
     desc: 'Assistance through a specialized partner — a registered credit broker. We help with pre-approval, offer comparison, payment calculations, and document preparation.',
     perks: ['Fast pre-approval', 'Competitive rates', 'Full administrative support'],
     badge: 'Free for our clients',
@@ -39,7 +39,7 @@ const servicesEn = [
   },
   {
     num: '02',
-    title: 'Interior Design',
+    title: 'Interior design',
     desc: 'Our partner designers turn every property into a stylish, functional space tailored to your taste and budget. They offer concepts, 2D and 3D visualizations.',
     perks: ['Custom design project', 'Realistic 3D visualizations', 'Optimal use of your budget'],
     badge: 'Discount for our clients',
@@ -47,7 +47,7 @@ const servicesEn = [
   },
   {
     num: '03',
-    title: 'Renovation & Finishing',
+    title: 'Renovation & finishing',
     desc: 'We work with experienced companies and teams for finishing and renovation work — from partial updates to complete overhauls. Guaranteed quality and on-time delivery.',
     perks: ['Professional execution', 'Warranty on completed work', 'On-time delivery'],
     badge: 'Discount for our clients',
@@ -74,9 +74,9 @@ const whyUsBg = [
 ]
 
 const whyUsEn = [
-  { label: 'Everything in One Place', desc: 'We coordinate communication with all parties on your behalf.' },
-  { label: 'Vetted Partners', desc: 'Only companies with proven experience and real client recommendations.' },
-  { label: 'Personalized Solutions', desc: 'Everything is tailored to your needs and budget — nothing off-the-shelf.' },
+  { label: 'Everything in one place', desc: 'We coordinate communication with all parties on your behalf.' },
+  { label: 'Vetted partners', desc: 'Only companies with proven experience and real client recommendations.' },
+  { label: 'Personalized solutions', desc: 'Everything is tailored to your needs and budget — nothing off-the-shelf.' },
 ]
 
 const textBg = {
@@ -87,10 +87,10 @@ const textBg = {
 }
 
 const textEn = {
-  eyebrow: 'Exclusive for Our Clients',
-  heading: "We Don't Just Find the Property",
+  eyebrow: 'Exclusive for our clients',
+  heading: "We don't just find the property",
   subtitle: 'We provide a full range of services through vetted partners — from financing to interior design and finishing work. Everything is arranged by us.',
-  whyUsLabel: 'Why Our Partners',
+  whyUsLabel: 'Why our partners',
 }
 
 export default function ComplexServices({ locale = 'bg' }: { locale?: Locale }) {

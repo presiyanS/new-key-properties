@@ -87,12 +87,12 @@ export default async function AboutPage() {
   const heroStats = (cms?.heroStats?.length > 0
     ? cms.heroStats
     : [
-        { value: 'Ограничен', label: 'брой клиенти' },
-        { value: '0', label: 'скрити такси' },
-        { value: '100%', label: 'отдаденост' },
+        { value: 'Ограничен', valueEn: 'Limited', label: 'брой клиенти', labelEn: 'clients/month' },
+        { value: '0', valueEn: '0', label: 'скрити такси', labelEn: 'hidden fees' },
+        { value: '100%', valueEn: '100%', label: 'отдаденост', labelEn: 'dedication' },
       ]
-  ).map((s: { value: string; label: string; labelEn?: string }) => ({
-    value: s.value,
+  ).map((s: { value: string; valueEn?: string; label: string; labelEn?: string }) => ({
+    value: locale === 'en' ? (s.valueEn ?? s.value) : s.value,
     label: locale === 'en' ? (s.labelEn ?? s.label) : s.label,
   }))
 
@@ -133,8 +133,8 @@ export default async function AboutPage() {
           <div className="max-w-3xl">
             <p className="text-brand-gold/60 uppercase text-xs tracking-widest mb-5 font-medium animate-fade-in">{dict.nav.about}</p>
             <h1 className="font-serif text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up">
-              {t(cms?.heroTitle, cms?.heroTitleEn, 'Агенция, която наистина', 'The Agency That Truly')}<br />
-              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'се грижи', 'Cares')}</span> {locale === 'en' ? 'About You' : 'за Вас'}
+              {t(cms?.heroTitle, cms?.heroTitleEn, 'Агенция, която наистина', 'The agency that truly')}<br />
+              <span className="text-brand-gold">{t(cms?.heroTitleGold, cms?.heroTitleGoldEn, 'се грижи', 'cares')}</span> {locale === 'en' ? 'about you' : 'за Вас'}
             </h1>
             <p className="text-white/70 text-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
               {t(
