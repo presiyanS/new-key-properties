@@ -35,6 +35,11 @@ export default async function KonsultatsiyaPage() {
   const phone = settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? '0879 826 292'
 
+  // Site-settings form copy and this page's form-card copy are Bulgarian-only
+  // in the CMS (no En field) — only apply them on the bg site, so English
+  // visitors get the dictionary/hardcoded En defaults instead.
+  const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
+
   const benefits =
     cms?.benefits?.length > 0
       ? cms.benefits
@@ -199,30 +204,30 @@ export default async function KonsultatsiyaPage() {
             <AnimatedSection direction="right" delay={0.15}>
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100">
                 <span className="text-brand-gold/60 uppercase text-xs tracking-widest font-medium">
-                  {cms?.formCardBadge ?? 'Безплатно'}
+                  {locale === 'bg' ? (cms?.formCardBadge ?? 'Безплатно') : 'Free'}
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-brand-green mt-2 mb-2">
-                  {cms?.formCardTitle ?? 'Вашето запитване'}
+                  {locale === 'bg' ? (cms?.formCardTitle ?? 'Вашето запитване') : 'Your Inquiry'}
                 </h3>
                 <p className="text-gray-400 text-sm mb-8">
-                  {cms?.formCardSubtitle ?? 'Отговаряме в рамките на 24 часа.'}
+                  {locale === 'bg' ? (cms?.formCardSubtitle ?? 'Отговаряме в рамките на 24 часа.') : "We respond within 24 hours."}
                 </p>
                 <ContactForm
                   endpoint="/api/submit-consultation"
-                  nameLabel={settings?.formNameLabel}
-                  namePlaceholder={settings?.formNamePlaceholder}
-                  phoneLabel={settings?.formPhoneLabel}
-                  phonePlaceholder={settings?.formPhonePlaceholder}
-                  emailLabel={settings?.formEmailLabel}
-                  emailPlaceholder={settings?.formEmailPlaceholder}
-                  messageLabel={settings?.formMessageLabel}
-                  messagePlaceholder={settings?.formMessagePlaceholder}
-                  submitText={settings?.formSubmitText}
-                  loadingText={settings?.formLoadingText}
-                  successTitle={settings?.formSuccessTitle}
-                  successMessage={settings?.formSuccessMessage}
-                  errorMessage={settings?.formErrorMessage}
-                  footerNote={settings?.formFooterNote}
+                  nameLabel={bgOnly(settings?.formNameLabel)}
+                  namePlaceholder={bgOnly(settings?.formNamePlaceholder)}
+                  phoneLabel={bgOnly(settings?.formPhoneLabel)}
+                  phonePlaceholder={bgOnly(settings?.formPhonePlaceholder)}
+                  emailLabel={bgOnly(settings?.formEmailLabel)}
+                  emailPlaceholder={bgOnly(settings?.formEmailPlaceholder)}
+                  messageLabel={bgOnly(settings?.formMessageLabel)}
+                  messagePlaceholder={bgOnly(settings?.formMessagePlaceholder)}
+                  submitText={bgOnly(settings?.formSubmitText)}
+                  loadingText={bgOnly(settings?.formLoadingText)}
+                  successTitle={bgOnly(settings?.formSuccessTitle)}
+                  successMessage={bgOnly(settings?.formSuccessMessage)}
+                  errorMessage={bgOnly(settings?.formErrorMessage)}
+                  footerNote={bgOnly(settings?.formFooterNote)}
                 />
               </div>
             </AnimatedSection>

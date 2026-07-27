@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { generateEventId, trackLead } from '@/lib/metaPixel'
+import { useLocale } from '@/lib/i18n/LocaleContext'
+import { localizeHref } from '@/lib/i18n/config'
 
 type Props = {
   endpoint?: string
@@ -24,21 +26,38 @@ type Props = {
 
 export default function ContactForm({
   endpoint = '/api/contact',
-  nameLabel = 'Вашето Име *',
-  namePlaceholder = 'Иван Иванов',
-  phoneLabel = 'Телефон *',
-  phonePlaceholder = '0888 123 456',
-  emailLabel = 'Имейл',
-  emailPlaceholder = 'ivan@example.com',
-  messageLabel = 'Съобщение *',
-  messagePlaceholder = 'Търсите ли имот за покупка или наем? Разкажете ни повече...',
-  submitText = 'Изпратете Запитване',
-  loadingText = 'Изпращане...',
-  successTitle = 'Благодарим Ви!',
-  successMessage = 'Получихме Вашето запитване. Ще се свържем с Вас в рамките на 24 часа.',
-  errorMessage = 'Възникна грешка. Моля, опитайте отново или се обадете директно.',
-  footerNote = 'Отговаряме в рамките на 24 часа. Местата са ограничени – свържете се с нас сега.',
+  nameLabel,
+  namePlaceholder,
+  phoneLabel,
+  phonePlaceholder,
+  emailLabel,
+  emailPlaceholder,
+  messageLabel,
+  messagePlaceholder,
+  submitText,
+  loadingText,
+  successTitle,
+  successMessage,
+  errorMessage,
+  footerNote,
 }: Props) {
+  const { locale, dict } = useLocale()
+  const cf = dict.contactForm
+  nameLabel ??= cf.nameLabel
+  namePlaceholder ??= cf.namePlaceholder
+  phoneLabel ??= cf.phoneLabel
+  phonePlaceholder ??= cf.phonePlaceholder
+  emailLabel ??= cf.emailLabel
+  emailPlaceholder ??= cf.emailPlaceholder
+  messageLabel ??= cf.messageLabel
+  messagePlaceholder ??= cf.messagePlaceholder
+  submitText ??= cf.submitText
+  loadingText ??= cf.loadingText
+  successTitle ??= cf.successTitle
+  successMessage ??= cf.successMessage
+  errorMessage ??= cf.errorMessage
+  footerNote ??= cf.footerNote
+
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' })
   const [website, setWebsite] = useState('')
   const [consent, setConsent] = useState(false)
@@ -158,9 +177,9 @@ export default function ContactForm({
           className="mt-0.5 w-4 h-4 accent-brand-green shrink-0 cursor-pointer"
         />
         <label htmlFor="gdpr-consent" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
-          Съгласен/а съм данните ми (имe, телефон, имейл) да бъдат обработени от New Key Properties единствено с цел отговор на моето запитване. Прочетете нашата{' '}
-          <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-brand-green font-medium hover:underline">
-            Политика за поверителност
+          {cf.consentPrefix}{' '}
+          <a href={localizeHref('/privacy-policy', locale)} target="_blank" rel="noopener noreferrer" className="text-brand-green font-medium hover:underline">
+            {cf.consentLink}
           </a>
           .
         </label>

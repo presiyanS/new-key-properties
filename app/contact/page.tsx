@@ -34,6 +34,10 @@ export default async function ContactPage() {
     return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
   }
 
+  // Site-settings form copy is Bulgarian-only in the CMS (no En field) — only
+  // apply it on the bg site, so English visitors get the dictionary defaults.
+  const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
+
   const phone = cms?.phone ?? settings?.phone ?? '0879826292'
   const phoneDisplay = settings?.phoneDisplay ?? phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
   const email = cms?.email ?? settings?.email ?? 'office@newkey.bg'
@@ -166,20 +170,20 @@ export default async function ContactPage() {
                   {t(cms?.formSubtitle, cms?.formSubtitleEn, 'Попълнете формата и ще се свържем с Вас в рамките на 24 часа.', "Fill out the form and we'll get back to you within 24 hours.")}
                 </p>
                 <ContactForm
-                  nameLabel={settings?.formNameLabel}
-                  namePlaceholder={settings?.formNamePlaceholder}
-                  phoneLabel={settings?.formPhoneLabel}
-                  phonePlaceholder={settings?.formPhonePlaceholder}
-                  emailLabel={settings?.formEmailLabel}
-                  emailPlaceholder={settings?.formEmailPlaceholder}
-                  messageLabel={settings?.formMessageLabel}
-                  messagePlaceholder={settings?.formMessagePlaceholder}
-                  submitText={settings?.formSubmitText}
-                  loadingText={settings?.formLoadingText}
-                  successTitle={settings?.formSuccessTitle}
-                  successMessage={settings?.formSuccessMessage}
-                  errorMessage={settings?.formErrorMessage}
-                  footerNote={settings?.formFooterNote}
+                  nameLabel={bgOnly(settings?.formNameLabel)}
+                  namePlaceholder={bgOnly(settings?.formNamePlaceholder)}
+                  phoneLabel={bgOnly(settings?.formPhoneLabel)}
+                  phonePlaceholder={bgOnly(settings?.formPhonePlaceholder)}
+                  emailLabel={bgOnly(settings?.formEmailLabel)}
+                  emailPlaceholder={bgOnly(settings?.formEmailPlaceholder)}
+                  messageLabel={bgOnly(settings?.formMessageLabel)}
+                  messagePlaceholder={bgOnly(settings?.formMessagePlaceholder)}
+                  submitText={bgOnly(settings?.formSubmitText)}
+                  loadingText={bgOnly(settings?.formLoadingText)}
+                  successTitle={bgOnly(settings?.formSuccessTitle)}
+                  successMessage={bgOnly(settings?.formSuccessMessage)}
+                  errorMessage={bgOnly(settings?.formErrorMessage)}
+                  footerNote={bgOnly(settings?.formFooterNote)}
                 />
               </div>
             </AnimatedSection>
