@@ -189,7 +189,8 @@ ${AGENCY_FACTS}
 7. "content" не съдържа markdown форматиране (без #, **, _ и т.н.) — само обикновен текст с нови редове, и не съдържа заглавие в себе си
 8. "title": кратко, привлекателно заглавие (максимум 70 знака), sentence case — главна буква само на първата дума и на собствени имена (напр. София, България), НЕ Title Case
 9. "excerpt": кратко резюме, максимум 200 знака
-10. Върни САМО валиден JSON във формат {"title":"...","excerpt":"...","content":"..."}, без markdown форматиране, без обяснения преди или след него`
+10. "titleEn", "excerptEn", "contentEn": точен, естествен превод на английски на съответните полета — същите факти и цифри, без добавяне или пропускане на съдържание. "titleEn" също е в sentence case (главна буква само на първата дума и на собствени имена), не Title Case
+11. Върни САМО валиден JSON във формат {"title":"...","titleEn":"...","excerpt":"...","excerptEn":"...","content":"...","contentEn":"..."}, без markdown форматиране, без обяснения преди или след него`
 
 function pickTopic(date: Date) {
   const weekNumber = Math.floor(date.getTime() / (7 * 24 * 60 * 60 * 1000))
@@ -352,7 +353,7 @@ export async function GET(request: NextRequest) {
     // strict JSON.parse — the schema constraint prevents that at generation time.
     const writingResponse = await anthropic.messages.create({
       model: 'claude-sonnet-5',
-      max_tokens: 6000,
+      max_tokens: 10000,
       output_config: {
         effort: 'medium',
         format: {
@@ -361,10 +362,13 @@ export async function GET(request: NextRequest) {
             type: 'object',
             properties: {
               title: { type: 'string' },
+              titleEn: { type: 'string' },
               excerpt: { type: 'string' },
+              excerptEn: { type: 'string' },
               content: { type: 'string' },
+              contentEn: { type: 'string' },
             },
-            required: ['title', 'excerpt', 'content'],
+            required: ['title', 'titleEn', 'excerpt', 'excerptEn', 'content', 'contentEn'],
             additionalProperties: false,
           },
         },
@@ -382,11 +386,16 @@ export async function GET(request: NextRequest) {
       throw new Error('Writing request was declined by safety classifiers')
     }
 
-    const post = extractJson<{ title: string; excerpt: string; content: string }>(
-      extractText(writingResponse.content)
-    )
+    const post = extractJson<{
+      title: string
+      titleEn: string
+      excerpt: string
+      excerptEn: string
+      content: string
+      contentEn: string
+    }>(extractText(writingResponse.content))
 
-    if (!post || !post.title || !post.content) {
+    if (!post || !post.title || !post.content || !post.titleEn || !post.contentEn) {
       throw new Error('Writing pass did not return valid JSON')
     }
 
@@ -397,11 +406,14 @@ export async function GET(request: NextRequest) {
       _id: docId,
       _type: 'blogPost',
       title: post.title,
+      titleEn: post.titleEn,
       slug: { _type: 'slug', current: slug },
       date: formatDate(now),
       category: topic.category,
       excerpt: post.excerpt,
+      excerptEn: post.excerptEn,
       content: post.content,
+      contentEn: post.contentEn,
       externalImageUrl: topic.image,
       researchNotes: buildResearchNotes(research),
     })
