@@ -253,7 +253,7 @@ export default async function HomePage() {
 
             {/* Left: text */}
             <div>
-              <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mb-8 animate-fade-in">
+              <div className="inline-flex items-center gap-2 bg-brand-gold/15 border border-brand-gold/30 rounded-full px-4 py-2 mt-10 mb-8 animate-fade-in">
                 <span className="w-2 h-2 bg-brand-gold rounded-full animate-pulse" />
                 <span className="text-brand-gold text-sm font-medium tracking-wide">
                   {t(cms?.heroBadge, cms?.heroBadgeEn, 'Агенция за недвижими имоти · София', 'Real estate agency · Sofia')}
