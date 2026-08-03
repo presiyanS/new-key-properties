@@ -89,6 +89,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             {content.split('\n\n').map((paragraph, i) => {
+              const headingMatch = paragraph.match(/^\*\*(.+)\*\*$/)
+              if (headingMatch) {
+                return (
+                  <h3 key={i} className="font-serif text-2xl sm:text-3xl font-bold text-brand-green mt-12 mb-4 first:mt-0">
+                    {headingMatch[1]}
+                  </h3>
+                )
+              }
               if (paragraph.startsWith('**') && paragraph.includes('**')) {
                 const parts = paragraph.split(/\*\*(.*?)\*\*/)
                 return (
