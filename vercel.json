@@ -5,6 +5,10 @@
       "schedule": "0 7 * * 1"
     },
     {
+      "path": "/api/cron/market-post/write",
+      "schedule": "0 20 * * 1"
+    },
+    {
       "path": "/api/cron/notify-searches",
       "schedule": "0 8 * * *"
     }
