@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@sanity/client'
 import { Resend } from 'resend'
 
-export const maxDuration = 180
+export const maxDuration = 300
 
 const sanity = createClient({
   projectId: '9gz26s06',
