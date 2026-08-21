@@ -143,6 +143,13 @@ export const listingType = defineType({
       of: [{ type: 'image', options: { hotspot: true } }],
     }),
     defineField({
+      name: 'consultant',
+      title: 'Консултант по имота',
+      type: 'reference',
+      to: [{ type: 'teamMember' }],
+      description: 'По желание — показва се като контактно лице за този имот.',
+    }),
+    defineField({
       name: 'video',
       title: 'Видео тур (по желание)',
       type: 'file',

@@ -23,8 +23,12 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
 
   const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title
   const mainImage = listing.imageUrls?.[0]
-  const showAgent = AGENT_NEIGHBORHOODS.includes(listing.neighborhood.trim().toLowerCase())
-  const agentName = locale === 'en' ? AGENT_NAME_EN : AGENT_NAME_BG
+  const fallbackAgent = AGENT_NEIGHBORHOODS.includes(listing.neighborhood.trim().toLowerCase())
+  const showAgent = Boolean(listing.consultant) || fallbackAgent
+  const agentName = listing.consultant
+    ? (locale === 'en' ? (listing.consultant.nameEn ?? listing.consultant.name) : listing.consultant.name)
+    : (locale === 'en' ? AGENT_NAME_EN : AGENT_NAME_BG)
+  const agentPhoto = listing.consultant?.imageUrl ?? AGENT_PHOTO
 
   return (
     <Link
@@ -140,7 +144,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
         {showAgent && (
           <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-gray-100">
             <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
-              <Image src={AGENT_PHOTO} alt={agentName} fill className="object-cover" />
+              <Image src={agentPhoto} alt={agentName} fill className="object-cover" />
             </div>
             <p className="text-xs text-gray-500">
               <span className="text-gray-400">{dict.listings.agentLabel}:</span>{' '}

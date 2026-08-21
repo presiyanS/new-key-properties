@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getListing, getListings } from '@/lib/sanity'
 import BackToListings from '@/components/BackToListings'
 import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
 import ImageGallery from '@/components/ImageGallery'
+import VideoTour from '@/components/VideoTour'
 import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
 import MortgageCalculator from '@/components/MortgageCalculator'
@@ -124,14 +126,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
               {listing.videoUrl && (
                 <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
                   <h2 className="font-bold text-gray-900 text-lg mb-4">{dict.listings.videoHeading}</h2>
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="w-full max-w-xs mx-auto rounded-xl bg-black"
-                  >
-                    <source src={listing.videoUrl} />
-                  </video>
+                  <VideoTour src={listing.videoUrl} poster={images[0]} title={title} />
                 </div>
               )}
 
@@ -319,6 +314,22 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 <p className="text-gray-400 text-sm mb-6">
                   {dict.listings.interestedSubtitle}
                 </p>
+
+                {listing.consultant && (
+                  <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+                    {listing.consultant.imageUrl && (
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 ring-1 ring-brand-gold/40">
+                        <Image src={listing.consultant.imageUrl} alt={listing.consultant.name} fill className="object-cover" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-xs text-gray-400">{dict.listings.agentLabel}</p>
+                      <p className="font-bold text-gray-900 text-sm">
+                        {locale === 'en' ? (listing.consultant.nameEn ?? listing.consultant.name) : listing.consultant.name}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <div className="space-y-3 mb-6">
                   <a

@@ -47,6 +47,7 @@ export type SanityListing = {
   descriptionEn: string | null
   imageUrls: string[]
   videoUrl: string | null
+  consultant: { name: string; nameEn: string | null; imageUrl: string | null; phone: string | null; email: string | null } | null
   features: string[]
   featuresEn: string[] | null
   featured: boolean
@@ -72,6 +73,7 @@ const LISTING_FIELDS = `
   descriptionEn,
   "imageUrls": select(count(images) > 0 => images[].asset->url, externalImageUrls),
   "videoUrl": video.asset->url,
+  "consultant": consultant->{ name, nameEn, "imageUrl": image.asset->url, phone, email },
   features,
   featuresEn,
   featured,
