@@ -146,6 +146,7 @@ const bg = {
     statFloor: 'Етаж',
     statConstruction: 'Строителство',
     descriptionHeading: 'Описание',
+    videoHeading: 'Видео тур',
     featuresHeading: 'Особености',
     locationHeading: 'Локация',
     mapTitlePrefix: 'Карта —',

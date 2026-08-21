@@ -143,6 +143,13 @@ export const listingType = defineType({
       of: [{ type: 'image', options: { hotspot: true } }],
     }),
     defineField({
+      name: 'video',
+      title: 'Видео тур (по желание)',
+      type: 'file',
+      options: { accept: 'video/*' },
+      description: 'Кратко видео на имота — показва се на страницата на имота под снимките.',
+    }),
+    defineField({
       name: 'externalImageUrls',
       title: 'Снимки (URL връзки)',
       type: 'array',

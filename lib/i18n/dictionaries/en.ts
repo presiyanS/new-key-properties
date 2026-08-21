@@ -148,6 +148,7 @@ const en: typeof bg = {
     statFloor: 'Floor',
     statConstruction: 'Construction',
     descriptionHeading: 'Description',
+    videoHeading: 'Video tour',
     featuresHeading: 'Features',
     locationHeading: 'Location',
     mapTitlePrefix: 'Map —',

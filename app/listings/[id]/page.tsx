@@ -120,6 +120,21 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 )}
               </div>
 
+              {/* Video tour */}
+              {listing.videoUrl && (
+                <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
+                  <h2 className="font-bold text-gray-900 text-lg mb-4">{dict.listings.videoHeading}</h2>
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full max-w-xs mx-auto rounded-xl bg-black"
+                  >
+                    <source src={listing.videoUrl} />
+                  </video>
+                </div>
+              )}
+
               {/* Status notice banner */}
               {listing.status !== 'active' && (
                 <div
