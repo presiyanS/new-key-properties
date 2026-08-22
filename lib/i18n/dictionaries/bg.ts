@@ -125,6 +125,7 @@ const bg = {
     rented: 'Отдадено',
     rentedNoticeTitle: 'Имотът е вече отдаден',
     rentedNoticeSubtitle: 'Свържете се с нас — намираме подобни имоти по индивидуални критерии.',
+    featuredBadge: 'Препоръчан',
     underOffer: 'Под оферта',
     underOfferNoticeTitle: 'Имотът е под оферта',
     underOfferNoticeSubtitle: 'В процес на сделка — свържете се с нас за подобни имоти.',

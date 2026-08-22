@@ -127,6 +127,7 @@ const en: typeof bg = {
     rented: 'Rented',
     rentedNoticeTitle: 'This property has been rented',
     rentedNoticeSubtitle: 'Get in touch — we source similar properties to individual criteria.',
+    featuredBadge: 'Recommended',
     underOffer: 'Under offer',
     underOfferNoticeTitle: 'This property is under offer',
     underOfferNoticeSubtitle: 'A deal is in progress — get in touch and we’ll find similar properties.',
