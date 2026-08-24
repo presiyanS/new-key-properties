@@ -24,6 +24,7 @@ type SavedSearch = {
 
 type Listing = {
   _id: string
+  slug: string | null
   title: string
   type: 'sale' | 'rent'
   price: number
@@ -46,7 +47,7 @@ function buildEmailHtml(listing: Listing, search: SavedSearch): string {
     ? `€${listing.price.toLocaleString('bg-BG')}`
     : `€${listing.price.toLocaleString('bg-BG')}/мес.`
 
-  const listingUrl = `https://www.newkey.bg/listings/${listing._id}`
+  const listingUrl = `https://www.newkey.bg/listings/${listing.slug ?? listing._id}`
 
   const criteriaLines = [
     search.type !== 'any' ? `Тип: ${search.type === 'sale' ? 'Продажба' : 'Наем'}` : null,
@@ -126,7 +127,7 @@ export async function GET(request: NextRequest) {
 
   const [newListings, savedSearches]: [Listing[], SavedSearch[]] = await Promise.all([
     sanity.fetch(
-      `*[_type == "listing" && _createdAt > $since]{ _id, title, type, price, area, rooms, neighborhood }`,
+      `*[_type == "listing" && _createdAt > $since]{ _id, "slug": slug.current, title, type, price, area, rooms, neighborhood }`,
       { since }
     ),
     sanity.fetch(

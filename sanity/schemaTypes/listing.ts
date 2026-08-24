@@ -4,6 +4,7 @@ import { orderRankField } from '@sanity/orderable-document-list'
 import { ExternalImagePreview } from '../components/ExternalImagePreview'
 import { createExternalImageThumbnail } from '../components/ExternalImageThumbnail'
 import { PricePrefixInput } from '../components/PricePrefixInput'
+import { slugify } from '../../lib/slugify'
 
 export const listingType = defineType({
   name: 'listing',
@@ -29,6 +30,30 @@ export const listingType = defineType({
             params
           )
           return isUnique || 'Този код вече се използва от друг имот'
+        }),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'URL адрес (slug)',
+      type: 'slug',
+      description: 'Автоматично се генерира от квартала и кода на имота — определя адреса на страницата (напр. /listings/strelbishte-nk-1042). Може да се редактира на ръка при нужда.',
+      options: {
+        source: (doc: Record<string, unknown>) => `${doc.neighborhood ?? ''} ${doc.code ?? ''}`,
+        slugify,
+        maxLength: 96,
+      },
+      validation: (r) =>
+        r.required().custom(async (slug, context) => {
+          if (!slug?.current) return true
+          const { document, getClient } = context
+          const client = getClient({ apiVersion: '2024-01-01' })
+          const id = document?._id.replace(/^drafts\./, '') ?? ''
+          const params = { draft: `drafts.${id}`, published: id, slug: slug.current }
+          const isUnique = await client.fetch(
+            `!defined(*[_type == "listing" && !(_id in [$draft, $published]) && slug.current == $slug][0]._id)`,
+            params
+          )
+          return isUnique || 'Този адрес вече се използва от друг имот'
         }),
     }),
     defineField({

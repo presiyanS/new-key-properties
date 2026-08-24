@@ -32,6 +32,7 @@ export function urlFor(source: SanityImageSource) {
 
 export type SanityListing = {
   _id: string
+  slug: string
   code: string | null
   title: string
   titleEn: string | null
@@ -58,6 +59,7 @@ export type SanityListing = {
 
 const LISTING_FIELDS = `
   _id,
+  "slug": slug.current,
   code,
   title,
   titleEn,
@@ -119,6 +121,21 @@ export async function getListing(id: string, preview = false): Promise<SanityLis
   } catch { return null }
 }
 
+// Matches on the new readable slug, but also falls back to the old raw
+// Sanity `_id` — lets the listing page detect an old-style link and
+// permanently redirect to the new slug URL instead of 404ing.
+export async function getListingBySlug(param: string, preview = false): Promise<SanityListing | null> {
+  const query = `*[_type == "listing" && (slug.current == $param || _id == $param)][0] { ${LISTING_FIELDS} }`
+  try {
+    if (preview) return await previewClient.fetch(query, { param })
+    return await unstable_cache(
+      () => client.fetch(query, { param }),
+      [`listing-slug-${param}`],
+      { revalidate: 300, tags: ['listings'] }
+    )()
+  } catch { return null }
+}
+
 export async function getFeaturedListings(preview = false): Promise<SanityListing[]> {
   try {
     if (preview) return await previewClient.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`)
@@ -132,6 +149,7 @@ export async function getFeaturedListings(preview = false): Promise<SanityListin
 
 export type SanityListingForWebhook = {
   title: string
+  slug: string | null
   purpose: 'sale' | 'rent'
   propertyType: string | null
   neighborhood: string
@@ -150,6 +168,7 @@ export async function getListingForWebhook(id: string): Promise<SanityListingFor
     return await freshClient.fetch(
       `*[_type == "listing" && _id == $id][0]{
         title,
+        "slug": slug.current,
         "purpose": type,
         "propertyType": category,
         neighborhood,

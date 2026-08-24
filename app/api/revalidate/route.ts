@@ -71,7 +71,7 @@ export async function POST(req: Request) {
         description: listing.description,
         status: listing.status,
         mainImage: listing.mainImage,
-        url: `https://www.newkey.bg/listings/${id}`,
+        url: `https://www.newkey.bg/listings/${listing.slug ?? id}`,
       })
     })
   }

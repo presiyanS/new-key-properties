@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { getListing, getListings } from '@/lib/sanity'
+import { notFound, permanentRedirect } from 'next/navigation'
+import { getListingBySlug, getListings } from '@/lib/sanity'
 import BackToListings from '@/components/BackToListings'
 import { draftMode } from 'next/headers'
 import ContactForm from '@/components/ContactForm'
@@ -17,12 +17,12 @@ export const revalidate = 60
 
 export async function generateStaticParams() {
   const listings = await getListings()
-  return listings.map((l) => ({ id: l._id }))
+  return listings.filter((l) => l.slug).map((l) => ({ slug: l.slug }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params
-  const listing = await getListing(id)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const listing = await getListingBySlug(slug)
   if (!listing) return {}
   const locale = await getLocale()
 
@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const descriptionFull = locale === 'en' ? (listing.descriptionEn ?? listing.description) : listing.description
   const image = listing.imageUrls?.[0]
   const description = descriptionFull?.slice(0, 200) ?? ''
-  const url = `https://www.newkey.bg${localizeHref(`/listings/${id}`, locale)}`
+  const url = `https://www.newkey.bg${localizeHref(`/listings/${listing.slug}`, locale)}`
 
   return {
     title,
     description,
-    alternates: hreflangAlternates(`/listings/${id}`, locale),
+    alternates: hreflangAlternates(`/listings/${listing.slug}`, locale),
     openGraph: {
       title,
       description,
@@ -53,12 +53,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 }
 
-export default async function ListingDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function ListingDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug: slugParam } = await params
   const { isEnabled: preview } = await draftMode()
-  const listing = await getListing(id, preview)
+  const listing = await getListingBySlug(slugParam, preview)
   if (!listing) notFound()
   const locale = await getLocale()
+
+  // Old links used the raw Sanity document id instead of the readable slug —
+  // send them to the canonical slug URL instead of rendering a duplicate page.
+  if (listing.slug && listing.slug !== slugParam) {
+    permanentRedirect(localizeHref(`/listings/${listing.slug}`, locale))
+  }
+  const id = listing.slug
   const dict = getDictionary(locale)
 
   const title = locale === 'en' ? (listing.titleEn ?? listing.title) : listing.title

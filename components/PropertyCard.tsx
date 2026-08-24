@@ -32,7 +32,7 @@ export default function PropertyCard({ listing, priority }: { listing: SanityLis
 
   return (
     <Link
-      href={localizeHref(`/listings/${listing._id}`, locale)}
+      href={localizeHref(`/listings/${listing.slug}`, locale)}
       className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-gray-100/80"
     >
       {/* Image */}
