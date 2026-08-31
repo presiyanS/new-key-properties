@@ -37,6 +37,7 @@ export const ALLOWED_DOMAINS = [
   'bta.bg',
   'capital.bg',
   'colliers.com',
+  'sofia.bg',
 ]
 
 // Rotating angles so each week covers something different. `research` tells
