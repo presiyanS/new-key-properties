@@ -25,8 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const locale = await getLocale()
   const title = locale === 'en' ? ((post as { titleEn?: string }).titleEn ?? post.title) : post.title
   const excerpt = locale === 'en' ? ((post as { excerptEn?: string }).excerptEn ?? post.excerpt) : post.excerpt
-  const image = (post as { image?: string }).image
+  const rawImage = (post as { image?: string }).image
   const url = `https://www.newkey.bg${localizeHref(`/blog/${slug}`, locale)}`
+  // Facebook's crawler is blocked outright by upload.wikimedia.org (403 "Unauthorized
+  // request"), which every blog post's image currently comes from. Routing through our
+  // own /_next/image endpoint means Facebook/LinkedIn fetch the image from our domain
+  // (which fetches Wikimedia server-side without issue) instead of hitting Wikimedia directly.
+  const image = rawImage ? `https://www.newkey.bg/_next/image?url=${encodeURIComponent(rawImage)}&w=1200&q=75` : undefined
   return {
     title,
     description: excerpt,
@@ -37,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url,
       siteName: 'New Key Properties',
       type: 'article',
-      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
+      ...(image ? { images: [{ url: image, alt: title }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
