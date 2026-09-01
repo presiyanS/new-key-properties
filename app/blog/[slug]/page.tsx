@@ -25,7 +25,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const locale = await getLocale()
   const title = locale === 'en' ? ((post as { titleEn?: string }).titleEn ?? post.title) : post.title
   const excerpt = locale === 'en' ? ((post as { excerptEn?: string }).excerptEn ?? post.excerpt) : post.excerpt
-  return { title, description: excerpt, alternates: hreflangAlternates(`/blog/${slug}`, locale) }
+  const image = (post as { image?: string }).image
+  const url = `https://www.newkey.bg${localizeHref(`/blog/${slug}`, locale)}`
+  return {
+    title,
+    description: excerpt,
+    alternates: hreflangAlternates(`/blog/${slug}`, locale),
+    openGraph: {
+      title,
+      description: excerpt,
+      url,
+      siteName: 'New Key Properties',
+      type: 'article',
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: excerpt,
+      ...(image ? { images: [image] } : {}),
+    },
+  }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
