@@ -4,7 +4,7 @@ import { sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const { name, phone, email, message, metaEventId } = await req.json()
+  const { name, phone, email, message, metaEventId, listingTitle, listingUrl } = await req.json()
 
   if (!name || !phone || !message) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     to: 'office@newkey.bg',
     bcc: process.env.PERSONAL_NOTIFY_EMAIL || undefined,
     replyTo: email || undefined,
-    subject: `Ново запитване от ${name}`,
+    subject: listingTitle ? `Ново запитване от ${name} за обява: ${listingTitle}` : `Ново запитване от ${name}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a4d3a;">Ново запитване от сайта</h2>
@@ -45,6 +45,11 @@ export async function POST(req: Request) {
           <tr>
             <td style="padding: 8px 0; color: #666;">Имейл:</td>
             <td style="padding: 8px 0;">${email}</td>
+          </tr>` : ''}
+          ${listingTitle ? `
+          <tr>
+            <td style="padding: 8px 0; color: #666;">Обява:</td>
+            <td style="padding: 8px 0; font-weight: bold;">${listingUrl ? `<a href="${listingUrl}" style="color: #1a4d3a;">${listingTitle}</a>` : listingTitle}</td>
           </tr>` : ''}
           <tr>
             <td style="padding: 8px 0; color: #666; vertical-align: top;">Съобщение:</td>

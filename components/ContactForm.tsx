@@ -11,9 +11,9 @@ type Props = {
   // Distinguishes which page/context a submission came from in the Make.com →
   // HubSpot pipeline (Deal/Contact records otherwise all look identical).
   source?: string
-  // Extra context merged into the Make.com webhook payload only — e.g. which
-  // listing a "quick inquiry" was submitted from. Never sent to /api/* (those
-  // routes only expect the visible form fields).
+  // Extra context merged into both the Make.com webhook payload and the
+  // /api/* request body — e.g. which listing a "quick inquiry" was submitted
+  // from, so it shows up in the email notification and HubSpot alike.
   extraFields?: Record<string, unknown>
   nameLabel?: string
   namePlaceholder?: string
@@ -89,7 +89,7 @@ export default function ContactForm({
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, metaEventId }),
+      body: JSON.stringify({ ...form, ...extraFields, metaEventId }),
     })
 
     setLoading(false)
