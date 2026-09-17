@@ -79,9 +79,14 @@ Price: €359,000
 For viewings and more information, contact us: 0879 826 292 | office@newkey.bg
 New Key Properties - because your property deserves honesty.`
 
+// NOTE: earlier runs of this script omitted `slug`, which every other listing
+// has (auto-generated in Studio from neighborhood + code). Without it, Studio's
+// preview/production-URL link 404s. Set explicitly here so copies of this
+// script don't repeat that gap.
 const listing = {
   _type: 'listing',
   code,
+  slug: { _type: 'slug', current: 'hadzhi-dimitar-nk-1052' },
   title: 'Четиристаен апартамент, Хаджи Димитър',
   titleEn: 'Four-room apartment, Hadzhi Dimitar',
   type: 'sale',
