@@ -122,7 +122,7 @@ const listing = {
   descriptionEn,
   features: ['Две паркоместа', 'Мазе', 'Обзаведен', 'Готов за нанасяне', 'Блиндирана врата'],
   featuresEn: ['Two parking spaces', 'Basement storage', 'Furnished', 'Move-in ready', 'Armored door'],
-  featured: false,
+  featured: true,
   status: 'active',
   images: imageAssets.map((asset) => ({
     _type: 'image',
