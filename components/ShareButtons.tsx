@@ -8,7 +8,7 @@ export default function ShareButtons({ id, title }: { id: string; title: string 
   const [copied, setCopied] = useState(false)
   const url = `https://www.newkey.bg/listings/${id}`
   const encodedUrl = encodeURIComponent(url)
-  const encodedText = encodeURIComponent(`${title} — New Key Properties\n${url}`)
+  const encodedText = encodeURIComponent(`${title} - New Key Properties\n${url}`)
 
   function copyLink() {
     navigator.clipboard.writeText(url).then(() => {
