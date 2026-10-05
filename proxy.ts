@@ -41,7 +41,7 @@ async function listingSlugState(slug: string): Promise<'live' | 'hidden' | 'gone
   }
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname: rawPathname } = request.nextUrl
 
   // English locale is served under an /en prefix; strip it so the rest of

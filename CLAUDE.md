@@ -53,7 +53,7 @@ npx tsc --noEmit # typecheck
 - Tokens: `SANITY_API_READ_TOKEN`, `SANITY_API_WRITE_TOKEN`, `SANITY_API_READ_TOKEN` — never commit; use `.env.local`
 - Listings use orderable document list (`orderRank`); images may be Sanity assets or `externalImageUrls`
 
-## Auth / protected routes (`middleware.ts`)
+## Auth / protected routes (`proxy.ts`)
 
 - `/studio` — `studio_auth` cookie (login via `/nkp-admin`)
 - `/studio-staging` — `studio_staging_auth`

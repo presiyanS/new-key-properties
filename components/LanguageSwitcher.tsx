@@ -11,7 +11,7 @@ export default function LanguageSwitcher() {
   const enPath = locale === 'en' ? pathname : `/en${pathname === '/' ? '' : pathname}`
 
   // Plain <a> tags (not next/link): switching locale must reload through the
-  // middleware so the server re-renders with the new x-locale header. Since
+  // proxy so the server re-renders with the new x-locale header. Since
   // /en and / resolve to the identical route tree (rewrite, not a distinct
   // [locale] segment), Next's client-side router can reuse the cached page
   // across a soft navigation and never actually re-render in the new locale.
