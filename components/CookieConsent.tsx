@@ -40,9 +40,9 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
       {status === 'accepted' && <MetaPixel />}
 
       {status === 'pending' && (
-        <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-4 sm:py-5">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-4">
-            <p className="text-white/80 text-sm text-center sm:text-left flex-1">
+        <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-3 sm:py-5">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4">
+            <p className="text-white/80 text-xs sm:text-sm text-center sm:text-left flex-1">
               {dict.cookies.message}{' '}
               <Link
                 href={localizeHref('/privacy-policy', locale)}
@@ -54,13 +54,13 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
             <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={() => handle('declined')}
-                className="px-5 py-2.5 rounded-xl border border-brand-gold/30 text-brand-gold/80 text-sm font-medium hover:bg-white/5 transition-colors"
+                className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-brand-gold/30 text-brand-gold/80 text-sm font-medium hover:bg-white/5 transition-colors"
               >
                 {dict.cookies.decline}
               </button>
               <button
                 onClick={() => handle('accepted')}
-                className="px-5 py-2.5 rounded-xl bg-brand-gold text-brand-green text-sm font-bold hover:bg-brand-gold-light transition-colors"
+                className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-brand-gold text-brand-green text-sm font-bold hover:bg-brand-gold-light transition-colors"
               >
                 {dict.cookies.accept}
               </button>

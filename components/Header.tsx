@@ -107,7 +107,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex items-center justify-between transition-all duration-300 ${
-            scrolled ? 'h-16' : 'h-20'
+            scrolled ? 'h-16' : 'h-16 xl:h-20'
           }`}
         >
           {/* Logo */}
@@ -117,7 +117,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
               alt="New Key Properties"
               width={180}
               height={68}
-              className={`w-auto transition-all duration-300 ${scrolled ? 'h-14' : 'h-20'}`}
+              className={`w-auto transition-all duration-300 ${scrolled ? 'h-12 xl:h-14' : 'h-14 xl:h-20'}`}
               priority
             />
           </Link>

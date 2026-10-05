@@ -26,8 +26,21 @@ export default function ViberBanner({ initialDismissed }: { initialDismissed: bo
   }
 
   return (
-    <div className="relative bg-brand-green text-white px-4 py-2.5 text-center text-sm">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 px-6">
+    <div className="relative bg-brand-green text-white px-4 py-2 sm:py-2.5 text-center text-sm">
+      {/* Phones: one short tappable line, so the banner doesn't eat the first screen */}
+      <a
+        href={VIBER_CHANNEL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="sm:hidden flex items-center justify-center gap-2 pr-6 text-xs font-medium"
+      >
+        <svg className="w-4 h-4 text-brand-gold shrink-0" viewBox="0 0 32 32" fill="currentColor">
+          <path d="M25.5 6.2C23.2 4.1 19.8 3 16 3 8.3 3 2 8.8 2 16c0 2.3.6 4.5 1.8 6.5L2 30l7.8-2c1.8 1 3.9 1.5 6.2 1.5 7.7 0 14-5.8 14-13 0-3.5-1.3-6.8-4.5-9.8zM16 27.5c-2 0-4-.5-5.7-1.5l-.4-.2-4.6 1.2 1.2-4.5-.3-.4C5.2 20.4 4.5 18.2 4.5 16 4.5 10.2 9.7 5.5 16 5.5c3 0 5.8 1.1 7.9 3 2.1 2 3.1 4.5 3.1 7.5 0 5.8-5.2 10.5-11.5 10.5zm6.3-7.8c-.3-.2-2-.9-2.3-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.3-.6.3-1.1.2-1.2-.1-.1-.3-.2-.6-.3z" />
+        </svg>
+        <span>{dict.viberBanner.textShort}</span>
+        <span className="text-brand-gold font-bold" aria-hidden="true">›</span>
+      </a>
+      <div className="hidden max-w-7xl mx-auto sm:flex flex-row items-center justify-center gap-3 px-6">
         <span className="flex items-center gap-2 font-medium">
           <svg className="w-4 h-4 text-brand-gold shrink-0" viewBox="0 0 32 32" fill="currentColor">
             <path d="M25.5 6.2C23.2 4.1 19.8 3 16 3 8.3 3 2 8.8 2 16c0 2.3.6 4.5 1.8 6.5L2 30l7.8-2c1.8 1 3.9 1.5 6.2 1.5 7.7 0 14-5.8 14-13 0-3.5-1.3-6.8-4.5-9.8zM16 27.5c-2 0-4-.5-5.7-1.5l-.4-.2-4.6 1.2 1.2-4.5-.3-.4C5.2 20.4 4.5 18.2 4.5 16 4.5 10.2 9.7 5.5 16 5.5c3 0 5.8 1.1 7.9 3 2.1 2 3.1 4.5 3.1 7.5 0 5.8-5.2 10.5-11.5 10.5zm6.3-7.8c-.3-.2-2-.9-2.3-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.3-.6.3-1.1.2-1.2-.1-.1-.3-.2-.6-.3z" />

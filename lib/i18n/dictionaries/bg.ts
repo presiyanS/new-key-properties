@@ -44,6 +44,8 @@ const bg = {
   viberBanner: {
     text: 'Получавайте новите ни обяви преди да са публикувани на сайта',
     cta: 'Присъедини се във Viber',
+    // Single-line version for phones
+    textShort: 'Новите обяви - първо във Viber',
     close: 'Затвори',
   },
   about: {

@@ -46,6 +46,8 @@ const en: typeof bg = {
   viberBanner: {
     text: 'Get our new listings before they go live on the site',
     cta: 'Join our Viber channel',
+    // Single-line version for phones
+    textShort: 'New listings first on Viber',
     close: 'Close',
   },
   about: {
