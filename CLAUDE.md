@@ -23,7 +23,7 @@ Claude acts as Lead Engineer for New Key Properties. Presiyan (owner) is **non-t
 ## Stack
 
 - **Next.js 16** (`app/`), React 19, TypeScript, Tailwind
-- **Sanity 5** — schemas in `sanity/schemaTypes/`, Studio at `/studio` (prod) and `/studio-staging`
+- **Sanity 6** — schemas in `sanity/schemaTypes/`, Studio at `/studio` (prod) and `/studio-staging`
 - **Deploy** — Vercel; cron jobs in `vercel.json` (`/api/cron/market-post`, `/api/cron/notify-searches`)
 
 ## Commands
