@@ -123,12 +123,12 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <nav className="hidden xl:flex items-center gap-4">
             {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`relative text-xs xl:text-sm font-medium uppercase tracking-widest transition-colors group ${
+                className={`relative text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors group ${
                   pathname === l.href ? 'text-brand-gold' : 'text-brand-gold/70 hover:text-brand-gold'
                 }`}
               >
@@ -143,8 +143,8 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           </nav>
 
           {/* Right: socials + CTA */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-3 mr-3">
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
+            <div className="hidden 2xl:flex items-center gap-3 mr-3">
               <SocialLinks links={socialLinks} size="sm" />
             </div>
             <div className="mr-1 text-brand-gold/80">
@@ -164,7 +164,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden text-brand-gold p-2 rounded-xl hover:bg-brand-gold/10 transition-colors"
+            className="xl:hidden text-brand-gold p-2 rounded-xl hover:bg-brand-gold/10 transition-colors"
             aria-label={dict.nav.menu}
           >
             <div className="w-6 h-5 flex flex-col justify-between">
@@ -184,7 +184,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden bg-brand-green-dark border-t border-brand-gold/10 overflow-hidden"
+            className="xl:hidden bg-brand-green-dark border-t border-brand-gold/10 overflow-hidden"
           >
             <div className="px-5 py-6 space-y-1">
               {navLinks.map((l, i) => (

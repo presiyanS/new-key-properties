@@ -18,7 +18,7 @@ export default function ShareButtons({ id, title }: { id: string; title: string 
   }
 
   return (
-    <div className="flex items-center gap-2 pt-6 border-t border-gray-100 mt-8">
+    <div className="flex flex-wrap items-center gap-2 pt-6 border-t border-gray-100 mt-8">
       <span className="text-sm text-gray-400 mr-1">{dict.listings.shareLabel}</span>
 
       {/* Facebook */}

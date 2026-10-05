@@ -249,7 +249,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
         {/* Filter bar row */}
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {/* Type tabs */}
-          <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
+          <div className="flex flex-wrap items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
             {tabs.map((tab) => (
               <button
                 key={tab.val}
@@ -266,7 +266,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
           </div>
 
           {/* Category tabs */}
-          <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
+          <div className="flex flex-wrap items-center gap-1 bg-white border border-gray-200 rounded-xl p-1">
             {categoryTabs.map((tab) => (
               <button
                 key={tab.val}
