@@ -10,6 +10,7 @@ const en: typeof bg = {
     blog: 'Blog',
     konsultatsiya: 'Consultation',
     valuation: 'Valuation',
+    services: 'Services',
     contact: 'Contact',
     callUs: 'Call us',
     menu: 'Menu',

@@ -62,6 +62,8 @@ type Props = {
 
 export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
   const [open, setOpen] = useState(false)
+  // Which desktop dropdown ("services" / "about") is open, if any
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const { locale, dict } = useLocale()
@@ -70,6 +72,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
   if (pathname !== prevPathname) {
     setPrevPathname(pathname)
     setOpen(false)
+    setOpenGroup(null)
   }
 
   const navLinks = [
@@ -83,6 +86,31 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     { href: '/otsenka', label: dict.nav.valuation },
     { href: '/contact', label: dict.nav.contact },
   ].map((l) => ({ ...l, href: localizeHref(l.href, locale) }))
+
+  // Desktop menu: same pages as navLinks (the phone menu stays a flat list),
+  // with related pages grouped into dropdowns so the bar isn't crowded.
+  const link = (href: string) => navLinks.find((l) => l.href === localizeHref(href, locale))!
+  type NavItem = { href: string; label: string } | { key: string; label: string; children: { href: string; label: string }[] }
+  const desktopNav: NavItem[] = [
+    link('/'),
+    link('/listings'),
+    link('/kvartali'),
+    { key: 'services', label: dict.nav.services, children: [link('/konsultatsiya'), link('/otsenka')] },
+    { key: 'about', label: dict.nav.about, children: [link('/about'), link('/team')] },
+    link('/blog'),
+    link('/contact'),
+  ]
+  const navItemClass = (active: boolean) =>
+    `relative text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors group ${
+      active ? 'text-brand-gold' : 'text-brand-gold/70 hover:text-brand-gold'
+    }`
+  const underline = (active: boolean) => (
+    <span
+      className={`absolute -bottom-1 left-0 h-px bg-brand-gold transition-all duration-300 ${
+        active ? 'w-full' : 'w-0 group-hover:w-full'
+      }`}
+    />
+  )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -123,23 +151,63 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden xl:flex items-center gap-4">
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`relative text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors group ${
-                  pathname === l.href ? 'text-brand-gold' : 'text-brand-gold/70 hover:text-brand-gold'
-                }`}
-              >
-                {l.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-px bg-brand-gold transition-all duration-300 ${
-                    pathname === l.href ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                />
-              </Link>
-            ))}
+          <nav className="hidden xl:flex items-center gap-6">
+            {desktopNav.map((item) => {
+              if ('href' in item) {
+                const active = pathname === item.href
+                return (
+                  <Link key={item.href} href={item.href} className={navItemClass(active)}>
+                    {item.label}
+                    {underline(active)}
+                  </Link>
+                )
+              }
+              const active = item.children.some((c) => pathname === c.href)
+              const isOpen = openGroup === item.key
+              return (
+                <div
+                  key={item.key}
+                  className="relative"
+                  onMouseEnter={() => setOpenGroup(item.key)}
+                  onMouseLeave={() => setOpenGroup(null)}
+                  onKeyDown={(e) => e.key === 'Escape' && setOpenGroup(null)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenGroup(isOpen ? null : item.key)}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    className={`${navItemClass(active)} flex items-center gap-1`}
+                  >
+                    {item.label}
+                    <svg className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                    {underline(active)}
+                  </button>
+                  {isOpen && (
+                    // pt-3 is an invisible bridge so the menu doesn't close while
+                    // the mouse travels from the label down to the panel
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50">
+                      <div className="min-w-48 bg-brand-green-dark border border-brand-gold/15 rounded-xl shadow-2xl py-2">
+                        {item.children.map((c) => (
+                          <Link
+                            key={c.href}
+                            href={c.href}
+                            onClick={() => setOpenGroup(null)}
+                            className={`block px-4 py-2.5 text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors ${
+                              pathname === c.href ? 'text-brand-gold' : 'text-brand-gold/70 hover:text-brand-gold hover:bg-white/5'
+                            }`}
+                          >
+                            {c.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </nav>
 
           {/* Right: socials + CTA */}
