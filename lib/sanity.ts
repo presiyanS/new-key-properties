@@ -55,7 +55,7 @@ export type SanityListing = {
   features: string[]
   featuresEn: string[] | null
   featured: boolean
-  status: 'active' | 'under_offer' | 'sold'
+  status: 'active' | 'under_offer' | 'sold' | 'hidden'
   googleMapsUrl: string | null
   category: string | null
 }
@@ -87,6 +87,10 @@ const LISTING_FIELDS = `
   category
 `
 
+// Public site queries skip listings marked "Скрит" (hidden) in Studio.
+// `status != "hidden"` is also true for old listings with no status set.
+const PUBLIC_LISTING = `_type == "listing" && status != "hidden"`
+
 const freshClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '9gz26s06',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
@@ -97,12 +101,12 @@ const freshClient = createClient({
 })
 
 const _cachedGetListings = unstable_cache(
-  () => freshClient.fetch(`*[_type == "listing"] | order(orderRank asc) { ${LISTING_FIELDS} }`),
+  () => freshClient.fetch(`*[${PUBLIC_LISTING}] | order(orderRank asc) { ${LISTING_FIELDS} }`),
   ['listings-v4'],
   { revalidate: 60, tags: ['listings'] }
 )
 const _cachedGetFeaturedListings = unstable_cache(
-  () => freshClient.fetch(`*[_type == "listing" && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
+  () => freshClient.fetch(`*[${PUBLIC_LISTING} && featured == true] | order(_createdAt desc) { ${LISTING_FIELDS} }`),
   ['featured-listings-v4'],
   { revalidate: 60, tags: ['listings'] }
 )
@@ -118,7 +122,7 @@ export async function getListing(id: string, preview = false): Promise<SanityLis
   try {
     if (preview) return await previewClient.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id })
     return await unstable_cache(
-      () => client.fetch(`*[_type == "listing" && _id == $id][0] { ${LISTING_FIELDS} }`, { id }),
+      () => client.fetch(`*[${PUBLIC_LISTING} && _id == $id][0] { ${LISTING_FIELDS} }`, { id }),
       [`listing-${id}`],
       { revalidate: 300, tags: ['listings'] }
     )()
@@ -129,11 +133,11 @@ export async function getListing(id: string, preview = false): Promise<SanityLis
 // Sanity `_id` — lets the listing page detect an old-style link and
 // permanently redirect to the new slug URL instead of 404ing.
 export async function getListingBySlug(param: string, preview = false): Promise<SanityListing | null> {
-  const query = `*[_type == "listing" && (slug.current == $param || _id == $param)][0] { ${LISTING_FIELDS} }`
+  const match = `(slug.current == $param || _id == $param)`
   try {
-    if (preview) return await previewClient.fetch(query, { param })
+    if (preview) return await previewClient.fetch(`*[_type == "listing" && ${match}][0] { ${LISTING_FIELDS} }`, { param })
     return await unstable_cache(
-      () => client.fetch(query, { param }),
+      () => client.fetch(`*[${PUBLIC_LISTING} && ${match}][0] { ${LISTING_FIELDS} }`, { param }),
       [`listing-slug-${param}`],
       { revalidate: 300, tags: ['listings'] }
     )()
@@ -163,7 +167,7 @@ export type SanityListingForWebhook = {
   rooms: string | number
   floor: string | number | null
   description: string
-  status: 'active' | 'under_offer' | 'sold'
+  status: 'active' | 'under_offer' | 'sold' | 'hidden'
   mainImage: string | null
 }
 
@@ -297,7 +301,7 @@ export async function getTeamMembers(preview = false): Promise<SanityTeamMember[
 
 // ── Page Content ─────────────────────────────────────────────────────────────
 
-const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->{ ${LISTING_FIELDS} } }`), ['home-page'], { revalidate: 3600, tags: ['home-page', 'listings'] })
+const _cachedGetHomePage = unstable_cache(() => client.fetch(`*[_type == "homePage" && _id == "homePage"][0]{ ..., "featuredListings": featuredListings[]->[status != "hidden"]{ ${LISTING_FIELDS} } }`), ['home-page'], { revalidate: 3600, tags: ['home-page', 'listings'] })
 const _cachedGetAboutPage = unstable_cache(() => client.fetch(`*[_type == "aboutPage" && _id == "aboutPage"][0]`), ['about-page'], { revalidate: 3600, tags: ['about-page'] })
 const _cachedGetContactPage = unstable_cache(() => client.fetch(`*[_type == "contactPage" && _id == "contactPage"][0]`), ['contact-page'], { revalidate: 3600, tags: ['contact-page'] })
 const _cachedGetConsultationPage = unstable_cache(() => client.fetch(`*[_type == "consultationPage" && _id == "consultationPage"][0]`), ['consultation-page'], { revalidate: 3600, tags: ['consultation-page'] })

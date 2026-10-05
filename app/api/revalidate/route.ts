@@ -46,7 +46,10 @@ export async function POST(req: Request) {
   }
 
   const applied = tags.filter((t) => ALL_TAGS.includes(t))
-  for (const tag of applied) revalidateTag(tag, 'max')
+  // expire: 0 → the very next visitor gets fresh data. 'max' (stale-while-
+  // revalidate) would show one more stale page, so an unpublished or hidden
+  // listing could linger until someone happened to load it twice.
+  for (const tag of applied) revalidateTag(tag, { expire: 0 })
 
   // Sanity webhook (create/update, filtered to _type == "listing" in the
   // dashboard trigger) — forward the listing to Make.com for downstream
@@ -56,7 +59,8 @@ export async function POST(req: Request) {
   if (body._type === 'listing' && typeof body._id === 'string') {
     const id = body._id.replace(/^drafts\./, '')
     getListingForWebhook(id).then((listing) => {
-      if (!listing) return
+      // Deleted/unpublished (null) or hidden in Studio — nothing to announce.
+      if (!listing || listing.status === 'hidden') return
       sendListingToMakeWebhook({
         title: listing.title,
         slug: id,

@@ -198,6 +198,10 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     else if (sortBy === 'area-asc') result = [...result].sort((a, b) => (Number(a.area) || 0) - (Number(b.area) || 0))
     else if (sortBy === 'area-desc') result = [...result].sort((a, b) => (Number(b.area) || 0) - (Number(a.area) || 0))
 
+    // Sold/rented listings stay visible as proof of closed deals, but always
+    // after the available ones (stable sort keeps the order chosen above).
+    result = [...result].sort((a, b) => Number(a.status === 'sold') - Number(b.status === 'sold'))
+
     return result
   }, [listings, filter, categoryFilter, searchQuery, neighborhood, rooms, priceMin, priceMax, areaMin, areaMax, constructionAct, statusFilter, sortBy])
 

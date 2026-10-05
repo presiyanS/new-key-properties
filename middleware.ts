@@ -19,6 +19,28 @@ async function resolveLegacyListingSlug(id: string): Promise<string | null> {
   }
 }
 
+// For a readable /listings/<slug> link, reports whether the listing is live
+// ('live'), still exists but is marked "Скрит" in Studio ('hidden'), or is gone
+// entirely - deleted or unpublished ('gone'). Uses the public API, which only
+// ever sees published documents. Returns null on any error so a Sanity hiccup
+// never redirects a real listing away.
+async function listingSlugState(slug: string): Promise<'live' | 'hidden' | 'gone' | null> {
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '9gz26s06'
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production'
+  const query = encodeURIComponent('*[_type == "listing" && slug.current == $slug][0]{ "status": coalesce(status, "active") }')
+  const url = `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}?query=${query}&$slug=${encodeURIComponent(JSON.stringify(slug))}`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const data = await res.json()
+    if (!('result' in data)) return null
+    if (data.result === null) return 'gone'
+    return data.result.status === 'hidden' ? 'hidden' : 'live'
+  } catch {
+    return null
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname: rawPathname } = request.nextUrl
 
@@ -61,6 +83,19 @@ export async function middleware(request: NextRequest) {
       const newPath = `/listings/${slug}`
       const target = new URL((isEnglish ? `/en${newPath}` : newPath) + request.nextUrl.search, request.url)
       return NextResponse.redirect(target, 308)
+    }
+  }
+
+  // Removed or hidden listings → send visitors (and Google) to the listings
+  // page with a real redirect status, instead of a "not found" page that
+  // Next.js can only serve as 200 here (see streaming note in the route).
+  // Gone for good → 308 (permanent); hidden → 307 (temporary), so it can be
+  // un-hidden later without browsers having cached the redirect forever.
+  if (legacyListingMatch && legacyListingMatch[1].includes('-')) {
+    const state = await listingSlugState(legacyListingMatch[1])
+    if (state === 'gone' || state === 'hidden') {
+      const target = new URL(isEnglish ? '/en/listings' : '/listings', request.url)
+      return NextResponse.redirect(target, state === 'gone' ? 308 : 307)
     }
   }
 

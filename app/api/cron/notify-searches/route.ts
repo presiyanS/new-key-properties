@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
 
   const [newListings, savedSearches]: [Listing[], SavedSearch[]] = await Promise.all([
     sanity.fetch(
-      `*[_type == "listing" && _createdAt > $since]{ _id, "slug": slug.current, title, type, price, area, rooms, neighborhood }`,
+      `*[_type == "listing" && status != "hidden" && _createdAt > $since]{ _id, "slug": slug.current, title, type, price, area, rooms, neighborhood }`,
       { since }
     ),
     sanity.fetch(
