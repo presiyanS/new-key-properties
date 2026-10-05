@@ -9,6 +9,9 @@ export const client = createClient({
   apiVersion: '2024-01-01',
   useCdn: true,
   token: process.env.SANITY_API_READ_TOKEN,
+  // With a token and no perspective, apiVersion 2024-01-01 returns drafts too —
+  // unpublished/in-progress Studio edits would leak onto the live site.
+  perspective: 'published',
 })
 
 export const previewClient = createClient({
@@ -90,6 +93,7 @@ const freshClient = createClient({
   apiVersion: '2024-01-01',
   useCdn: false,
   token: process.env.SANITY_API_READ_TOKEN,
+  perspective: 'published',
 })
 
 const _cachedGetListings = unstable_cache(
