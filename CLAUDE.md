@@ -72,9 +72,20 @@ npx tsc --noEmit # typecheck
 - Prefer editing Sanity-backed pages over hardcoding in `data/` when CMS fields exist
 - Keep changes minimal; match existing component and GROQ patterns
 - Do not commit `.env`, `.env.local`, or `.claude/settings.local.json`
-- Only commit when the user explicitly asks
+- Auto-commit after a change is made and verified, without waiting to be asked (Presiyan will say so explicitly if a given change should stay uncommitted)
 
 ## Git / deploy
 
-- `git push`, `vercel deploy`, `vercel --prod` are normal workflows for this repo
+- Committing is automatic (see Conventions above); pushing to `main` still needs Presiyan's explicit go-ahead each time, since it triggers a production deploy on Vercel
+- `git push`, `vercel deploy`, `vercel --prod` are normal workflows for this repo once approved
 - Production site: newkey.bg (and Vercel preview URLs)
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
