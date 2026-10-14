@@ -213,6 +213,8 @@ const en: typeof bg = {
     viewAllListingsPrefix: 'View all',
     viewAllListingsMiddle: 'properties in',
     pricesHeadingPrefix: 'Prices in',
+    pricesAsOfPrefix: 'Prices as of',
+    pricesAsOfNote: 'Average asking prices from listings. Actual sales usually close slightly below them.',
     targetAudienceHeading: 'Who it suits',
     ctaCardTitlePrefix: 'Looking for a property in',
     ctaCardSubtitle: 'Get in touch — we know this neighborhood well and source properties to specific criteria.',

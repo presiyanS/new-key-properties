@@ -18,6 +18,8 @@ export const neighborhoodType = defineType({
     defineField({ name: 'transportEn', title: 'Транспорт и достъпност (EN)', type: 'text', rows: 3, description: 'Английски превод — показва се на /en сайта' }),
     defineField({ name: 'priceRangeSale', title: 'Ценови диапазон — продажба', type: 'string', description: 'Напр. 2 000 – 3 500 €/кв.м' }),
     defineField({ name: 'priceRangeRent', title: 'Ценови диапазон — наем', type: 'string', description: 'Напр. 700 – 1 400 €/мес.' }),
+    defineField({ name: 'pricesAsOf', title: 'Цените са актуални към', type: 'string', description: 'Напр. "октомври 2026 г." - показва се под цените. Обновете го, когато обновите цените.' }),
+    defineField({ name: 'pricesAsOfEn', title: 'Цените са актуални към (EN)', type: 'string', description: 'Напр. "October 2026" - показва се на /en сайта' }),
     defineField({ name: 'targetAudience', title: 'За кого е подходящ', type: 'text', rows: 3 }),
     defineField({ name: 'targetAudienceEn', title: 'За кого е подходящ (EN)', type: 'text', rows: 3, description: 'Английски превод — показва се на /en сайта' }),
     defineField({ name: 'pros', title: 'Предимства', type: 'array', of: [{ type: 'string' }] }),

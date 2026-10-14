@@ -211,6 +211,8 @@ const bg = {
     viewAllListingsPrefix: 'Вижте всички',
     viewAllListingsMiddle: 'имота в',
     pricesHeadingPrefix: 'Цени в',
+    pricesAsOfPrefix: 'Цени към',
+    pricesAsOfNote: 'Средни цени на предлагане по данни от обявите. Реалните сделки обикновено се сключват малко под тях.',
     targetAudienceHeading: 'За кого е подходящ',
     ctaCardTitlePrefix: 'Търсите имот в',
     ctaCardSubtitle: 'Свържете се с нас — познаваме квартала отлично и намираме имоти по конкретни критерии.',

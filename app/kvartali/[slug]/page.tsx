@@ -75,6 +75,8 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
   const tagline = isEn ? (n.taglineEn ?? n.tagline) : n.tagline
   const transport = isEn ? (n.transportEn ?? n.transport) : n.transport
   const targetAudience = isEn ? (n.targetAudienceEn ?? n.targetAudience) : n.targetAudience
+  // Only show the "prices as of" note in a language we actually have it in
+  const pricesAsOf: string | undefined = isEn ? n.pricesAsOfEn : n.pricesAsOf
   const pros: string[] = (isEn && n.prosEn?.length ? n.prosEn : n.pros) ?? []
   const cons: string[] = (isEn && n.consEn?.length ? n.consEn : n.cons) ?? []
 
@@ -270,6 +272,12 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ s
                 <div className="pt-4 border-t border-gray-100">
                   <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">{dict.listings.tabRent}</p>
                   <p className="text-xl font-bold text-gray-900">{translateNeighborhoodPriceRange(n.priceRangeRent, locale)}</p>
+                </div>
+              )}
+              {pricesAsOf && (
+                <div className="pt-4 mt-4 border-t border-gray-100">
+                  <p className="text-sm font-medium text-gray-700">{dict.neighborhoods.pricesAsOfPrefix} {pricesAsOf}</p>
+                  <p className="text-xs text-gray-400 mt-1 leading-relaxed">{dict.neighborhoods.pricesAsOfNote}</p>
                 </div>
               )}
             </div>
