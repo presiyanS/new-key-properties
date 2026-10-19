@@ -28,7 +28,7 @@ const content = {
     eyebrow: 'Правна информация',
     title: 'Политика за поверителност',
     lastUpdatedLabel: 'Последна актуализация',
-    lastUpdated: '08.07.2026',
+    lastUpdated: '19.10.2026',
     sections: [
       {
         heading: '1. Администратор на личните данни',
@@ -82,9 +82,12 @@ const content = {
         heading: '5. Получатели на личните данни',
         intro: 'Личните Ви данни не се продават, наемат или споделят с трети лица за маркетингови цели. Данните могат да бъдат споделяни единствено с:',
         simpleList: [
-          'Resend Inc. — доставчик на имейл услуги, използван за препращане на запитвания до нас. Resend е сертифициран по стандартите за защита на данни.',
-          'Vercel Inc. — хостинг доставчик, поддържащ инфраструктурата на уебсайта.',
-          'Компетентни държавни органи — при законово задължение.',
+          'Resend Inc. - доставчик на имейл услуги, използван за препращане на запитвания до нас. Resend е сертифициран по стандартите за защита на данни.',
+          'Vercel Inc. - хостинг доставчик, поддържащ инфраструктурата на уебсайта.',
+          'HubSpot - система за управление на клиенти (CRM), в която съхраняваме запитванията, за да ги обработим.',
+          'Make.com - платформа за автоматизация, чрез която запитванията от формите постъпват в HubSpot.',
+          'Meta и Google - само ако сте приели бисквитките: информация, че е изпратено запитване, за да измерваме ефективността на рекламите си (вижте т. 7).',
+          'Компетентни държавни органи - при законово задължение.',
         ],
       },
       {
@@ -105,8 +108,13 @@ const content = {
         ),
       },
       {
-        heading: '7. Бисквитки (cookies)',
-        body: 'Уебсайтът използва минимален набор от технически бисквитки, необходими единствено за функционирането на сайта (напр. автентикация в администраторски раздели). Не използваме рекламни или проследяващи бисквитки от трети страни.',
+        heading: '7. Бисквитки (cookies) и инструменти за измерване',
+        intro: 'Уебсайтът използва технически бисквитки, необходими за работата му - например за да запомни избора Ви в банера за бисквитки и за вход в администраторските раздели. Използваме и Vercel Web Analytics, който събира обобщена статистика за посещенията без бисквитки и без да идентифицира отделни посетители. Рекламните и аналитичните инструменти по-долу се зареждат само ако натиснете „Приемам“ в банера за бисквитки (чл. 6, ал. 1, б. „а“ GDPR - съгласие). Ако натиснете „Отказвам“, те не се зареждат. Можете да оттеглите съгласието си по всяко време, като изтриете бисквитките за newkey.bg от настройките на браузъра си - банерът ще се появи отново. С Ваше съгласие използваме:',
+        simpleList: [
+          'Meta Pixel и Meta Conversions API (Meta) - за да измерваме ефективността на рекламите си във Facebook и Instagram. При изпращане на форма към Meta се изпращат имейлът и телефонът Ви в криптиран (хеширан) вид, както и IP адресът Ви.',
+          'Google Ads (Google) - за да измерваме колко посетители от рекламите ни в Google ни изпращат запитване или ни се обаждат.',
+          'HubSpot - за анализ на посещенията на сайта и свързването им с изпратените запитвания.',
+        ],
       },
       {
         heading: '8. Промени в политиката',
@@ -123,7 +131,7 @@ const content = {
     eyebrow: 'Legal information',
     title: 'Privacy policy',
     lastUpdatedLabel: 'Last updated',
-    lastUpdated: '08.07.2026',
+    lastUpdated: '19.10.2026',
     sections: [
       {
         heading: '1. Data controller',
@@ -177,9 +185,12 @@ const content = {
         heading: '5. Recipients of personal data',
         intro: 'We do not sell, rent, or share your personal data with third parties for marketing purposes. Data may only be shared with:',
         simpleList: [
-          'Resend Inc. — an email service provider used to forward inquiries to us. Resend is certified to data protection standards.',
-          'Vercel Inc. — the hosting provider supporting the website’s infrastructure.',
-          'Competent public authorities — where required by law.',
+          'Resend Inc. - an email service provider used to forward inquiries to us. Resend is certified to data protection standards.',
+          'Vercel Inc. - the hosting provider supporting the website’s infrastructure.',
+          'HubSpot - the customer relationship management (CRM) system where we store inquiries in order to handle them.',
+          'Make.com - an automation platform that passes inquiries from the website forms into HubSpot.',
+          'Meta and Google - only if you have accepted cookies: information that an inquiry was sent, so we can measure how well our ads perform (see section 7).',
+          'Competent public authorities - where required by law.',
         ],
       },
       {
@@ -200,8 +211,13 @@ const content = {
         ),
       },
       {
-        heading: '7. Cookies',
-        body: 'The website uses a minimal set of technical cookies necessary solely for the site to function (e.g. authentication in admin sections). We do not use advertising or third-party tracking cookies.',
+        heading: '7. Cookies and measurement tools',
+        intro: 'The website uses technical cookies needed for it to work - for example, to remember your choice in the cookie banner and for logging in to admin sections. We also use Vercel Web Analytics, which collects aggregate visit statistics without cookies and without identifying individual visitors. The advertising and analytics tools below load only if you click "Accept" in the cookie banner (Art. 6(1)(a) GDPR - consent). If you click "Decline", they are not loaded. You can withdraw your consent at any time by deleting the cookies for newkey.bg in your browser settings - the banner will then appear again. With your consent we use:',
+        simpleList: [
+          'Meta Pixel and Meta Conversions API (Meta) - to measure how well our ads on Facebook and Instagram perform. When you send a form, your email and phone number are sent to Meta in encrypted (hashed) form, together with your IP address.',
+          'Google Ads (Google) - to measure how many visitors from our Google ads send us an inquiry or call us.',
+          'HubSpot - to analyse website visits and link them to the inquiries sent.',
+        ],
       },
       {
         heading: '8. Changes to this policy',
