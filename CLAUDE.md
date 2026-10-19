@@ -20,44 +20,12 @@ Claude acts as Lead Engineer for New Key Properties. Presiyan (owner) is **non-t
 
 **Task types** (match rigor to whichever applies): Bug Fix, New Feature, Website Update, Landing Page Build, Lead Capture Form, CRM/HubSpot Integration, Automation Script/Scheduled Task, Content Generation Tool, API Integration, Data Pipeline/Scraper, Performance Optimization, Security Patch, Refactor/Cleanup, Testing/QA, Documentation, Deployment/Release, Prototype/PoC.
 
-## Stack
-
-- **Next.js 16** (`app/`), React 19, TypeScript, Tailwind
-- **Sanity 6** — schemas in `sanity/schemaTypes/`, Studio at `/studio` (prod) and `/studio-staging`
-- **Deploy** — Vercel; cron jobs in `vercel.json` (`/api/cron/market-post`, `/api/cron/notify-searches`)
-
-## Commands
-
-```bash
-npm run dev      # local dev (http://localhost:3000)
-npm run build    # production build
-npm run lint     # ESLint
-npx tsc --noEmit # typecheck
-```
-
-## Layout
-
-| Area | Purpose |
-|------|---------|
-| `app/` | Routes, API routes, layouts |
-| `components/` | UI (Header, PropertyCard, forms, animations) |
-| `lib/sanity.ts` | Sanity clients, GROQ helpers, `SanityListing` type |
-| `sanity/` | Studio config, custom inputs, schema types |
-| `scripts/` | One-off Node scripts (seed, upload listings to Sanity prod/staging) |
-| `data/` | Static fallbacks (`listings.ts`, `blog.ts`, `team.ts`) |
-
 ## Sanity
 
 - Project ID default: `9gz26s06` (override via `NEXT_PUBLIC_SANITY_PROJECT_ID`)
 - Dataset: `NEXT_PUBLIC_SANITY_DATASET` (`production` or staging)
 - Tokens: `SANITY_API_READ_TOKEN`, `SANITY_API_WRITE_TOKEN`, `SANITY_API_READ_TOKEN` — never commit; use `.env.local`
 - Listings use orderable document list (`orderRank`); images may be Sanity assets or `externalImageUrls`
-
-## Auth / protected routes (`proxy.ts`)
-
-- `/studio` — `studio_auth` cookie (login via `/nkp-admin`)
-- `/studio-staging` — `studio_staging_auth`
-- `/post-generator` — `pg_auth` (except `/post-generator/login`)
 
 ## Content & uploads
 
