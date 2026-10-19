@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
-import { sendMetaLeadEvent } from '@/lib/metaConversionsApi'
+import { hasMarketingConsent, sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   // Runs alongside the Resend send rather than after it, so a slow Meta API
   // (bounded by its own 5s timeout) doesn't add to the response latency.
-  const metaLeadPromise = metaEventId
+  const metaLeadPromise = metaEventId && hasMarketingConsent(req)
     ? sendMetaLeadEvent({
         eventId: metaEventId,
         eventSourceUrl: req.headers.get('referer') ?? 'https://www.newkey.bg/',

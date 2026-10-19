@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client'
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 import { splitName, syncHubSpotContact } from '@/lib/hubspot'
-import { sendMetaLeadEvent } from '@/lib/metaConversionsApi'
+import { hasMarketingConsent, sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 const sanity = createClient({
   projectId: '9gz26s06',
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
 
   // Same reasoning as syncHubSpotContact above — awaited (bounded by its own
   // 5s timeout) so the promise isn't orphaned once the function returns.
-  if (metaEventId) {
+  if (metaEventId && hasMarketingConsent(req)) {
     await sendMetaLeadEvent({
       eventId: metaEventId,
       eventSourceUrl: req.headers.get('referer') ?? 'https://www.newkey.bg/',

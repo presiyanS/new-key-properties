@@ -16,6 +16,17 @@ function hashPhone(value: string): string {
   return hashField(value.replace(/[^\d]/g, ''))
 }
 
+/**
+ * True only if the visitor clicked "Приемам" in the cookie banner (same
+ * cookie CookieConsent.tsx sets). The browser-side pixel is already gated on
+ * it; this applies the same rule to the server-side event, which otherwise
+ * would send hashed email/phone + IP to Meta even after "Отказвам".
+ */
+export function hasMarketingConsent(req: Request): boolean {
+  const cookies = req.headers.get('cookie') ?? ''
+  return cookies.split(/;\s*/).includes('nkp_cookie_consent=accepted')
+}
+
 type LeadEventInput = {
   eventId: string
   eventSourceUrl: string
