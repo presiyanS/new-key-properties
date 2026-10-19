@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
 import MetaPixel from '@/components/MetaPixel'
+import GoogleAdsTag from '@/components/GoogleAdsTag'
 
 const COOKIE_NAME = 'nkp_cookie_consent'
 
@@ -38,6 +39,8 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
       )}
 
       {status === 'accepted' && <MetaPixel />}
+
+      {status === 'accepted' && <GoogleAdsTag />}
 
       {status === 'pending' && (
         <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-3 sm:py-5">

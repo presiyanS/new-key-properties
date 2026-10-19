@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { Locale } from '@/lib/i18n/config'
 import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { generateEventId, trackLead } from '@/lib/metaPixel'
+import { trackGoogleAdsContact } from '@/lib/googleAds'
 
 const textBg = {
   nameLabel: 'Вашето име *',
@@ -127,6 +128,7 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
     setLoading(false)
 
     if (res.ok) {
+      trackGoogleAdsContact()
       setSubmitted(true)
     } else {
       setError(t.errorMessage)

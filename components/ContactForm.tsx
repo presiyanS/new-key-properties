@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { generateEventId, trackLead } from '@/lib/metaPixel'
+import { trackGoogleAdsContact } from '@/lib/googleAds'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
 
@@ -95,6 +96,7 @@ export default function ContactForm({
     setLoading(false)
 
     if (res.ok) {
+      trackGoogleAdsContact()
       setSubmitted(true)
     } else {
       setError(errorMessage)
