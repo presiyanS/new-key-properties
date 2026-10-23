@@ -22,7 +22,7 @@ export default function PurchaseCostsCalculator({ price: fixedPrice }: Props) {
 
   const price = fixedPrice ?? enteredPrice
   const costs = purchaseCosts(price, notaryVat)
-  const percent = costs.percent.toLocaleString(locale === 'en' ? 'en-US' : 'bg-BG', { maximumFractionDigits: 1 })
+  const percent = costs.percent.toLocaleString(locale === 'en' ? 'en-US' : 'bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
