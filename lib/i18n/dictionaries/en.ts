@@ -11,6 +11,7 @@ const en: typeof bg = {
     konsultatsiya: 'Consultation',
     valuation: 'Valuation',
     calculator: 'Calculator',
+    checklist: 'Property checklist',
     services: 'Services',
     contact: 'Contact',
     callUs: 'Call us',
@@ -187,6 +188,14 @@ const en: typeof bg = {
     heroSubtitle: 'Every property is carefully vetted and presented with full transparency. Serious listings only.',
     bottomCtaTitle: "Can't find what you're looking for?",
     bottomCtaSubtitle: "Tell us what you're looking for and we'll find it for you. We actively source properties to specific criteria — as if it were for ourselves.",
+  },
+  checklist: {
+    progress: 'Checked',
+    of: 'of',
+    reset: 'Clear all ticks',
+    print: 'Print',
+    savedNote: 'Your ticks are saved in this browser only.',
+    calculatorLink: 'Go to the calculator',
   },
   calculators: {
     priceLabel: 'Property price',

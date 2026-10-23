@@ -115,6 +115,7 @@ export default function Footer({
                 { href: '/blog', label: dict.nav.blog },
                 { href: '/otsenka', label: dict.nav.valuation },
                 { href: '/kalkulator', label: dict.nav.calculator },
+                { href: '/proverka-na-imot', label: dict.nav.checklist },
                 { href: '/contact', label: dict.nav.contact },
               ].map((l) => (
                 <li key={l.href}>
