@@ -12,14 +12,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
     return {
-      title: 'Free Consultation | New Key Properties',
+      title: { absolute: 'Free Consultation | New Key Properties' },
       description:
         'Book a free consultation with our brokers. Honest advice, no hidden fees — we help you buy, sell, or rent a property in Sofia.',
       alternates: hreflangAlternates('/konsultatsiya', locale),
     }
   }
   return {
-    title: 'Безплатна Консултация | New Key Properties',
+    title: { absolute: 'Безплатна Консултация | New Key Properties' },
     description:
       'Запишете се за безплатна консултация с нашите брокери. Честен съвет без скрити такси — помагаме Ви да купите, продадете или наемете имот в София.',
     alternates: hreflangAlternates('/konsultatsiya', locale),

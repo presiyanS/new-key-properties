@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PostGeneratorClient from './PostGeneratorClient'
 
 export const metadata: Metadata = {
-  title: 'Генератор на постове | New Key Properties',
+  title: { absolute: 'Генератор на постове | New Key Properties' },
   robots: { index: false, follow: false },
 }
 

@@ -24,7 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
             'Изчислете данъците и таксите при покупка на имот в София и дали дължите данък при продажба. По действащите закони, с обяснение на всяка сума.',
         }
   return {
-    title,
+    // absolute: the layout would otherwise add a second "| New Key Properties"
+    title: { absolute: title },
     description,
     alternates: hreflangAlternates('/kalkulator', locale),
     openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },

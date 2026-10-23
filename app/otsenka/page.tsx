@@ -18,7 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const description =
       'Get a free, honest market valuation of your property in Sofia. No obligation — our brokers respond within 24 hours with a fair price estimate.'
     return {
-      title,
+      // absolute: the layout would otherwise add a second "| New Key Properties"
+      title: { absolute: title },
       description,
       alternates: hreflangAlternates('/otsenka', locale),
       openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },
@@ -29,7 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент — нашите брокери отговарят до 24 часа с точна ценова оценка.'
   return {
-    title,
+    // absolute: the layout would otherwise add a second "| New Key Properties"
+    title: { absolute: title },
     description,
     alternates: hreflangAlternates('/otsenka', locale),
     openGraph: { title, description, url, siteName: 'New Key Properties', type: 'website', images: [image] },

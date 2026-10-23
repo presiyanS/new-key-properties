@@ -7,7 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   if (locale === 'en') {
     return {
-      title: 'Privacy policy — New Key Properties',
+      title: 'Privacy policy',
       description:
         'Privacy policy and personal data protection at New Key Properties. Learn how we handle your data in compliance with GDPR.',
       robots: { index: true, follow: true },
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
   return {
-    title: 'Политика за поверителност — New Key Properties',
+    title: 'Политика за поверителност',
     description:
       'Политика за поверителност и защита на личните данни на New Key Properties. Научете как обработваме вашите данни в съответствие с GDPR.',
     robots: { index: true, follow: true },

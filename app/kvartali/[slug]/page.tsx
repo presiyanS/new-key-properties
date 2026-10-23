@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const title = `${name} Neighborhood, Sofia — Prices, Rent & Listings | New Key Properties`
     const description = n.metaDescriptionEn ?? `Full guide to the ${name} neighborhood in Sofia: current property prices, rents, transport, pros and cons. New Key Properties.`
     return {
-      title,
+      // absolute: the layout would otherwise add a second "| New Key Properties"
+      title: { absolute: title },
       description,
       keywords: `${name} neighborhood, ${name} Sofia properties, ${name} apartments, ${name} rent, buy property ${name}`,
       openGraph: {
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = `Квартал ${n.name} София — Цени, Наем и Имоти | New Key Properties`
   const description = n.metaDescription ?? `Пълен наръчник за квартал ${n.name} в София: актуални цени на имоти, наеми, транспорт, предимства и недостатъци. New Key Properties.`
   return {
-    title,
+    // absolute: the layout would otherwise add a second "| New Key Properties"
+    title: { absolute: title },
     description,
     keywords: `квартал ${n.name}, имоти ${n.name}, апартаменти ${n.name} София, наем ${n.name}, купи имот ${n.name}`,
     openGraph: {

@@ -31,12 +31,12 @@ const bg: Content = {
         {
           id: 'danachna-otsenka',
           title: 'Удостоверение за данъчна оценка',
-          detail: 'Издава се от общината и е нужно за сделката при нотариуса. Ако данъчната оценка е по-висока от цената, данъкът и таксите се смятат върху нея.',
+          detail: 'Издава се от общината и е нужно за сделката при нотариуса. Ако данъчната оценка е по-висока от цената, местният данък и таксите се смятат върху нея.',
         },
         {
           id: 'akt-16',
           title: 'Документ за въвеждане в експлоатация',
-          detail: 'За по-нови сгради - Акт 16 и разрешение за ползване или удостоверение за въвеждане в експлоатация. Без него сградата официално не е завършена.',
+          detail: 'За по-нови сгради - разрешение за ползване или удостоверение за въвеждане в експлоатация. Без него в имота не може законно да се живее.',
         },
         {
           id: 'lichni-danni',
@@ -48,32 +48,32 @@ const bg: Content = {
     {
       id: 'pravna-proverka',
       title: 'Правна проверка на имота',
-      intro: 'Тази проверка струва малко, а може да Ви спести целия имот. Ако не сте сигурни как да я направите, направете я с адвокат.',
+      intro: 'Тази проверка струва малко, а може да Ви предпази от загубата на целия имот. Ако не сте сигурни как да я направите, възложете я на адвокат.',
       items: [
         {
           id: 'tezhesti',
           title: 'Удостоверение за тежести',
-          detail: 'Издава се от Агенцията по вписванията. Показва дали върху имота има ипотека, възбрана, запор или заведено дело. Поискайте го за поне 10 години назад и го проверете точно преди сделката, не седмици по-рано.',
+          detail: 'Издава се от Агенцията по вписванията. Показва дали върху имота има вписани ипотеки, възбрани или искови молби (дела). Поискайте актуално удостоверение точно преди сделката, а не такова отпреди седмици.',
         },
         {
           id: 'istoria',
           title: 'История на собствеността',
-          detail: 'Проверете кога и как продавачът е придобил имота. Имот, който сменя собственици много често или е купен преди броени седмици, заслужава допълнителни въпроси.',
+          detail: 'Проверете кога и как продавачът е придобил имота. Ако имотът често сменя собствениците си или е купен преди броени седмици, задайте допълнителни въпроси.',
         },
         {
           id: 'palnomoshtno',
           title: 'Проверка на пълномощно',
-          detail: 'Ако продавачът не идва лично, а изпраща пълномощник, проверете пълномощното при нотариуса, който го е заверил. Това е един от най-честите начини за измама с имоти.',
+          detail: 'Ако продавачът не идва лично, а изпраща пълномощник, помолете нотариуса да провери пълномощното в регистъра на Нотариалната камара - дали е истинско и дали не е оттеглено. Фалшивите пълномощни са известна схема за имотни измами.',
         },
         {
           id: 'zadalzhenia',
           title: 'Неплатени данъци и сметки',
-          detail: 'Поискайте доказателство, че няма дългове за данък сгради, такса битови отпадъци, ток, вода, парно и такси към входа. Някои от тези дългове могат да станат Ваш проблем след покупката.',
+          detail: 'Нотариусът проверява по електронен път дали продавачът има публични задължения (например данъци). За сметките за ток, вода, парно и таксите към входа поискайте от продавача доказателство, че са платени.',
         },
         {
           id: 'naemateli',
           title: 'Кой живее в имота',
-          detail: 'Ако имотът е отдаден под наем, разберете до кога е договорът и кога наемателите ще напуснат. Запишете това в предварителния договор.',
+          detail: 'Ако имотът е отдаден под наем, разберете до кога е договорът и кога наемателите ще напуснат. Договор за наем, вписан в имотния регистър, остава в сила и за новия собственик. Запишете срока за освобождаване в предварителния договор.',
         },
       ],
     },
@@ -85,7 +85,7 @@ const bg: Content = {
         {
           id: 'saotvetstvie',
           title: 'Съвпада ли имотът с документите',
-          detail: 'Затворени тераси, съборени стени или пристроени помещения, които ги няма в схемата, може да са незаконни. Това може да създаде проблеми при кредит или при бъдеща продажба.',
+          detail: 'Затворени тераси, премахнати стени или пристроени помещения, които ги няма в схемата, може да са направени без разрешение. Поискайте документи за всяка такава промяна.',
         },
         {
           id: 'instalatsii',
@@ -105,7 +105,7 @@ const bg: Content = {
         {
           id: 'kvartal',
           title: 'Кварталът наоколо',
-          detail: 'Разходете се пеша: транспорт, паркиране, училища, магазини. Проверете дали наблизо не се строи нещо, което ще закрие гледката или ще носи шум години наред.',
+          detail: 'Разходете се пеша и вижте транспорта, паркирането, училищата и магазините. Проверете дали наблизо не се строи нещо, което ще закрие гледката или ще вдига шум години наред.',
         },
       ],
     },
@@ -127,29 +127,29 @@ const bg: Content = {
         {
           id: 'etapi',
           title: 'Етап на строежа',
-          detail: 'Акт 14 означава завършен груб строеж, Акт 15 - завършена сграда, Акт 16 - сградата може да се ползва. Колкото по-ранен е етапът, толкова по-голям е рискът.',
+          detail: 'Акт 14 означава завършен груб строеж, Акт 15 - завършена сграда, а Акт 16 установява, че сградата е годна за ползване. Колкото по-ранен е етапът, толкова по-голям е рискът.',
         },
         {
           id: 'plashtania',
           title: 'Плащания, обвързани с етапите',
-          detail: 'Най-сигурно е вноските да са обвързани с актовете - например част при Акт 14 и остатъкът при Акт 16. Внимавайте, ако се иска почти цялата сума много рано.',
+          detail: 'По-сигурно е вноските да са обвързани с актовете - например част при Акт 14 и остатъкът при Акт 16. Внимавайте, ако се иска почти цялата сума много рано.',
         },
         {
           id: 'stroitel',
           title: 'Репутацията на строителя',
-          detail: 'Разгледайте негови завършени сгради и, ако може, поговорете с хора, които живеят там. Закъсненията и качеството се виждат най-добре на място.',
+          detail: 'Разгледайте сгради, които вече е завършил, и ако е възможно, поговорете с хора, които живеят там. Закъсненията и качеството се виждат най-добре на място.',
         },
       ],
     },
     {
       id: 'predi-podpis',
       title: 'Преди да подпишете',
-      intro: 'Предварителният договор е мястото, където се пазите. Не го подписвайте набързо.',
+      intro: 'Предварителният договор е това, което Ви защитава. Не го подписвайте набързо.',
       items: [
         {
           id: 'predvaritelen-dogovor',
           title: 'Писмен предварителен договор',
-          detail: 'Устна уговорка не Ви пази. В договора трябва да са цената, капарото, срокът до нотариуса и какво се случва, ако някоя страна се откаже.',
+          detail: 'Устната уговорка не Ви защитава. В договора трябва да са цената, капарото, срокът до нотариуса и какво се случва, ако някоя страна се откаже.',
         },
         {
           id: 'kredit',
@@ -159,7 +159,7 @@ const bg: Content = {
         {
           id: 'realna-tsena',
           title: 'Реалната цена в нотариалния акт',
-          detail: 'Ако Ви предложат в акта да се впише по-ниска цена от реално платената, откажете. Това е незаконно, а ако сделката се развали, ще Ви е трудно да докажете, че сте платили повече.',
+          detail: 'Ако Ви предложат в акта да се впише по-ниска цена от реално платената, откажете. Това е невярно деклариране, за което се носи наказателна отговорност, а ако сделката се развали, ще Ви е трудно да докажете, че сте платили повече.',
         },
         {
           id: 'razhodi',
@@ -174,7 +174,7 @@ const bg: Content = {
       ],
     },
   ],
-  redFlagsTitle: 'Сигнали, при които да спрете',
+  redFlagsTitle: 'Тревожни сигнали',
   redFlagsIntro: 'Нито един от тях не означава задължително измама, но всеки е причина да спрете и да проверите внимателно.',
   redFlags: [
     'Продавачът отказва да покаже документите преди капарото.',
@@ -207,12 +207,12 @@ const en: Content = {
         {
           id: 'danachna-otsenka',
           title: 'Tax valuation certificate',
-          detail: 'Issued by the municipality and needed for the deal at the notary. If the tax valuation is higher than the price, tax and fees are calculated on it.',
+          detail: 'Issued by the municipality and needed for the deal at the notary. If the tax valuation is higher than the price, the local tax and the fees are calculated on it.',
         },
         {
           id: 'akt-16',
           title: 'Proof the building is complete',
-          detail: 'For newer buildings - Act 16 and a permit for use or a certificate of commissioning. Without it, the building is not officially finished.',
+          detail: 'For newer buildings - a permit for use or a certificate of commissioning. Without it, nobody can legally live in the property.',
         },
         {
           id: 'lichni-danni',
@@ -224,32 +224,32 @@ const en: Content = {
     {
       id: 'pravna-proverka',
       title: 'Legal check of the property',
-      intro: 'This check costs little and can save you the whole property. If you are not sure how to do it, do it with a lawyer.',
+      intro: 'This check costs little and can protect you from losing the whole property. If you are not sure how to do it, ask a lawyer to do it.',
       items: [
         {
           id: 'tezhesti',
           title: 'Certificate of encumbrances',
-          detail: 'Issued by the Registry Agency. It shows whether the property has a mortgage, a seizure, a lien or a pending lawsuit. Ask for at least 10 years back, and check it right before the deal, not weeks earlier.',
+          detail: 'Issued by the Registry Agency. It shows whether any mortgages, attachment orders or lawsuits are registered against the property. Get a fresh certificate right before the deal, not one from weeks earlier.',
         },
         {
           id: 'istoria',
           title: 'Ownership history',
-          detail: 'Check when and how the seller acquired the property. A property that changes owners very often, or was bought only weeks ago, deserves extra questions.',
+          detail: 'Check when and how the seller acquired the property. If it changes owners often, or was bought only weeks ago, ask more questions.',
         },
         {
           id: 'palnomoshtno',
           title: 'Check any power of attorney',
-          detail: 'If the seller sends a representative instead of coming in person, verify the power of attorney with the notary who certified it. This is one of the most common ways property fraud happens.',
+          detail: 'If the seller sends a representative instead of coming in person, ask the notary to check the power of attorney in the Notary Chamber register - that it is genuine and has not been revoked. Fake powers of attorney are a known property fraud scheme.',
         },
         {
           id: 'zadalzhenia',
           title: 'Unpaid taxes and bills',
-          detail: 'Ask for proof there are no debts for property tax, waste fee, electricity, water, heating and building fees. Some of these debts can become your problem after you buy.',
+          detail: 'The notary checks electronically whether the seller owes public debts (such as taxes). For electricity, water, heating and building fees, ask the seller for proof they are paid.',
         },
         {
           id: 'naemateli',
           title: 'Who lives there',
-          detail: 'If the property is rented out, find out when the lease ends and when the tenants will leave. Write this into the preliminary contract.',
+          detail: 'If the property is rented out, find out when the lease ends and when the tenants will leave. A lease registered in the property register stays in force for the new owner. Write the move-out date into the preliminary contract.',
         },
       ],
     },
@@ -261,7 +261,7 @@ const en: Content = {
         {
           id: 'saotvetstvie',
           title: 'Does it match the documents',
-          detail: 'Enclosed balconies, removed walls or added rooms that are not in the scheme may be illegal. That can cause problems with a mortgage or a future sale.',
+          detail: 'Enclosed balconies, removed walls or added rooms that are not in the scheme may have been done without a permit. Ask for documents for every such change.',
         },
         {
           id: 'instalatsii',
@@ -281,7 +281,7 @@ const en: Content = {
         {
           id: 'kvartal',
           title: 'The surrounding area',
-          detail: 'Walk around: transport, parking, schools, shops. Check whether anything is being built nearby that will block the view or bring noise for years.',
+          detail: 'Walk around and look at transport, parking, schools and shops. Check whether anything is being built nearby that will block the view or make noise for years.',
         },
       ],
     },
@@ -303,12 +303,12 @@ const en: Content = {
         {
           id: 'etapi',
           title: 'Construction stage',
-          detail: 'Act 14 means the rough structure is done, Act 15 that the building is finished, Act 16 that it can be used. The earlier the stage, the bigger the risk.',
+          detail: 'Act 14 means the rough structure is done, Act 15 that the building is finished, and Act 16 confirms it is fit for use. The earlier the stage, the bigger the risk.',
         },
         {
           id: 'plashtania',
           title: 'Payments tied to the stages',
-          detail: 'It is safest when instalments are tied to the acts - for example part at Act 14 and the rest at Act 16. Be careful if almost the full amount is asked for very early.',
+          detail: 'It is safer when instalments are tied to the acts - for example part at Act 14 and the rest at Act 16. Be careful if almost the full amount is asked for very early.',
         },
         {
           id: 'stroitel',
@@ -320,7 +320,7 @@ const en: Content = {
     {
       id: 'predi-podpis',
       title: 'Before you sign',
-      intro: 'The preliminary contract is where you protect yourself. Do not sign it in a hurry.',
+      intro: 'The preliminary contract is what protects you. Do not sign it in a hurry.',
       items: [
         {
           id: 'predvaritelen-dogovor',
@@ -335,7 +335,7 @@ const en: Content = {
         {
           id: 'realna-tsena',
           title: 'The real price in the deed',
-          detail: 'If someone suggests writing a lower price in the deed than you actually pay, refuse. It is illegal, and if the deal falls apart it will be hard to prove you paid more.',
+          detail: 'If someone suggests writing a lower price in the deed than you actually pay, refuse. It is a false declaration that carries criminal liability, and if the deal falls apart it will be hard to prove you paid more.',
         },
         {
           id: 'razhodi',
@@ -350,7 +350,7 @@ const en: Content = {
       ],
     },
   ],
-  redFlagsTitle: 'Signs to stop',
+  redFlagsTitle: 'Warning signs',
   redFlagsIntro: 'None of these always means fraud, but each one is a reason to stop and check carefully.',
   redFlags: [
     'The seller refuses to show documents before the deposit.',
