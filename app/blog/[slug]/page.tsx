@@ -6,7 +6,7 @@ import { getBlogPost, getBlogPosts, getBlogSlugs } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
 import { blogPosts as staticPosts } from '@/data/blog'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
-import { localizeHref, hreflangAlternates, translateBlogCategory } from '@/lib/i18n/config'
+import { localizeHref, hreflangAlternates, translateBlogCategory, type Locale } from '@/lib/i18n/config'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -51,6 +51,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ...(image ? { images: [image] } : {}),
     },
   }
+}
+
+// Turns [text](/path) inside article text into links. Paths starting with "/"
+// are site pages (and get the /en prefix on the English site); anything else
+// opens in a new tab.
+function withLinks(text: string, locale: Locale) {
+  return text.split(/(\[[^\]]+\]\([^)\s]+\))/).map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/)
+    if (!m) return part
+    const className = 'text-brand-green font-semibold underline decoration-brand-gold/50 underline-offset-2 hover:text-brand-gold'
+    return m[2].startsWith('/') ? (
+      <Link key={i} href={localizeHref(m[2], locale)} className={className}>{m[1]}</Link>
+    ) : (
+      <a key={i} href={m[2]} target="_blank" rel="noopener noreferrer" className={className}>{m[1]}</a>
+    )
+  })
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -127,12 +143,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 return (
                   <p key={i} className="mb-4">
                     {parts.map((part, j) =>
-                      j % 2 === 1 ? <strong key={j} className="text-brand-green">{part}</strong> : part
+                      j % 2 === 1 ? <strong key={j} className="text-brand-green">{part}</strong> : <span key={j}>{withLinks(part, locale)}</span>
                     )}
                   </p>
                 )
               }
-              return <p key={i} className="mb-4">{paragraph}</p>
+              return <p key={i} className="mb-4">{withLinks(paragraph, locale)}</p>
             })}
           </div>
 
