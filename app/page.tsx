@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = { url: '/og-default.png', width: 1200, height: 630 }
 
   if (locale === 'en') {
-    const title = 'New Key Properties | Real Estate in Sofia'
+    const title = 'New Key Properties | Real estate in Sofia'
     const description =
       'New Key Properties – an honest, trustworthy real estate agency in Sofia. Sales, rentals, and property sourcing with genuine client care.'
     return {
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
       twitter: { card: 'summary_large_image', title, description, images: [image.url] },
     }
   }
-  const title = 'New Key Properties | Недвижими Имоти в София'
+  const title = 'New Key Properties | Недвижими имоти в София'
   const description =
     'New Key Properties – честна и надеждна агенция за недвижими имоти в София. Продажби, наеми и намиране на имоти с максимална грижа за клиента.'
   return {

@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
   return {
-    title: 'За Нас',
+    title: 'За нас',
     description:
       'Научете повече за New Key Properties – честна агенция за недвижими имоти в София с истинска грижа за клиентите.',
     alternates: hreflangAlternates('/about', locale),

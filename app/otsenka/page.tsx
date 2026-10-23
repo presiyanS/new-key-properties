@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = { url: '/og-otsenka.png', width: 1200, height: 630 }
 
   if (locale === 'en') {
-    const title = 'Free Property Valuation | New Key Properties'
+    const title = 'Free property valuation | New Key Properties'
     const description =
       'Get a free, honest market valuation of your property in Sofia. No obligation — our brokers respond within 24 hours with a fair price estimate.'
     return {
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
       twitter: { card: 'summary_large_image', title, description, images: [image.url] },
     }
   }
-  const title = 'Безплатна Оценка на Имот | New Key Properties'
+  const title = 'Безплатна оценка на имот | New Key Properties'
   const description =
     'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент — нашите брокери отговарят до 24 часа с точна ценова оценка.'
   return {
