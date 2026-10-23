@@ -10,6 +10,7 @@ import VideoTour from '@/components/VideoTour'
 import ShareButtons from '@/components/ShareButtons'
 import ScrollToTop from '@/components/ScrollToTop'
 import MortgageCalculator from '@/components/MortgageCalculator'
+import PurchaseCostsCalculator from '@/components/PurchaseCostsCalculator'
 import { getLocale, getDictionary } from '@/lib/i18n/getDictionary'
 import { localizeHref, hreflangAlternates, translateNeighborhood, translateFloor, translatePriceText } from '@/lib/i18n/config'
 
@@ -284,9 +285,12 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 <ShareButtons id={id} title={title} />
               </div>
 
-              {/* Mortgage calculator */}
+              {/* Mortgage and buying-costs calculators */}
               {listing.type === 'sale' && listing.status === 'active' && !isNaN(numericPrice) && numericPrice > 0 && (
-                <MortgageCalculator price={numericPrice} />
+                <>
+                  <MortgageCalculator price={numericPrice} />
+                  <PurchaseCostsCalculator price={numericPrice} />
+                </>
               )}
 
               {/* Map */}

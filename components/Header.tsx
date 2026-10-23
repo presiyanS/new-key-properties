@@ -84,6 +84,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     { href: '/blog', label: dict.nav.blog },
     { href: '/konsultatsiya', label: dict.nav.konsultatsiya },
     { href: '/otsenka', label: dict.nav.valuation },
+    { href: '/kalkulator', label: dict.nav.calculator },
     { href: '/contact', label: dict.nav.contact },
   ].map((l) => ({ ...l, href: localizeHref(l.href, locale) }))
 
@@ -95,7 +96,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     link('/'),
     link('/listings'),
     link('/kvartali'),
-    { key: 'services', label: dict.nav.services, children: [link('/konsultatsiya'), link('/otsenka')] },
+    { key: 'services', label: dict.nav.services, children: [link('/konsultatsiya'), link('/otsenka'), link('/kalkulator')] },
     { key: 'about', label: dict.nav.about, children: [link('/about'), link('/team')] },
     link('/blog'),
     link('/contact'),
