@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const name = locale === 'en' ? (n.nameEn ?? n.name) : n.name
 
   if (locale === 'en') {
-    const title = `${name} Neighborhood, Sofia — Prices, Rent & Listings | New Key Properties`
+    const title = `${name} neighborhood, Sofia - prices, rent and listings | New Key Properties`
     const description = n.metaDescriptionEn ?? `Full guide to the ${name} neighborhood in Sofia: current property prices, rents, transport, pros and cons. New Key Properties.`
     return {
       // absolute: the layout would otherwise add a second "| New Key Properties"
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
   }
 
-  const title = `Квартал ${n.name} София — Цени, Наем и Имоти | New Key Properties`
+  const title = `Квартал ${n.name}, София - цени, наеми и имоти | New Key Properties`
   const description = n.metaDescription ?? `Пълен наръчник за квартал ${n.name} в София: актуални цени на имоти, наеми, транспорт, предимства и недостатъци. New Key Properties.`
   return {
     // absolute: the layout would otherwise add a second "| New Key Properties"
