@@ -1,6 +1,6 @@
 'use client'
 
-// Small building blocks shared by PurchaseCostsCalculator and SaleTaxCalculator.
+// Small building blocks shared by the calculators (purchase costs, sale tax, rental yield, affordability).
 
 import type { ReactNode } from 'react'
 
@@ -98,6 +98,26 @@ export function BreakdownRow({ label, note, amount }: { label: string; note?: Re
         {note && <div className="text-xs text-gray-400 mt-0.5">{note}</div>}
       </div>
       <p className="font-semibold text-gray-900 whitespace-nowrap">{amount}</p>
+    </div>
+  )
+}
+
+/** Decimal number field with a unit after it (e.g. interest rate in %). Accepts "2,75" or "2.75". */
+export function DecimalInput({ id, label, unit, value, onChange }: { id: string; label: string; unit: string; value: string; onChange: (v: string) => void }) {
+  return (
+    <div>
+      <label htmlFor={id} className={labelClass}>{label}</label>
+      <div className="relative">
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          value={value}
+          onChange={(e) => onChange(e.target.value.replace(/[^\d.,]/g, '').slice(0, 5))}
+          className={`${inputClass} pr-10`}
+        />
+        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">{unit}</span>
+      </div>
     </div>
   )
 }

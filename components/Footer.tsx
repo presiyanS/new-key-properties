@@ -116,6 +116,7 @@ export default function Footer({
                 { href: '/otsenka', label: dict.nav.valuation },
                 { href: '/kalkulator', label: dict.nav.calculator },
                 { href: '/dohodnost-ot-naem', label: dict.nav.rentalYield },
+                { href: '/kolko-moga-da-si-pozvolya', label: dict.nav.affordability },
                 { href: '/proverka-na-imot', label: dict.nav.checklist },
                 { href: '/contact', label: dict.nav.contact },
               ].map((l) => (

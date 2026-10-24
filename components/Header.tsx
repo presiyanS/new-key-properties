@@ -87,6 +87,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     { href: '/kalkulator', label: dict.nav.calculator },
     { href: '/proverka-na-imot', label: dict.nav.checklist },
     { href: '/dohodnost-ot-naem', label: dict.nav.rentalYield },
+    { href: '/kolko-moga-da-si-pozvolya', label: dict.nav.affordability },
     { href: '/contact', label: dict.nav.contact },
   ].map((l) => ({ ...l, href: localizeHref(l.href, locale) }))
 
@@ -98,7 +99,7 @@ export default function Header({ phone, phoneDisplay, socialLinks }: Props) {
     link('/'),
     link('/listings'),
     link('/kvartali'),
-    { key: 'services', label: dict.nav.services, children: [link('/konsultatsiya'), link('/otsenka'), link('/kalkulator'), link('/dohodnost-ot-naem'), link('/proverka-na-imot')] },
+    { key: 'services', label: dict.nav.services, children: [link('/konsultatsiya'), link('/otsenka'), link('/kalkulator'), link('/dohodnost-ot-naem'), link('/kolko-moga-da-si-pozvolya'), link('/proverka-na-imot')] },
     { key: 'about', label: dict.nav.about, children: [link('/about'), link('/team')] },
     link('/blog'),
     link('/contact'),

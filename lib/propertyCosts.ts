@@ -203,3 +203,101 @@ export function rentalYield(input: RentalYieldInput): RentalYieldResult | null {
     paybackYears: netIncome > 0 ? totalInvestment / netIncome : null,
   }
 }
+
+// ── Affordability ───────────────────────────────────────────────────────
+
+/** BNB limits on home loans since 1 Oct 2024: loan ≤ 85% of value, payment ≤ 50% of income, ≤ 30 years. */
+export const MAX_LOAN_TO_VALUE = 0.85
+export const MAX_PAYMENT_TO_INCOME = 0.5
+
+/** Rough bank-side costs: property valuation + application/processing fee. Varies by bank. */
+export const BANK_FEES_ESTIMATE = 350
+
+/** Monthly annuity payment for a loan at a yearly rate (percent) over `years`. */
+export function monthlyPayment(loan: number, ratePercent: number, years: number): number {
+  const r = ratePercent / 100 / 12
+  const n = years * 12
+  return r === 0 ? loan / n : (loan * r) / (1 - Math.pow(1 + r, -n))
+}
+
+/** The largest loan a monthly payment can carry. */
+function loanForPayment(payment: number, ratePercent: number, years: number): number {
+  const r = ratePercent / 100 / 12
+  const n = years * 12
+  return r === 0 ? payment * n : (payment * (1 - Math.pow(1 + r, -n))) / r
+}
+
+/**
+ * Costs of putting a mortgage on the property: notary fee for the mortgage
+ * deed (same tariff scale, on the loan amount) + VAT, 0.1% registration of the
+ * mortgage, and the bank's own fees.
+ */
+export function mortgageFees(loan: number, notaryChargesVat: boolean): number {
+  if (!(loan > 0)) return 0
+  const notary = notaryFee(loan)
+  const vat = notaryChargesVat ? notary * VAT_RATE : 0
+  const registry = Math.max(loan * REGISTRY_FEE_RATE, REGISTRY_FEE_MIN)
+  return round2(notary + vat + registry + BANK_FEES_ESTIMATE)
+}
+
+export type AffordabilityInput = {
+  /** Household net income per month. */
+  monthlyIncome: number
+  /** Payments on loans the household already has. */
+  otherPayments: number
+  savings: number
+  ratePercent: number
+  years: number
+  /** Share of income the buyer is willing to put towards the payment, at most 0.5. */
+  paymentShare: number
+}
+
+export type AffordabilityResult = {
+  price: number
+  loan: number
+  payment: number
+  downPayment: number
+  purchaseCosts: number
+  mortgageFees: number
+  /** What capped the price: the income (payment limit) or the savings (cash needed upfront). */
+  limitedBy: 'income' | 'savings'
+  /** Payment if the (usually floating) rate rises by 2 points. */
+  paymentIfRateUp: number
+}
+
+export function affordability(input: AffordabilityInput): AffordabilityResult | null {
+  const share = Math.min(input.paymentShare, MAX_PAYMENT_TO_INCOME)
+  const maxPayment = Math.max(input.monthlyIncome * share - input.otherPayments, 0)
+  const maxLoanByIncome = loanForPayment(maxPayment, input.ratePercent, input.years)
+  if (!(input.savings > 0)) return null
+
+  // Cash needed upfront for a given price; grows with price, so binary-search the largest one the savings cover.
+  const plan = (price: number) => {
+    const loan = Math.min(price * MAX_LOAN_TO_VALUE, maxLoanByIncome)
+    const buying = purchaseCosts(price, false).total
+    const fees = mortgageFees(loan, true)
+    return { loan, buying, fees, cash: price - loan + buying + fees }
+  }
+  let lo = 0
+  let hi = input.savings / (1 - MAX_LOAN_TO_VALUE) + 1
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2
+    if (plan(mid).cash <= input.savings) lo = mid
+    else hi = mid
+  }
+  // Round down to a whole hundred so the shown price is always affordable.
+  const price = Math.floor(lo / 100) * 100
+  if (price <= 0) return null
+  const p = plan(price)
+  const loan = Math.floor(p.loan)
+  return {
+    price,
+    loan,
+    payment: round2(monthlyPayment(loan, input.ratePercent, input.years)),
+    downPayment: round2(price - loan),
+    purchaseCosts: p.buying,
+    mortgageFees: p.fees,
+    limitedBy: price * MAX_LOAN_TO_VALUE > maxLoanByIncome + 1 ? 'income' : 'savings',
+    paymentIfRateUp: round2(monthlyPayment(loan, input.ratePercent + 2, input.years)),
+  }
+}
