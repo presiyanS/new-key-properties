@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
 import { rentalYield } from '@/lib/propertyCosts'
-import { BreakdownRow, Choice, MoneyInput, useMoneyFormat } from './calculatorFields'
+import { BreakdownRow, DecimalInput, MoneyInput, parseDecimal, useMoneyFormat } from './calculatorFields'
 
 export default function RentalYieldCalculator() {
   const { locale, dict } = useLocale()
@@ -17,10 +17,14 @@ export default function RentalYieldCalculator() {
   const [price, setPrice] = useState(150000)
   const [monthlyRent, setMonthlyRent] = useState(525)
   const [setupCosts, setSetupCosts] = useState(5000)
-  const [vacantMonths, setVacantMonths] = useState(1)
-  const [managementRate, setManagementRate] = useState(0)
+  const [vacantText, setVacantText] = useState('1')
+  const [managementText, setManagementText] = useState('0')
   const [localFeesPerYear, setLocalFeesPerYear] = useState(150)
   const [upkeepPerYear, setUpkeepPerYear] = useState(300)
+
+  // Typed freely; kept within sensible bounds (a year has 12 months, a fee can't exceed the rent).
+  const vacantMonths = Math.min(parseDecimal(vacantText), 12)
+  const managementRate = Math.min(parseDecimal(managementText), 100) / 100
 
   const r = rentalYield({ price, monthlyRent, setupCosts, vacantMonths, managementRate, localFeesPerYear, upkeepPerYear })
   const minus = (n: number) => (n > 0 ? `− ${fmt(n)}` : fmt(0))
@@ -37,24 +41,9 @@ export default function RentalYieldCalculator() {
           <MoneyInput id="yield-setup" label={t.setupCosts} value={setupCosts} onChange={setSetupCosts} />
           <MoneyInput id="yield-fees" label={t.localFees} value={localFeesPerYear} onChange={setLocalFeesPerYear} />
           <MoneyInput id="yield-upkeep" label={t.upkeep} value={upkeepPerYear} onChange={setUpkeepPerYear} />
+          <DecimalInput id="yield-vacant" label={t.vacantMonths} unit={t.vacantUnit} value={vacantText} onChange={setVacantText} hint={t.vacantHint} />
+          <DecimalInput id="yield-management" label={t.management} unit="%" value={managementText} onChange={setManagementText} hint={t.managementHint} />
         </div>
-        <Choice
-          label={t.vacantMonths}
-          value={vacantMonths}
-          onChange={setVacantMonths}
-          options={[0, 1, 2, 3].map((n) => ({ value: n, label: String(n) }))}
-        />
-        <Choice
-          label={t.management}
-          value={managementRate}
-          onChange={setManagementRate}
-          options={[
-            { value: 0, label: t.managementSelf },
-            { value: 0.08, label: '8%' },
-            { value: 0.1, label: '10%' },
-            { value: 0.15, label: '15%' },
-          ]}
-        />
       </div>
 
       {!r ? (

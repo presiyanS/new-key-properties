@@ -102,8 +102,29 @@ export function BreakdownRow({ label, note, amount }: { label: string; note?: Re
   )
 }
 
+/** Reads "2,75" or "2.75" typed by the visitor; empty or invalid gives 0. */
+export function parseDecimal(text: string): number {
+  const n = Number(text.replace(',', '.'))
+  return Number.isFinite(n) ? n : 0
+}
+
 /** Decimal number field with a unit after it (e.g. interest rate in %). Accepts "2,75" or "2.75". */
-export function DecimalInput({ id, label, unit, value, onChange }: { id: string; label: string; unit: string; value: string; onChange: (v: string) => void }) {
+export function DecimalInput({
+  id,
+  label,
+  unit,
+  value,
+  onChange,
+  hint,
+}: {
+  id: string
+  label: string
+  unit: string
+  value: string
+  onChange: (v: string) => void
+  /** Small grey line under the field, e.g. the allowed range or a warning. */
+  hint?: ReactNode
+}) {
   return (
     <div>
       <label htmlFor={id} className={labelClass}>{label}</label>
@@ -114,10 +135,11 @@ export function DecimalInput({ id, label, unit, value, onChange }: { id: string;
           inputMode="decimal"
           value={value}
           onChange={(e) => onChange(e.target.value.replace(/[^\d.,]/g, '').slice(0, 5))}
-          className={`${inputClass} pr-10`}
+          className={`${inputClass} pr-16`}
         />
         <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">{unit}</span>
       </div>
+      {hint && <div className="text-xs text-gray-400 mt-1.5">{hint}</div>}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
-import { getBuyerChecklist } from '@/lib/buyerChecklist'
+import { getBuyerChecklist, type ChecklistItem } from '@/lib/buyerChecklist'
 
 // Ticked items are remembered in the visitor's own browser only (nothing is
 // sent to us). Storage can be blocked, e.g. in private mode, so every access
@@ -52,6 +52,38 @@ export default function BuyerChecklist() {
   const done = allItems.filter((i) => checked[i.id]).length
   const percent = Math.round((done / allItems.length) * 100)
 
+  const renderItem = (item: ChecklistItem) => {
+    const isChecked = !!checked[item.id]
+    return (
+      <li key={item.id} className="break-inside-avoid">
+        <label className="flex gap-4 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={() => toggle(item.id)}
+            className="mt-1 w-5 h-5 shrink-0 accent-brand-green cursor-pointer"
+          />
+          <span>
+            <span className={`block font-semibold transition-colors ${isChecked ? 'text-gray-400 line-through' : 'text-gray-900 group-hover:text-brand-green'}`}>
+              {item.title}
+            </span>
+            <span className="block text-gray-600 text-sm leading-relaxed mt-1">
+              {item.detail}
+              {item.id === 'razhodi' && (
+                <>
+                  {' '}
+                  <Link href={localizeHref('/kalkulator', locale)} className="text-brand-green font-medium hover:text-brand-gold transition-colors whitespace-nowrap print:hidden">
+                    {t.calculatorLink} →
+                  </Link>
+                </>
+              )}
+            </span>
+          </span>
+        </label>
+      </li>
+    )
+  }
+
   return (
     <div>
       {/* Progress bar - stays visible while scrolling */}
@@ -77,52 +109,24 @@ export default function BuyerChecklist() {
         <p className="text-xs text-gray-400 mt-2">{t.savedNote}</p>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-8 print:space-y-6">
         {content.sections.map((section, sIdx) => (
-          <section key={section.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 break-inside-avoid">
-            <h2 className="font-serif text-2xl font-bold text-brand-green mb-2">
-              <span className="text-brand-gold mr-2">{sIdx + 1}.</span>
-              {section.title}
-            </h2>
-            <p className="text-gray-500 mb-6">{section.intro}</p>
-            <ul className="space-y-4">
-              {section.items.map((item) => {
-                const isChecked = !!checked[item.id]
-                return (
-                  <li key={item.id}>
-                    <label className="flex gap-4 cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => toggle(item.id)}
-                        className="mt-1 w-5 h-5 shrink-0 accent-brand-green cursor-pointer"
-                      />
-                      <span>
-                        <span className={`block font-semibold transition-colors ${isChecked ? 'text-gray-400 line-through' : 'text-gray-900 group-hover:text-brand-green'}`}>
-                          {item.title}
-                        </span>
-                        <span className="block text-gray-600 text-sm leading-relaxed mt-1">
-                          {item.detail}
-                          {item.id === 'razhodi' && (
-                            <>
-                              {' '}
-                              <Link href={localizeHref('/kalkulator', locale)} className="text-brand-green font-medium hover:text-brand-gold transition-colors whitespace-nowrap">
-                                {t.calculatorLink} →
-                              </Link>
-                            </>
-                          )}
-                        </span>
-                      </span>
-                    </label>
-                  </li>
-                )
-              })}
-            </ul>
+          <section key={section.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 print:shadow-none print:border-0 print:rounded-none print:p-0">
+            {/* On paper the heading stays on the same page as its first item. */}
+            <div className="break-inside-avoid">
+              <h2 className="font-serif text-2xl font-bold text-brand-green mb-2 print:text-xl">
+                <span className="text-brand-gold mr-2">{sIdx + 1}.</span>
+                {section.title}
+              </h2>
+              <p className="text-gray-500 mb-6 print:mb-3 print:text-sm">{section.intro}</p>
+              <ul>{renderItem(section.items[0])}</ul>
+            </div>
+            <ul className="space-y-4 mt-4 print:space-y-2 print:mt-2">{section.items.slice(1).map(renderItem)}</ul>
           </section>
         ))}
 
         {/* Red flags - information, not tick boxes */}
-        <section className="bg-red-50 border border-red-100 rounded-2xl p-6 sm:p-8 break-inside-avoid">
+        <section className="bg-red-50 border border-red-100 rounded-2xl p-6 sm:p-8 break-inside-avoid print:bg-white print:border-red-300">
           <h2 className="font-serif text-2xl font-bold text-red-900 mb-2">{content.redFlagsTitle}</h2>
           <p className="text-red-800/80 mb-6">{content.redFlagsIntro}</p>
           <ul className="space-y-3">

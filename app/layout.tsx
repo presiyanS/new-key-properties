@@ -105,12 +105,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-white text-gray-900`}>
         <LocaleProvider locale={locale} dict={dict}>
-          {!isStudio && <ViberBanner initialDismissed={viberBannerDismissed} />}
-          {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
+          {/* Site chrome is left off printed pages. `contents` keeps the wrapper box-less on screen, so the sticky header still works. */}
+          <div className="contents print:hidden">
+            {!isStudio && <ViberBanner initialDismissed={viberBannerDismissed} />}
+            {!isStudio && <Header phone={phone} phoneDisplay={phoneDisplay} socialLinks={socialLinks} />}
+          </div>
           <main>{children}</main>
-          {!isStudio && <Footer settings={settings} locale={locale} dict={dict} />}
-          {!isStudio && <FloatingCTA phone={phone} />}
-          {!isStudio && <CookieConsent initialStatus={initialConsent} />}
+          <div className="contents print:hidden">
+            {!isStudio && <Footer settings={settings} locale={locale} dict={dict} />}
+            {!isStudio && <FloatingCTA phone={phone} />}
+            {!isStudio && <CookieConsent initialStatus={initialConsent} />}
+          </div>
         </LocaleProvider>
         {isDraftMode && <VisualEditing />}
         <Analytics />

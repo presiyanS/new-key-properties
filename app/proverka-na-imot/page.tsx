@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import BuyerChecklist from '@/components/BuyerChecklist'
 import { getSiteSettings } from '@/lib/sanity'
 import { draftMode } from 'next/headers'
@@ -63,8 +64,17 @@ export default async function ProverkaNaImotPage() {
 
   return (
     <>
+      {/* ── Print-only header: replaces the hero and site menu on paper ── */}
+      <div className="hidden print:flex items-center gap-4 border-b-2 border-brand-gold pb-4 mb-6">
+        <Image src="/logo.png" alt="New Key Properties" width={56} height={56} className="w-14 h-14" />
+        <div>
+          <p className="font-serif text-2xl font-bold text-brand-green">{t.heroTitle} {t.heroTitleGold}</p>
+          <p className="text-sm text-gray-600">New Key Properties · {phoneDisplay} · office@newkey.bg · newkey.bg</p>
+        </div>
+      </div>
+
       {/* ── Hero ── */}
-      <section className="bg-brand-green py-20 relative overflow-hidden">
+      <section className="bg-brand-green py-20 relative overflow-hidden print:hidden">
         <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-brand-gold/5 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl">
@@ -84,15 +94,15 @@ export default async function ProverkaNaImotPage() {
       </section>
 
       {/* ── Checklist ── */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-gray-50 print:p-0 print:bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 print:max-w-none print:p-0">
           <BuyerChecklist />
           <p className="text-sm text-gray-500 leading-relaxed mt-8">{t.disclaimer}</p>
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white print:hidden">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl font-bold text-brand-green mb-4">{t.ctaTitle}</h2>
           <p className="text-gray-500 text-lg leading-relaxed mb-8">{t.ctaSubtitle}</p>

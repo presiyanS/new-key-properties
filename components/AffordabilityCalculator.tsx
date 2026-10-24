@@ -4,8 +4,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale } from '@/lib/i18n/LocaleContext'
 import { localizeHref } from '@/lib/i18n/config'
-import { affordability } from '@/lib/propertyCosts'
-import { BreakdownRow, Choice, DecimalInput, MoneyInput, useMoneyFormat } from './calculatorFields'
+import { affordability, MAX_PAYMENT_TO_INCOME } from '@/lib/propertyCosts'
+import { BreakdownRow, DecimalInput, MoneyInput, parseDecimal, useMoneyFormat } from './calculatorFields'
+
+/** BNB maximum home-loan term. */
+const MAX_YEARS = 30
 
 export default function AffordabilityCalculator() {
   const { locale, dict } = useLocale()
@@ -16,13 +19,16 @@ export default function AffordabilityCalculator() {
   const [otherPayments, setOtherPayments] = useState(0)
   const [savings, setSavings] = useState(40000)
   const [rateText, setRateText] = useState(locale === 'en' ? '2.75' : '2,75')
-  const [years, setYears] = useState(30)
-  const [paymentShare, setPaymentShare] = useState(0.4)
+  const [yearsText, setYearsText] = useState('30')
+  const [shareText, setShareText] = useState('40')
 
-  const ratePercent = Number(rateText.replace(',', '.'))
-  const r = Number.isFinite(ratePercent)
-    ? affordability({ monthlyIncome, otherPayments, savings, ratePercent, years, paymentShare })
-    : null
+  // Typed freely, but a bank can't go past the BNB limits, so anything above is calculated at the limit (and said so).
+  const ratePercent = parseDecimal(rateText)
+  const typedYears = parseDecimal(yearsText)
+  const typedShare = parseDecimal(shareText) / 100
+  const years = Math.min(typedYears, MAX_YEARS)
+  const paymentShare = Math.min(typedShare, MAX_PAYMENT_TO_INCOME)
+  const r = years >= 1 && rateText !== '' ? affordability({ monthlyIncome, otherPayments, savings, ratePercent, years, paymentShare }) : null
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-xs border border-gray-100">
@@ -34,25 +40,24 @@ export default function AffordabilityCalculator() {
           <MoneyInput id="afford-income" label={t.monthlyIncome} value={monthlyIncome} onChange={setMonthlyIncome} />
           <MoneyInput id="afford-other" label={t.otherPayments} value={otherPayments} onChange={setOtherPayments} />
           <MoneyInput id="afford-savings" label={t.savings} value={savings} onChange={setSavings} />
-          <DecimalInput id="afford-rate" label={t.rate} unit="%" value={rateText} onChange={setRateText} />
+          <DecimalInput id="afford-rate" label={t.rate} unit="%" value={rateText} onChange={setRateText} hint={t.rateNote} />
+          <DecimalInput
+            id="afford-years"
+            label={t.years}
+            unit={t.yearsUnit}
+            value={yearsText}
+            onChange={setYearsText}
+            hint={typedYears > MAX_YEARS ? <span className="text-brand-green font-medium">{t.yearsOverMax}</span> : t.yearsHint}
+          />
+          <DecimalInput
+            id="afford-share"
+            label={t.paymentShare}
+            unit="%"
+            value={shareText}
+            onChange={setShareText}
+            hint={typedShare > MAX_PAYMENT_TO_INCOME ? <span className="text-brand-green font-medium">{t.shareOverMax}</span> : t.shareHint}
+          />
         </div>
-        <p className="text-xs text-gray-400 -mt-2">{t.rateNote}</p>
-        <Choice
-          label={t.years}
-          value={years}
-          onChange={setYears}
-          options={[20, 25, 30].map((n) => ({ value: n, label: `${n} ${t.yearsUnit}` }))}
-        />
-        <Choice
-          label={t.paymentShare}
-          value={paymentShare}
-          onChange={setPaymentShare}
-          options={[
-            { value: 0.3, label: '30%' },
-            { value: 0.4, label: '40%' },
-            { value: 0.5, label: t.paymentShareMax },
-          ]}
-        />
       </div>
 
       {!r ? (

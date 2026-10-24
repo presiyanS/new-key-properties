@@ -297,3 +297,8 @@
     }
   }
 }
+
+/* Printed pages (e.g. the property checklist): even margins on any paper size */
+@page {
+  margin: 15mm 14mm;
+}
