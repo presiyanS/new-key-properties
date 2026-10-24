@@ -14,6 +14,7 @@ const en: typeof bg = {
     checklist: 'Property checklist',
     rentalYield: 'Rental yield',
     affordability: 'Affordability calculator',
+    timeline: 'Offer to keys',
     services: 'Services',
     contact: 'Contact',
     callUs: 'Call us',
@@ -311,6 +312,15 @@ const en: typeof bg = {
     rateRise: 'Most loans have a floating rate. If it rises by 2 points, the payment becomes {payment}.',
     disclaimer: "An estimate. The bank lends up to 85% of its own valuation, which may be below the price, and decides by its own rules on income, age and credit history. Does not include agency commission.",
     costsLink: 'Buying and selling costs calculator',
+  },
+  timeline: {
+    financing: 'How you are paying',
+    cash: 'With my own money',
+    mortgage: 'With a mortgage',
+    stage: 'What you are buying',
+    ready: 'Finished building (with Act 16)',
+    newBuild: 'New build (under construction)',
+    who: 'Who',
   },
   blog: {
     articlesCount: 'articles',

@@ -118,6 +118,7 @@ export default function Footer({
                 { href: '/dohodnost-ot-naem', label: dict.nav.rentalYield },
                 { href: '/kolko-moga-da-si-pozvolya', label: dict.nav.affordability },
                 { href: '/proverka-na-imot', label: dict.nav.checklist },
+                { href: '/ot-oferta-do-klyuchove', label: dict.nav.timeline },
                 { href: '/contact', label: dict.nav.contact },
               ].map((l) => (
                 <li key={l.href}>
