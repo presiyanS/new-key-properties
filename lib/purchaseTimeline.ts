@@ -35,7 +35,7 @@ const bg: Content = {
       duration: 'Зависи от Вас',
       who: 'Вие и продавачът',
       detail:
-        'Огледайте имота внимателно и договорете не само цената, а и срока до нотариуса, какво остава в имота и кога ще бъде освободен. Запишете всичко договорено - то влиза в предварителния договор.',
+        'Огледайте имота внимателно и договорете не само цената, но и срока до нотариуса, какво остава в имота и кога ще бъде освободен. Запишете всичко договорено - то влиза в предварителния договор.',
       links: [{ href: '/proverka-na-imot', label: 'Какво да проверите при оглед' }],
     },
     {
@@ -64,7 +64,7 @@ const bg: Content = {
       duration: '1 ден',
       who: 'Вие и продавачът',
       detail:
-        'Подписвате писмен договор с цената, капарото и срока до нотариуса. Размерът на капарото е по договорка - често около 10%. Ако купувачът се откаже, губи капарото; ако продавачът се откаже, връща го в двоен размер (чл. 93 ЗЗД).',
+        'Подписвате писмен договор с цената, капарото и срока до нотариуса. Размерът на капарото е по договорка - законът не определя процент. Ако купувачът не изпълни договора, продавачът може да задържи капарото; ако продавачът не го изпълни, купувачът може да поиска капарото в двоен размер (чл. 93 ЗЗД).',
     },
     {
       id: 'predvaritelen-kredit',
@@ -82,16 +82,16 @@ const bg: Content = {
       duration: 'До завършване на сградата',
       who: 'Вие и строителят',
       detail:
-        'По-сигурно е вноските да са обвързани с актовете - например част при Акт 14 (груб строеж) и остатъкът при Акт 16. Кога точно се подписва нотариалният акт зависи от договора със строителя - уточнете го предварително.',
+        'По-сигурно е вноските да са обвързани с етапите на строежа - например част при Акт 14 (завършен груб строеж) и остатъкът след въвеждането на сградата в експлоатация. Кога точно се подписва нотариалният акт зависи от договора със строителя - уточнете го предварително.',
     },
     {
       id: 'akt16',
       stage: 'new',
-      title: 'Изчакване на Акт 16',
-      duration: 'Месеци до година',
-      who: 'Строителят и ДНСК',
+      title: 'Въвеждане на сградата в експлоатация',
+      duration: 'Зависи от сградата',
+      who: 'Строителят, ДНСК или общината',
       detail:
-        'След Акт 15 държавна комисия проверява сградата. На практика от Акт 15 до Акт 16 минават от няколко месеца до година. След протокола (Акт 16) ДНСК издава разрешение за ползване до 5 работни дни. Без него в имота не може законно да се живее.',
+        'При по-големите сгради държавна комисия съставя Акт 16, след което ДНСК издава разрешение за ползване до 5 работни дни. На практика от Акт 15 до Акт 16 минават от няколко месеца до година. При по-малките жилищни сгради Акт 16 няма - общината издава удостоверение за въвеждане в експлоатация. Без един от двата документа в имота не може законно да се живее.',
     },
     {
       id: 'dokumenti',
@@ -99,7 +99,7 @@ const bg: Content = {
       duration: '3–7 работни дни',
       who: 'Продавачът, нотариусът или Ваш адвокат',
       detail:
-        'Удостоверение за тежести от Агенцията по вписванията (3 или 7 работни дни), удостоверение за данъчна оценка от Столична община (1, 3 или 5 дни) и схема от кадастъра (3 или 7 работни дни). Може да върви успоредно с проверката от банката.',
+        'Удостоверение за тежести от Агенцията по вписванията (3 или 7 работни дни), удостоверение за данъчна оценка от Столична община (1, 3 или 5 дни) и схема от кадастъра (3 или 7 работни дни).',
       links: [{ href: '/proverka-na-imot', label: 'Какво да проверите' }],
     },
     {
@@ -117,17 +117,17 @@ const bg: Content = {
       duration: '1 ден',
       who: 'Вие, продавачът и нотариусът',
       detail:
-        'Подписвате нотариалния акт и нотариусът го вписва в имотния регистър. Преди това се плащат местният данък и таксите - пресметнете ги предварително.',
+        'Подписвате нотариалния акт, след което той се вписва в имотния регистър. Местният данък се плаща преди или при сделката и нотариусът проверява, че е платен. Пресметнете данъка и таксите предварително.',
       links: [{ href: '/kalkulator', label: 'Калкулатор на разходите' }],
     },
     {
       id: 'notarius-kredit',
       financing: 'mortgage',
       title: 'Ипотека и изплащане на продавача',
-      duration: '1–3 работни дни след сделката',
+      duration: 'Обикновено 1–3 работни дни',
       who: 'Банката и нотариусът',
       detail:
-        'Заедно с покупката се подписва и учредяването на ипотеката в полза на банката. След вписването ѝ банката превежда парите на продавача.',
+        'Заедно с покупката се учредява и ипотека в полза на банката. След като сделката и ипотеката бъдат вписани, банката превежда парите на продавача.',
     },
     {
       id: 'klyuchove',
@@ -139,11 +139,11 @@ const bg: Content = {
     },
     {
       id: 'partidi',
-      title: 'Партиди и общината',
+      title: 'Смяна на партидите',
       duration: 'До 30 дни',
       who: 'Вие',
       detail:
-        'Прехвърлете партидите за ток, вода, парно и газ на Ваше име с копие от нотариалния акт. При Софийска вода това е безплатно до 30 дни след сделката. В общината не подавате декларация - при покупка нотариусът изпраща данните служебно (ЗМДТ, чл. 14, ал. 3).',
+        'Прехвърлете партидите за ток, вода, парно и газ на Ваше име. Ще Ви трябват нотариалният акт, личната карта и показанията на уредите. При Софийска вода смяната е безплатна в срок до 30 дни. В общината не подавате декларация - при покупка данните стигат до нея служебно (ЗМДТ, чл. 14, ал. 3).',
     },
   ],
 }
@@ -185,7 +185,7 @@ const en: Content = {
       duration: '1 day',
       who: 'You and the seller',
       detail:
-        'You sign a written contract with the price, the deposit and the deadline for the notary. The deposit is agreed between the parties - often around 10%. If the buyer backs out, they lose the deposit; if the seller backs out, they pay it back double (Obligations and Contracts Act, Art. 93).',
+        'You sign a written contract with the price, the deposit and the deadline for the notary. The amount of the deposit is agreed between the parties - the law sets no percentage. If the buyer fails to go through with the deal, the seller may keep the deposit; if the seller fails, the buyer may claim double the deposit back (Obligations and Contracts Act, Art. 93).',
     },
     {
       id: 'predvaritelen-kredit',
@@ -203,16 +203,16 @@ const en: Content = {
       duration: 'Until the building is finished',
       who: 'You and the builder',
       detail:
-        'It is safer to tie payments to the official stages - for example part at Act 14 (shell complete) and the rest at Act 16. When exactly the notarial deed is signed depends on the contract with the builder - agree it in advance.',
+        'It is safer to tie payments to the construction stages - for example part at Act 14 (shell complete) and the rest once the building is officially approved for use. When exactly the notarial deed is signed depends on the contract with the builder - agree it in advance.',
     },
     {
       id: 'akt16',
       stage: 'new',
-      title: 'Waiting for Act 16',
-      duration: 'Months to a year',
-      who: 'The builder and the Construction Control Directorate (DNSK)',
+      title: 'Approval of the building for use',
+      duration: 'Depends on the building',
+      who: 'The builder, the Construction Control Directorate (DNSK) or the municipality',
       detail:
-        'After Act 15 a state commission inspects the building. In practice, Act 15 to Act 16 takes from a few months to a year. After the commission\'s protocol (Act 16), DNSK issues the occupancy permit within 5 working days. Without it, nobody can legally live in the property.',
+        'For larger buildings a state commission draws up Act 16, after which DNSK issues an occupancy permit within 5 working days. In practice, Act 15 to Act 16 takes from a few months to a year. Smaller residential buildings have no Act 16 - the municipality issues a certificate of commissioning instead. Without one of these two documents, nobody can legally live in the property.',
     },
     {
       id: 'dokumenti',
@@ -220,7 +220,7 @@ const en: Content = {
       duration: '3–7 working days',
       who: 'The seller, the notary or your lawyer',
       detail:
-        'Certificate of encumbrances from the Registry Agency (3 or 7 working days), tax valuation certificate from Sofia Municipality (1, 3 or 5 days) and the cadastral scheme (3 or 7 working days). This can run alongside the bank\'s checks.',
+        'Certificate of encumbrances from the Registry Agency (3 or 7 working days), tax valuation certificate from Sofia Municipality (1, 3 or 5 days) and the cadastral scheme (3 or 7 working days).',
       links: [{ href: '/proverka-na-imot', label: 'What to check' }],
     },
     {
@@ -238,17 +238,17 @@ const en: Content = {
       duration: '1 day',
       who: 'You, the seller and the notary',
       detail:
-        'You sign the notarial deed and the notary registers it in the property register. The local tax and the fees are paid before that - work them out in advance.',
+        'You sign the notarial deed, which is then entered in the property register. The local tax is paid before or at the signing, and the notary checks that it has been paid. Work out the tax and fees in advance.',
       links: [{ href: '/kalkulator', label: 'Costs calculator' }],
     },
     {
       id: 'notarius-kredit',
       financing: 'mortgage',
       title: 'Mortgage and paying the seller',
-      duration: '1–3 working days after signing',
+      duration: 'Usually 1–3 working days',
       who: 'The bank and the notary',
       detail:
-        'Together with the purchase, the mortgage in favour of the bank is signed. Once it is registered, the bank transfers the money to the seller.',
+        'Together with the purchase, a mortgage is set up in favour of the bank. Once the deed and the mortgage are registered, the bank transfers the money to the seller.',
     },
     {
       id: 'klyuchove',
@@ -260,11 +260,11 @@ const en: Content = {
     },
     {
       id: 'partidi',
-      title: 'Utility accounts and the municipality',
+      title: 'Moving the utility accounts',
       duration: 'Within 30 days',
       who: 'You',
       detail:
-        'Move the electricity, water, heating and gas accounts into your name with a copy of the notarial deed. At Sofiyska Voda this is free within 30 days of the purchase. You do not file a declaration with the municipality - for a purchase, the notary sends the details automatically (Local Taxes and Fees Act, Art. 14(3)).',
+        'Move the electricity, water, heating and gas accounts into your name. You will need the notarial deed, your ID and the meter readings. At Sofiyska Voda the change is free within 30 days. You do not file a declaration with the municipality - for a purchase, it receives the details automatically (Local Taxes and Fees Act, Art. 14(3)).',
     },
   ],
 }

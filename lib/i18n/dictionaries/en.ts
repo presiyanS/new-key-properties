@@ -318,7 +318,7 @@ const en: typeof bg = {
     cash: 'With my own money',
     mortgage: 'With a mortgage',
     stage: 'What you are buying',
-    ready: 'Finished building (with Act 16)',
+    ready: 'Finished building',
     newBuild: 'New build (under construction)',
     who: 'Who',
   },

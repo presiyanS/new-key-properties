@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       : {
           title: 'Покупка на имот в София: от офертата до ключовете | New Key Properties',
           description:
-            'Всяка стъпка при покупка на имот в София и колко време обикновено отнема - с пари в брой или с кредит, в завършена сграда или ново строителство.',
+            'Всяка стъпка при покупка на имот в София и колко време обикновено отнема - със собствени средства или с кредит, в завършена сграда или ново строителство.',
         }
   return {
     // absolute: the layout would otherwise add a second "| New Key Properties"
@@ -37,8 +37,8 @@ const textBg = {
   heroBadge: 'Безплатно · Без регистрация',
   heroTitle: 'От офертата',
   heroTitleGold: 'до ключовете',
-  heroSubtitle: 'Какво се случва след като харесате имот, кой какво прави и колко време отнема всяка стъпка. Изберете как плащате и какъв имот купувате - стъпките ще се подредят за Вашия случай.',
-  disclaimer: 'Сроковете са официалните срокове на институциите или обичайни диапазони по данни от няколко източника. Всяка сделка е различна - банката, продавачът и договорът могат да ги удължат или скъсят.',
+  heroSubtitle: 'Какво се случва, след като харесате имот, кой какво прави и колко време отнема всяка стъпка. Изберете как плащате и какъв имот купувате - стъпките ще се подредят за Вашия случай.',
+  disclaimer: 'Посочените срокове са или официални, или обичайни за пазара по данни от няколко източника. Всяка сделка е различна - банката, продавачът и договорът могат да ги удължат или скъсят.',
   ctaTitle: 'Искате някой да води сделката вместо Вас?',
   ctaSubtitle: 'Ще следим всяка стъпка и ще Ви казваме честно какво предстои и колко ще отнеме. Работим с ограничен брой клиенти на месец, за да отделим на всеки нужното внимание.',
 }
@@ -48,7 +48,7 @@ const textEn: typeof textBg = {
   heroTitle: 'From the offer',
   heroTitleGold: 'to the keys',
   heroSubtitle: 'What happens after you find a property you like, who does what, and how long each step takes. Choose how you are paying and what you are buying - the steps will adjust to your case.',
-  disclaimer: 'The times shown are official deadlines or typical ranges confirmed in several sources. Every deal is different - the bank, the seller and the contract can make them longer or shorter.',
+  disclaimer: 'The times shown are either official deadlines or typical market ranges confirmed in several sources. Every deal is different - the bank, the seller and the contract can make them longer or shorter.',
   ctaTitle: 'Want someone to handle the deal for you?',
   ctaSubtitle: "We'll follow every step and tell you honestly what comes next and how long it will take. We work with a limited number of clients each month so every one gets the attention they need.",
 }
