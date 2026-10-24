@@ -261,7 +261,7 @@ const en: typeof bg = {
     vacancyLoss: 'Months without a tenant',
     managementFee: 'Property management',
     rentTax: 'Tax on rent (9%)',
-    rentTaxNote: '10% tax on the rent after 10% deemed costs (Personal Income Tax Act). Declared every quarter and in the annual tax return.',
+    rentTaxNote: '10% tax on the rent after 10% deemed costs (Personal Income Tax Act). Paid in advance for the first three quarters, then settled in the annual tax return by 30 April. If the tenant is a company, it withholds the tax.',
     localFeesRow: 'Building tax and waste fee',
     localFeesNote: 'The exact amount is on the annual notice from Sofia Municipality.',
     upkeepRow: 'Upkeep and repairs',

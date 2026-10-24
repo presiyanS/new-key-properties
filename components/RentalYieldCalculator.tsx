@@ -15,12 +15,12 @@ export default function RentalYieldCalculator() {
     n.toLocaleString(locale === 'en' ? 'en-US' : 'bg-BG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
   const [price, setPrice] = useState(150000)
-  const [monthlyRent, setMonthlyRent] = useState(700)
+  const [monthlyRent, setMonthlyRent] = useState(525)
   const [setupCosts, setSetupCosts] = useState(5000)
   const [vacantMonths, setVacantMonths] = useState(1)
   const [managementRate, setManagementRate] = useState(0)
   const [localFeesPerYear, setLocalFeesPerYear] = useState(150)
-  const [upkeepPerYear, setUpkeepPerYear] = useState(400)
+  const [upkeepPerYear, setUpkeepPerYear] = useState(300)
 
   const r = rentalYield({ price, monthlyRent, setupCosts, vacantMonths, managementRate, localFeesPerYear, upkeepPerYear })
   const minus = (n: number) => (n > 0 ? `− ${fmt(n)}` : fmt(0))
