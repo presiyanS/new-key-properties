@@ -136,3 +136,70 @@ export function saleTax(input: SaleTaxInput): SaleTaxResult {
     exemptFrom: exemptFromDate && sale && exemptFromDate > sale ? toIso(exemptFromDate) : null,
   }
 }
+
+// ── Renting out ─────────────────────────────────────────────────────────
+
+/**
+ * Rent tax for a private landlord (ЗДДФЛ чл. 31 + чл. 48): 10% of the rent is
+ * deemed costs, the rest is taxed at 10%, so 9% of the rent actually collected.
+ */
+export const RENT_TAX_RATE = 0.09
+
+export type RentalYieldInput = {
+  price: number
+  monthlyRent: number
+  /** One-off: renovation, furniture, appliances before the first tenant. */
+  setupCosts: number
+  /** Months per year with no tenant (0–3). */
+  vacantMonths: number
+  /** Share of collected rent paid to a property manager, e.g. 0.1. */
+  managementRate: number
+  /** Building tax + waste fee per year, from the municipality's annual notice. */
+  localFeesPerYear: number
+  /** Repairs, wear and tear, insurance per year. */
+  upkeepPerYear: number
+}
+
+export type RentalYieldResult = {
+  /** Price-only yield, the figure usually quoted in listings. Percent, e.g. 5.6 */
+  grossYield: number
+  fullYearRent: number
+  vacancyLoss: number
+  management: number
+  rentTax: number
+  localFees: number
+  upkeep: number
+  netIncome: number
+  purchaseCosts: number
+  totalInvestment: number
+  /** Net income over everything paid to get the property rented. Percent. */
+  netYield: number
+  /** Years for net income to repay the investment; null if it never does. */
+  paybackYears: number | null
+}
+
+export function rentalYield(input: RentalYieldInput): RentalYieldResult | null {
+  if (!(input.price > 0) || !(input.monthlyRent > 0)) return null
+  const fullYearRent = round2(input.monthlyRent * 12)
+  const vacancyLoss = round2(input.monthlyRent * input.vacantMonths)
+  const collected = fullYearRent - vacancyLoss
+  const management = round2(collected * input.managementRate)
+  const rentTax = round2(collected * RENT_TAX_RATE)
+  const netIncome = round2(collected - management - rentTax - input.localFeesPerYear - input.upkeepPerYear)
+  const buying = purchaseCosts(input.price, false).total
+  const totalInvestment = round2(input.price + buying + input.setupCosts)
+  return {
+    grossYield: (fullYearRent / input.price) * 100,
+    fullYearRent,
+    vacancyLoss,
+    management,
+    rentTax,
+    localFees: input.localFeesPerYear,
+    upkeep: input.upkeepPerYear,
+    netIncome,
+    purchaseCosts: buying,
+    totalInvestment,
+    netYield: (netIncome / totalInvestment) * 100,
+    paybackYears: netIncome > 0 ? totalInvestment / netIncome : null,
+  }
+}
