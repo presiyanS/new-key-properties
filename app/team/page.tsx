@@ -56,8 +56,8 @@ export default async function TeamPage() {
     cms?.philosophyItems?.length > 0
       ? cms.philosophyItems
       : [
-          { title: 'Качество над количество', titleEn: 'Quality over quantity', text: 'Работим с ограничен брой клиенти на месец — не защото не искаме повече работа, а защото вярваме, че качеството е по-важно от количеството. Всеки клиент заслужава пълното ни внимание.', textEn: "We work with a limited number of clients each month — not because we don't want more work, but because we believe quality matters more than quantity. Every client deserves our full attention." },
-          { title: 'Работим като за себе си', titleEn: 'We work as if it were our own', text: 'Когато работим с Вас, третираме Вашия имот и Вашите интереси така, сякаш са наши. Това не е маркетинг — това е начинът, по който сме решили да работим.', textEn: "When we work with you, we treat your property and your interests as if they were our own. This isn't marketing — it's how we've chosen to work." },
+          { title: 'Качество над количество', titleEn: 'Quality over quantity', text: 'Работим с ограничен брой клиенти на месец - не защото не искаме повече работа, а защото вярваме, че качеството е по-важно от количеството. Всеки клиент заслужава пълното ни внимание.', textEn: "We work with a limited number of clients each month - not because we don't want more work, but because we believe quality matters more than quantity. Every client deserves our full attention." },
+          { title: 'Работим като за себе си', titleEn: 'We work as if it were our own', text: 'Когато работим с Вас, третираме Вашия имот и Вашите интереси така, сякаш са наши. Това не е маркетинг - това е начинът, по който сме решили да работим.', textEn: "When we work with you, we treat your property and your interests as if they were our own. This isn't marketing - it's how we've chosen to work." },
         ]
   ).map((item: { title: string; titleEn?: string; text: string; textEn?: string }) => ({
     title: locale === 'en' ? (item.titleEn ?? item.title) : item.title,

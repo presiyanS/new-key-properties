@@ -34,7 +34,7 @@ export default async function ContactPage() {
     return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
   }
 
-  // Site-settings form copy is Bulgarian-only in the CMS (no En field) — only
+  // Site-settings form copy is Bulgarian-only in the CMS (no En field) - only
   // apply it on the bg site, so English visitors get the dictionary defaults.
   const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
 
@@ -45,8 +45,8 @@ export default async function ContactPage() {
 
   const monthLocale = locale === 'en' ? 'en-US' : 'bg-BG'
   const urgencyMessageDefault = locale === 'en'
-    ? `We work with a limited number of clients each month to guarantee the highest quality. Get in touch now — spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} are limited.`
-    : `Работим с ограничен брой клиенти на месец, за да гарантираме най-високо качество. Свържете се с нас сега — местата за ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} са ограничени.`
+    ? `We work with a limited number of clients each month to guarantee the highest quality. Get in touch now - spots for ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} are limited.`
+    : `Работим с ограничен брой клиенти на месец, за да гарантираме най-високо качество. Свържете се с нас сега - местата за ${new Date().toLocaleDateString(monthLocale, { month: 'long' })} са ограничени.`
 
   return (
     <>

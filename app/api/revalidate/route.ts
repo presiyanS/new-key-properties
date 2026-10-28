@@ -8,7 +8,7 @@ const ALL_TAGS = [
   'consultation-page', 'site-settings', 'blog-page', 'team-page', 'listings-page', 'neighborhoods',
 ]
 
-// Maps a Sanity document `_type` to the cache tag(s) it affects — lets this
+// Maps a Sanity document `_type` to the cache tag(s) it affects - lets this
 // route double as a Sanity webhook target later without changes, and lets
 // scripts request revalidation by document type instead of memorizing tags.
 const TYPE_TO_TAGS: Record<string, string[]> = {
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     // Sanity webhook payload shape: { _type, _id, ... }
     tags = TYPE_TO_TAGS[body._type]
   } else {
-    // No hint given — revalidate everything.
+    // No hint given - revalidate everything.
     tags = ALL_TAGS
   }
 
@@ -52,14 +52,14 @@ export async function POST(req: Request) {
   for (const tag of applied) revalidateTag(tag, { expire: 0 })
 
   // Sanity webhook (create/update, filtered to _type == "listing" in the
-  // dashboard trigger) — forward the listing to Make.com for downstream
+  // dashboard trigger) - forward the listing to Make.com for downstream
   // automations. Fetched fresh by id rather than trusting the webhook body,
   // since the dashboard trigger's payload projection can change independently
   // of this route. Fire-and-forget: must never delay or fail this response.
   if (body._type === 'listing' && typeof body._id === 'string') {
     const id = body._id.replace(/^drafts\./, '')
     getListingForWebhook(id).then((listing) => {
-      // Deleted/unpublished (null) or hidden in Studio — nothing to announce.
+      // Deleted/unpublished (null) or hidden in Studio - nothing to announce.
       if (!listing || listing.status === 'hidden') return
       sendListingToMakeWebhook({
         title: listing.title,

@@ -2,7 +2,7 @@ import { createHash } from 'crypto'
 
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 const ACCESS_TOKEN = process.env.META_CONVERSIONS_API_ACCESS_TOKEN
-// Temporary — set only while verifying in Events Manager's Test Events tab.
+// Temporary - set only while verifying in Events Manager's Test Events tab.
 // Must be unset in normal production operation, or live traffic gets tagged as test data.
 const TEST_EVENT_CODE = process.env.META_TEST_EVENT_CODE
 
@@ -39,7 +39,7 @@ type LeadEventInput = {
 /**
  * Sends a Lead event to Meta's Conversions API, deduped against the
  * client-side fbq('track','Lead', …, {eventID}) call via the shared eventId.
- * Never throws and is bounded by a 5s timeout — a slow or unreachable Meta
+ * Never throws and is bounded by a 5s timeout - a slow or unreachable Meta
  * API must never fail or meaningfully delay the form's response.
  */
 export async function sendMetaLeadEvent({ eventId, eventSourceUrl, email, phone, clientIp, userAgent }: LeadEventInput) {

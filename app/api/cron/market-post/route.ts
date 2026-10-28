@@ -18,7 +18,7 @@ export const maxDuration = 300
 
 // Split from the writing step (see ./write/route.ts) because the combined
 // research+writing job started timing out once the writing pass began
-// producing both Bulgarian and English content — research alone stays well
+// producing both Bulgarian and English content - research alone stays well
 // under the limit. This route only verifies facts and saves them; the write
 // route (a separate cron, ~15 min later) turns them into the actual draft.
 export async function GET(request: NextRequest) {
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     const topic = pickTopic(now)
     const todayISO = formatDate(now)
 
-    // Research pass — web-search-grounded, restricted to the approved sources.
+    // Research pass - web-search-grounded, restricted to the approved sources.
     const researchResponse = await anthropic.messages.create({
       model: 'claude-sonnet-5',
       max_tokens: 8192,
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 
     if (!research || research.facts.length < 2) {
       const reason =
-        'Тази седмица AI изследването не успя да потвърди достатъчно факти от одобрените източници (нужни са поне 2 съвпадащи източника за всеки факт), затова не беше генерирана статия — за да няма грешни данни на сайта. Ще опитаме отново следващата седмица.'
+        'Тази седмица AI изследването не успя да потвърди достатъчно факти от одобрените източници (нужни са поне 2 съвпадащи източника за всеки факт), затова не беше генерирана статия - за да няма грешни данни на сайта. Ще опитаме отново следващата седмица.'
       if (notifyEmail) {
         await resend.emails.send({
           from: 'New Key Properties <noreply@newkey.bg>',
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, reason: 'insufficient_verified_facts' })
     }
 
-    // Save the verified facts for the write step to pick up — not a public
+    // Save the verified facts for the write step to pick up - not a public
     // content type, just a handoff document between the two cron jobs.
     const pending = await sanity.create({
       _type: 'blogPostResearch',
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
           from: 'New Key Properties <noreply@newkey.bg>',
           to: notifyEmail,
           subject: 'Блог: грешка при генериране на статия',
-          html: buildFailureEmailHtml(`Възникна техническа грешка тази седмица: ${String(error)}. Няма да пропуснем данни — просто провери следващата седмица или се свържи с Claude.`),
+          html: buildFailureEmailHtml(`Възникна техническа грешка тази седмица: ${String(error)}. Няма да пропуснем данни - просто провери следващата седмица или се свържи с Claude.`),
         })
       } catch (emailError) {
         console.error('Failed to send failure notification:', emailError)

@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (locale === 'en') {
     const title = 'Free property valuation | New Key Properties'
     const description =
-      'Get a free, honest market valuation of your property in Sofia. No obligation — our brokers respond within 24 hours with a fair price estimate.'
+      'Get a free, honest market valuation of your property in Sofia. No obligation - our brokers respond within 24 hours with a fair price estimate.'
     return {
       // absolute: the layout would otherwise add a second "| New Key Properties"
       title: { absolute: title },
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
   const title = 'Безплатна оценка на имот | New Key Properties'
   const description =
-    'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент — нашите брокери отговарят до 24 часа с точна ценова оценка.'
+    'Получете безплатна и честна пазарна оценка на Вашия имот в София. Без ангажимент - нашите брокери отговарят до 24 часа с точна ценова оценка.'
   return {
     // absolute: the layout would otherwise add a second "| New Key Properties"
     title: { absolute: title },
@@ -50,16 +50,16 @@ const textBg = {
   heroBadge: 'Напълно безплатно · Без ангажимент',
   heroTitle: 'Колко струва',
   heroTitleGold: 'моят имот?',
-  heroSubtitle: 'Получете честна и точна пазарна оценка на Вашия имот в София — базирана на реални сделки в квартала, не на завишени очаквания. Отговаряме до 24 часа.',
+  heroSubtitle: 'Получете честна и точна пазарна оценка на Вашия имот в София - базирана на реални сделки в квартала, не на завишени очаквания. Отговаряме до 24 часа.',
   heroButton: 'Заявете безплатна оценка',
   benefitsEyebrow: 'Защо да изберете нас',
   benefitsTitle: 'Оценка, на която можете да разчитате',
-  benefitsSubtitle: 'Не завишаваме цени, за да спечелим клиент. Казваме Ви истината за пазара — защото Ви ценим като бъдещ клиент, не като еднократна сделка.',
+  benefitsSubtitle: 'Не завишаваме цени, за да спечелим клиент. Казваме Ви истината за пазара - защото Ви ценим като бъдещ клиент, не като еднократна сделка.',
   benefits: [
-    { title: 'Реални пазарни данни', desc: 'Базираме оценката на актуални сделки и обяви в конкретния квартал — не на усещане.' },
+    { title: 'Реални пазарни данни', desc: 'Базираме оценката на актуални сделки и обяви в конкретния квартал - не на усещане.' },
     { title: 'Честна цена', desc: 'Не Ви казваме каквото искате да чуете. Казваме Ви истината, дори ако тя означава по-ниска цена от очакваната.' },
     { title: 'Без ангажимент', desc: 'Оценката е напълно безплатна. Не сте длъжни да работите с нас след това.' },
-    { title: 'Лично внимание', desc: 'Работим с ограничен брой клиенти на месец — Вашата заявка получава реално внимание, не автоматичен отговор.' },
+    { title: 'Лично внимание', desc: 'Работим с ограничен брой клиенти на месец - Вашата заявка получава реално внимание, не автоматичен отговор.' },
   ],
   formEyebrow: 'Заявка',
   formTitle: 'Заявете Вашата оценка',
@@ -72,16 +72,16 @@ const textEn: typeof textBg = {
   heroBadge: 'Completely free · No obligation',
   heroTitle: "What's my",
   heroTitleGold: 'property worth?',
-  heroSubtitle: "Get a fair, accurate market valuation of your property in Sofia — based on real deals in the neighborhood, not inflated expectations. We respond within 24 hours.",
+  heroSubtitle: "Get a fair, accurate market valuation of your property in Sofia - based on real deals in the neighborhood, not inflated expectations. We respond within 24 hours.",
   heroButton: 'Request a free valuation',
   benefitsEyebrow: 'Why choose us',
   benefitsTitle: 'A valuation you can trust',
-  benefitsSubtitle: "We don't inflate prices to win a client. We tell you the truth about the market — because we value you as a future client, not a one-time deal.",
+  benefitsSubtitle: "We don't inflate prices to win a client. We tell you the truth about the market - because we value you as a future client, not a one-time deal.",
   benefits: [
-    { title: 'Real market data', desc: 'We base the valuation on actual recent deals and listings in your specific neighborhood — not a gut feeling.' },
+    { title: 'Real market data', desc: 'We base the valuation on actual recent deals and listings in your specific neighborhood - not a gut feeling.' },
     { title: 'An honest price', desc: "We don't tell you what you want to hear. We tell you the truth, even if it means a lower price than expected." },
     { title: 'No obligation', desc: "The valuation is completely free. You're not required to work with us afterward." },
-    { title: 'Personal attention', desc: 'We work with a limited number of clients each month — your request gets real attention, not an automated reply.' },
+    { title: 'Personal attention', desc: 'We work with a limited number of clients each month - your request gets real attention, not an automated reply.' },
   ],
   formEyebrow: 'Request',
   formTitle: 'Request your valuation',

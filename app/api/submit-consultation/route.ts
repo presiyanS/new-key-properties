@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const { firstname, lastname } = splitName(name)
 
   // Awaited so Vercel doesn't freeze the function before the request completes,
-  // but syncHubSpotContact never throws — CRM failures must never block the user-facing success state.
+  // but syncHubSpotContact never throws - CRM failures must never block the user-facing success state.
   await syncHubSpotContact({ firstname, lastname, phone, message }, email || undefined)
 
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 
   if (error) {
     console.error('Resend error:', error)
-    // Notification email failed, but the lead is still (attempting to be) in HubSpot — don't block the user.
+    // Notification email failed, but the lead is still (attempting to be) in HubSpot - don't block the user.
   }
 
   return NextResponse.json({ success: true })

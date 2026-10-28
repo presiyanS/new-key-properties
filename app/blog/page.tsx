@@ -66,8 +66,8 @@ export default async function BlogPage() {
               style={{ animationDelay: '0.1s' }}
             >
               {locale === 'en'
-                ? (cms?.heroSubtitleEn ?? cms?.heroSubtitle ?? 'Market analysis, tips for buyers and sellers, legal guidance — everything you need to know about property in Sofia.')
-                : (cms?.heroSubtitle ?? 'Анализи на пазара, съвети за купувачи и продавачи, правни насоки — всичко, което трябва да знаете за имотите в София.')}
+                ? (cms?.heroSubtitleEn ?? cms?.heroSubtitle ?? 'Market analysis, tips for buyers and sellers, legal guidance - everything you need to know about property in Sofia.')
+                : (cms?.heroSubtitle ?? 'Анализи на пазара, съвети за купувачи и продавачи, правни насоки - всичко, което трябва да знаете за имотите в София.')}
             </p>
             <p
               className="text-white/40 text-sm mt-4 animate-fade-up"
@@ -106,8 +106,8 @@ export default async function BlogPage() {
             </h2>
             <p className="text-white/60 text-lg mb-10">
               {locale === 'en'
-                ? (cms?.ctaSubtitleEn ?? cms?.ctaSubtitle ?? "Get in touch with us directly — we'll give you an honest, informed answer.")
-                : (cms?.ctaSubtitle ?? 'Свържете се с нас директно — ще Ви дадем честен и компетентен отговор.')}
+                ? (cms?.ctaSubtitleEn ?? cms?.ctaSubtitle ?? "Get in touch with us directly - we'll give you an honest, informed answer.")
+                : (cms?.ctaSubtitle ?? 'Свържете се с нас директно - ще Ви дадем честен и компетентен отговор.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

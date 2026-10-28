@@ -27,7 +27,7 @@ export default function Footer({
   locale: Locale
   dict: Dictionary
 }) {
-  // Site-settings footer copy is Bulgarian-only in the CMS (no En field) — only
+  // Site-settings footer copy is Bulgarian-only in the CMS (no En field) - only
   // apply it on the bg site, so English visitors get the dictionary defaults.
   const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
 

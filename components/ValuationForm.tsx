@@ -109,7 +109,7 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (website) return // honeypot caught a bot — silently drop
+    if (website) return // honeypot caught a bot - silently drop
 
     setLoading(true)
     setError('')

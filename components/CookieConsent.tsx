@@ -18,7 +18,7 @@ function setCookie(name: string, value: string, days: number) {
 type Status = 'pending' | 'accepted' | 'declined'
 
 // initialStatus is read server-side from the request's cookies (see app/layout.tsx),
-// which already reflects the same data document.cookie would — no client recheck needed.
+// which already reflects the same data document.cookie would - no client recheck needed.
 export default function CookieConsent({ initialStatus }: { initialStatus: Status }) {
   const { locale, dict } = useLocale()
   const [status, setStatus] = useState<Status>(initialStatus)

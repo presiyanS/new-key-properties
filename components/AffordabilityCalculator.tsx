@@ -18,7 +18,7 @@ export default function AffordabilityCalculator() {
   const [monthlyIncome, setMonthlyIncome] = useState(2500)
   const [otherPayments, setOtherPayments] = useState(0)
   const [savings, setSavings] = useState(40000)
-  const [rateText, setRateText] = useState(locale === 'en' ? '2.75' : '2,75')
+  const [rateText, setRateText] = useState(locale === 'en' ? '2.4' : '2,4')
   const [yearsText, setYearsText] = useState('30')
   const [shareText, setShareText] = useState('40')
 

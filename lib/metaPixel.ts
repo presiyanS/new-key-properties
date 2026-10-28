@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-// The consent cookie is the same one CookieConsent.tsx sets/reads — the
+// The consent cookie is the same one CookieConsent.tsx sets/reads - the
 // Pixel base code only ever mounts when this is 'accepted', but form
 // submissions can race that mount, so trackLead re-checks it directly.
 function hasMarketingConsent(): boolean {

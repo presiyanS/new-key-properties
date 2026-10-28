@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * The hero's right-side composition — fully animated:
+ * The hero's right-side composition - fully animated:
  * • Building outline "draws" itself with a clip-path wipe from the bottom
  * • Window rectangles independently flicker like real apartment lights
  * • Floating value cards bob gently up/down
@@ -51,7 +51,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Corner accent brackets — always visible, appear instantly */}
+          {/* Corner accent brackets - always visible, appear instantly */}
           <path d="M 20 20 L 20 60 L 60 60" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4" />
           <path d="M 400 20 L 400 60 L 360 60" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4" />
           <path d="M 20 460 L 20 420 L 60 420" stroke="#c9a84c" strokeWidth="1.5" strokeOpacity="0.4" />
@@ -76,7 +76,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
             />
           </g>
 
-          {/* ── Window lights — each flickers independently ── */}
+          {/* ── Window lights - each flickers independently ── */}
           {/* Top-left window */}
           <rect
             x="110" y="220" width="60" height="55" rx="4"
@@ -140,7 +140,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
           </div>
         </div>
 
-        {/* ── Gold key icon — floats and gently rotates ── */}
+        {/* ── Gold key icon - floats and gently rotates ── */}
         <div
           style={{
             position: 'absolute',
@@ -159,7 +159,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
 
         {/* ── Floating value cards ── */}
 
-        {/* Badge 0 — top-left, bobs up */}
+        {/* Badge 0 - top-left, bobs up */}
         <div
           className="absolute top-16 -left-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 6s ease-in-out infinite' }}
@@ -171,7 +171,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
           {b[0].subtitle && <p className="text-white/40 text-xs mt-0.5 pl-4">{b[0].subtitle}</p>}
         </div>
 
-        {/* Badge 1 — top-right, bobs down */}
+        {/* Badge 1 - top-right, bobs down */}
         <div
           className="absolute top-28 -right-10 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 7s ease-in-out 1s infinite' }}
@@ -183,7 +183,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
           {b[1].subtitle && <p className="text-white/40 text-xs mt-0.5 pl-4">{b[1].subtitle}</p>}
         </div>
 
-        {/* Badge 2 — bottom-left, bobs up slowly */}
+        {/* Badge 2 - bottom-left, bobs up slowly */}
         <div
           className="absolute bottom-24 -left-6 bg-brand-gold/10 border border-brand-gold/25 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-up-down 8s ease-in-out 2s infinite' }}
@@ -192,7 +192,7 @@ export default function AnimatedSkylineHero({ badges }: Props) {
           {b[2].subtitle && <p className="text-white/40 text-xs mt-0.5">{b[2].subtitle}</p>}
         </div>
 
-        {/* Badge 3 — bottom-right, bobs down */}
+        {/* Badge 3 - bottom-right, bobs down */}
         <div
           className="absolute bottom-16 -right-8 bg-brand-green-light/80 border border-brand-gold/30 backdrop-blur-xs rounded-2xl px-4 py-3 shadow-xl"
           style={{ animation: 'float-down-up 5.5s ease-in-out 0.5s infinite' }}

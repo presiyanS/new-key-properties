@@ -62,21 +62,21 @@ export default async function AboutPage() {
     ? (locale === 'en' ? (cms.missionParagraphsEn?.length > 0 ? cms.missionParagraphsEn : cms.missionParagraphs) : cms.missionParagraphs)
     : locale === 'en'
       ? [
-          "We believe the real estate market needs more honesty. Too many people are let down by agencies that think only about their commission — not the outcome.",
+          "We believe the real estate market needs more honesty. Too many people are let down by agencies that think only about their commission - not the outcome.",
           'We work differently. We focus on closed deals, not viewing counts. We qualify serious buyers, prepare the property strategically, and negotiate on your behalf.',
-          'Our goal is to become the most trusted agency in Sofia — not through advertising, but through real results, satisfied clients, and a reputation built on honest work.',
+          'Our goal is to become the most trusted agency in Sofia - not through advertising, but through real results, satisfied clients, and a reputation built on honest work.',
         ]
       : [
-          'Вярваме, че пазарът на недвижими имоти се нуждае от повече честност. Твърде много хора са разочаровани от агенции, които мислят само за комисионната — не за резултата.',
+          'Вярваме, че пазарът на недвижими имоти се нуждае от повече честност. Твърде много хора са разочаровани от агенции, които мислят само за комисионната - не за резултата.',
           'Ние работим различно. Фокусираме се върху затворени сделки, не върху брой огледи. Квалифицираме сериозните купувачи, подготвяме имота стратегически и преговаряме от Ваше име.',
-          'Нашата цел е да станем най-доверената агенция в София — не чрез реклама, а чрез реални резултати, доволни клиенти и репутация, изградена с честна работа.',
+          'Нашата цел е да станем най-доверената агенция в София - не чрез реклама, а чрез реални резултати, доволни клиенти и репутация, изградена с честна работа.',
         ]
 
   const missionValues = (cms?.missionValues?.length > 0
     ? cms.missionValues
     : [
         { label: 'Доверие', desc: 'Изграждаме дългосрочни отношения, основани на честна работа и реални резултати.' },
-        { label: 'Честност', desc: 'Казваме истината — дори когато тя не е това, което клиентът иска да чуе.' },
+        { label: 'Честност', desc: 'Казваме истината - дори когато тя не е това, което клиентът иска да чуе.' },
         { label: 'Резултати', desc: 'Фокусираме се върху намирането на правилното решение, не на бързата комисионна.' },
       ]
   ).map((v: { label: string; labelEn?: string; desc: string; descEn?: string }) => ({
@@ -115,7 +115,7 @@ export default async function AboutPage() {
         { title: 'Личен подход', desc: 'Всеки клиент е уникален. Слушаме внимателно и намираме решения, съобразени с Вашата конкретна ситуация.' },
         { title: 'Качество пред количество', desc: 'Работим с ограничен брой клиенти на месец, за да гарантираме максимално качество на услугата.' },
         { title: 'Дългосрочно мислене', desc: 'Интересуваме се от Вашите дългосрочни цели, не само от текущата сделка.' },
-        { title: 'Пазарна компетентност', desc: 'Следим пазара постоянно и Ви даваме реална картина — без преувеличения в нито една посока.' },
+        { title: 'Пазарна компетентност', desc: 'Следим пазара постоянно и Ви даваме реална картина - без преувеличения в нито една посока.' },
         { title: 'Ангажираност', desc: 'Остаме достъпни и ангажирани от първия контакт до финалното подписване и след него.' },
       ]
   ).map((v: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
@@ -140,8 +140,8 @@ export default async function AboutPage() {
               {t(
                 cms?.heroSubtitle,
                 cms?.heroSubtitleEn,
-                'New Key Properties не е просто поредната агенция за имоти. Ние сме екип от хора, за които честността и грижата за клиента не са маркетингови фрази — те са начин на работа.',
-                "New Key Properties isn't just another real estate agency. We're a team of people for whom honesty and client care aren't marketing phrases — they're how we work."
+                'New Key Properties не е просто поредната агенция за имоти. Ние сме екип от хора, за които честността и грижата за клиента не са маркетингови фрази - те са начин на работа.',
+                "New Key Properties isn't just another real estate agency. We're a team of people for whom honesty and client care aren't marketing phrases - they're how we work."
               )}
             </p>
             <div className="flex items-center gap-6 mt-10 animate-fade-up" style={{ animationDelay: '0.2s' }}>
@@ -252,8 +252,8 @@ export default async function AboutPage() {
               {t(
                 cms?.specializationSubtitle,
                 cms?.specializationSubtitleEn,
-                'New Key Properties специализира изключително в жилищни и инвестиционни имоти в София — продажби, наеми и намиране на имоти за покупка.',
-                'New Key Properties specializes exclusively in residential and investment property in Sofia — sales, rentals, and property sourcing.'
+                'New Key Properties специализира изключително в жилищни и инвестиционни имоти в София - продажби, наеми и намиране на имоти за покупка.',
+                'New Key Properties specializes exclusively in residential and investment property in Sofia - sales, rentals, and property sourcing.'
               )}
             </p>
           </AnimatedSection>

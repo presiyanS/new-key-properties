@@ -288,7 +288,7 @@ const en: typeof bg = {
     otherPayments: 'Payments on other loans (per month)',
     savings: 'Savings you can put in',
     rate: 'Annual percentage rate (APR)',
-    rateNote: 'The average APR on new home loans is about 2.75% (Bulgarian National Bank data, June 2026). Your bank may offer a different rate.',
+    rateNote: 'The average interest rate on new home loans is about 2.4% (Bulgarian National Bank data, September 2026). Your bank may offer a different rate.',
     years: 'Loan term',
     yearsUnit: 'years',
     yearsHint: 'Up to 30 years under BNB rules.',

@@ -91,7 +91,7 @@ export default async function HomePage() {
     : [
         {
           title: 'Продажби',
-          desc: 'Квалифицираме сериозни купувачи — не управляваме безкрайни огледи. По-малко суматоха, по-бърза продажба на реална цена.',
+          desc: 'Квалифицираме сериозни купувачи - не управляваме безкрайни огледи. По-малко суматоха, по-бърза продажба на реална цена.',
           icon: 'sale',
         },
         {
@@ -101,12 +101,12 @@ export default async function HomePage() {
         },
         {
           title: 'Намиране на имот',
-          desc: 'Търсим и намираме имоти по Вашите конкретни критерии — като за нас самите.',
+          desc: 'Търсим и намираме имоти по Вашите конкретни критерии - като за нас самите.',
           icon: 'search',
         },
         {
           title: 'Инвестиции',
-          desc: 'Реален анализ на доходност и пазарни тенденции — помагаме Ви да инвестирате умно.',
+          desc: 'Реален анализ на доходност и пазарни тенденции - помагаме Ви да инвестирате умно.',
           icon: 'invest',
         },
       ]
@@ -119,9 +119,9 @@ export default async function HomePage() {
   const processSteps = (cms?.processSteps?.length > 0
     ? cms.processSteps
     : [
-        { title: 'Консултация', desc: 'Разговаряме задълбочено за Вашите нужди, бюджет и конкретни предпочитания. Безплатно и без ангажименти — само честен разговор.' },
-        { title: 'Проучване', desc: 'Намираме имоти, отговарящи точно на Вашите критерии. Показваме само сериозни, реалистични оферти — без губене на Вашето време.' },
-        { title: 'Резултат', desc: 'Придружаваме Ви до финалното подписване и след него. Работим докато намерим правилното решение — без бързане към комисионна.' },
+        { title: 'Консултация', desc: 'Разговаряме задълбочено за Вашите нужди, бюджет и конкретни предпочитания. Безплатно и без ангажименти - само честен разговор.' },
+        { title: 'Проучване', desc: 'Намираме имоти, отговарящи точно на Вашите критерии. Показваме само сериозни, реалистични оферти - без губене на Вашето време.' },
+        { title: 'Резултат', desc: 'Придружаваме Ви до финалното подписване и след него. Работим докато намерим правилното решение - без бързане към комисионна.' },
       ]
   ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
     title: locale === 'en' ? (s.titleEn ?? s.title) : s.title,
@@ -141,7 +141,7 @@ export default async function HomePage() {
         },
         {
           title: 'Ограничен брой клиенти',
-          desc: 'Ограничен брой клиенти на месец — за максимален фокус, лично внимание и реални резултати за всеки.',
+          desc: 'Ограничен брой клиенти на месец - за максимален фокус, лично внимание и реални резултати за всеки.',
         },
         {
           title: 'Дълбоко познаваме пазара',
@@ -292,8 +292,8 @@ export default async function HomePage() {
                 {t(
                   cms?.heroSubtitle,
                   cms?.heroSubtitleEn,
-                  'New Key Properties — агенция, която работи различно. Фокусираме се върху резултати, не върху брой огледи. По-малко суматоха. Повече затворени сделки. В София.',
-                  "New Key Properties — an agency that works differently. We focus on results, not viewing counts. Less hassle. More closed deals. In Sofia."
+                  'New Key Properties - агенция, която работи различно. Фокусираме се върху резултати, не върху брой огледи. По-малко суматоха. Повече затворени сделки. В София.',
+                  "New Key Properties - an agency that works differently. We focus on results, not viewing counts. Less hassle. More closed deals. In Sofia."
                 )}
               </p>
 
@@ -386,7 +386,7 @@ export default async function HomePage() {
               {t(cms?.processTitle, cms?.processTitleEn, 'Как работим', 'How we work')}
             </h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              {t(cms?.processSubtitle, cms?.processSubtitleEn, 'Три прости стъпки до Вашия идеален имот — без изненади, без стрес.', 'Three simple steps to your ideal property — no surprises, no stress.')}
+              {t(cms?.processSubtitle, cms?.processSubtitleEn, 'Три прости стъпки до Вашия идеален имот - без изненади, без стрес.', 'Three simple steps to your ideal property - no surprises, no stress.')}
             </p>
           </AnimatedSection>
 
@@ -542,8 +542,8 @@ export default async function HomePage() {
                   {t(
                     cms?.ctaCardDesc,
                     cms?.ctaCardDescEn,
-                    'Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега — броят на клиентите, с които работим, е ограничен.',
-                    "The Sofia property market moves fast. Good deals disappear. Get in touch now — the number of clients we take on is limited."
+                    'Пазарът на имоти в София се движи бързо. Добрите оферти изчезват. Свържете се с нас сега - броят на клиентите, с които работим, е ограничен.',
+                    "The Sofia property market moves fast. Good deals disappear. Get in touch now - the number of clients we take on is limited."
                   )}
                 </p>
                 <div className="space-y-3">

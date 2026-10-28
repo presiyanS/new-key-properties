@@ -13,7 +13,7 @@ type Props = {
   // HubSpot pipeline (Deal/Contact records otherwise all look identical).
   source?: string
   // Extra context merged into both the Make.com webhook payload and the
-  // /api/* request body — e.g. which listing a "quick inquiry" was submitted
+  // /api/* request body - e.g. which listing a "quick inquiry" was submitted
   // from, so it shows up in the email notification and HubSpot alike.
   extraFields?: Record<string, unknown>
   nameLabel?: string
@@ -77,7 +77,7 @@ export default function ContactForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (website) return // honeypot caught a bot — silently drop
+    if (website) return // honeypot caught a bot - silently drop
 
     setLoading(true)
     setError('')

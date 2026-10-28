@@ -28,7 +28,7 @@ type PendingResearch = {
 // split out). Scheduled the same evening, well after the research cron —
 // not right after it, because Vercel's free-plan crons are only accurate to
 // within the hour, so a short offset couldn't guarantee this runs second.
-// If there's nothing pending, that's normal — it just means this week's
+// If there's nothing pending, that's normal - it just means this week's
 // research already failed to verify enough facts (handled, and emailed, by
 // the research step) or hasn't run yet.
 export async function GET(request: NextRequest) {
@@ -52,11 +52,11 @@ export async function GET(request: NextRequest) {
     const todayISO = formatDate(now)
     const facts: ResearchFact[] = JSON.parse(pending.factsJson)
 
-    // Writing pass — grounded only in the verified facts from the research
+    // Writing pass - grounded only in the verified facts from the research
     // step, no tools. Uses structured outputs (output_config.format) instead
     // of asking the model to hand-format JSON in prose: a free-text "return
     // JSON" instruction lets the model write literal newlines inside the
-    // multi-paragraph "content" string, which breaks strict JSON.parse — the
+    // multi-paragraph "content" string, which breaks strict JSON.parse - the
     // schema constraint prevents that at generation time.
     const writingResponse = await anthropic.messages.create({
       model: 'claude-sonnet-5',
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
       researchNotes: pending.researchNotes,
     })
 
-    // Verified facts are now a real draft — clear the handoff doc so the
+    // Verified facts are now a real draft - clear the handoff doc so the
     // next run doesn't pick it up again.
     await sanity.delete(pending._id)
 
@@ -150,14 +150,14 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Cron market post write error:', error)
     // Leave the pending research doc in place so the verified facts aren't
-    // lost — next week's write run will retry from the same facts.
+    // lost - next week's write run will retry from the same facts.
     if (notifyEmail) {
       try {
         await resend.emails.send({
           from: 'New Key Properties <noreply@newkey.bg>',
           to: notifyEmail,
           subject: 'Блог: грешка при генериране на статия',
-          html: buildFailureEmailHtml(`Възникна техническа грешка тази седмица: ${String(error)}. Няма да пропуснем данни — просто провери следващата седмица или се свържи с Claude.`),
+          html: buildFailureEmailHtml(`Възникна техническа грешка тази седмица: ${String(error)}. Няма да пропуснем данни - просто провери следващата седмица или се свържи с Claude.`),
         })
       } catch (emailError) {
         console.error('Failed to send failure notification:', emailError)

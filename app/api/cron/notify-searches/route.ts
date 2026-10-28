@@ -159,7 +159,7 @@ export async function GET(request: NextRequest) {
         await resend.emails.send({
           from: 'New Key Properties <noreply@newkey.bg>',
           to: email,
-          subject: `Нов имот: ${listing.title} — ${listing.neighborhood}`,
+          subject: `Нов имот: ${listing.title} - ${listing.neighborhood}`,
           html: buildEmailHtml(listing, search),
         })
         sent++

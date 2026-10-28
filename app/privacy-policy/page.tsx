@@ -275,7 +275,7 @@ export default async function PrivacyPolicyPage() {
                     {s.list.map(([field, reason]) => (
                       <li key={field} className="flex items-start gap-3 text-sm text-gray-600">
                         <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-2 shrink-0" />
-                        <span><strong>{field}</strong> — {reason}</span>
+                        <span><strong>{field}</strong> - {reason}</span>
                       </li>
                     ))}
                   </ul>

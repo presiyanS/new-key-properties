@@ -14,14 +14,14 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: { absolute: 'Free consultation | New Key Properties' },
       description:
-        'Book a free consultation with our brokers. Honest advice, no hidden fees — we help you buy, sell, or rent a property in Sofia.',
+        'Book a free consultation with our brokers. Honest advice, no hidden fees - we help you buy, sell, or rent a property in Sofia.',
       alternates: hreflangAlternates('/konsultatsiya', locale),
     }
   }
   return {
     title: { absolute: 'Безплатна консултация | New Key Properties' },
     description:
-      'Запишете се за безплатна консултация с нашите брокери. Честен съвет без скрити такси — помагаме Ви да купите, продадете или наемете имот в София.',
+      'Запишете се за безплатна консултация с нашите брокери. Честен съвет без скрити такси - помагаме Ви да купите, продадете или наемете имот в София.',
     alternates: hreflangAlternates('/konsultatsiya', locale),
   }
 }
@@ -41,7 +41,7 @@ export default async function KonsultatsiyaPage() {
     return locale === 'en' ? (en ?? enDefault) : (bg ?? bgDefault)
   }
 
-  // Site-settings form copy is Bulgarian-only in the CMS (no En field) — only
+  // Site-settings form copy is Bulgarian-only in the CMS (no En field) - only
   // apply it on the bg site, so English visitors get the dictionary defaults.
   const bgOnly = <T,>(v: T | undefined) => (locale === 'bg' ? v : undefined)
 
@@ -54,10 +54,10 @@ export default async function KonsultatsiyaPage() {
     cms?.benefits?.length > 0
       ? cms.benefits
       : [
-          { title: 'Напълно безплатно', titleEn: 'Completely free', desc: 'Без никакви задължения. Консултацията е безплатна — говорим честно и без да се опитваме да Ви "продадем" нещо.', descEn: 'No obligation whatsoever. The consultation is free — we talk honestly, without trying to "sell" you anything.' },
-          { title: 'Честен съвет', titleEn: 'Honest advice', desc: 'Казваме Ви истината — дори ако тя означава да изчакате или да не купувате точно сега. Вашият интерес е на първо място.', descEn: 'We tell you the truth — even if it means waiting, or not buying right now. Your interest comes first.' },
-          { title: 'Пазарна оценка', titleEn: 'Market assessment', desc: 'Получавате реална оценка на цените в квартала, който Ви интересува — без преувеличения и без скрити агенди.', descEn: "You get a realistic assessment of prices in the neighborhood you're interested in — no exaggeration, no hidden agenda." },
-          { title: 'Личен брокер', titleEn: 'Personal broker', desc: 'Работите директно с Александър или Борил — не с колцентър, не с начинаещ стажант. Лично внимание от първия контакт.', descEn: 'You work directly with Alexander or Boril — not a call center, not a junior intern. Personal attention from the first contact.' },
+          { title: 'Напълно безплатно', titleEn: 'Completely free', desc: 'Без никакви задължения. Консултацията е безплатна - говорим честно и без да се опитваме да Ви "продадем" нещо.', descEn: 'No obligation whatsoever. The consultation is free - we talk honestly, without trying to "sell" you anything.' },
+          { title: 'Честен съвет', titleEn: 'Honest advice', desc: 'Казваме Ви истината - дори ако тя означава да изчакате или да не купувате точно сега. Вашият интерес е на първо място.', descEn: 'We tell you the truth - even if it means waiting, or not buying right now. Your interest comes first.' },
+          { title: 'Пазарна оценка', titleEn: 'Market assessment', desc: 'Получавате реална оценка на цените в квартала, който Ви интересува - без преувеличения и без скрити агенди.', descEn: "You get a realistic assessment of prices in the neighborhood you're interested in - no exaggeration, no hidden agenda." },
+          { title: 'Личен брокер', titleEn: 'Personal broker', desc: 'Работите директно с Александър или Борил - не с колцентър, не с начинаещ стажант. Лично внимание от първия контакт.', descEn: 'You work directly with Alexander or Boril - not a call center, not a junior intern. Personal attention from the first contact.' },
         ]
   ).map((b: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
     title: locale === 'en' ? (b.titleEn ?? b.title) : b.title,
@@ -68,9 +68,9 @@ export default async function KonsultatsiyaPage() {
     cms?.stats?.length > 0
       ? cms.stats
       : [
-          { value: 'Ограничен', valueEn: 'Limited', label: 'брой клиенти на месец — за максимално внимание към всеки', labelEn: 'clients per month — for maximum attention to each one' },
-          { value: '0', valueEn: '0', label: 'скрити такси — прозрачност от първия разговор', labelEn: 'hidden fees — transparency from the first conversation' },
-          { value: '100%', valueEn: '100%', label: 'отдаденост — работим като за собствен имот', labelEn: 'dedication — we work as if it were our own property' },
+          { value: 'Ограничен', valueEn: 'Limited', label: 'брой клиенти на месец - за максимално внимание към всеки', labelEn: 'clients per month - for maximum attention to each one' },
+          { value: '0', valueEn: '0', label: 'скрити такси - прозрачност от първия разговор', labelEn: 'hidden fees - transparency from the first conversation' },
+          { value: '100%', valueEn: '100%', label: 'отдаденост - работим като за собствен имот', labelEn: 'dedication - we work as if it were our own property' },
         ]
   ).map((s: { value: string; valueEn?: string; label: string; labelEn?: string }) => ({
     value: locale === 'en' ? (s.valueEn ?? s.value) : s.value,
@@ -83,7 +83,7 @@ export default async function KonsultatsiyaPage() {
       : [
           { title: 'Попълнете формата', titleEn: 'Fill out the form', desc: 'Кажете ни накратко с какво можем да помогнем.', descEn: 'Tell us briefly how we can help.' },
           { title: 'Обаждаме Ви се', titleEn: 'We call you', desc: 'Свързваме се с Вас до 24 часа, за да уточним час.', descEn: "We get in touch within 24 hours to arrange a time." },
-          { title: 'Консултация', titleEn: 'Consultation', desc: '30-45 мин. разговор — по телефон или лично в София.', descEn: '30-45 min. conversation — by phone or in person in Sofia.' },
+          { title: 'Консултация', titleEn: 'Consultation', desc: '30-45 мин. разговор - по телефон или лично в София.', descEn: '30-45 min. conversation - by phone or in person in Sofia.' },
           { title: 'Решавате Вие', titleEn: 'You decide', desc: 'Без натиск. Работим заедно само ако решите сам.', descEn: 'No pressure. We only work together if you decide to.' },
         ]
   ).map((s: { title: string; titleEn?: string; desc: string; descEn?: string }) => ({
@@ -95,8 +95,8 @@ export default async function KonsultatsiyaPage() {
     cms?.faq?.length > 0
       ? cms.faq
       : [
-          { q: 'Наистина ли е безплатно?', qEn: 'Is it really free?', a: 'Да, напълно безплатно. Нямаме скрити такси за консултацията. Ако решите да работите с нас след това — тогава обсъждаме условия.', aEn: 'Yes, completely free. There are no hidden fees for the consultation. If you decide to work with us afterward, we discuss terms then.' },
-          { q: 'Колко продължава консултацията?', qEn: 'How long does the consultation last?', a: 'Обикновено 30-45 минути — по телефон или лично в удобно за Вас място в София.', aEn: 'Usually 30-45 minutes — by phone or in person at a location convenient for you in Sofia.' },
+          { q: 'Наистина ли е безплатно?', qEn: 'Is it really free?', a: 'Да, напълно безплатно. Нямаме скрити такси за консултацията. Ако решите да работите с нас след това - тогава обсъждаме условия.', aEn: 'Yes, completely free. There are no hidden fees for the consultation. If you decide to work with us afterward, we discuss terms then.' },
+          { q: 'Колко продължава консултацията?', qEn: 'How long does the consultation last?', a: 'Обикновено 30-45 минути - по телефон или лично в удобно за Вас място в София.', aEn: 'Usually 30-45 minutes - by phone or in person at a location convenient for you in Sofia.' },
           { q: 'Трябва ли да съм готов да купувам/продавам веднага?', qEn: 'Do I need to be ready to buy or sell right away?', a: 'Не. Много хора идват при нас с въпроси, планират покупка след 3-6 месеца, или просто искат да разберат пазара. Всичко е добре дошло.', aEn: 'No. Many people come to us with questions, plan to buy in 3-6 months, or simply want to understand the market. All of that is welcome.' },
           { q: 'Работите ли само в определени квартали?', qEn: 'Do you only work in certain neighborhoods?', a: 'Работим в цяла София, но специализираме в: Драгалевци, Младост, Овча купел, Дружба, Манастирски ливади и центъра.', aEn: 'We work across all of Sofia, but we specialize in: Dragalevtsi, Mladost, Ovcha Kupel, Druzhba, Manastirski Livadi, and the city center.' },
         ]
@@ -134,8 +134,8 @@ export default async function KonsultatsiyaPage() {
               {t(
                 cms?.heroSubtitle,
                 cms?.heroSubtitleEn,
-                'Имате въпроси за имотния пазар в София? Мислите да купувате, продавате или наемате? Говорете с нас — честно, без задължения и напълно безплатно.',
-                'Have questions about the Sofia property market? Thinking about buying, selling, or renting? Talk to us — honestly, with no obligation, and completely free.'
+                'Имате въпроси за имотния пазар в София? Мислите да купувате, продавате или наемате? Говорете с нас - честно, без задължения и напълно безплатно.',
+                'Have questions about the Sofia property market? Thinking about buying, selling, or renting? Talk to us - honestly, with no obligation, and completely free.'
               )}
             </p>
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
@@ -171,8 +171,8 @@ export default async function KonsultatsiyaPage() {
               {t(
                 cms?.benefitsSubtitle,
                 cms?.benefitsSubtitleEn,
-                'При консултацията с New Key Properties нямате какво да губите — само да спечелите.',
-                'With a New Key Properties consultation, you have nothing to lose — only to gain.'
+                'При консултацията с New Key Properties нямате какво да губите - само да спечелите.',
+                'With a New Key Properties consultation, you have nothing to lose - only to gain.'
               )}
             </p>
           </AnimatedSection>

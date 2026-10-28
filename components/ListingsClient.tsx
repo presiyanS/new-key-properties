@@ -41,7 +41,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
 
   // Restore filters from URL on mount. Deliberately done in an effect (not a
   // lazy useState initializer) because window.location.search isn't
-  // available during SSR — reading it during render would cause a hydration
+  // available during SSR - reading it during render would cause a hydration
   // mismatch between the server-rendered defaults and the client's first pass.
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
@@ -144,7 +144,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
     // Type
     if (filter !== 'all') result = result.filter((l) => l.type === filter)
 
-    // Category — use stored category field; fall back to title heuristic for legacy listings
+    // Category - use stored category field; fall back to title heuristic for legacy listings
     if (categoryFilter !== 'all') {
       result = result.filter((l) => {
         const cat = l.category ?? (l.title?.toLowerCase().includes('гараж') ? 'garage' : 'apartment')
@@ -382,7 +382,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     min={0}
                     className={inputClass}
                   />
-                  <span className="text-gray-400 text-sm shrink-0">—</span>
+                  <span className="text-gray-400 text-sm shrink-0">–</span>
                   <input
                     type="number"
                     value={priceMax}
@@ -406,7 +406,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
                     min={0}
                     className={inputClass}
                   />
-                  <span className="text-gray-400 text-sm shrink-0">—</span>
+                  <span className="text-gray-400 text-sm shrink-0">–</span>
                   <input
                     type="number"
                     value={areaMax}
@@ -519,7 +519,7 @@ export default function ListingsClient({ listings, phone, phoneDisplay, email, b
               {bottomCtaTitle ?? 'Не намирате търсеното?'}
             </h3>
             <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">
-              {bottomCtaSubtitle ?? 'Разкажете ни какво търсите и ние ще го намерим за Вас. Активно работим за намиране на имоти по конкретни критерии — като за нас самите.'}
+              {bottomCtaSubtitle ?? 'Разкажете ни какво търсите и ние ще го намерим за Вас. Активно работим за намиране на имоти по конкретни критерии - като за нас самите.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

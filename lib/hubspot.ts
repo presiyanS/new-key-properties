@@ -9,7 +9,7 @@ export function splitName(fullName: string): { firstname: string; lastname: stri
 
 /**
  * Upserts a HubSpot contact by email (PATCH first, falling back to a create
- * on 404). Never throws — CRM failures must never block the caller's
+ * on 404). Never throws - CRM failures must never block the caller's
  * user-facing success response, only get logged server-side.
  */
 export async function syncHubSpotContact(properties: Record<string, string>, email?: string) {

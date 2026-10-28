@@ -5,7 +5,7 @@ const servicesBg = [
   {
     num: '01',
     title: 'Банково кредитиране',
-    desc: 'Съдействие чрез специализиран партньор — регистриран кредитен посредник. Помагаме с предварително одобрение, сравнение на оферти, калкулации на вноски и подготовка на документите.',
+    desc: 'Съдействие чрез специализиран партньор - регистриран кредитен посредник. Помагаме с предварително одобрение, сравнение на оферти, калкулации на вноски и подготовка на документите.',
     perks: ['Бързо предварително одобрение', 'Конкурентни лихви', 'Пълна административна помощ'],
     badge: 'Безплатно за клиентите ни',
     badgeFree: true,
@@ -21,7 +21,7 @@ const servicesBg = [
   {
     num: '03',
     title: 'Ремонт и довършване',
-    desc: 'Сътрудничим с опитни фирми и екипи за довършителни работи и ремонти — от частични обновявания до цялостни реновации. Гарантирано качество и спазване на срокове.',
+    desc: 'Сътрудничим с опитни фирми и екипи за довършителни работи и ремонти - от частични обновявания до цялостни реновации. Гарантирано качество и спазване на срокове.',
     perks: ['Професионално изпълнение', 'Гаранция за извършените работи', 'Спазване на срокове'],
     badge: 'Отстъпка за клиентите ни',
     badgeFree: false,
@@ -32,7 +32,7 @@ const servicesEn = [
   {
     num: '01',
     title: 'Bank financing',
-    desc: 'Assistance through a specialized partner — a registered credit broker. We help with pre-approval, offer comparison, payment calculations, and document preparation.',
+    desc: 'Assistance through a specialized partner - a registered credit broker. We help with pre-approval, offer comparison, payment calculations, and document preparation.',
     perks: ['Fast pre-approval', 'Competitive rates', 'Full administrative support'],
     badge: 'Free for our clients',
     badgeFree: true,
@@ -48,7 +48,7 @@ const servicesEn = [
   {
     num: '03',
     title: 'Renovation & finishing',
-    desc: 'We work with experienced companies and teams for finishing and renovation work — from partial updates to complete overhauls. Guaranteed quality and on-time delivery.',
+    desc: 'We work with experienced companies and teams for finishing and renovation work - from partial updates to complete overhauls. Guaranteed quality and on-time delivery.',
     perks: ['Professional execution', 'Warranty on completed work', 'On-time delivery'],
     badge: 'Discount for our clients',
     badgeFree: false,
@@ -70,26 +70,26 @@ const icons = [
 const whyUsBg = [
   { label: 'Всичко на едно място', desc: 'Ние организираме комуникацията с всички страни вместо вас.' },
   { label: 'Проверени партньори', desc: 'Само фирми с доказан опит и препоръки от реални клиенти.' },
-  { label: 'Персонализирани решения', desc: 'Всичко е съобразено с вашите нужди и бюджет — нищо на шаблон.' },
+  { label: 'Персонализирани решения', desc: 'Всичко е съобразено с вашите нужди и бюджет - нищо на шаблон.' },
 ]
 
 const whyUsEn = [
   { label: 'Everything in one place', desc: 'We coordinate communication with all parties on your behalf.' },
   { label: 'Vetted partners', desc: 'Only companies with proven experience and real client recommendations.' },
-  { label: 'Personalized solutions', desc: 'Everything is tailored to your needs and budget — nothing off-the-shelf.' },
+  { label: 'Personalized solutions', desc: 'Everything is tailored to your needs and budget - nothing off-the-shelf.' },
 ]
 
 const textBg = {
   eyebrow: 'Ексклузивно за клиентите ни',
   heading: 'Ние не просто намираме имота',
-  subtitle: 'Осигуряваме пълен пакет услуги чрез проверени партньори — от финансиране до интериорен дизайн и довършителни работи. Всичко е осигурено от нас.',
+  subtitle: 'Осигуряваме пълен пакет услуги чрез проверени партньори - от финансиране до интериорен дизайн и довършителни работи. Всичко е осигурено от нас.',
   whyUsLabel: 'Защо нашите партньори',
 }
 
 const textEn = {
   eyebrow: 'Exclusive for our clients',
   heading: "We don't just find the property",
-  subtitle: 'We provide a full range of services through vetted partners — from financing to interior design and finishing work. Everything is arranged by us.',
+  subtitle: 'We provide a full range of services through vetted partners - from financing to interior design and finishing work. Everything is arranged by us.',
   whyUsLabel: 'Why our partners',
 }
 

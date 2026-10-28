@@ -13,7 +13,7 @@ function setCookie(name: string, value: string, days: number) {
 }
 
 // initialDismissed is read server-side from the request's cookies (see app/layout.tsx),
-// which already reflects the same data document.cookie would — no client recheck needed.
+// which already reflects the same data document.cookie would - no client recheck needed.
 export default function ViberBanner({ initialDismissed }: { initialDismissed: boolean }) {
   const { dict } = useLocale()
   const [dismissed, setDismissed] = useState(initialDismissed)

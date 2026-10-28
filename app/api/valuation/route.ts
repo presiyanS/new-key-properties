@@ -58,7 +58,7 @@ export async function POST(req: Request) {
 
   const { firstname, lastname } = splitName(name)
   const summaryLines = [
-    `Заявка за оценка — ${PURPOSE_LABEL[purpose] ?? purpose}`,
+    `Заявка за оценка - ${PURPOSE_LABEL[purpose] ?? purpose}`,
     propertyType ? `Тип имот: ${PROPERTY_TYPE_LABEL[propertyType] ?? propertyType}` : null,
     `Квартал: ${neighborhood}`,
     area ? `Площ: ${area} кв.м` : null,
@@ -69,10 +69,10 @@ export async function POST(req: Request) {
   ].filter(Boolean)
 
   // Awaited so Vercel doesn't freeze the function before the request completes,
-  // but syncHubSpotContact never throws — CRM failures must never block the user-facing success state.
+  // but syncHubSpotContact never throws - CRM failures must never block the user-facing success state.
   await syncHubSpotContact({ firstname, lastname, phone, message: summaryLines.join('\n') }, email || undefined)
 
-  // Same reasoning as syncHubSpotContact above — awaited (bounded by its own
+  // Same reasoning as syncHubSpotContact above - awaited (bounded by its own
   // 5s timeout) so the promise isn't orphaned once the function returns.
   if (metaEventId && hasMarketingConsent(req)) {
     await sendMetaLeadEvent({

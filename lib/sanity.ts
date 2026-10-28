@@ -130,7 +130,7 @@ export async function getListing(id: string, preview = false): Promise<SanityLis
 }
 
 // Matches on the new readable slug, but also falls back to the old raw
-// Sanity `_id` — lets the listing page detect an old-style link and
+// Sanity `_id` - lets the listing page detect an old-style link and
 // permanently redirect to the new slug URL instead of 404ing.
 export async function getListingBySlug(param: string, preview = false): Promise<SanityListing | null> {
   const match = `(slug.current == $param || _id == $param)`
@@ -153,7 +153,7 @@ export async function getFeaturedListings(preview = false): Promise<SanityListin
 
 // ── Make.com listing webhook ────────────────────────────────────────────────
 // Uncached, minimal projection used to build the payload forwarded to Make
-// right after a Sanity webhook fires — needs the freshest data, not the CDN.
+// right after a Sanity webhook fires - needs the freshest data, not the CDN.
 
 export type SanityListingForWebhook = {
   title: string

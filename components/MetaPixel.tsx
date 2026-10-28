@@ -13,7 +13,7 @@ declare global {
 }
 
 // Only ever mounted by CookieConsent once the visitor has accepted the
-// marketing/analytics category — see components/CookieConsent.tsx.
+// marketing/analytics category - see components/CookieConsent.tsx.
 export default function MetaPixel() {
   const pathname = usePathname()
   const isFirstRender = useRef(true)

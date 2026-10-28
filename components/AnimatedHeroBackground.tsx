@@ -3,12 +3,12 @@
 /**
  * Animated background for the hero section.
  * Four blurred gradient orbs float at different speeds/directions,
- * creating a living, cinematic depth effect — no images needed.
+ * creating a living, cinematic depth effect - no images needed.
  */
 export default function AnimatedHeroBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* Orb 1 — large gold glow, top-right quadrant */}
+      {/* Orb 1 - large gold glow, top-right quadrant */}
       <div
         style={{
           position: 'absolute',
@@ -22,7 +22,7 @@ export default function AnimatedHeroBackground() {
         }}
       />
 
-      {/* Orb 2 — medium green-light, bottom-left */}
+      {/* Orb 2 - medium green-light, bottom-left */}
       <div
         style={{
           position: 'absolute',
@@ -36,7 +36,7 @@ export default function AnimatedHeroBackground() {
         }}
       />
 
-      {/* Orb 3 — small intense gold, center-ish */}
+      {/* Orb 3 - small intense gold, center-ish */}
       <div
         style={{
           position: 'absolute',
@@ -50,7 +50,7 @@ export default function AnimatedHeroBackground() {
         }}
       />
 
-      {/* Orb 4 — upper-left accent */}
+      {/* Orb 4 - upper-left accent */}
       <div
         style={{
           position: 'absolute',

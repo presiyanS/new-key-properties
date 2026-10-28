@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { GOOGLE_ADS_ID, trackGoogleAdsContact } from '@/lib/googleAds'
 
 // Only ever mounted by CookieConsent once the visitor has accepted the
-// marketing/analytics category — see components/CookieConsent.tsx.
+// marketing/analytics category - see components/CookieConsent.tsx.
 export default function GoogleAdsTag() {
   // Phone links live in ~20 places (many in server components), so one
   // document-level listener counts a tap on any tel: link as a Contact

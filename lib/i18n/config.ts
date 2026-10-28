@@ -45,7 +45,7 @@ export function translateBlogCategory(category: string, locale: Locale): string 
  * Listings store `neighborhood` as a single Bulgarian string (no En field in
  * the schema), so this transliterates the known Sofia neighborhoods for the
  * English site. Unknown/future values fall back to the original string
- * instead of erroring — better an unmapped Cyrillic name than a crash.
+ * instead of erroring - better an unmapped Cyrillic name than a crash.
  */
 const NEIGHBORHOOD_EN: Record<string, string> = {
   'борово': 'Borovo',
@@ -75,7 +75,7 @@ export function translateNeighborhood(name: string, locale: Locale): string {
 
 /**
  * `floor` is a free-text string field (per the schema, it can hold a number
- * or one of a few fixed Bulgarian words instead) — translate the known words,
+ * or one of a few fixed Bulgarian words instead) - translate the known words,
  * leave anything else (numbers) untouched.
  */
 const FLOOR_TEXT_EN: Record<string, string> = {
@@ -91,7 +91,7 @@ export function translateFloor(floor: string, locale: Locale): string {
 }
 
 /**
- * `price` is also a free-text string field — usually a plain number, but can
+ * `price` is also a free-text string field - usually a plain number, but can
  * be one of these fixed Bulgarian phrases instead (per the schema
  * description). Translate the known phrases, leave numeric prices untouched.
  */
@@ -105,7 +105,7 @@ export function translatePriceText(price: string, locale: Locale): string {
   const key = price.trim().toLowerCase()
   if (PRICE_TEXT_EN[key]) return PRICE_TEXT_EN[key]
   // Rental prices are sometimes entered as free text like "от 400 €/мес."
-  // ("from 400 €/month") — translate the common fragments rather than the
+  // ("from 400 €/month") - translate the common fragments rather than the
   // whole string, since the numbers/formatting vary per listing.
   return price
     .replace(/^от\s+/i, 'from ')
@@ -114,7 +114,7 @@ export function translatePriceText(price: string, locale: Locale): string {
 
 /**
  * Neighborhood `priceRangeSale`/`priceRangeRent` are also free-text fields with
- * no separate En counterpart (per the schema) — translate the fixed Bulgarian
+ * no separate En counterpart (per the schema) - translate the fixed Bulgarian
  * unit fragments (e.g. "€/кв.м" -> "€/m²"), leave the numbers untouched.
  */
 export function translateNeighborhoodPriceRange(range: string, locale: Locale): string {

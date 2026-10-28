@@ -12,13 +12,13 @@ export async function generateMetadata(): Promise<Metadata> {
   if (locale === 'en') {
     return {
       title: 'Sofia Neighborhoods',
-      description: 'Full guides to the most sought-after neighborhoods in Sofia — prices, transport, character, and who each area suits. From New Key Properties.',
+      description: 'Full guides to the most sought-after neighborhoods in Sofia - prices, transport, character, and who each area suits. From New Key Properties.',
       alternates: hreflangAlternates('/kvartali', locale),
     }
   }
   return {
     title: 'Квартали в София',
-    description: 'Пълни наръчници за най-търсените квартали в София — цени, транспорт, характер и за кого е подходящ всеки район. От New Key Properties.',
+    description: 'Пълни наръчници за най-търсените квартали в София - цени, транспорт, характер и за кого е подходящ всеки район. От New Key Properties.',
     alternates: hreflangAlternates('/kvartali', locale),
   }
 }
