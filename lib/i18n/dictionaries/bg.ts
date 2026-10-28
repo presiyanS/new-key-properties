@@ -136,7 +136,7 @@ const bg = {
     featuredBadge: 'Препоръчан',
     underOffer: 'Под оферта',
     underOfferNoticeTitle: 'Имотът е под оферта',
-    underOfferNoticeSubtitle: 'В процес на сделка — свържете се с нас за подобни имоти.',
+    underOfferNoticeSubtitle: 'В процес на сделка - свържете се с нас за подобни имоти.',
     statusLabel: 'Статус',
     allStatuses: 'Всички статуси',
     statusActive: 'Активни',

@@ -14,7 +14,7 @@ export default function MortgageCalculator({ price }: Props) {
   // BNB caps home loans at 85% of the property value, so the down payment starts at 15%.
   const [downPaymentPercent, setDownPaymentPercent] = useState(20)
   const [years, setYears] = useState(25)
-  // Average rate on new home loans per BNB statistics (June 2026: 2.41%).
+  // Average rate on new home loans per BNB statistics (September 2026: 2.41%, checked 2026-10-28).
   const [rate, setRate] = useState(2.4)
 
   const downPayment = Math.round((price * downPaymentPercent) / 100)

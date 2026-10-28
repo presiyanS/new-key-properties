@@ -138,7 +138,7 @@ const en: typeof bg = {
     featuredBadge: 'Recommended',
     underOffer: 'Under offer',
     underOfferNoticeTitle: 'This property is under offer',
-    underOfferNoticeSubtitle: 'A deal is in progress — get in touch and we’ll find similar properties.',
+    underOfferNoticeSubtitle: 'A deal is in progress - get in touch and we’ll find similar properties.',
     statusLabel: 'Status',
     allStatuses: 'All statuses',
     statusActive: 'Active',
