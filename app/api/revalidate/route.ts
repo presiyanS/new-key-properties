@@ -1,7 +1,5 @@
 import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
-import { getListingForWebhook } from '@/lib/sanity'
-import { sendListingToMakeWebhook } from '@/lib/makeWebhook'
 
 const ALL_TAGS = [
   'listings', 'blog', 'team', 'home-page', 'about-page', 'contact-page',
@@ -50,35 +48,6 @@ export async function POST(req: Request) {
   // revalidate) would show one more stale page, so an unpublished or hidden
   // listing could linger until someone happened to load it twice.
   for (const tag of applied) revalidateTag(tag, { expire: 0 })
-
-  // Sanity webhook (create/update, filtered to _type == "listing" in the
-  // dashboard trigger) - forward the listing to Make.com for downstream
-  // automations. Fetched fresh by id rather than trusting the webhook body,
-  // since the dashboard trigger's payload projection can change independently
-  // of this route. Fire-and-forget: must never delay or fail this response.
-  if (body._type === 'listing' && typeof body._id === 'string') {
-    const id = body._id.replace(/^drafts\./, '')
-    getListingForWebhook(id).then((listing) => {
-      // Deleted/unpublished (null) or hidden in Studio - nothing to announce.
-      if (!listing || listing.status === 'hidden') return
-      sendListingToMakeWebhook({
-        title: listing.title,
-        slug: id,
-        purpose: listing.purpose,
-        propertyType: listing.propertyType,
-        neighborhood: listing.neighborhood,
-        price: listing.price,
-        currency: listing.currency,
-        area: listing.area,
-        rooms: listing.rooms,
-        floor: listing.floor,
-        description: listing.description,
-        status: listing.status,
-        mainImage: listing.mainImage,
-        url: `https://www.newkey.bg/listings/${listing.slug ?? id}`,
-      })
-    })
-  }
 
   return NextResponse.json({ revalidated: applied })
 }

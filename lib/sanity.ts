@@ -152,48 +152,6 @@ export async function getFeaturedListings(preview = false): Promise<SanityListin
 }
 
 // ── Make.com listing webhook ────────────────────────────────────────────────
-// Uncached, minimal projection used to build the payload forwarded to Make
-// right after a Sanity webhook fires - needs the freshest data, not the CDN.
-
-export type SanityListingForWebhook = {
-  title: string
-  slug: string | null
-  purpose: 'sale' | 'rent'
-  propertyType: string | null
-  neighborhood: string
-  price: string | number
-  currency: 'EUR'
-  area: string | number
-  rooms: string | number
-  floor: string | number | null
-  description: string
-  status: 'active' | 'under_offer' | 'sold' | 'hidden'
-  mainImage: string | null
-}
-
-export async function getListingForWebhook(id: string): Promise<SanityListingForWebhook | null> {
-  try {
-    return await freshClient.fetch(
-      `*[_type == "listing" && _id == $id][0]{
-        title,
-        "slug": slug.current,
-        "purpose": type,
-        "propertyType": category,
-        neighborhood,
-        price,
-        "currency": "EUR",
-        area,
-        rooms,
-        floor,
-        description,
-        "status": coalesce(status, "active"),
-        "mainImage": coalesce(images[0].asset->url, externalImageUrls[0])
-      }`,
-      { id }
-    )
-  } catch { return null }
-}
-
 // ── Blog Posts ──────────────────────────────────────────────────────────────
 
 export type SanityBlogPost = {

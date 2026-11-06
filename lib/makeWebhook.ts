@@ -22,13 +22,3 @@ export async function sendToMakeWebhook(source: string, data: Record<string, unk
     console.error('Make.com webhook failed:', err)
   }
 }
-
-const MAKE_LISTING_WEBHOOK_URL = 'https://hook.eu1.make.com/vohraajqmjc44flutwfi5bkrqmba1jum'
-
-export function sendListingToMakeWebhook(data: Record<string, unknown>) {
-  fetch(MAKE_LISTING_WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...data, timestamp: new Date().toISOString() }),
-  }).catch(() => {})
-}
