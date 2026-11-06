@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { generateEventId, trackLead } from '@/lib/metaPixel'
 import { trackGoogleAdsContact } from '@/lib/googleAds'
 import { useLocale } from '@/lib/i18n/LocaleContext'
@@ -9,12 +8,9 @@ import { localizeHref } from '@/lib/i18n/config'
 
 type Props = {
   endpoint?: string
-  // Distinguishes which page/context a submission came from in the Make.com →
-  // HubSpot pipeline (Deal/Contact records otherwise all look identical).
-  source?: string
-  // Extra context merged into both the Make.com webhook payload and the
-  // /api/* request body - e.g. which listing a "quick inquiry" was submitted
-  // from, so it shows up in the email notification and HubSpot alike.
+  // Extra context merged into the /api/* request body - e.g. which listing a
+  // "quick inquiry" was submitted from, so it shows up in the email
+  // notification and HubSpot alike.
   extraFields?: Record<string, unknown>
   nameLabel?: string
   namePlaceholder?: string
@@ -34,7 +30,6 @@ type Props = {
 
 export default function ContactForm({
   endpoint = '/api/contact',
-  source = 'Website Contact Form',
   extraFields,
   nameLabel,
   namePlaceholder,
@@ -77,26 +72,26 @@ export default function ContactForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (website) return // honeypot caught a bot - silently drop
 
     setLoading(true)
     setError('')
 
-    sendToMakeWebhook(source, extraFields ? { ...form, ...extraFields } : form)
-
     const metaEventId = generateEventId()
-    trackLead(metaEventId, { content_name: 'Contact Form' })
 
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, ...extraFields, metaEventId }),
+      body: JSON.stringify({ ...form, ...extraFields, metaEventId, website }),
     })
 
     setLoading(false)
 
     if (res.ok) {
-      trackGoogleAdsContact()
+      // Ad platforms only count submissions the server accepted, not bots.
+      if (!website) {
+        trackLead(metaEventId, { content_name: 'Contact Form' })
+        trackGoogleAdsContact()
+      }
       setSubmitted(true)
     } else {
       setError(errorMessage)
@@ -127,7 +122,10 @@ export default function ContactForm({
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ display: 'none' }}
+        data-1p-ignore
+        data-lpignore="true"
+        // Moved off-screen rather than display:none, which bots tend to skip
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>

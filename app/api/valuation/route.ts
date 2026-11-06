@@ -1,7 +1,10 @@
 import { createClient } from '@sanity/client'
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { escapeHtml } from '@/lib/escapeHtml'
 import { splitName, syncHubSpotContact } from '@/lib/hubspot'
+import { screenSubmission } from '@/lib/leadGuard'
+import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { hasMarketingConsent, sendMetaLeadEvent } from '@/lib/metaConversionsApi'
 
 const sanity = createClient({
@@ -28,11 +31,19 @@ const CONDITION_LABEL: Record<string, string> = {
 }
 
 export async function POST(req: Request) {
-  const { name, phone, email, neighborhood, purpose, propertyType, area, rooms, floor, condition, message, metaEventId } = await req.json()
+  const { name, phone, email, neighborhood, purpose, propertyType, area, rooms, floor, condition, message, metaEventId, website } = await req.json()
+
+  const verdict = await screenSubmission(website)
+  if (verdict === 'honeypot') return NextResponse.json({ success: true })
+  if (verdict === 'bot') return NextResponse.json({ error: 'Blocked' }, { status: 403 })
 
   if (!name || !phone || !neighborhood || !purpose) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  await sendToMakeWebhook('Website Valuation Form', {
+    name, phone, email, purpose, propertyType, neighborhood, area, rooms, floor, condition, message,
+  })
 
   try {
     await sanity.create({
@@ -87,7 +98,7 @@ export async function POST(req: Request) {
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const row = (label: string, value?: string) =>
-    value ? `<tr><td style="padding: 8px 0; color: #666; width: 140px;">${label}:</td><td style="padding: 8px 0; font-weight: bold;">${value}</td></tr>` : ''
+    value ? `<tr><td style="padding: 8px 0; color: #666; width: 140px;">${label}:</td><td style="padding: 8px 0; font-weight: bold;">${escapeHtml(value)}</td></tr>` : ''
 
   const { error } = await resend.emails.send({
     from: 'New Key Properties <noreply@newkey.bg>',
@@ -109,7 +120,7 @@ export async function POST(req: Request) {
           ${row('Стаи', rooms)}
           ${row('Етаж', floor)}
           ${row('Състояние', condition ? CONDITION_LABEL[condition] ?? condition : undefined)}
-          ${message ? `<tr><td style="padding: 8px 0; color: #666; vertical-align: top;">Съобщение:</td><td style="padding: 8px 0;">${String(message).replace(/\n/g, '<br>')}</td></tr>` : ''}
+          ${message ? `<tr><td style="padding: 8px 0; color: #666; vertical-align: top;">Съобщение:</td><td style="padding: 8px 0;">${escapeHtml(message).replace(/\n/g, '<br>')}</td></tr>` : ''}
         </table>
       </div>
     `,

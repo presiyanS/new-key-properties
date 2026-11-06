@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import type { Locale } from '@/lib/i18n/config'
-import { sendToMakeWebhook } from '@/lib/makeWebhook'
 import { generateEventId, trackLead } from '@/lib/metaPixel'
 import { trackGoogleAdsContact } from '@/lib/googleAds'
 
@@ -109,26 +108,26 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (website) return // honeypot caught a bot - silently drop
 
     setLoading(true)
     setError('')
 
-    sendToMakeWebhook('Website Valuation Form', form)
-
     const metaEventId = generateEventId()
-    trackLead(metaEventId, { content_name: 'Valuation Form' })
 
     const res = await fetch('/api/valuation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, metaEventId }),
+      body: JSON.stringify({ ...form, metaEventId, website }),
     })
 
     setLoading(false)
 
     if (res.ok) {
-      trackGoogleAdsContact()
+      // Ad platforms only count submissions the server accepted, not bots.
+      if (!website) {
+        trackLead(metaEventId, { content_name: 'Valuation Form' })
+        trackGoogleAdsContact()
+      }
       setSubmitted(true)
     } else {
       setError(t.errorMessage)
@@ -159,7 +158,10 @@ export default function ValuationForm({ locale = 'bg' }: { locale?: Locale }) {
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ display: 'none' }}
+        data-1p-ignore
+        data-lpignore="true"
+        // Moved off-screen rather than display:none, which bots tend to skip
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
       />
       {/* Purpose toggle */}
       <div>

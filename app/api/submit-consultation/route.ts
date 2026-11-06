@@ -1,13 +1,22 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { escapeHtml } from '@/lib/escapeHtml'
 import { splitName, syncHubSpotContact } from '@/lib/hubspot'
+import { screenSubmission } from '@/lib/leadGuard'
+import { sendToMakeWebhook } from '@/lib/makeWebhook'
 
 export async function POST(req: Request) {
-  const { name, phone, email, message } = await req.json()
+  const { name, phone, email, message, website } = await req.json()
+
+  const verdict = await screenSubmission(website)
+  if (verdict === 'honeypot') return NextResponse.json({ success: true })
+  if (verdict === 'bot') return NextResponse.json({ error: 'Blocked' }, { status: 403 })
 
   if (!name || !phone || !message) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  await sendToMakeWebhook('Website Consultation Form', { name, phone, email, message })
 
   const { firstname, lastname } = splitName(name)
 
@@ -28,20 +37,20 @@ export async function POST(req: Request) {
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
             <td style="padding: 8px 0; color: #666; width: 120px;">Име:</td>
-            <td style="padding: 8px 0; font-weight: bold;">${name}</td>
+            <td style="padding: 8px 0; font-weight: bold;">${escapeHtml(name)}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; color: #666;">Телефон:</td>
-            <td style="padding: 8px 0; font-weight: bold;">${phone}</td>
+            <td style="padding: 8px 0; font-weight: bold;">${escapeHtml(phone)}</td>
           </tr>
           ${email ? `
           <tr>
             <td style="padding: 8px 0; color: #666;">Имейл:</td>
-            <td style="padding: 8px 0;">${email}</td>
+            <td style="padding: 8px 0;">${escapeHtml(email)}</td>
           </tr>` : ''}
           <tr>
             <td style="padding: 8px 0; color: #666; vertical-align: top;">Съобщение:</td>
-            <td style="padding: 8px 0;">${message.replace(/\n/g, '<br>')}</td>
+            <td style="padding: 8px 0;">${escapeHtml(message).replace(/\n/g, '<br>')}</td>
           </tr>
         </table>
       </div>

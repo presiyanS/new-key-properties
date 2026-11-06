@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@sanity/client'
+import { screenSubmission } from '@/lib/leadGuard'
 
 const sanity = createClient({
   projectId: '9gz26s06',
@@ -11,6 +12,10 @@ const sanity = createClient({
 
 export async function POST(request: NextRequest) {
   const { email, type, neighborhood, rooms, priceMin, priceMax } = await request.json()
+
+  if ((await screenSubmission()) === 'bot') {
+    return NextResponse.json({ error: 'Blocked' }, { status: 403 })
+  }
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: 'Невалиден имейл адрес.' }, { status: 400 })

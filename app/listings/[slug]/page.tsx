@@ -365,7 +365,6 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     {dict.listings.quickInquiryLabel}
                   </p>
                   <ContactForm
-                    source="Website Listing Inquiry"
                     extraFields={{ listingTitle: listing.title, listingUrl: `https://www.newkey.bg/listings/${id}` }}
                   />
                 </div>
