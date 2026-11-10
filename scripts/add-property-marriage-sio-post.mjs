@@ -210,7 +210,7 @@ const doc = {
   contentEn,
   date: '2026-11-09',
   category: 'Правни съвети',
-  externalImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Mladost_Sofia_Bulgaria_-_panoramio.jpg',
+  externalImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Sofia_-_panoramio_-_zonemars_%2814%29.jpg',
   researchNotes,
 }
 
