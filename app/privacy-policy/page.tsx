@@ -28,7 +28,7 @@ const content = {
     eyebrow: 'Правна информация',
     title: 'Политика за поверителност',
     lastUpdatedLabel: 'Последна актуализация',
-    lastUpdated: '19.10.2026',
+    lastUpdated: '10.11.2026',
     sections: [
       {
         heading: '1. Администратор на личните данни',
@@ -109,7 +109,7 @@ const content = {
       },
       {
         heading: '7. Бисквитки (cookies) и инструменти за измерване',
-        intro: 'Уебсайтът използва технически бисквитки, необходими за работата му - например за да запомни избора Ви в банера за бисквитки и за вход в администраторските раздели. Използваме и Vercel Web Analytics, който събира обобщена статистика за посещенията без бисквитки и без да идентифицира отделни посетители. Рекламните и аналитичните инструменти по-долу се зареждат само ако натиснете „Приемам“ в банера за бисквитки (чл. 6, ал. 1, б. „а“ GDPR - съгласие). Ако натиснете „Отказвам“, те не се зареждат. Можете да оттеглите съгласието си по всяко време, като изтриете бисквитките за newkey.bg от настройките на браузъра си - банерът ще се появи отново. С Ваше съгласие използваме:',
+        intro: 'Уебсайтът използва технически бисквитки, необходими за работата му - например за да запомни избора Ви в банера за бисквитки и за вход в администраторските раздели. Използваме и Vercel Web Analytics, който събира обобщена статистика за посещенията без бисквитки и без да идентифицира отделни посетители. Рекламните и аналитичните инструменти по-долу се зареждат само ако натиснете „Приемам“ в банера за бисквитки (чл. 6, ал. 1, б. „а“ GDPR - съгласие). Ако натиснете „Отказвам“, те не се зареждат. Изключение е тагът на Google Ads, който се зарежда при всяко посещение в т.нар. „режим на съгласие“ (Google Consent Mode): докато не натиснете „Приемам“, той не записва бисквитки и не изпраща информация за запитвания или обаждания - към Google се изпращат само анонимни технически сигнали без бисквитки (например че е отворена страница), които Google използва за обобщени статистически оценки. Можете да оттеглите съгласието си по всяко време, като изтриете бисквитките за newkey.bg от настройките на браузъра си - банерът ще се появи отново. С Ваше съгласие използваме:',
         simpleList: [
           'Meta Pixel и Meta Conversions API (Meta) - за да измерваме ефективността на рекламите си във Facebook и Instagram. При изпращане на форма към Meta се изпращат имейлът и телефонът Ви в криптиран (хеширан) вид, както и IP адресът Ви.',
           'Google Ads (Google) - за да измерваме колко посетители от рекламите ни в Google ни изпращат запитване или ни се обаждат.',
@@ -131,7 +131,7 @@ const content = {
     eyebrow: 'Legal information',
     title: 'Privacy policy',
     lastUpdatedLabel: 'Last updated',
-    lastUpdated: '19.10.2026',
+    lastUpdated: '10.11.2026',
     sections: [
       {
         heading: '1. Data controller',
@@ -212,7 +212,7 @@ const content = {
       },
       {
         heading: '7. Cookies and measurement tools',
-        intro: 'The website uses technical cookies needed for it to work - for example, to remember your choice in the cookie banner and for logging in to admin sections. We also use Vercel Web Analytics, which collects aggregate visit statistics without cookies and without identifying individual visitors. The advertising and analytics tools below load only if you click "Accept" in the cookie banner (Art. 6(1)(a) GDPR - consent). If you click "Decline", they are not loaded. You can withdraw your consent at any time by deleting the cookies for newkey.bg in your browser settings - the banner will then appear again. With your consent we use:',
+        intro: 'The website uses technical cookies needed for it to work - for example, to remember your choice in the cookie banner and for logging in to admin sections. We also use Vercel Web Analytics, which collects aggregate visit statistics without cookies and without identifying individual visitors. The advertising and analytics tools below load only if you click "Accept" in the cookie banner (Art. 6(1)(a) GDPR - consent). If you click "Decline", they are not loaded. The exception is the Google Ads tag, which loads on every visit in so-called "consent mode" (Google Consent Mode): until you click "Accept", it sets no cookies and sends no information about inquiries or calls - Google receives only anonymous technical signals without cookies (for example, that a page was opened), which it uses for aggregate statistical estimates. You can withdraw your consent at any time by deleting the cookies for newkey.bg in your browser settings - the banner will then appear again. With your consent we use:',
         simpleList: [
           'Meta Pixel and Meta Conversions API (Meta) - to measure how well our ads on Facebook and Instagram perform. When you send a form, your email and phone number are sent to Meta in encrypted (hashed) form, together with your IP address.',
           'Google Ads (Google) - to measure how many visitors from our Google ads send us an inquiry or call us.',

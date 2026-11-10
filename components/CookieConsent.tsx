@@ -40,7 +40,8 @@ export default function CookieConsent({ initialStatus }: { initialStatus: Status
 
       {status === 'accepted' && <MetaPixel />}
 
-      {status === 'accepted' && <GoogleAdsTag />}
+      {/* Always mounted (Consent Mode) - it stays cookieless until "accepted". */}
+      <GoogleAdsTag consented={status === 'accepted'} />
 
       {status === 'pending' && (
         <div className="fixed bottom-0 inset-x-0 z-60 bg-brand-green-dark border-t border-brand-gold/20 px-4 py-3 sm:py-5">
